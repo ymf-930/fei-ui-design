@@ -79,9 +79,9 @@
 <!--          slot="bottom"-->
 <!--      />-->
 <!--    </Sidebar>-->
-    <!--    <ClientOnly>-->
-    <!--      <Config v-if="!$page.frontmatter.navbar" />-->
-    <!--    </ClientOnly>-->
+        <ClientOnly>
+          <Config v-if="!frontmatter.navbar" />
+        </ClientOnly>
   </div>
 </template>
 
@@ -96,7 +96,7 @@ import Navbar from '../components/Navbar.vue'
 import {resolveSidebarItems} from '../util'
 // import Carbon from '../components/Carbon'
 // import DocsHome from '../components/DocsHome'
-// import Config from '../components/Config.vue'
+import Config from '../components/Config.vue'
 import PassLayout from '../components/PassLayout.vue'
 import License from '../components/License.vue'
 import HeaderNotification from '../components/HeaderNotification.vue'
@@ -105,6 +105,7 @@ import Branding from '../components/Branding.vue'
 // import navbar from '../components/navbarLayout.vue'
 
 const {site, page, theme, frontmatter} = useData()
+console.log(frontmatter.value);
 const isSidebarOpen = ref(false)
 const ads = ref('codefund')
 const noAdvertiser = ref(false)

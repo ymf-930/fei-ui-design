@@ -36,9 +36,9 @@ const link = computed(() => {
 })
 const exact = computed(() => {
   if (theme.value.locales) {
-    return Object.keys(theme.value.locales).some(rootLink => rootLink === props.link)
+    return Object.keys(theme.value.locales).some(rootLink => rootLink === props.item.link)
   }
-  return this.link === '/'
+  return link.value === '/'
 })
 </script>
 <style lang="stylus">

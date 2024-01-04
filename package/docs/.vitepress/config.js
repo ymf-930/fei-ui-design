@@ -1,28 +1,24 @@
 import { defineConfig } from 'vitepress'
 export default defineConfig({
-  // locales: {
-  //   '/': {
-
-  //     // lang: 'Engl+ish',
-  //     lang: 'en-US',
-  //     text: 'English',
-  //   },
-  //   '/es/': {
-  //     // lang: 'Español',
-  //     lang: 'es-ES',
-  //     text: 'Español',
-  //   }
-  // },
+  locales: {
+    '/': {
+      // lang: 'Engl+ish',
+      lang: 'en-US',
+      text: 'English',
+    },
+    '/es/': {
+      // lang: 'Español',
+      lang: 'es-ES',
+      text: 'Español',
+    }
+  },
   // plugins: [
   //   ['vuepress-plugin-typescript']
   // ],
   base: '/',
   outDir: '../site',
   title: 'F-UI-DESIGN',
-
-  // theme: require.resolve('../../vuepress-theme-vuesax/'),
   head: [
-    // ['link', { rel: 'icon', href: `/logos/logo-vuesax-svg-7.svg`, color: '#2c3e50' }],
     ['link', { rel: 'icon', href: `/logos/logo-vuesax-logotipo-vuesax-png-8.png`, media: '(prefers-color-scheme:dark)', type: 'image/png' }],
     ['link', { rel: 'icon', href: `/logos/logo-vuesax-logotipo-vuesax-png-7.png`, media: '(prefers-color-scheme:light)', type: 'image/png' }],
     ['meta', { name: 'viewport', content: 'width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1, shrink-to-fit=no' }],
@@ -34,10 +30,6 @@ export default defineConfig({
     ['meta', { property: 'og:title', content: 'F-UI-DESIGN - Framework for Vuejs'}],
     ['meta', { property: 'og:url', content: 'https://vuesax.com/'}],
     ['meta', { name: 'twitter:card', content: 'summary_large_image'}],
-    // ['script', {}, ``],
-    // ['script', {
-    //   src: 'https://cdn.paddle.com/paddle/paddle.js'
-    // }],
   ],
   themeConfig: {
     socialLinks: [
@@ -55,8 +47,6 @@ export default defineConfig({
         ...getSidebar('/es/')
       }
     },
-
-    // repo: 'git@github.com:lusaxweb/vuesax-next.git',
     lastUpdated: true,
     linkPrevVersion: 'https://lusaxweb.github.io/vuesax/',
     searchPlaceholder: 'F-UI-DESIGN Search',
@@ -68,7 +58,11 @@ function getNavbar (lang = '/') {
   return {
     nav: [
       {
-        text: lang !== '/'? `Guía` : `Guide`,
+        text: lang !== '/'? `Home` : `首页`,
+        link: `${lang}docs/`,
+      },
+      {
+        text: lang !== '/'? `Guía` : `文档`,
         link: `${lang}docs/guide/`,
         items: [
           { text: lang !== '/'? `Introducción` : `Introduction`, link: `${lang}docs/guide/` },
@@ -77,21 +71,9 @@ function getNavbar (lang = '/') {
         ]
       },
       {
-        text: lang !== '/'? `Documentación` : `Documentation`,
-        link: `${lang}docs/`,
+        text: lang !== '/'? `Documentación` : `组件`,
+        link: `${lang}docs/components`,
         items: [
-          {
-            text: lang !== '/'? `Tema` : `Theme`,
-            items: [
-              { text: `Color`, link: `${lang}docs/theme/` },
-            ]
-          },
-          {
-            text: lang !== '/'? `Diseño` : `Layout`,
-            items: [
-              { text: lang !== '/'? `Cuadrícula` : `Grid`, link: `${lang}docs/layout/` },
-            ]
-          },
           {
             text: lang !== '/'? `Componentes` : `Components`,
             items: [
@@ -112,58 +94,10 @@ function getNavbar (lang = '/') {
 							{ text: 'Navbar', link: `${lang}docs/components/Navbar` },
 							{ text: 'Sidebar', link: `${lang}docs/components/Sidebar` },
 							{ text: 'Card', link: `${lang}docs/components/Card` },
-							// new component slot 1
             ]
           }
         ]
       },
-      // {
-      //   text: `F-UI-DESIGN Pass`,
-      //   link: `${lang}pass/`,
-      //   items: []
-      // },
-      {
-        text: lang !== '/'? `Licencia` : `License`,
-        link: `${lang}license/`
-      },
-      {
-        text: lang !== '/'? `Ecosistema` : `Ecosystem`,
-        // link: `${lang}ecosystem/`,
-        items: [
-          {
-            text: `Social`,
-            items: [
-              { text: `GitHub`, link: `https://github.com/lusaxweb/vuesax-next` },
-              { text: `Discord`, link: `https://discord.gg/6AZNXEa` },
-              { text: `Twitter`, link: `https://twitter.com/vuesax` },
-              { text: `Medium`, link: `https://medium.com/@luisdanielrovira8` }
-            ]
-          },
-          {
-            text: lang !== '/'? `Ayuda` : `Help`,
-            items: [
-              { text: lang !== '/'? `Problemas` : `Issues`, link: `https://github.com/lusaxweb/vuesax-next/issues` },
-              { text: lang !== '/'? `Editar página` : `Edit Page`, link: `https://github.com/lusaxweb/vuesax-next` },
-              { text: lang !== '/'? `Últimos lanzamientos` : `Latest Releases`, link: `https://github.com/lusaxweb/vuesax-next/releases` },
-            ]
-          },
-          {
-            text: lang !== '/'? `Contacto` : `Contact`,
-            items: [
-              { text: `Lusaxweb`, link: `http://lusaxweb.net` },
-              { text: `Chat`, link: `https://discordapp.com/invite/9dsKtvB` },
-              { text: `Pull Request`, link: `https://github.com/lusaxweb/vuesax/pulls` },
-              { text: `Codepen Template`, link: `https://codepen.io/lusaxweb/pen/mxMKYr` }
-            ]
-          }
-        ]
-      },
-      {
-        text: '...',
-        items: [
-          { text: lang !== '/'? `Marca` : `Branding`, link: `/branding/` },
-        ]
-      }
     ]
   }
 }

@@ -38,23 +38,13 @@ import DropdownLink from '../components/DropdownLink.vue'
 import {resolveNavLinkItem} from '../util'
 import NavLink from '../components/NavLink.vue'
 import {useData} from "vitepress"
-import {computed} from "vue";
+import {computed} from "vue"
 
-const {theme} = useData()
+const {site, theme} = useData()
 
 const userNav = computed(() => {
   // return this.$themeLocaleConfig.nav || theme.value.nav || []
-  return theme.value.nav || [
-    {
-      text: `Guide`,
-      link: `/docs/guide/`,
-      items: [
-        { text: `Introduction`, link: `/docs/guide/` },
-        { text: `Getting Started`, link: `/docs/guide/gettingStarted` },
-        { text: `F-UI-DESIGN + Nuxtjs`, link: `/docs/guide/nuxt` }
-      ]
-    },
-  ]
+  return site.value.themeConfig.locales['/'].nav || []
 })
 const nav = computed(() => {
   // const { locales } = this.$site
@@ -89,12 +79,13 @@ const nav = computed(() => {
 
 const userLinks = computed(() => {
   return (nav.value || []).map(link => {
+    console.log(resolveNavLinkItem(link));
     return Object.assign(resolveNavLinkItem(link), {
       items: (link.items || []).map(resolveNavLinkItem)
     })
   })
 })
-
+console.log(userLinks.value);
 const repoLink = computed(() => {
   const {repo} = theme
   if (repo) {
@@ -126,6 +117,8 @@ const repoLabel = computed(() => {
 <style lang="stylus">
 getVar(var)
   unquote("var(--vs-" + var + ")")
+getColor(vsColor, alpha = 1)
+  unquote("rgba(var(--vs-"+vsColor+"), "+alpha+")")
 
 .nav-links
   display flex
@@ -145,9 +138,8 @@ getVar(var)
     transition all .25s ease
 
     a
-      opacity .5
+      opacity 1
       transition all .25s ease
-      font-weight bold
       display block
       padding 18px
 
@@ -164,7 +156,7 @@ getVar(var)
         transition all .25s ease
 
       &:hover, &.router-link-active
-        opacity 1 !important
+        color getColor(primary) !important
 
       &.router-link-active
         &:after

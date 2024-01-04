@@ -1,24 +1,11 @@
 <template>
-  <header class="navbar">
+  <header class="navbar fixed">
     <SidebarButton @toggle-sidebar="$emit('toggle-sidebar')"/>
 
     <router-link
-        :to="$localePath"
+        to="/"
         class="home-link"
     >
-      <!-- <img
-        class="logo"
-        v-if="$site.themeConfig.logo"
-        :src="$withBase($site.themeConfig.logo)"
-        :alt="$siteTitle"
-      >
-      <span
-        ref="siteName"
-        class="site-name"
-        v-if="$siteTitle"
-        :class="{ 'can-hide': $site.themeConfig.logo }"
-      >{{ $siteTitle }}</span>
-      F-UI-DESIGN -->
       <svg class="logo-nav" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 401.69 98.4">
         <g id="Capa_2" data-name="Capa 2">
           <g id="Capa_1-2" data-name="Capa 1">
@@ -40,141 +27,44 @@
         </g>
       </svg>
     </router-link>
-
-    <div
-        class="links"
-        :style="linksWrapMaxWidth ? {
-        'max-width': linksWrapMaxWidth + 'px'
-      } : {}"
-    >
-      <!-- <AlgoliaSearchBox
-        v-if="isAlgoliaSearch"
-        :options="algolia"
-      /> -->
-
-      <NavLinks class="can-hide"/>
-    </div>
-
-    <div
-        :class="{'remove-links': focused}"
-        class="external-links-search">
-      <a
-          title="Previous Version"
-          class="v-old"
-          target="_blank" :href="theme.linkPrevVersion">
-        v3.x
-      </a>
-
+    <div :class="{'remove-links': focused}"
+         class="external-links-search">
+      <div class="links"
+           :style="linksWrapMaxWidth
+           ? {'max-width': linksWrapMaxWidth + 'px'}
+           : {}"
+      >
+        <NavLinks class="can-hide"/>
+      </div>
+      <span title="Previous Version" class="v-old">v3.x</span>
       <div class="con-links">
         <a title="Github" target="_blank" href="https://github.com/lusaxweb/vuesax-next">
           <i class="bx bxl-github"></i>
         </a>
-        <a title="Twitter" target="_blank" href="https://twitter.com/vuesax">
-          <i class="bx bxl-twitter"></i>
-        </a>
-        <a title="Discord" target="_blank" href="https://discord.gg/6AZNXEa">
-          <i class="bx bxl-discord"></i>
-        </a>
       </div>
-
       <SearchBox
           @focus="focused = true"
           @blur="focused = false"
           @showSuggestions="handleShowSuggestions"
           v-if="theme.search !== false && frontmatter.search !== false"/>
-      <!-- <NavLinksLanguages class="can-hide"/> -->
-      <!-- <button @click="handlePaddle">
-        Buy Now!
-      </button> -->
-      <div class="user-info">
-        <!-- <button class="btn-login" v-if="!$user.user" @click="handleLogin">
-          Login
-        </button>
-
-        <div v-else class="user-dropdown">
-          <div class="user">
-            <img :src="$user.user.photoURL" alt="">
-          </div>
-
-          <div class="dropdown">
-            <div class="dropdown-content">
-              <span class="name-user">
-                {{ $user.user.displayName }}
-              </span>
-              <button class="logout" @click="handleLogOut">
-                Logout
-              </button>
-            </div>
-          </div>
-        </div> -->
-
-        <!-- <button @click="handleF-UI-DESIGNPass" v-if="$user.user">
-          Comprar Components Pass
-        </button> -->
-      </div>
     </div>
   </header>
 </template>
 
 <script setup>
 import {useData} from "vitepress"
-// import AlgoliaSearchBox from '@AlgoliaSearchBox'
 import SidebarButton from '../components/SidebarButton.vue'
 import NavLinks from './NavLinks.vue'
-// import NavLinksLanguages from '@theme/components/NavLinksLanguages.vue'
 import SearchBox from './SearchBox.vue'
-
-import * as firebase from "firebase/app";
-
-// Add the Firebase products that you want to use
-import "firebase/auth";
-import "firebase/database";
-import {computed, onMounted, ref} from "vue";
+import {onMounted, ref} from "vue";
 
 const {frontmatter, theme} = useData()
-
-const firebaseConfig = {
-  apiKey: "AIzaSyCO1X9AaKblBqNA3OL1HvAC-7n9xhJxmdU",
-  authDomain: "vuesax-framework.firebaseapp.com",
-  databaseURL: "https://vuesax-framework.firebaseio.com",
-  projectId: "vuesax-framework",
-  storageBucket: "vuesax-framework.appspot.com",
-  messagingSenderId: "150226273019",
-  appId: "1:150226273019:web:0f4faefcb7549d5cbe665e",
-  measurementId: "G-ELFGE3FQQF"
-};
-// Initialize Firebase
-
-// Vue.prototype.$firebase = firebase
-
 const linksWrapMaxWidth = ref(null)
 const showSuggestions = ref(false)
 const focused = ref(false)
 
 
-// if (!firebase.apps.length) {
-//   firebase.initializeApp(firebaseConfig);
-// }
-
 onMounted(() => {
-  firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      // User is signed in.
-      // this.$user.user = user
-      const userId = firebase.auth().currentUser.uid
-      firebase.database().ref('/users/' + userId).once('value').then((snapshot) => {
-        // var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
-        this.$user.user = snapshot.val()
-        // ...
-      });
-      // ...
-    } else {
-      // User is signed out.
-      // ...
-      this.$user.user = null
-    }
-  });
-
   const MOBILE_DESKTOP_BREAKPOINT = 719 // refer to config.styl
   const NAVBAR_VERTICAL_PADDING = parseInt(css(this.$el, 'paddingLeft')) + parseInt(css(this.$el, 'paddingRight'))
   const handleLinksWrapWidth = () => {
@@ -195,75 +85,11 @@ onMounted(() => {
       this.$el.classList.remove('fixed')
     }
   })
-  // Paddle.Setup({
-  //   vendor: 106600,
-  // })
-  // console.log(Paddle)
 })
 
-const getUserPass = computed(() => {
-  if (this.$user.user) {
-    return Object.keys(this.$user.user.pass) || []
-  }
-})
-const algolia = computed(() => {
-  return this.$themeLocaleConfig.algolia || this.$site.themeConfig.algolia || {}
-})
-const isAlgoliaSearch = computed(() => {
-  return this.algolia && this.algolia.apiKey && this.algolia.indexName
-})
-
-
-function handleLogOut() {
-  firebase.auth().signOut().then(() => {
-    this.$user.user = null
-  }).catch(function (error) {
-    // An error happened.
-  });
-}
-
-function handleLogin() {
-  const provider = new firebase.auth.GithubAuthProvider();
-  firebase.auth().signInWithPopup(provider).then((result) => {
-    // This gives you a GitHub Access Token. You can use it to access the GitHub API.
-    var token = result.credential.accessToken;
-    // The signed-in user info.
-    var user = result.user;
-
-    this.handleUserDB(user)
-    // ...
-  })
-}
-
-function handleUserDB(user) {
-  const userId = firebase.auth().currentUser.uid
-  firebase.database().ref(`users/${userId}`).once("value", snapshot => {
-    if (!snapshot.exists()) {
-      const db = firebase.database()
-      const userId = firebase.auth().currentUser.uid
-      db.ref('users/' + userId).set({
-        displayName: user.displayName,
-        email: user.email,
-        photoURL: user.photoURL,
-        uid: user.uid
-      }).then(() => {
-        firebase.database().ref(`users/${userId}`).once("value", snapshot => {
-          this.$user.user = snapshot.val()
-        })
-      })
-    } else {
-      this.$user.user = snapshot.val()
-    }
-  })
-}
-
-// handlePaddle() {
-//   Paddle.Checkout.open({ product: 579742 })
-// }
 function handleShowSuggestions(active) {
   this.showSuggestions = active
 }
-
 
 function css(el, property) {
   // NOTE: Known bug, will return 'auto' if style value is 'auto'
@@ -278,83 +104,6 @@ $navbar-vertical-padding = 0.7rem
 $navbar-horizontal-padding = 1.5rem
 getVar(var)
   unquote("var(--vs-" + var + ")")
-
-.user-info
-  position relative
-  margin-left 10px
-
-  .user-dropdown
-    display flex
-    align-items center
-    justify-content center
-    padding-right 10px
-
-    &:hover
-      .dropdown
-        opacity 1
-        visibility visible
-
-    .dropdown
-      width 160px
-      visibility hidden
-      opacity 0
-      position absolute
-      right 10px
-      bottom 0px
-      transform translate(0, 100%)
-      box-shadow 0px 10px 20px -10px rgba(0, 0, 0, .15)
-      transition all .25s ease
-
-      .dropdown-content
-        width 160px
-        border-radius 15px 5px 15px 15px
-        padding 10px
-        background getVar(theme-layout)
-        margin-top 15px
-        position relative
-
-      .name-user
-        border-bottom 1px solid getVar(theme-bg2)
-        margin-bottom 10px
-        width 100%
-        padding 5px 10px
-        padding-top 0px
-        font-size .8rem
-        text-align center
-
-      .logout
-        background: getVar(theme-color)
-        color: getVar(theme-layout)
-        border 0px
-        padding 8px 25px
-        border-radius 10px
-        transition all .25s ease
-        box-shadow 0px 0px 0px 0px getVar(theme-color)
-        width 100%
-
-        &:hover
-          box-shadow 0px 5px 15px -5px getVar(theme-color)
-          transform translate(0, -4px)
-
-    .user
-      img
-        width 40px
-        border-radius 30%
-
-  .btn-login
-    background: getVar(theme-color)
-    color: getVar(theme-layout)
-    border 0px
-    padding 10px 15px
-    border-radius 10px 10px 20px 10px
-    margin-right 10px
-    padding-right 17px
-    transition all .25s ease
-    box-shadow 0px 0px 0px 0px getVar(theme-color)
-
-    &:hover
-      box-shadow 0px 5px 15px -5px getVar(theme-color)
-      transform translate(0, -4px)
 
 .logo-nav
   fill getVar(theme-color)
@@ -402,6 +151,10 @@ getVar(var)
       padding 4px
       box-sizing border-box
 
+      i {
+        font-size: 18px;
+      }
+
       box-icon
         width 20px !important
         height 20px !important
@@ -419,16 +172,6 @@ getVar(var)
 
   &.transparent
     background transparent
-
-  &.fixed
-    border-radius 0px
-    background getVar(theme-layout)
-
-    .btn-login
-      border-radius 10px
-
-  // backdrop-filter blur(20px)
-  // background rgba(255,255,255,0.6) !important
 
   a, span, img
     display inline-block
@@ -504,10 +247,6 @@ getVar(var)
 
     .logo-nav
       height 24px
-
-  .user-info
-    .btn-login
-      margin-right 0px
 
 @media (max-width: 390px)
   .external-links-search
