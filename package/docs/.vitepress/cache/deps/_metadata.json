@@ -1,46 +1,19 @@
 {
-  "hash": "46dd0d9c",
-  "configHash": "c3b052f9",
-  "lockfileHash": "d9fc794f",
-  "browserHash": "5f335aae",
+  "hash": "9c6d1dc0",
+  "browserHash": "70131105",
   "optimized": {
     "vue": {
-      "src": "../../../../../node_modules/.pnpm/vue@3.3.11/node_modules/vue/dist/vue.runtime.esm-bundler.js",
+      "src": "../../../../../node_modules/.pnpm/vue@3.3.11_typescript@5.1.6/node_modules/vue/dist/vue.runtime.esm-bundler.js",
       "file": "vue.js",
-      "fileHash": "23240295",
+      "fileHash": "dd7709d8",
       "needsInterop": false
     },
     "vitepress > @vue/devtools-api": {
       "src": "../../../../../node_modules/.pnpm/@vue+devtools-api@6.5.1/node_modules/@vue/devtools-api/lib/esm/index.js",
       "file": "vitepress___@vue_devtools-api.js",
-      "fileHash": "2629381e",
-      "needsInterop": false
-    },
-    "firebase/app": {
-      "src": "../../../../../node_modules/.pnpm/firebase@7.24.0/node_modules/firebase/app/dist/index.esm.js",
-      "file": "firebase_app.js",
-      "fileHash": "4a8564e8",
-      "needsInterop": false
-    },
-    "firebase/auth": {
-      "src": "../../../../../node_modules/.pnpm/firebase@7.24.0/node_modules/firebase/auth/dist/index.esm.js",
-      "file": "firebase_auth.js",
-      "fileHash": "28c7f649",
-      "needsInterop": false
-    },
-    "firebase/database": {
-      "src": "../../../../../node_modules/.pnpm/firebase@7.24.0/node_modules/firebase/database/dist/index.esm.js",
-      "file": "firebase_database.js",
-      "fileHash": "9a7370a9",
+      "fileHash": "37fc9478",
       "needsInterop": false
     }
   },
-  "chunks": {
-    "chunk-GNQUU5TR": {
-      "file": "chunk-GNQUU5TR.js"
-    },
-    "chunk-CEQRFMJQ": {
-      "file": "chunk-CEQRFMJQ.js"
-    }
-  }
+  "chunks": {}
 }

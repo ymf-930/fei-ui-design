@@ -1,4 +1,9 @@
 import { defineConfig } from 'vitepress'
+import sidebarDocs from "./sidebar-docs.js";
+import sidebarComps from "./sidebar-comps.js";
+
+const baseUrl = process.env.NODE_ENV === 'production' ? '/f-ui-design/' : '/'
+
 export default defineConfig({
   locales: {
     '/': {
@@ -12,11 +17,9 @@ export default defineConfig({
       text: 'Español',
     }
   },
-  // plugins: [
-  //   ['vuepress-plugin-typescript']
-  // ],
-  base: '/',
-  outDir: '../site',
+  base: baseUrl,
+  ignoreDeadLinks: true,
+  outDir: '../../site',
   title: 'F-UI-DESIGN',
   head: [
     ['link', { rel: 'icon', href: `/logos/logo-vuesax-logotipo-vuesax-png-8.png`, media: '(prefers-color-scheme:dark)', type: 'image/png' }],
@@ -37,7 +40,16 @@ export default defineConfig({
     ],
     repo: 'lusaxweb/vuesax-next',
     docsDir: 'packages/docs',
-    locales: {
+    nav: [
+      { text: '首页', link: '/' },
+      { text: '文档', link: '/docs/introduction' },
+      { text: '组件', link: '/components/button' }
+    ],
+    sidebar: {
+      '/docs/': sidebarDocs,
+      '/components/': sidebarComps
+    },
+/*    locales: {
       '/': {
         ...getNavbar(),
         ...getSidebar()
@@ -46,7 +58,7 @@ export default defineConfig({
         ...getNavbar('/es/'),
         ...getSidebar('/es/')
       }
-    },
+    },*/
     lastUpdated: true,
     linkPrevVersion: 'https://lusaxweb.github.io/vuesax/',
     searchPlaceholder: 'F-UI-DESIGN Search',

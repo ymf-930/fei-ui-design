@@ -1,0 +1,291 @@
+.fei-radio {
+  cursor: pointer;
+  white-space: nowrap;
+  display: inline-block;
+  margin-right: 8px;
+  user-select: none;
+  font-size: var(--fei-font-size-default);
+  line-height: var(--fei-base-line-height);
+  outline: none;
+  &-group {
+    font-size: 0;
+  }
+  &__label {
+    padding: 0 8px;
+    vertical-align: middle;
+  }
+  &__input {
+    white-space: nowrap;
+    cursor: pointer;
+    outline: none;
+    display: inline-block;
+    line-height: 1;
+    position: relative;
+    vertical-align: middle;
+    width: 16px;
+    height: 16px;
+    &:hover {
+      .fei-radio__inner {
+        border-color: var(--fei-color-primary-light1);
+      }
+    }
+    &.is-checked {
+      .fei-radio__inner {
+        border-color: var(--fei-color-primary);
+        &:after {
+          opacity: 1;
+          -webkit-transform: scale(1);
+          transform: scale(1);
+          transition: all var(--fei-animation-duration-base) ease-in-out;
+        }
+      }
+      &:after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 1px solid var(--fei-color-primary);
+        border-radius: 50%;
+        animation: radioEffect var(--fei-animation-duration-slow) ease-in-out;
+        animation-fill-mode: both;
+        content: '';
+      }
+    }
+    &.is-disabled {
+      .fei-radio__inner {
+        cursor: not-allowed;
+        border-color: #dcdee2;
+        background-color: #f3f3f3;
+        &:after {
+          background-color: #ccc;
+        }
+      }
+    }
+  }
+  &__inner {
+    position: relative;
+    top: 0;
+    left: 0;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-color: #fff;
+    border: var(--fei-border-base);
+    border-radius: 50%;
+    transition: all var(--fei-animation-duration-base) ease-in-out;
+    &:after {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      left: 3px;
+      top: 3px;
+      border-radius: 8px;
+      display: table;
+      border-top: 0;
+      border-left: 0;
+      content: " ";
+      background-color: var(--fei-color-primary);
+      opacity: 0;
+      transition: all var(--fei-animation-duration-base) ease-in-out;
+      -webkit-transform: scale(0);
+      transform: scale(0);
+    }
+  }
+  &__original {
+    position: absolute;
+    opacity: 0;
+    outline: none;
+    margin: 0;
+    width: 0;
+    height: 0;
+    z-index: -1;
+    &[disabled] {
+      cursor: not-allowed;
+    }
+  }
+  &.is-disabled {
+    .fei-radio__label {
+      color: #ccc;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.fei-radio-group-button {
+  font-size: 0;
+  .fei-radio {
+    position: relative;
+    margin: 0;
+    padding: 0 15px;
+    color: #515a6e;
+    border: 1px solid #dcdee2;
+    background: #fff;
+    height: var(--fei-default-height);
+    line-height: var(--fei-default-height-2);
+    transition: background-color var(--fei-animation-duration-base), color var(--fei-animation-duration-base);
+    &:hover {
+      color: var(--fei-color-primary);
+      border-color: var(--fei-color-primary);
+      z-index: 1;
+    }
+    > span {
+      margin-left: 0;
+      padding: 0;
+      vertical-align: baseline;
+    }
+    .fei-radio__input, input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    &:first-child {
+      border-radius: var(--fei-border-radius-default) 0 0 var(--fei-border-radius-default);
+    }
+    &:last-child {
+      border-radius: 0 var(--fei-border-radius-default) var(--fei-border-radius-default) 0;
+    }
+    + .fei-radio {
+      margin-left: -1px;
+    }
+    &__input {
+      display: none;
+    }
+  }
+  &.fei-radio-group-large .fei-radio {
+    height: var(--fei-large-height);
+    line-height: var(--fei-large-height-2);
+    padding: 0 16px;
+  }
+  &.fei-radio-group-small .fei-radio {
+    height: var(--fei-small-height);
+    line-height: var(--fei-small-height-2);
+    padding: 0 12px;
+  }
+  &.fei-radio-group-mini .fei-radio {
+    height: var(--fei-mini-height);
+    line-height: var(--fei-mini-height-2);
+    padding: 0 8px;
+  }
+  .fei-radio.is-checked {
+    border-color: var(--fei-color-primary);
+    color: var(--fei-color-primary);
+    z-index: 1;
+    &:hover {
+      color: var(--fei-color-primary);
+      border-color: var(--fei-color-primary);
+      z-index: 1;
+    }
+  }
+  .fei-radio.is-disabled {
+    cursor: not-allowed;
+    border-color: #dcdee2;
+    background-color: #f7f7f7;
+    color: #ccc;
+    &:first-child, &:hover {
+      border-color: #dcdee2;
+      background-color: #f7f7f7;
+      color: #ccc;
+    }
+    &.is-checked {
+      color: #fff;
+      background-color: #e6e6e6;
+      border-color: #dcdee2;
+    }
+  }
+}
+
+.fei-radio-group-capsule {
+  display: inline-flex;
+  padding: 1.5px;
+  height: var(--fei-default-height);
+  background-color: var(--fei-fill-color-2);
+  border-radius: var(--fei-border-radius-default);
+
+  &.fei-radio-group-large {
+    height: var(--fei-large-height);
+
+    .fei-radio {
+      line-height: calc(var(--fei-large-height) - 8px);
+    }
+  }
+
+  &.fei-radio-group-small {
+    height: var(--fei-small-height);
+
+    .fei-radio {
+      line-height: calc(var(--fei-small-height) - 8px);
+    }
+  }
+
+  &.fei-radio-group-mini {
+    height: var(--fei-mini-height);
+
+    .fei-radio {
+      font-size: 12px;
+      line-height: calc(var(--fei-mini-height) - 8px);
+    }
+  }
+
+  .fei-radio {
+    position: relative;
+    display: inline-block;
+    margin: 1.5px;
+    color: var(--color-text-2);
+    line-height: calc(var(--fei-default-height) - 8px);
+    font-size: 14px;
+    background-color: transparent;
+    border-radius: var(--fei-border-radius-default);
+    cursor: pointer;
+    transition: all 0.1s cubic-bezier(0, 0, 1, 1);
+
+    &__input {
+      display: none;
+    }
+
+    .fei-radio__label {
+      padding: 0 12px;
+    }
+
+    &:not(.is-disabled):hover {
+      color: var(--fei-color-text-primary);
+      background-color: var(--fei-white-color);
+    }
+
+    &.is-checked {
+      color: var(--fei-color-primary);
+      background-color: var(--fei-white-color);
+
+      &:hover {
+        color: var(--fei-color-primary);
+      }
+    }
+
+    &.is-checked:before, &.is-checked + .fei-radio:before {
+      opacity: 0;
+    }
+
+    &:not(:first-of-type):before {
+      position: absolute;
+      top: 50%;
+      left: -2px;
+      display: block;
+      width: 1px;
+      height: 14px;
+      background-color: var(--fei-fill-color-3);
+      transform: translateY(-50%);
+      transition: all 0.1s cubic-bezier(0, 0, 1, 1);
+      content: '';
+    }
+  }
+}
+@keyframes radioEffect {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
