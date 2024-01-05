@@ -2,42 +2,42 @@
   <f-row :gutter="20">
     <f-col :span="6">
       <f-select v-model="select" clearable size="large">
-        <b-option
+        <f-option
           v-for="item in cityList"
           :key="item.value"
           :label="item.label"
           :value="item.value"
-        ></b-option>
+        ></f-option>
       </f-select>
     </f-col>
     <f-col :span="6">
       <f-select v-model="select" clearable>
-        <b-option
+        <f-option
           v-for="item in cityList"
           :key="item.value"
           :label="item.label"
           :value="item.value"
-        ></b-option>
+        ></f-option>
       </f-select>
     </f-col>
     <f-col :span="6">
       <f-select v-model="select" clearable size="small">
-        <b-option
+        <f-option
           v-for="item in cityList"
           :key="item.value"
           :label="item.label"
           :value="item.value"
-        ></b-option>
+        ></f-option>
       </f-select>
     </f-col>
     <f-col :span="6">
       <f-select v-model="select" clearable size="mini">
-        <b-option
+        <f-option
           v-for="item in cityList"
           :key="item.value"
           :label="item.label"
           :value="item.value"
-        ></b-option>
+        ></f-option>
       </f-select>
     </f-col>
   </f-row>

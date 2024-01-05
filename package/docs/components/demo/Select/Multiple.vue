@@ -1,20 +1,20 @@
 <template>
   <div>
     <f-select v-model="select" style="width: 300px" multiple>
-      <b-option
+      <f-option
         v-for="item in cityList"
         :key="item.value"
         :label="item.label"
         :value="item.value"
-      ></b-option>
+      ></f-option>
     </f-select>
     <f-select v-model="select" style="width: 300px; margin-left: 20px" multiple collapse-tags>
-      <b-option
+      <f-option
         v-for="item in cityList"
         :key="item.value"
         :label="item.label"
         :value="item.value"
-      ></b-option>
+      ></f-option>
     </f-select>
     <span>{{ select }}</span>
   </div>

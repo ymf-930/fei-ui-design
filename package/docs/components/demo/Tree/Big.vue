@@ -19,13 +19,13 @@
       </f-space>
     </div>
     <f-divider style="margin: 14px 0"></f-divider>
-    <b-big-tree
+    <f-big-tree
       ref="treeRef"
       :data="treedata"
       :visible-count="10"
       :filter-node-method="filterNode"
       @select-change="handleSelected"
-    ></b-big-tree>
+    ></f-big-tree>
   </div>
 </template>
 

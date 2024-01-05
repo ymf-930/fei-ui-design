@@ -2,12 +2,12 @@
   <div>
     <f-button @click="modal1 = true">禁用右上角关闭</f-button>
     <f-button @click="modal2 = true">禁用mask关闭</f-button>
-    <b-modal v-model="modal1" title="普通的模态框标题" :show-close="false">
+    <f-modal v-model="modal1" title="普通的模态框标题" :show-close="false">
       <p>禁用右上角关闭</p>
-    </b-modal>
-    <b-modal v-model="modal2" title="普通的模态框标题" :mask-closable="false">
+    </f-modal>
+    <f-modal v-model="modal2" title="普通的模态框标题" :mask-closable="false">
       <p>禁用mask关闭</p>
-    </b-modal>
+    </f-modal>
   </div>
 </template>
 

@@ -27,7 +27,7 @@ i 标签可以直接设置样式类名为 `f-iconfont f-icon-xxx` 来使用即�
 
 <script lang="ts" setup>
 import builtInIcons from '../.vitepress/utils/iconfont.json'
-import { Utils } from 'f-ui-design'
+import { Utils } from 'fei-ui-design'
 
 const iconList = builtInIcons.glyphs.map(v => v.font_class)
 const  baseIcons = [

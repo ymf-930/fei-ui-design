@@ -1,0 +1,18 @@
+::-webkit-scrollbar {
+  width: var(--fei-scrollbar-width);
+  height: var(--fei-scrollbar-width);
+}
+
+::-webkit-scrollbar-track {
+  background: var(--fei-scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--fei-scrollbar-color);
+  border-radius: var(--fei-scrollbar-radius);
+  transition: 0.2s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--fei-scrollbar-color-hover);
+}

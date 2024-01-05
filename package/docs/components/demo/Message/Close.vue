@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import { Message } from 'f-ui-design'
+import { Message } from 'fei-ui-design'
 
 function message() {
   Message.warning({ message: '消息1', duration: 0 })

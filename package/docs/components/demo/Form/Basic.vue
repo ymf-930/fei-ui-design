@@ -9,10 +9,10 @@
       </f-form-item>
       <f-form-item label="户籍地">
         <f-select v-model="formObj.region" placeholder="请选择户籍地">
-          <b-option label="上海" value="shanghai"></b-option>
-          <b-option label="北京" value="beijing"></b-option>
-          <b-option label="南京" value="nanjing"></b-option>
-          <b-option label="徐州" value="xuzhou"></b-option>
+          <f-option label="上海" value="shanghai"></f-option>
+          <f-option label="北京" value="beijing"></f-option>
+          <f-option label="南京" value="nanjing"></f-option>
+          <f-option label="徐州" value="xuzhou"></f-option>
         </f-select>
       </f-form-item>
       <f-form-item label="学历">

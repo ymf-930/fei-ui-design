@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import { Message } from 'f-ui-design'
+import { Message } from 'fei-ui-design'
 
 function message1() {
   Message.info('我是普通消息提示')

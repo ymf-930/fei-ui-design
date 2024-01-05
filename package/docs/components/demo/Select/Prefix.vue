@@ -4,10 +4,10 @@
       <template #prefix>
         <i class="f-iconfont f-icon-alert"></i>
       </template>
-      <b-option value="beijing" label="北京"></b-option>
-      <b-option value="shanghai" label="上海"></b-option>
-      <b-option value="xuzhou" label="徐州"></b-option>
-      <b-option value="nanjing" label="南京"></b-option>
+      <f-option value="beijing" label="北京"></f-option>
+      <f-option value="shanghai" label="上海"></f-option>
+      <f-option value="xuzhou" label="徐州"></f-option>
+      <f-option value="nanjing" label="南京"></f-option>
     </f-select>
   </div>
 </template>

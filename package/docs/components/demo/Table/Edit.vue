@@ -31,9 +31,9 @@
     </template>
     <template #hobby="{ index, row }">
       <f-select v-if="obj.editIndex === index" v-model="obj.editHobby" clearable size="small">
-        <b-option v-for="(val, key) in hobbyMap" :key="key" :value="key" :label="val">
+        <f-option v-for="(val, key) in hobbyMap" :key="key" :value="key" :label="val">
           {{ val }}
-        </b-option>
+        </f-option>
       </f-select>
       <span v-else>{{ hobbyMap[row.hobby] }}</span>
     </template>

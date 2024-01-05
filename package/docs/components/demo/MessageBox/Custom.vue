@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { MessageBox, Message } from 'f-ui-design'
+import { MessageBox, Message } from 'fei-ui-design'
 import { h } from 'vue'
 
 function open() {

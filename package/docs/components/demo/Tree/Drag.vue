@@ -33,7 +33,7 @@
 
 <script setup lang="ts">
 import { ref, h } from 'vue'
-import { Message, BDropdown, BDropdownMenu, BDropdownItem } from 'f-ui-design'
+import { Message, FDropdown, FDropdownMenu, FDropdownItem } from 'fei-ui-design'
 
 const data = ref([
   {
@@ -214,7 +214,7 @@ function renderContent1({ root, node, data }) {
       ]
     ),
     h(
-      BDropdown,
+      FDropdown,
       {
         trigger: 'click',
         appendToBody: true,
@@ -227,12 +227,12 @@ function renderContent1({ root, node, data }) {
       {
         default: () => h('i', { class: ['f-iconfont', 'f-icon-setting', 'setting-action'] }),
         dropdown: () =>
-          h(BDropdownMenu, () => [
-            h(BDropdownItem, { name: 'edit' }, () => [
+          h(FDropdownMenu, () => [
+            h(FDropdownItem, { name: 'edit' }, () => [
               h('i', { class: 'f-iconfont f-icon-edit-square' }),
               '编辑'
             ]),
-            h(BDropdownItem, { name: 'delete' }, () => [
+            h(FDropdownItem, { name: 'delete' }, () => [
               h('i', { class: 'f-iconfont f-icon-delete' }),
               '删除'
             ])

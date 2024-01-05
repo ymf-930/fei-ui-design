@@ -1,0 +1,25 @@
+.fei-button[theme-name='dark'] {
+  --b-btn-bg-color: var(--fei-dark-bg);
+  --b-btn-text-color: var(--fei-color-text-white);
+  --b-btn-border-color: var(--fei-border-color-light-2);
+  --b-btn-disabled-text-color: var(--fei-color-text-disabled);
+  --b-btn-disabled-bg-color: var(--fei-dark-bg);
+  --b-btn-disabled-border-color: var(--fei-border-color-light-2);
+
+  --b-btn-hover-text-color: var(--fei-color-primary-light1);
+  --b-btn-hover-bg-color: var(--fei-dark-bg);
+  --b-btn-hover-border-color: var(--fei-color-primary-light1);
+
+  &.is-background {
+    --b-btn-text-color: var(--fei-color-text-default);
+  }
+  &.is-disabled,
+  &.is-disabled:focus,
+  &.is-disabled:hover,
+  &[disabled],
+  &[disabled]:focus,
+  &[disabled]:hover {
+    cursor: not-allowed;
+    opacity: 0.85;
+  }
+}

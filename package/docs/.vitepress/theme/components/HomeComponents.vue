@@ -138,7 +138,7 @@
             Get Started
           </h4>
           <p>
-            F-UI-DESIGN is an open source framework and you can help even in simple details
+            FEI-UI-DESIGN is an open source framework and you can help even in simple details
           </p>
         </div>
 
@@ -183,7 +183,7 @@
         <footer>
           <div>
             <h4>
-              F-UI-DESIGN 4.0
+              FEI-UI-DESIGN 4.0
             </h4>
             <p>
               Framework

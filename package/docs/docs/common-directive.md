@@ -21,7 +21,7 @@ import {
   Waves,
   // 重复点击
   RepeatClick
-} from 'f-ui-design'
+} from 'fei-ui-design'
 
 const UI = create({
   directives: [ClickOutside, ClickAnimation, Waves, RepeatClick]

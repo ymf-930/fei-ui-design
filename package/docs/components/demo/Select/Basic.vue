@@ -1,12 +1,12 @@
 <template>
   <div>
     <f-select v-model="select" style="width: 200px" clearable>
-      <b-option
+      <f-option
         v-for="item in cityList"
         :key="item.value"
         :label="item.label"
         :value="item.value"
-      ></b-option>
+      ></f-option>
     </f-select>
     <span>{{ select }}</span>
   </div>

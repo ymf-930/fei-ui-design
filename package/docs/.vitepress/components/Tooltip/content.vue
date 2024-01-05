@@ -2,15 +2,15 @@
   <div class="center">
     <vs-tooltip>
       <vs-button gradient>
-        Whats is F-UI-DESIGN?
+        Whats is FEI-UI-DESIGN?
       </vs-button>
       <template #tooltip>
         <div class="content-tooltip">
           <h4>
-            Whats is F-UI-DESIGN?
+            Whats is FEI-UI-DESIGN?
           </h4>
           <p>
-            F-UI-DESIGN is a framework of UI components created with Vuejs
+            FEI-UI-DESIGN is a framework of UI components created with Vuejs
           </p>
         </div>
       </template>

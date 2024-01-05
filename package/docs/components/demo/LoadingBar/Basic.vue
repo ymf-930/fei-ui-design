@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { LoadingBar } from 'f-ui-design'
+import { LoadingBar } from 'fei-ui-design'
 
 function start() {
   LoadingBar.start()

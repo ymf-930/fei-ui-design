@@ -1,7 +1,7 @@
 <template>
   <div>
     <f-button @click="modal = true">显示全屏对话框</f-button>
-    <b-modal v-model="modal" title="全屏标题" :fullscreen="fullscreen">
+    <f-modal v-model="modal" title="全屏标题" :fullscreen="fullscreen">
       <template #ctrl>
         <i
           :class="`f-iconfont f-icon-fullscreen${fullscreen ? '-exit' : ''}`"
@@ -17,7 +17,7 @@
           <f-button type="primary" @click="modal = false">确 定</f-button>
         </span>
       </template>
-    </b-modal>
+    </f-modal>
   </div>
 </template>
 

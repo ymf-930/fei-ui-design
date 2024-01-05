@@ -4,8 +4,8 @@
       label="Label"
       v-model="value1"
     >
-      <vs-option label="F-UI-DESIGN" value="1">
-        F-UI-DESIGN
+      <vs-option label="FEI-UI-DESIGN" value="1">
+        FEI-UI-DESIGN
       </vs-option>
       <vs-option label="Vue" value="2">
         Vue
@@ -31,8 +31,8 @@
       label-placeholder="Label-placeholder"
       v-model="value2"
     >
-      <vs-option label="F-UI-DESIGN" value="1">
-        F-UI-DESIGN
+      <vs-option label="FEI-UI-DESIGN" value="1">
+        FEI-UI-DESIGN
       </vs-option>
       <vs-option label="Vue" value="2">
         Vue
@@ -58,8 +58,8 @@
       placeholder="Placeholder"
       v-model="value3"
     >
-      <vs-option label="F-UI-DESIGN" value="1">
-        F-UI-DESIGN
+      <vs-option label="FEI-UI-DESIGN" value="1">
+        FEI-UI-DESIGN
       </vs-option>
       <vs-option label="Vue" value="2">
         Vue

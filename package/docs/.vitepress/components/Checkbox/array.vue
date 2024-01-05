@@ -13,7 +13,7 @@
       Vue
     </vs-checkbox>
     <vs-checkbox val="vuesax" v-model="options">
-      F-UI-DESIGN
+      FEI-UI-DESIGN
     </vs-checkbox>
 
     <span class="data-check">

@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Message } from 'f-ui-design'
+import { Message } from 'fei-ui-design'
 
 const visible = ref(false)
 

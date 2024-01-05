@@ -9,12 +9,12 @@
         default-first-option
         placeholder="请选择城市"
       >
-        <b-option
+        <f-option
           v-for="item in cityList"
           :key="item.value"
           :label="item.label"
           :value="item.value"
-        ></b-option>
+        ></f-option>
       </f-select>
     </f-col>
     <f-col :span="16">

@@ -13,7 +13,7 @@
       Vue
     </vs-switch>
     <vs-switch val="vuesax" v-model="options">
-      F-UI-DESIGN
+      FEI-UI-DESIGN
     </vs-switch>
 
     <span class="data">

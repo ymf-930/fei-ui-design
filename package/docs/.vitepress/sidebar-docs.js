@@ -4,7 +4,7 @@ export default formatSidebar([
   {
     text: '介绍',
     items: [
-      { text: 'F UI Design', link: '/docs/introduction' },
+      { text: 'Fei UI Design', link: '/docs/introduction' },
       { text: '变更日志', link: '/docs/changelog' }
     ]
   },

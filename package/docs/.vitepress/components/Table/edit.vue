@@ -38,8 +38,8 @@
       </template>
       <vs-input block @keypress.enter="editActive = false" v-if="editProp == 'email'" v-model="edit[editProp]" />
       <vs-select @change="editActive = false" block v-if="editProp == 'name'" placeholder="Select" v-model="edit[editProp]">
-        <vs-option label="F-UI-DESIGN" value="F-UI-DESIGN">
-          F-UI-DESIGN
+        <vs-option label="FEI-UI-DESIGN" value="FEI-UI-DESIGN">
+          FEI-UI-DESIGN
         </vs-option>
         <vs-option label="Vue" value="Vuejs">
           Vue

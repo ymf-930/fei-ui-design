@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import { Message } from 'f-ui-design'
+import { Message } from 'fei-ui-design'
 
 function message1() {
   Message.info({ message: '我10秒消失', duration: 10 })

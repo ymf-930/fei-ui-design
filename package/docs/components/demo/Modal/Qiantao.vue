@@ -2,17 +2,17 @@
   <div>
     <f-button @click="modal1 = true">显示弹窗一</f-button>
 
-    <b-modal v-model="modal1" title="弹窗一" width="600px">
+    <f-modal v-model="modal1" title="弹窗一" width="600px">
       <p>我是弹窗内容...</p>
       <p>我是弹窗内容...</p>
       <p>我是弹窗内容...</p>
       <f-button type="primary" @click="modal2 = true">打开嵌套弹窗</f-button>
-      <b-modal v-model="modal2" title="嵌套弹窗">
+      <f-modal v-model="modal2" title="嵌套弹窗">
         <p>我是弹窗内容...</p>
         <p>我是弹窗内容...</p>
         <p>我是弹窗内容...</p>
-      </b-modal>
-    </b-modal>
+      </f-modal>
+    </f-modal>
   </div>
 </template>
 

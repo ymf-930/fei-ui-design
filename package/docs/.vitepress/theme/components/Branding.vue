@@ -11,7 +11,7 @@
           OUR LOGO
         </h2>
         <p>
-          Do not edit, change, distortion, color or reset the F-UI-DESIGN logo.
+          Do not edit, change, distortion, color or reset the FEI-UI-DESIGN logo.
         </p>
       </div>
 

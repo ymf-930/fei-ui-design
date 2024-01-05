@@ -2,12 +2,12 @@
   <div>
     <f-button @click="modal1 = true">打开弹窗1</f-button>
     <f-button @click="modal2 = true">打开弹窗2</f-button>
-    <b-modal v-model="modal1" title="弹窗1" draggable>
+    <f-modal v-model="modal1" title="弹窗1" draggable>
       <p>弹窗1内容</p>
-    </b-modal>
-    <b-modal v-model="modal2" title="弹窗2" draggable :mask="false">
+    </f-modal>
+    <f-modal v-model="modal2" title="弹窗2" draggable :mask="false">
       <p>弹窗2内容</p>
-    </b-modal>
+    </f-modal>
   </div>
 </template>
 

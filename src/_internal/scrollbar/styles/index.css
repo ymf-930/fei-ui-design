@@ -1,0 +1,75 @@
+.fei-scrollbar {
+  --f-scrollbar-margin: 2px;
+  --f-scrollbar-index: 2;
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+
+  &:active,
+  &:focus,
+  &:hover {
+    > .fei-scrollbar__bar {
+      opacity: 1;
+      transition: opacity 0.3s ease-out;
+    }
+  }
+}
+
+.fei-scrollbar__wrap {
+  overflow: auto;
+  height: 100%;
+}
+
+.fei-scrollbar__wrap--hidden-default {
+  scrollbar-width: none;
+}
+
+.fei-scrollbar__wrap--hidden-default::-webkit-scrollbar {
+  display: none;
+}
+
+.fei-scrollbar__bar {
+  position: absolute;
+  z-index: var(--f-scrollbar-index);
+  right: var(--f-scrollbar-margin);
+  bottom: var(--f-scrollbar-margin);
+  opacity: 0;
+  transition: opacity 0.12s ease-out;
+
+  &.is-horizontal {
+    height: var(--fei-scrollbar-width);
+    left: var(--f-scrollbar-margin);
+
+    > div {
+      height: 100%;
+    }
+  }
+
+  &.is-vertical {
+    width: var(--fei-scrollbar-width);
+    top: var(--f-scrollbar-margin);
+
+    > div {
+      width: 100%;
+    }
+  }
+
+  &.always {
+    opacity: 1;
+  }
+}
+
+.fei-scrollbar__thumb {
+  position: relative;
+  display: block;
+  width: 0;
+  height: 0;
+  cursor: pointer;
+  border-radius: var(--fei-scrollbar-radius);
+  background: var(--fei-scrollbar-color);
+  transition: background var(--fei-animation-duration-base);
+
+  &:hover {
+    background: var(--fei-scrollbar-color-hover);
+  }
+}

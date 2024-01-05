@@ -14,7 +14,7 @@ F-UI-Design 支持 tree shaking，组件、语言、主题均可 tree-shaking。
 
 ```vue
 <script setup lang="ts">
-import { FButton } from 'bin-ui-design'
+import { FButton } from 'fei-ui-design'
 </script>
 
 <template>
@@ -43,7 +43,7 @@ export default defineConfig({
     Components({
       resolvers: [
         // 自动引入组件
-        componentName => ({ name: componentName, from: 'bin-ui-design' })
+        componentName => ({ name: componentName, from: 'fei-ui-design' })
       ]
     })
   ]
@@ -66,7 +66,7 @@ import {
   FButton,
   // 工具包
   Utils
-} from 'bin-ui-design'
+} from 'fei-ui-design'
 
 const UI = create({
   components: [FButton],

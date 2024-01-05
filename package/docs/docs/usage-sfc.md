@@ -21,7 +21,7 @@ title: 在 SFC 中使用
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { FButton } from 'f-ui-design'
+import { FButton } from 'fei-ui-design'
 
 export default defineComponent({
   components: {
@@ -39,7 +39,7 @@ export default defineComponent({
 </template>
 
 <script lang="ts" setup>
-import { FButton } from 'f-ui-design'
+import { FButton } from 'fei-ui-design'
 </script>
 ```
 
@@ -47,8 +47,8 @@ import { FButton } from 'f-ui-design'
 
 ```js
 // main.js
-import 'f-ui-design/dist/styles/base.css'
-import 'f-ui-design/dist/styles/icon.css'
+import 'fei-ui-design/dist/styles/base.css'
+import 'fei-ui-design/dist/styles/icon.css'
 ```
 
 ## 使用 unplugin-vue-components 进行自动导入（推荐）
@@ -77,7 +77,7 @@ export default defineConfig({
     Components({
       resolvers: [
         // 自动引入组件
-        componentName => ({ name: componentName, from: 'f-ui-design' })
+        componentName => ({ name: componentName, from: 'fei-ui-design' })
       ]
     })
   ]
@@ -104,8 +104,8 @@ export default defineConfig({
 import { createApp } from 'vue'
 import App from './App.vue'
 
-import FUI from 'f-ui-design'
-import 'f-ui-design/dist/styles/index.css'
+import FUI from 'fei-ui-design'
+import 'fei-ui-design/dist/styles/index.css'
 
 const app = createApp(App)
 app.use(FUI)

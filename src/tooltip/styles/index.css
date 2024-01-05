@@ -1,0 +1,4 @@
+.fei-tooltip {
+  line-height: var(--fei-base-line-height);
+  min-width: 20px;
+}

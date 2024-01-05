@@ -68,7 +68,7 @@ expand、selected、checked 和 disabled 可以设置展开，选中，勾选和
 
 ## Big-Tree 超大数据
 
-如果需要渲染超大数据量的属性结构，需要使用扩展组件`<b-big-tree>`,组件内部 api 基本复用树结构所有属性，对树形结构进行优化，利用可视区域位置来进行过滤筛选节点并进行操作，
+如果需要渲染超大数据量的属性结构，需要使用扩展组件`<f-big-tree>`,组件内部 api 基本复用树结构所有属性，对树形结构进行优化，利用可视区域位置来进行过滤筛选节点并进行操作，
 但为了性能的提示必然要牺牲部分体验，因此大数据量的树结构不提供动画展开缩放效果
 
 默认节点高度为`28px`，可通过`visible-count`指定树可是区域显示的节点个数，默认为 15 个 即`420px`因为是针对可视区域的滚动优化，因此必须指定容器高度
@@ -95,9 +95,9 @@ expand、selected、checked 和 disabled 可以设置展开，选中，勾选和
 | allow-drop         | 拖拽时判定目标节点能否成为拖动目标位置。 返回false拖动节点不能被拖放到目标节点。type 参数有三种情况：'prev'、'inner'和 'next'，表示放置在目标节点前、插入目标节点和放置在目标节点后 | Function(draggingNode, dropNode, type) | —      | —        |
 | filter-node-method | 筛选过滤树节点函数                                                                                                                                                                  | Function                               | —      | —        |
 | highlight-filter   | 高亮搜索条件文字                                                                                                                                                                    | Boolean                                | —      | true     |
-| timeout            | 刷新频率（`<b-big-tree>`扩展组件可用）                                                                                                                                              | Number                                 | —      | 17       |
-| itemHeight         | 节点高度 （`<b-big-tree>`扩展组件可用）                                                                                                                                             | Number                                 | —      | 28       |
-| visibleCount       | 显示区域个数（`<b-big-tree>`扩展组件可用）                                                                                                                                          | Number                                 | —      | 15       |
+| timeout            | 刷新频率（`<f-big-tree>`扩展组件可用）                                                                                                                                              | Number                                 | —      | 17       |
+| itemHeight         | 节点高度 （`<f-big-tree>`扩展组件可用）                                                                                                                                             | Number                                 | —      | 28       |
+| visibleCount       | 显示区域个数（`<f-big-tree>`扩展组件可用）                                                                                                                                          | Number                                 | —      | 15       |
 
 ## Events
 

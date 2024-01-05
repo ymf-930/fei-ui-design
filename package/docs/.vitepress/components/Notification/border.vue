@@ -30,8 +30,8 @@ export default {
       const noti = this.$vs.notification({
         border,
         position,
-        title: 'Documentation F-UI-DESIGN 4.0+',
-        text: 'These documents refer to the latest version of vuesax (4.0+), to see the documents of the previous versions you can do it here 👉 F-UI-DESIGN3.x'
+        title: 'Documentation FEI-UI-DESIGN 4.0+',
+        text: 'These documents refer to the latest version of vuesax (4.0+), to see the documents of the previous versions you can do it here 👉 FEI-UI-DESIGN3.x'
       })
     }
   }

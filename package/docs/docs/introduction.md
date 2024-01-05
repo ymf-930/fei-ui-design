@@ -4,9 +4,9 @@ title: 介绍
 
 <f-back-top></f-back-top>
 
-# F UI Design
+# Fei UI Design
 
-F UI Design 是一个 Vue3 的组件库。
+Fei UI Design 是一个 Vue3 的组件库。
 
 要了解如何安装，参见 [安装](/docs/installation.html)
 
@@ -14,7 +14,7 @@ F UI Design 是一个 Vue3 的组件库。
 
 ## 最新版本
 
-[![NPM version](https://img.shields.io/npm/v/f-ui-design.svg)](https://www.npmjs.com/package/f-ui-design)
+[![NPM version](https://img.shields.io/npm/v/fei-ui-design.svg)](https://www.npmjs.com/package/fei-)
 
 ## 组件丰富
 

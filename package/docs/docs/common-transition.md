@@ -107,12 +107,12 @@ const activeTab = ref('tab1')
   <f-button v-for="item in tabs" :key="item.key" @click="activeTab = item.key" :type="activeTab === item.key?'primary':null">{{ item.title}}</f-button>
 
   <div style="position:relative; overflow:hidden;margin:10px 0; width: 200px;height: 100px;">
-    <b-move-transition>
+    <f-move-transition>
       <div class="transition-box" v-if="activeTab==='tab1'">tab1</div>
       <div class="transition-box" v-else-if="activeTab==='tab2'">tab2</div>
       <div class="transition-box" v-else-if="activeTab==='tab3'">tab3</div>
       <div class="transition-box" v-else-if="activeTab==='tab4'">tab4</div>
-    </b-move-transition>
+    </f-move-transition>
   </div>
 </div>
 
@@ -145,7 +145,7 @@ const activeTab = ref('tab1')
   width: 200px;
   height: 100px;
   border-radius: 4px;
-  background-color: var(--bin-color-primary);
+  background-color: var(--fei-color-primary);
   text-align: center;
   color: #fff;
   padding: 40px 20px;

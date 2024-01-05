@@ -7,7 +7,7 @@
 
 <script setup lang="ts">
 import { h } from 'vue'
-import { Message } from 'f-ui-design'
+import { Message } from 'fei-ui-design'
 
 function message1() {
   Message('普通的消息提示！')

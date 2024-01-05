@@ -1,0 +1,283 @@
+@import './dark.css';
+
+.fei-button {
+  --b-btn-font-weight: var(--fei-base-font-weight);
+  --b-btn-border-color: var(--fei-border-color-base);
+  --b-btn-bg-color: var(--fei-white-color);
+  --b-btn-text-color: var(--fei-color-text-default);
+  --b-btn-disabled-text-color: var(--fei-color-text-disabled);
+  --b-btn-disabled-bg-color: var(--fei-white-color);
+  --b-btn-disabled-border-color: var(--fei-disabled-border-color);
+  --b-btn-hover-text-color: var(--fei-color-primary);
+  --b-btn-hover-bg-color: var(--fei-color-primary-light6);
+  --b-btn-hover-border-color: var(--fei-color-primary);
+  --b-btn-active-text-color: var(--fei-color-primary-active);
+  --b-btn-active-bg-color: var(--b-btn-hover-bg-color);
+  --b-btn-active-border-color: var(--fei-color-primary-active);
+  --f-icon-margin: 6px;
+  --f-icon-size: 16px;
+}
+
+.fei-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--fei-default-height);
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  background: var(--b-btn-bg-color);
+  border: 1px solid var(--b-btn-border-color);
+  color: var(--b-btn-text-color);
+  -webkit-appearance: none;
+  text-align: center;
+  box-sizing: border-box;
+  outline: none;
+  margin: 0;
+  transition: var(--fei-animation-duration-base);
+  user-select: none;
+  padding: 0 16px;
+  font-size: var(--fei-font-size-default);
+  border-radius: var(--fei-border-radius-default);
+  letter-spacing: 0.02857em;
+  & + & {
+    margin-left: 8px;
+  }
+  .fei-button__icon {
+    height: var(--f-icon-size);
+    width: var(--f-icon-size);
+    max-width: var(--f-icon-size);
+    font-size: var(--f-icon-size);
+    position: relative;
+    flex-shrink: 0;
+    line-height: 1;
+    + span {
+      margin-left: var(--f-icon-margin);
+    }
+    > i {
+      height: var(--f-icon-size);
+      width: var(--f-icon-size);
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  &:hover,
+  &:focus {
+    outline: none;
+    color: var(--b-btn-hover-text-color);
+    border-color: var(--b-btn-hover-border-color);
+    background-color: var(--b-btn-hover-bg-color);
+  }
+  &:active {
+    color: var(--b-btn-active-text-color);
+    border-color: var(--b-btn-active-border-color);
+    background-color: var(--b-btn-active-bg-color);
+  }
+  &.is-plain {
+    --b-btn-hover-text-color: var(--fei-color-primary);
+    --b-btn-hover-bg-color: var(--b-btn-bg-color);
+    --b-btn-hover-border-color: var(--fei-color-primary);
+  }
+  &.is-circle {
+    border-radius: 50%;
+    padding: 0 8px;
+  }
+  &.is-round {
+    border-radius: 20px;
+  }
+  &.is-background {
+    background-image: -webkit-gradient(linear, left bottom, left top, from(#f5f5f5), to(#fff));
+    background-image: linear-gradient(0deg, #f5f5f5, #fff);
+
+    &.is-disabled,
+    &.is-disabled:focus,
+    &.is-disabled:hover {
+      background-color: var(--fei-color-select-hover);
+    }
+  }
+  &.is-dashed {
+    border-style: dashed;
+  }
+  &.is-disabled,
+  &.is-disabled:focus,
+  &.is-disabled:hover,
+  &[disabled],
+  &[disabled]:focus,
+  &[disabled]:hover {
+    cursor: not-allowed;
+    color: var(--b-btn-disabled-text-color);
+    border-color: var(--b-btn-disabled-border-color);
+    background-color: var(--b-btn-disabled-bg-color);
+  }
+  &.fei-button--default {
+    &.is-disabled,
+    &.is-disabled:focus,
+    &.is-disabled:hover,
+    &.is-loading {
+      cursor: not-allowed;
+      color: var(--b-btn-disabled-text-color);
+      border-color: var(--b-btn-disabled-border-color);
+      background-color: var(--b-btn-disabled-bg-color);
+    }
+  }
+  &.fei-button--text {
+    --b-btn-text-color: var(--fei-color-primary);
+    --b-btn-hover-text-color: var(--fei-color-primary-light1);
+    --b-btn-active-text-color: var(--fei-color-primary-active);
+    --b-btn-bg-color: transparent;
+    --b-btn-border-color: transparent;
+    --b-btn-hover-bg-color: transparent;
+    --b-btn-hover-border-color: transparent;
+    --b-btn-active-bg-color: transparent;
+    --b-btn-active-border-color: transparent;
+    --b-btn-disabled-border-color: transparent;
+    border-color: transparent;
+    color: var(--b-btn-text-color);
+    background: transparent;
+    background-image: none;
+    padding: 0;
+    height: auto;
+    &:focus,
+    &:hover {
+      color: var(--b-btn-hover-text-color);
+      border-color: transparent;
+      background-color: transparent;
+      box-shadow: none;
+    }
+
+    &:active {
+      color: var(--b-btn-active-text-color);
+    }
+    &.is-disabled,
+    &.is-disabled:focus,
+    &.is-disabled:hover,
+    &[disabled],
+    &[disabled]:focus,
+    &[disabled]:hover {
+      color: var(--b-btn-disabled-text-color);
+      background-image: none;
+      cursor: not-allowed;
+      background-color: transparent;
+      border-color: transparent;
+      opacity: 0.65;
+    }
+  }
+  @each $val in primary, success, warning, info, danger {
+    &.fei-button--$(val) {
+      --b-btn-text-color: var(--fei-white-color);
+      --b-btn-bg-color: var(--fei-color-$(val));
+      --b-btn-border-color: var(--fei-color-$(val));
+
+      --b-btn-hover-text-color: var(--fei-white-color);
+      --b-btn-hover-bg-color: var(--fei-color-$(val)-light1);
+      --b-btn-hover-border-color: var(--fei-color-$(val)-light1);
+
+      --b-btn-active-text-color: var(--fei-white-color);
+      --b-btn-active-bg-color: var(--fei-color-$(val)-active);
+      --b-btn-active-border-color: var(--fei-color-$(val)-active);
+
+      --b-btn-disabled-text-color: var(--fei-white-color);
+      --b-btn-disabled-bg-color: var(--fei-color-$(val)-light2);
+      --b-btn-disabled-border-color: var(--fei-color-$(val)-light2);
+    }
+    &.fei-button--$(val).is-dashed {
+      --b-btn-text-color: var(--fei-color-$(val));
+      --b-btn-bg-color: var(--fei-white-color);
+      --b-btn-border-color: var(--fei-color-$(val));
+
+      --b-btn-hover-text-color: var(--fei-color-$(val)-light1);
+      --b-btn-hover-bg-color: var(--fei-white-color);
+      --b-btn-hover-border-color: var(--fei-color-$(val)-light1);
+
+      --b-btn-active-text-color: var(--fei-color-$(val)-active);
+      --b-btn-active-bg-color: var(--fei-color-$(val)-light6);
+      --b-btn-active-border-color: var(--fei-color-$(val)-active);
+
+      --b-btn-disabled-text-color: var(--fei-color-$(val)-light3);
+      --b-btn-disabled-bg-color: var(--fei-white-color);
+      --b-btn-disabled-border-color: var(--fei-color-$(val)-light3);
+    }
+    &.fei-button--$(val).is-plain {
+      --b-btn-text-color: var(--fei-color-$(val));
+      --b-btn-bg-color: var(--fei-color-$(val)-light5);
+      --b-btn-border-color: var(--fei-color-$(val)-light4);
+
+      --b-btn-hover-text-color: var(--fei-color-$(val)-light1);
+      --b-btn-hover-bg-color: var(--fei-color-$(val)-light5);
+      --b-btn-hover-border-color: var(--fei-color-$(val)-light3);
+
+      --b-btn-active-text-color: var(--fei-color-$(val)-active);
+      --b-btn-active-bg-color: var(--fei-color-$(val)-light5);
+      --b-btn-active-border-color: var(--fei-color-$(val)-light1);
+
+      --b-btn-disabled-text-color: var(--fei-color-$(val)-light3);
+      --b-btn-disabled-bg-color: var(--fei-color-$(val)-light5);
+      --b-btn-disabled-border-color: var(--fei-color-$(val)-light3);
+    }
+    &.fei-button--$(val).is-transparent {
+      --b-btn-text-color: var(--fei-color-$(val));
+      --b-btn-bg-color: transparent;
+      --b-btn-border-color: var(--fei-color-$(val)-light1);
+
+      --b-btn-hover-text-color: var(--b-btn-text-color);
+      --b-btn-hover-bg-color: var(--b-btn-bg-color);
+      --b-btn-hover-border-color: var(--fei-color-$(val)-light1);
+
+      --b-btn-active-text-color: var(--fei-color-$(val)-active);
+      --b-btn-active-bg-color: var(--b-btn-bg-color);
+      --b-btn-active-border-color: var(--fei-color-$(val)-active);
+
+      --b-btn-disabled-text-color: var(--fei-color-$(val)-light2);
+      --b-btn-disabled-bg-color: var(--b-btn-bg-color);
+      --b-btn-disabled-border-color: var(--fei-color-$(val)-light2);
+    }
+    &.fei-button--$(val).fei-button--text {
+      --b-btn-text-color: var(--fei-color-$(val));
+      --b-btn-bg-color: transparent;
+      --b-btn-border-color: transparent;
+
+      --b-btn-hover-text-color: var(--fei-color-$(val)-light1);
+      --b-btn-hover-bg-color: transparent;
+      --b-btn-hover-border-color: transparent;
+
+      --b-btn-active-text-color: var(--fei-color-$(val)-active);
+      --b-btn-active-bg-color: transparent;
+      --b-btn-active-border-color: transparent;
+
+      --b-btn-disabled-text-color: var(--fei-color-$(val)-light3);
+      --b-btn-disabled-bg-color: transparent;
+      --b-btn-disabled-border-color: transparent;
+    }
+  }
+}
+
+.fei-button--large {
+  height: var(--fei-large-height);
+  padding: 0 14px;
+  font-size: var(--fei-font-size-large);
+
+  &.is-round {
+    padding: 0 14px;
+  }
+}
+
+.fei-button--small {
+  height: var(--fei-small-height);
+  padding: 0 11px;
+
+  &.is-round {
+    padding: 0 11px;
+  }
+}
+
+.fei-button--mini {
+  height: var(--fei-mini-height);
+  padding: 0 7px;
+
+  &.is-round {
+    padding: 0 10px;
+  }
+}

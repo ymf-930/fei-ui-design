@@ -22,7 +22,7 @@
     </f-button>
   </div>
   <div class="demo-button">
-    <f-button @click="Log.print({ name: 'bin-ui', author: 'wang bin' })">object - log</f-button>
+    <f-button @click="Log.print({ name: 'fei-ui-design', author: 'ymf' })">object - log</f-button>
     <f-button @click="Log.pretty('title', 'pretty print', 'primary')">pretty - primary</f-button>
     <f-button @click="Log.pretty('title', 'pretty print', 'success')">pretty - success</f-button>
     <f-button @click="Log.pretty('title', 'pretty print', 'warning')">pretty - warning</f-button>
@@ -31,7 +31,7 @@
   <div class="demo-button">
     <f-button
       @click="
-        Log.printVersion('f-ui-design', '1.0.0', 'https://wangbin3162.gitee.io/bin-ui-design/')
+        Log.printVersion('fei-ui-design', '1.0.0', 'https://ymf930.gitee.io/fei-ui-design/')
       "
     >
       打印版本号连接
@@ -40,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import { Utils } from 'bin-ui-design'
+import { Utils } from 'fei-ui-design'
 
 const Log = Utils.log
 </script>

@@ -1,0 +1,92 @@
+.fei-button-group {
+  flex-wrap: nowrap;
+  display: inline-flex;
+  position: relative;
+  + .fei-button-group {
+    margin-left: 8px;
+  }
+  &.fei-button-group--vertical {
+    flex-direction: column;
+
+    .fei-button {
+      &:first-child:not(:last-child) {
+        border-bottom-left-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+      }
+      &:not(:first-child):not(:last-child) {
+        margin-right: 0 !important;
+        border-radius: 0 !important;
+      }
+      &:last-child:not(:first-child) {
+        border-top-left-radius: 0 !important;
+        border-top-right-radius: 0 !important;
+      }
+
+      + .fei-button {
+        margin-top: -1px !important;
+        margin-left: 0 !important;
+      }
+    }
+  }
+  &:not(.fei-button-group--vertical) {
+    flex-direction: row;
+
+    .fei-button {
+      &:first-child:not(:last-child) {
+        border-top-right-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+      }
+      &:not(:first-child):not(:last-child) {
+        margin-right: 0 !important;
+        border-radius: 0 !important;
+      }
+      &:last-child:not(:first-child) {
+        border-top-left-radius: 0 !important;
+        border-bottom-left-radius: 0 !important;
+      }
+
+      + .fei-button {
+        margin-left: -1px !important;
+      }
+    }
+  }
+
+  .fei-button {
+    z-index: 0;
+
+    &:hover {
+      z-index: 1;
+    }
+
+    &:active,
+    &:focus {
+      z-index: 1;
+      outline: none;
+    }
+  }
+
+  .fei-button--primary:first-child,
+  .fei-button--info:first-child,
+  .fei-button--success:first-child,
+  .fei-button--warning:first-child,
+  .fei-button--danger:first-child {
+    border-right-color: hsla(0, 0%, 100%, 0.5);
+  }
+
+  .fei-button--primary:last-child,
+  .fei-button--info:last-child,
+  .fei-button--success:last-child,
+  .fei-button--warning:last-child,
+  .fei-button--danger:last-child {
+    border-left-color: hsla(0, 0%, 100%, 0.5);
+  }
+
+  .fei-button--primary:not(:first-child):not(:last-child),
+  .fei-button--info:not(:first-child):not(:last-child),
+  .fei-button--success:not(:first-child):not(:last-child),
+  .fei-button--warning:not(:first-child):not(:last-child),
+  .fei-button--danger:not(:first-child):not(:last-child) {
+    border-left-color: hsla(0, 0%, 100%, 0.5);
+    border-right-color: hsla(0, 0%, 100%, 0.5);
+  }
+}

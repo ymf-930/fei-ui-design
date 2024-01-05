@@ -2,7 +2,7 @@
   <div class="con-twits">
     <header>
       <h2>
-        <span>Some Words validating</span> <b>F-UI-DESIGN</b> <span>are oxygen for us Thanks!</span>
+        <span>Some Words validating</span> <b>FEI-UI-DESIGN</b> <span>are oxygen for us Thanks!</span>
       </h2>
     </header>
 
@@ -52,7 +52,7 @@ export default {
         name: 'Sébastien Chopin',
         user: 'Author of @nuxt_js',
         link: 'https://twitter.com/Atinux',
-        text: 'I have to say, F-UI-DESIGN 4 is 😍',
+        text: 'I have to say, FEI-UI-DESIGN 4 is 😍',
         img: 'https://pbs.twimg.com/profile_images/1042510623962275840/1Iw_Mvud_400x400.jpg'
       },
       {
@@ -66,14 +66,14 @@ export default {
         name: 'illy',
         user: '@__illy___',
         link: 'https://twitter.com/__illy___',
-        text: 'Create a serverless mobile web application with Vue (ts), <b>F-UI-DESIGN</b> and Firebase',
+        text: 'Create a serverless mobile web application with Vue (ts), <b>FEI-UI-DESIGN</b> and Firebase',
         img: 'https://pbs.twimg.com/profile_images/1184434161873870848/9e37ffmP_400x400.jpg'
       },
       {
         name: 'lvzy',
         user: '@lvzy12',
         link: 'https://twitter.com/lvzy12',
-        text: 'F-UI-DESIGN 4.0 UI components are very beautiful, look forward to your continuous updates 😻😻😻',
+        text: 'FEI-UI-DESIGN 4.0 UI components are very beautiful, look forward to your continuous updates 😻😻😻',
         img: 'https://pbs.twimg.com/profile_images/1210388192207097857/Xj8nbZKE_400x400.jpg'
       },
       {
@@ -108,14 +108,14 @@ export default {
         name: '新井 モノ',
         user: '@araimonokaiy',
         link: 'https://twitter.com/araimonokaiy',
-        text: 'Create modern and modern sites with <b>F-UI-DESIGN</b>!',
+        text: 'Create modern and modern sites with <b>FEI-UI-DESIGN</b>!',
         img: 'https://pbs.twimg.com/profile_images/1167749700667133954/qcnRP65y_400x400.jpg'
       },
       {
         name: 'Woterix',
         user: '@woterix',
         link: 'https://twitter.com/woterix',
-        text: '<b>F-UI-DESIGN</b> is a library of Vuejs components that facilitates front-end development and streamlines work with great visual quality',
+        text: '<b>FEI-UI-DESIGN</b> is a library of Vuejs components that facilitates front-end development and streamlines work with great visual quality',
         img: 'https://pbs.twimg.com/profile_images/980674833800286208/SNzLa2L8_400x400.jpg'
       },
       {

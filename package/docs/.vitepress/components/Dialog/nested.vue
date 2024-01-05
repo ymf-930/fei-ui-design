@@ -18,7 +18,7 @@
     <vs-dialog v-model="active2">
       <template #header>
         <h4 class="not-margin">
-          Welcome to <b>F-UI-DESIGN</b>
+          Welcome to <b>FEI-UI-DESIGN</b>
         </h4>
       </template>
 

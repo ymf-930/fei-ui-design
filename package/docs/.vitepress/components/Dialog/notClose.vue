@@ -6,7 +6,7 @@
     <vs-dialog not-close v-model="active">
       <template #header>
         <h4 class="not-margin">
-          Welcome to <b>F-UI-DESIGN</b>
+          Welcome to <b>FEI-UI-DESIGN</b>
         </h4>
       </template>
 

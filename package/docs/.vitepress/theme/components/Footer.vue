@@ -40,7 +40,7 @@
 
     <div class="copy">
       <span class="span-copy">
-        Copyright © 2022 F-UI-DESIGN
+        Copyright © 2022 FEI-UI-DESIGN
       </span>
       <span class="span-lusaxweb">
         <span>
@@ -58,14 +58,14 @@ export default {
     return {
       links:[
         {
-          title: 'F-UI-DESIGN',
+          title: 'FEI-UI-DESIGN',
           items: [
             {
-              text: 'What is F-UI-DESIGN?',
+              text: 'What is FEI-UI-DESIGN?',
               link: '/docs/guide/#whats-is-vuesax'
             },
             {
-              text: 'Why F-UI-DESIGN?',
+              text: 'Why FEI-UI-DESIGN?',
               link: '/docs/guide/#why-vuesax'
             },
             {

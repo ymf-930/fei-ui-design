@@ -8,7 +8,7 @@
         :offset="4"
         placement="bottom-start"
         transition="zoom-in-top"
-        popper-class="bin-select__popper"
+        popper-class="fei-select__popper"
         :gpu-acceleration="false"
       >
         <template #default>

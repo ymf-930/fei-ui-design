@@ -2,7 +2,7 @@
   <div class="center">
     <vs-alert :page.sync="page" >
       <template #title>
-        F-UI-DESIGN Framework
+        FEI-UI-DESIGN Framework
       </template>
 
       <template #page-1>

@@ -31,7 +31,7 @@
 
 <script setup lang="ts">
 import { ref, nextTick } from 'vue'
-import { Message } from 'f-ui-design'
+import { Message } from 'fei-ui-design'
 
 const columns = [
   { title: '姓名', key: 'name' },

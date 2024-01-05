@@ -18,7 +18,7 @@ title: 帮助函数
 
 ```ts
 // util-helper.js 这里是你自己定义的
-import { Utils } from 'f-ui-design'
+import { Utils } from 'fei-ui-design'
 
 export const typeOf = Utils.util.typeOf
 export const deepCopy = Utils.util.deepCopy

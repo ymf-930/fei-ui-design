@@ -43,13 +43,13 @@
                     </a>
                   </li>
                   <li class="in">
-                    <a target="_blank" :href="`https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Flusaxweb.github.io%2Fvuesax&title=F-UI-DESIGN+Framework&summary=framework+components+for+vuejs.&source=F-UI-DESIGN`">
+                    <a target="_blank" :href="`https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Flusaxweb.github.io%2Fvuesax&title=FEI-UI-DESIGN+Framework&summary=framework+components+for+vuejs.&source=FEI-UI-DESIGN`">
                       <i class="bx bxl-linkedin-square"></i>
                     </a>
 
                   </li>
                   <li class="redit">
-                    <a target="_blank" :href="`https://www.reddit.com/submit?url=https%3A%2F%2Flusaxweb.github.io%2Fvuesax&title=F-UI-DESIGN+Framework+components+for+vuejs`">
+                    <a target="_blank" :href="`https://www.reddit.com/submit?url=https%3A%2F%2Flusaxweb.github.io%2Fvuesax&title=FEI-UI-DESIGN+Framework+components+for+vuejs`">
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                         <g>
                           <circle cx="9.67" cy="13" r="1.001"/>

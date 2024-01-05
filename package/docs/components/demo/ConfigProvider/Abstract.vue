@@ -12,6 +12,6 @@ import { ref } from 'vue'
 const config = ref({})
 
 function setGlobal() {
-  config.value = { binColorPrimary: '#00c181' }
+  config.value = { feiColorPrimary: '#00c181' }
 }
 </script>

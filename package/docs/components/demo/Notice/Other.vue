@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { Notice } from 'f-ui-design'
+import { Notice } from 'fei-ui-design'
 
 function open(options) {
   Notice.info(options)

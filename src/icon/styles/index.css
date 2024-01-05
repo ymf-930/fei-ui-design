@@ -1,0 +1,25 @@
+@import './dark.css';
+@import './select.css';
+
+.fei-icon {
+  --f-icon-text-color: inherit;
+}
+
+.fei-icon {
+  color: var(--f-icon-text-color);
+}
+
+.icon-loading,
+.icon-is-rotating:before {
+  display: inline-block;
+  animation: rotating 1s linear infinite;
+}
+
+@keyframes rotating {
+  0% {
+    transform: rotateZ(0deg);
+  }
+  100% {
+    transform: rotateZ(360deg);
+  }
+}

@@ -2,10 +2,10 @@
   <div class="pass">
     <header>
       <h1>
-        F-UI-DESIGN Components Pass
+        FEI-UI-DESIGN Components Pass
       </h1>
       <p>
-        Exclusive and unique components, every week new and great components will be created that you can only obtain by having the <b>F-UI-DESIGN Pass</b> <br>
+        Exclusive and unique components, every week new and great components will be created that you can only obtain by having the <b>FEI-UI-DESIGN Pass</b> <br>
         You will also have many privileges and improvements such as exclusive images discounts in the store and a distinctive on our discord channel apart from many more
       </p>
     </header>
@@ -20,7 +20,7 @@
           <span>
             <i class='bx bxs-lock'></i>
           </span>
-          Unlock F-UI-DESIGN Pass
+          Unlock FEI-UI-DESIGN Pass
         </button>
 
         <div class="reloj">
@@ -38,7 +38,7 @@
     <div class="content-pass vuesax-pass-components">
       <div class="has-pass row">
         <h2>
-          F-UI-DESIGN Pass
+          FEI-UI-DESIGN Pass
         </h2>
       </div>
       <div class="no-pass row">

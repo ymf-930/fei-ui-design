@@ -32,7 +32,7 @@ title: 滚动组件 Scrollbar
 
 - f-scrollbar的父层要有固定高度
 - f-scrollbar的高度要设成100%
-- 如果出现横滚动条，请添加css（.bin-scrollbar\_\_wrap{overflow-x:hidden;}）
+- 如果出现横滚动条，请添加css（.fei-scrollbar\_\_wrap{overflow-x:hidden;}）
 
 ## Props
 

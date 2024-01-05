@@ -1,8 +1,8 @@
 <template>
   <div class="center con-selects">
     <vs-select placeholder="Select" v-model="value">
-      <vs-option label="F-UI-DESIGN" value="1">
-        F-UI-DESIGN
+      <vs-option label="FEI-UI-DESIGN" value="1">
+        FEI-UI-DESIGN
       </vs-option>
       <vs-option label="Vue" value="2">
         Vue

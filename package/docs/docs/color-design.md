@@ -17,7 +17,7 @@ F-UI-Design 默认具有一套较为美观的配色方案，在开发中也推�
 
 <script setup lang="ts">
 import { reactive } from 'vue'
-import { Utils } from 'f-ui-design'
+import { Utils } from 'fei-ui-design'
 
 const data = reactive({
   primary: '#1089ff',

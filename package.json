@@ -1,9 +1,9 @@
 {
-  "name": "f-ui-design",
-  "private": true,
-  "version": "0.0.0",
+  "name": "fei-ui-design",
+  "private": false,
+  "version": "0.0.1",
   "keywords": [
-    "f-ui-design",
+    "fei-ui-design",
     "f-ui-one",
     "ui",
     "vue",
@@ -20,18 +20,18 @@
   "homepage": "",
   "main": "./lib/src/index.js",
   "module": "./es/src/index.mjs",
-  "types": "./dist/@types/src/index.d.js",
   "repository": {
     "type": "git",
-    "url": "https://gitee.com/ymf930/f-ui-design.git"
+    "url": "https://gitee.com/ymf930/fei-ui-design.git"
   },
   "scripts": {
     "dev": "vitepress dev package/docs --port 8000 --open",
+    "build:package": "pnpm run gen-version && pnpm clean && pnpm build:lib && pnpm build:style",
     "build:site": "vitepress build package/docs",
     "preview": "vite preview",
     "clean": "rimraf dist es lib",
     "build:lib": "vite build",
-    "build:style": "gulp --require @esbuild-kit/cjs-loader -f build/build-style.js",
+    "build:style": "gulp --require @esbuild-kit/cjs-loader -f build/build-style.ts",
     "test": "vitest",
     "type-check": "vue-tsc --noEmit",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",

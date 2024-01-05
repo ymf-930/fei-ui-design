@@ -21,20 +21,20 @@
       </template>
     </f-tabs>
     <div style="overflow: hidden; position: relative">
-      <b-move-transition>
+      <f-move-transition>
         <p v-if="activeTab === 'tab0'">首页</p>
         <p v-else-if="activeTab === 'tab1'">用户管理</p>
         <p v-else-if="activeTab === 'tab2'">组织管理</p>
         <p v-else-if="activeTab === 'tab3'">系统管理</p>
         <p v-else>{{ activeTab }}</p>
-      </b-move-transition>
+      </f-move-transition>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Message } from 'f-ui-design'
+import { Message } from 'fei-ui-design'
 
 const tabs = ref([
   { key: 'tab0', title: '首页', noClose: true },

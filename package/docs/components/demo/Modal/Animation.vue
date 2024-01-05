@@ -13,7 +13,7 @@
       <f-button @click="modal1 = true">弹出</f-button>
     </f-space>
 
-    <b-modal
+    <f-modal
       v-model="modal1"
       :title="`自定义动画${transitionName}`"
       :transition-name="transitionName"
@@ -26,7 +26,7 @@
           <f-button @click="modal1 = false">关闭</f-button>
         </span>
       </template>
-    </b-modal>
+    </f-modal>
   </div>
 </template>
 

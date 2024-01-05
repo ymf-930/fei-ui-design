@@ -37,8 +37,8 @@
       <f-input placeholder="Enter name" style="width: auto" clearable>
         <template #prepend>
           <f-select v-model="type" clearable style="width: 100px">
-            <b-option lable="email" value="email"></b-option>
-            <b-option lable="phone" value="phone"></b-option>
+            <f-option lable="email" value="email"></f-option>
+            <f-option lable="phone" value="phone"></f-option>
           </f-select>
         </template>
         <template #append>

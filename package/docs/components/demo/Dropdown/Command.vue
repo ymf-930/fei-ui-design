@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import { Message } from 'f-ui-design'
+import { Message } from 'fei-ui-design'
 
 function handleClick(name) {
   console.log(name)

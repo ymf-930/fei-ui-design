@@ -6,7 +6,7 @@
     <f-button @click="modal4 = true">距离顶部200px</f-button>
     <f-button @click="modal5 = true">body-style</f-button>
 
-    <b-modal v-model="modal1">
+    <f-modal v-model="modal1">
       <template #title>
         <p style="color: #f60; text-align: center">
           <span>自定义页头</span>
@@ -18,30 +18,30 @@
       <template #footer>
         <f-button type="danger">Delete</f-button>
       </template>
-    </b-modal>
+    </f-modal>
 
-    <b-modal v-model="modal2">
+    <f-modal v-model="modal2">
       <p>我是弹窗内容...</p>
       <p>我是弹窗内容...</p>
       <p>我是弹窗内容...</p>
-    </b-modal>
+    </f-modal>
 
-    <b-modal v-model="modal3" title="自定义宽度" width="300px">
+    <f-modal v-model="modal3" title="自定义宽度" width="300px">
       <p>
         自定义宽度，单位 px，默认 520px。 对话框的宽度是响应式的，当屏幕尺寸小于 768px
         时，宽度会变为自动auto。
       </p>
-    </b-modal>
+    </f-modal>
 
-    <b-modal v-model="modal4" title="距离顶部" top="200px">
+    <f-modal v-model="modal4" title="距离顶部" top="200px">
       <p>距离顶部200px</p>
-    </b-modal>
+    </f-modal>
 
-    <b-modal v-model="modal5" title="body-style" :body-styles="{ padding: '20px' }">
+    <f-modal v-model="modal5" title="body-style" :body-styles="{ padding: '20px' }">
       <p>我是弹窗内容...</p>
       <p>我是弹窗内容...</p>
       <p>我是弹窗内容...</p>
-    </b-modal>
+    </f-modal>
   </div>
 </template>
 

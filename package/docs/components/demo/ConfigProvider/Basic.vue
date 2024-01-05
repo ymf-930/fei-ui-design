@@ -1,10 +1,10 @@
 <template>
   <f-config-provider
     :theme="{
-      binColorPrimary: '#722ed1',
-      binColorSuccess: '#13c2c2',
-      binColorWarning: '#e14c19',
-      binColorDanger: '#d42a87'
+      feiColorPrimary: '#722ed1',
+      feiColorSuccess: '#13c2c2',
+      feiColorWarning: '#e14c19',
+      feiColorDanger: '#d42a87'
     }"
   >
     <div>

@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 import { h } from 'vue'
-import { Notice } from 'f-ui-design'
+import { Notice } from 'fei-ui-design'
 
 function open(hasMessage) {
   Notice({

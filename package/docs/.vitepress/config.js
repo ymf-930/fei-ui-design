@@ -2,7 +2,7 @@ import { defineConfig } from 'vitepress'
 import sidebarDocs from "./sidebar-docs.js";
 import sidebarComps from "./sidebar-comps.js";
 
-const baseUrl = process.env.NODE_ENV === 'production' ? '/f-ui-design/' : '/'
+const baseUrl = process.env.NODE_ENV === 'production' ? '/fei-ui-design/' : '/'
 
 export default defineConfig({
   locales: {
@@ -20,17 +20,17 @@ export default defineConfig({
   base: baseUrl,
   ignoreDeadLinks: true,
   outDir: '../../site',
-  title: 'F-UI-DESIGN',
+  title: 'FEI-UI-DESIGN',
   head: [
     ['link', { rel: 'icon', href: `/logos/logo-vuesax-logotipo-vuesax-png-8.png`, media: '(prefers-color-scheme:dark)', type: 'image/png' }],
     ['link', { rel: 'icon', href: `/logos/logo-vuesax-logotipo-vuesax-png-7.png`, media: '(prefers-color-scheme:light)', type: 'image/png' }],
     ['meta', { name: 'viewport', content: 'width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1, shrink-to-fit=no' }],
     ['meta', { name: 'author', content: 'Lusaxweb' }],
     ['meta', { name: 'google', content: 'nositelinkssearchbox' }],
-    ['meta', { hid: 'description', name: 'description', content: 'F-UI-DESIGN Framework Components for Vuejs' }],
+    ['meta', { hid: 'description', name: 'description', content: 'FEI-UI-DESIGN Framework Components for Vuejs' }],
     ['meta', { property: 'og:image', content: 'https://vuesax.com/vuesax_components.png' }],
-    ['meta', { property: 'og:description', content: 'F-UI-DESIGN Framework Components for Vuejs' }],
-    ['meta', { property: 'og:title', content: 'F-UI-DESIGN - Framework for Vuejs'}],
+    ['meta', { property: 'og:description', content: 'FEI-UI-DESIGN Framework Components for Vuejs' }],
+    ['meta', { property: 'og:title', content: 'FEI-UI-DESIGN - Framework for Vuejs'}],
     ['meta', { property: 'og:url', content: 'https://vuesax.com/'}],
     ['meta', { name: 'twitter:card', content: 'summary_large_image'}],
   ],
@@ -61,7 +61,7 @@ export default defineConfig({
     },*/
     lastUpdated: true,
     linkPrevVersion: 'https://lusaxweb.github.io/vuesax/',
-    searchPlaceholder: 'F-UI-DESIGN Search',
+    searchPlaceholder: 'FEI-UI-DESIGN Search',
   }
 })
 
@@ -79,7 +79,7 @@ function getNavbar (lang = '/') {
         items: [
           { text: lang !== '/'? `Introducción` : `Introduction`, link: `${lang}docs/guide/` },
           { text: lang !== '/'? `Empezando` : `Getting Started`, link: `${lang}docs/guide/gettingStarted` },
-          { text: `F-UI-DESIGN + Nuxtjs`, link: `${lang}docs/guide/nuxt` }
+          { text: `FEI-UI-DESIGN + Nuxtjs`, link: `${lang}docs/guide/nuxt` }
         ]
       },
       {

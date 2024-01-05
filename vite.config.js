@@ -23,13 +23,13 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),
-      'f-ui-design': resolve(__dirname, './src')
+      'fei-ui-design': resolve(__dirname, './src')
     }
   },
   build: {
     rollupOptions: {
       external: ['vue', /\.css/],
-      input: './src/index.js',
+      input: './src/index.ts',
       output: [
         {
           format: 'es',
@@ -49,13 +49,13 @@ export default defineConfig({
           exports: 'named',
           //配置打包根目录
           dir: 'lib'
-        }
+        },
       ]
     },
     lib: {
-      entry: './src/index.js',
-      name: 'f-ui-design',
-      fileName: 'f-ui-design'
+      entry: './src/index.ts',
+      name: 'fei-ui-design',
+      fileName: 'fei-ui-design'
     }
   }
 })

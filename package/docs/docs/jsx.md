@@ -16,7 +16,7 @@ title: JSX & TSX
 
 ```ts
 import { defineComponent } from 'vue'
-import { FButton } from 'f-ui-design'
+import { FButton } from 'fei-ui-design'
 
 export default defineComponent({
   render() {

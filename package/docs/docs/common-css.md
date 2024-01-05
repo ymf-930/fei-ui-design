@@ -11,16 +11,16 @@ title: 通用样式
 ```ts
 // main.js
 // 全部引入
-import 'f-ui-design/dist/styles/index.css'
+import 'fei-ui-design/dist/styles/index.css'
 // 按需引入
-import 'f-ui-design/dist/styles/base.css'
-import 'f-ui-design/dist/styles/icon.css'
+import 'fei-ui-design/dist/styles/base.css'
+import 'fei-ui-design/dist/styles/icon.css'
 
 // 扩展基础样式
-import 'f-ui-design/dist/styles/common/common.css'
-import 'f-ui-design/dist/styles/common/flex.css'
-import 'f-ui-design/dist/styles/common/reset.css'
-import 'f-ui-design/dist/styles/common/scrollbar.css'
+import 'fei-ui-design/dist/styles/common/common.css'
+import 'fei-ui-design/dist/styles/common/flex.css'
+import 'fei-ui-design/dist/styles/common/reset.css'
+import 'fei-ui-design/dist/styles/common/scrollbar.css'
 ```
 
 ## reset.css
@@ -29,9 +29,9 @@ import 'f-ui-design/dist/styles/common/scrollbar.css'
 
 ```css
 body {
-  color: var(--bin-color-text-primary);
-  font-size: var(--bin-font-size-default);
-  font-family: var(--bin-font-family);
+  color: var(--fei-color-text-primary);
+  font-size: var(--fei-font-size-default);
+  font-family: var(--fei-font-family);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-tap-highlight-color: transparent;
@@ -84,19 +84,19 @@ ul {
 }
 
 a {
-  color: var(--bin-color-primary);
+  color: var(--fei-color-primary);
   text-decoration: none;
   &:hover {
-    color: var(--bin-color-primary-light1);
+    color: var(--fei-color-primary-light1);
     outline: none;
   }
 
   &:focus {
-    color: var(--bin-color-primary-light1);
+    color: var(--fei-color-primary-light1);
     outline: none;
   }
   &:active {
-    color: var(--bin-color-primary-active);
+    color: var(--fei-color-primary-active);
   }
 }
 
@@ -106,7 +106,7 @@ h3,
 h4,
 h5,
 h6 {
-  color: var(--bin-color-text-primary);
+  color: var(--fei-color-text-primary);
   font-weight: inherit;
   &:first-child {
     margin-top: 0;
@@ -117,15 +117,15 @@ h6 {
 }
 
 h1 {
-  font-size: calc(--bin-font-size-default + 6px);
+  font-size: calc(--fei-font-size-default + 6px);
 }
 
 h2 {
-  font-size: calc(--bin-font-size-default + 4px);
+  font-size: calc(--fei-font-size-default + 4px);
 }
 
 h3 {
-  font-size: calc(--bin-font-size-default + 2px);
+  font-size: calc(--fei-font-size-default + 2px);
 }
 
 h4,
@@ -147,18 +147,18 @@ p {
 
 sup,
 sub {
-  font-size: calc(--bin-font-size-default - 1px);
+  font-size: calc(--fei-font-size-default - 1px);
 }
 
 small {
-  font-size: calc(--bin-font-size-default - 2px);
+  font-size: calc(--fei-font-size-default - 2px);
 }
 
 hr {
   margin-top: 20px;
   margin-bottom: 20px;
   border: 0;
-  border-top: var(--bin-border-base-light);
+  border-top: var(--fei-border-base-light);
 }
 ```
 
@@ -564,21 +564,21 @@ flex-box:
 
 ```css
 ::-webkit-scrollbar {
-  width: var(--bin-scrollbar-width);
-  height: var(--bin-scrollbar-width);
+  width: var(--fei-scrollbar-width);
+  height: var(--fei-scrollbar-width);
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bin-scrollbar-track);
+  background: var(--fei-scrollbar-track);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--bin-scrollbar-color);
-  border-radius: var(--bin-scrollbar-radius);
+  background: var(--fei-scrollbar-color);
+  border-radius: var(--fei-scrollbar-radius);
   transition: 0.2s;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--bin-scrollbar-color-hover);
+  background: var(--fei-scrollbar-color-hover);
 }
 ```
