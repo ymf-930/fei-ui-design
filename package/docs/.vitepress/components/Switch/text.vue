@@ -36,6 +36,6 @@ export default {
   display flex
   align-items center
   justify-content center
-  >>>.vs-switch
+  :deep(.vs-switch)
     margin 10px
 </style>

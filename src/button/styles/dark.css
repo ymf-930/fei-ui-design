@@ -1,17 +1,17 @@
 .fei-button[theme-name='dark'] {
-  --b-btn-bg-color: var(--fei-dark-bg);
-  --b-btn-text-color: var(--fei-color-text-white);
-  --b-btn-border-color: var(--fei-border-color-light-2);
-  --b-btn-disabled-text-color: var(--fei-color-text-disabled);
-  --b-btn-disabled-bg-color: var(--fei-dark-bg);
-  --b-btn-disabled-border-color: var(--fei-border-color-light-2);
+  --f-btn-bg-color: var(--fei-dark-bg);
+  --f-btn-text-color: var(--fei-color-text-white);
+  --f-btn-border-color: var(--fei-border-color-light-2);
+  --f-btn-disabled-text-color: var(--fei-color-text-disabled);
+  --f-btn-disabled-bg-color: var(--fei-dark-bg);
+  --f-btn-disabled-border-color: var(--fei-border-color-light-2);
 
-  --b-btn-hover-text-color: var(--fei-color-primary-light1);
-  --b-btn-hover-bg-color: var(--fei-dark-bg);
-  --b-btn-hover-border-color: var(--fei-color-primary-light1);
+  --f-btn-hover-text-color: var(--fei-color-primary-light1);
+  --f-btn-hover-bg-color: var(--fei-dark-bg);
+  --f-btn-hover-border-color: var(--fei-color-primary-light1);
 
   &.is-background {
-    --b-btn-text-color: var(--fei-color-text-default);
+    --f-btn-text-color: var(--fei-color-text-default);
   }
   &.is-disabled,
   &.is-disabled:focus,

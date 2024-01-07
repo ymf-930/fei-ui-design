@@ -37,7 +37,7 @@ export default {
   align-items flex-start
   justify-content flex-start
   flex-direction column
-  >>>.vs-switch
+  :deep(.vs-switch)
     margin 5px
   .data
     background rgba(0,0,0,.03)

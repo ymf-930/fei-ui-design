@@ -1,10 +1,10 @@
 .fei-card {
-  --b-card-border-color: var(--fei-border-color-light);
+  --f-card-border-color: var(--fei-border-color-light);
 }
 
 .fei-card {
   border-radius: var(--fei-border-radius-default);
-  border: 1px solid var(--b-card-border-color);
+  border: 1px solid var(--f-card-border-color);
   background-color: #fff;
   transition: var(--fei-animation-duration-base);
   width: 100%;
@@ -33,7 +33,7 @@
     font-weight: 500;
 
     &.has-divider {
-      border-bottom: 1px solid var(--b-card-border-color);
+      border-bottom: 1px solid var(--f-card-border-color);
     }
 
     &.no-divider {

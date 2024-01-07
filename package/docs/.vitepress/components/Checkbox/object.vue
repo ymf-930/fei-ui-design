@@ -31,7 +31,7 @@ export default {
 .con-checkbox
   flex-direction column
   align-items flex-start
-  >>>.vs-checkbox-content
+  :deep(.vs-checkbox-content)
     min-width 80px
   .data-check
     background rgba(0,0,0,.03)

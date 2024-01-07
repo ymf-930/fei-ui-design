@@ -54,6 +54,6 @@ export default {
 </script>
 <style lang="stylus" scoped>
 .content-inputs
-  >>>.vs-input-content
+  :deep(.vs-input-content)
     margin 10px
 </style>

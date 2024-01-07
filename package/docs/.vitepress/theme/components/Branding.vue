@@ -147,7 +147,7 @@ getVar(var)
           border 2px solid #16181a !important
 
 .con-branding
-  ~ >>>.config
+  ~ :deep(.config)
     left 0px
   .con-images
     display flex

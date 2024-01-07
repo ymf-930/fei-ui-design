@@ -57,7 +57,7 @@
               </td>
 
               <td class="bugx">
-                <a target="_blank" :href="`https://github.com/lusaxweb/vuesax/issues/new?title=[${$page.title}] prop (${tr.name}) - Your Bug Name&amp;body=**Steps to Reproduce**%0A1. Do something%0A2. Do something else.%0A3. Do one last thing.%0A%0A**Expected**%0AThe ${tr.name} should do this%0A%0A**Result**%0AThe ${tr.name} does not do this%0A%0A**Testcase**%0A(fork this to get started)%0Ahttp://jsfiddle.net/example-bug/1/`" >
+                <a target="_blank" :href="`https://github.com/lusaxweb/vuesax/issues/new?title=[${page.title}] prop (${tr.name}) - Your Bug Name&amp;body=**Steps to Reproduce**%0A1. Do something%0A2. Do something else.%0A3. Do one last thing.%0A%0A**Expected**%0AThe ${tr.name} should do this%0A%0A**Result**%0AThe ${tr.name} does not do this%0A%0A**Testcase**%0A(fork this to get started)%0Ahttp://jsfiddle.net/example-bug/1/`" >
                   <i class='bx bx-bug' ></i>
                 </a>
 
@@ -86,13 +86,13 @@ export default {
 
   computed: {
     props(){
-      return this.$page.frontmatter.PROPS
+      return frontmatter.value.PROPS
     },
     slots(){
-      return this.$page.frontmatter.SLOTS
+      return frontmatter.value.SLOTS
     },
     events(){
-      return this.$page.frontmatter.EVENTS
+      return frontmatter.value.EVENTS
     },
     getTables() {
       let tables = {}
@@ -277,7 +277,6 @@ getVar(var)
 
 
 .btn-usage
-  border 0px
   padding 4px 9px
   background transparent
   border 1px dashed getVar(theme-bg2)
@@ -300,7 +299,6 @@ getVar(var)
     box-icon
       opacity 1
 .btn-toggle-code
-  border 0px
   padding 4px 9px
   background transparent
   border 1px dashed getVar(theme-bg2)

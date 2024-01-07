@@ -19,7 +19,7 @@ export default {
 <style scoped lang="stylus">
 .con-checkbox
   flex-direction column
-  >>>.vs-checkbox-content
+  :deep(.vs-checkbox-content)
     min-width 80px
   .data
     background rgba(0,0,0,.03)

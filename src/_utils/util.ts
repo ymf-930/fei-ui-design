@@ -16,12 +16,12 @@ export function copy(content) {
   return new Promise(resolve => {
     const copyInput = document.createElement('textarea')
     copyInput.value = content
-    copyInput.setAttribute('id', 'b-copy-temp')
+    copyInput.setAttribute('id', 'f-copy-temp')
     document.body.appendChild(copyInput)
     copyInput.select() // 选择对象
     const result = document.execCommand('Copy') // 执行浏览器复制命令
     copyInput.style.display = 'none'
-    document.body.removeChild(document.getElementById('b-copy-temp'))
+    document.body.removeChild(document.getElementById('f-copy-temp'))
     resolve(result)
   })
 }

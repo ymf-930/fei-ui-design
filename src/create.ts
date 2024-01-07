@@ -6,25 +6,25 @@ import config from '../package.json'
 
 type ComponentType = any
 
-export interface BUiInstance {
+export interface FUiInstance {
   version: string
   componentPrefix: string
   // eslint-disable-next-line no-unused-vars
   install: (app: App) => void
 }
 
-interface BUiCreateOptions {
+interface FUiCreateOptions {
   components?: ComponentType[]
   componentPrefix?: string
   directives?: any[]
 }
 // 组件自动注册，可以支持扩展前缀
 function create({
-  componentPrefix = 'B',
+  componentPrefix = 'F',
   components = [],
   directives = [],
   plugins = []
-}: BUiCreateOptions = {}): BUiInstance {
+}: FUiCreateOptions = {}): FUiInstance {
   const installTargets: App[] = []
   function registerComponent(app: App, name: string, component: ComponentType): void {
     const newName = componentPrefix + name.slice(1)

@@ -1,5 +1,5 @@
 .fei-layout {
-  --b-layout-animation-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --f-layout-animation-ease: cubic-bezier(0.4, 0, 0.2, 1);
 
   position: relative;
   color: var(--fei-color-text-default);
@@ -13,12 +13,12 @@
   .fei-layout-sider {
     position: relative;
     border-right: 1px solid var(--fei-border-color-base);
-    transition: width 0.2s var(--b-layout-animation-ease);
+    transition: width 0.2s var(--f-layout-animation-ease);
 
     .sider-inner {
       opacity: 1;
       overflow-x: hidden;
-      transition: opacity 0.2s var(--b-layout-animation-ease);
+      transition: opacity 0.2s var(--f-layout-animation-ease);
 
       &.hide {
         opacity: 0;
@@ -57,7 +57,7 @@
     opacity: 0;
 
     > i {
-      transition: 0.2s var(--b-layout-animation-ease);
+      transition: 0.2s var(--f-layout-animation-ease);
     }
 
     &.collapsed {

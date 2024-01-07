@@ -1,9 +1,9 @@
 .fei-divider {
-  --b-divider-border-color: var(--fei-border-color-base);
+  --f-divider-border-color: var(--fei-border-color-base);
 }
 
 .fei-divider {
-  background-color: var(--b-divider-border-color);
+  background-color: var(--f-divider-border-color);
   position: relative;
   &-horizontal {
     display: block;
@@ -22,7 +22,7 @@
   }
   &-dashed {
     background: 0 0;
-    border-top: 1px dashed var(--b-divider-border-color);
+    border-top: 1px dashed var(--f-divider-border-color);
   }
   &-inner-text {
     position: absolute;

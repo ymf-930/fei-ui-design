@@ -1,20 +1,20 @@
 .fei-menu-wrapper {
-  --b-menu-collapse-width: var(--fei-menu-collapse-width);
-  --b-menu-padding: var(--fei-menu-padding);
-  --b-menu-item-height: var(--fei-menu-item-height);
-  --b-menu-item-height-h: var(--fei-menu-item-height-h);
-  --b-menu-item-border-radius: var(--fei-menu-item-border-radius);
-  --b-menu-item-margin-bottom: var(--fei-menu-item-margin-bottom);
-  --b-menu-text-color: var(--fei-menu-text-color);
-  --b-menu-text-hover-color: var(--fei-menu-text-hover-color);
-  --b-menu-text-active-color: var(--fei-menu-text-active-color);
-  --b-menu-bg-color: var(--fei-menu-bg-color);
-  --b-menu-bg-hover-color: var(--fei-menu-bg-hover-color);
-  --b-menu-bg-active-color: var(--fei-menu-bg-active-color);
+  --f-menu-collapse-width: var(--fei-menu-collapse-width);
+  --f-menu-padding: var(--fei-menu-padding);
+  --f-menu-item-height: var(--fei-menu-item-height);
+  --f-menu-item-height-h: var(--fei-menu-item-height-h);
+  --f-menu-item-border-radius: var(--fei-menu-item-border-radius);
+  --f-menu-item-margin-bottom: var(--fei-menu-item-margin-bottom);
+  --f-menu-text-color: var(--fei-menu-text-color);
+  --f-menu-text-hover-color: var(--fei-menu-text-hover-color);
+  --f-menu-text-active-color: var(--fei-menu-text-active-color);
+  --f-menu-bg-color: var(--fei-menu-bg-color);
+  --f-menu-bg-hover-color: var(--fei-menu-bg-hover-color);
+  --f-menu-bg-active-color: var(--fei-menu-bg-active-color);
 }
 
 .fei-menu-wrapper {
-  padding: var(--b-menu-padding);
+  padding: var(--f-menu-padding);
   overflow-x: hidden;
   transition: 0.2s;
 
@@ -25,21 +25,21 @@
 
   &.is-collapse {
     padding: 0;
-    width: var(--b-menu-collapse-width) !important;
+    width: var(--f-menu-collapse-width) !important;
   }
 }
 
 .fei-menu-item {
   display: flex;
   align-items: center;
-  height: var(--b-menu-item-height);
-  line-height: var(--b-menu-item-height);
+  height: var(--f-menu-item-height);
+  line-height: var(--f-menu-item-height);
   font-size: var(--fei-font-size-default);
-  border-radius: var(--b-menu-item-border-radius);
-  color: var(--b-menu-text-color);
+  border-radius: var(--f-menu-item-border-radius);
+  color: var(--f-menu-text-color);
   list-style: none;
   padding: 0 10px;
-  margin-bottom: var(--b-menu-item-margin-bottom);
+  margin-bottom: var(--f-menu-item-margin-bottom);
   cursor: pointer;
   position: relative;
   transition:
@@ -67,8 +67,8 @@
   &:hover,
   &:focus {
     outline: 0;
-    color: var(--b-menu-text-hover-color);
-    background: var(--b-menu-bg-hover-color);
+    color: var(--f-menu-text-hover-color);
+    background: var(--f-menu-bg-hover-color);
   }
 
   &.is-disabled {
@@ -86,8 +86,8 @@
   }
 
   &.is-active {
-    color: var(--b-menu-text-active-color);
-    background: var(--b-menu-bg-active-color);
+    color: var(--f-menu-text-active-color);
+    background: var(--f-menu-bg-active-color);
 
     i {
       color: inherit;
@@ -109,15 +109,15 @@
     position: relative;
     display: flex;
     align-items: center;
-    height: var(--b-menu-item-height);
-    line-height: var(--b-menu-item-height);
+    height: var(--f-menu-item-height);
+    line-height: var(--f-menu-item-height);
     font-size: var(--fei-font-size-default);
-    color: var(--b-menu-text-color);
+    color: var(--f-menu-text-color);
     padding: 0 10px;
     cursor: pointer;
-    border-radius: var(--b-menu-item-border-radius);
-    color: var(--b-menu-text-color);
-    margin-bottom: var(--b-menu-item-margin-bottom);
+    border-radius: var(--f-menu-item-border-radius);
+    color: var(--f-menu-text-color);
+    margin-bottom: var(--f-menu-item-margin-bottom);
     transition:
       border-color var(--fei-animation-duration-slow),
       background-color var(--fei-animation-duration-slow),
@@ -150,13 +150,13 @@
 
     &.is-active,
     &:hover {
-      color: var(--b-menu-text-hover-color);
-      background: var(--b-menu-bg-hover-color);
+      color: var(--f-menu-text-hover-color);
+      background: var(--f-menu-bg-hover-color);
     }
 
     &.is-active {
-      color: var(--b-menu-text-active-color);
-      background: var(--b-menu-bg-active-color);
+      color: var(--f-menu-text-active-color);
+      background: var(--f-menu-bg-active-color);
     }
   }
 
@@ -177,7 +177,7 @@
 
   &.is-active {
     > .fei-submenu__title {
-      color: var(--b-menu-text-active-color);
+      color: var(--f-menu-text-active-color);
     }
   }
 
@@ -224,8 +224,8 @@
 
     > .fei-menu-item {
       float: left;
-      height: var(--b-menu-item-height-h);
-      line-height: var(--b-menu-item-height-h);
+      height: var(--f-menu-item-height-h);
+      line-height: var(--f-menu-item-height-h);
       margin: 0;
       border-bottom: 2px solid transparent;
       border-radius: 0;
@@ -267,10 +267,10 @@
       }
 
       .fei-submenu__title {
-        height: var(--b-menu-item-height-h);
-        line-height: var(--b-menu-item-height-h);
+        height: var(--f-menu-item-height-h);
+        line-height: var(--f-menu-item-height-h);
         border-bottom: 2px solid transparent;
-        color: var(--b-menu-text-color);
+        color: var(--f-menu-text-color);
         border-radius: 0;
         margin-bottom: 0;
         padding: 0 20px;
@@ -292,39 +292,39 @@
 }
 
 .fei-menu--popup {
-  --b-menu-collapse-width: var(--fei-menu-collapse-width);
-  --b-menu-padding: var(--fei-menu-padding);
-  --b-menu-item-height: var(--fei-menu-item-height);
-  --b-menu-item-height-h: var(--fei-menu-item-height-h);
-  --b-menu-item-border-radius: var(--fei-menu-item-border-radius);
-  --b-menu-text-color: var(--fei-menu-text-color);
-  --b-menu-text-hover-color: var(--fei-menu-text-hover-color);
-  --b-menu-text-active-color: var(--fei-menu-text-active-color);
-  --b-menu-bg-color: var(--fei-menu-bg-color);
-  --b-menu-bg-hover-color: var(--fei-menu-bg-hover-color);
-  --b-menu-bg-active-color: var(--fei-menu-bg-active-color);
+  --f-menu-collapse-width: var(--fei-menu-collapse-width);
+  --f-menu-padding: var(--fei-menu-padding);
+  --f-menu-item-height: var(--fei-menu-item-height);
+  --f-menu-item-height-h: var(--fei-menu-item-height-h);
+  --f-menu-item-border-radius: var(--fei-menu-item-border-radius);
+  --f-menu-text-color: var(--fei-menu-text-color);
+  --f-menu-text-hover-color: var(--fei-menu-text-hover-color);
+  --f-menu-text-active-color: var(--fei-menu-text-active-color);
+  --f-menu-bg-color: var(--fei-menu-bg-color);
+  --f-menu-bg-hover-color: var(--fei-menu-bg-hover-color);
+  --f-menu-bg-active-color: var(--fei-menu-bg-active-color);
   z-index: 100;
   min-width: 180px;
   border: none;
   padding: 5px 0;
   border-radius: var(--fei-border-radius-default);
   box-shadow: var(--fei-shadow-down);
-  background: var(--b-menu-bg-color);
+  background: var(--f-menu-bg-color);
 
   .fei-menu-item,
   .fei-submenu__title {
-    height: var(--b-menu-item-height);
-    line-height: var(--b-menu-item-height);
+    height: var(--f-menu-item-height);
+    line-height: var(--f-menu-item-height);
     padding: 0 10px;
 
     &:hover {
-      color: var(--b-menu-text-hover-color);
-      background: var(--b-menu-bg-hover-color);
+      color: var(--f-menu-text-hover-color);
+      background: var(--f-menu-bg-hover-color);
     }
 
     &.is-active {
-      color: var(--b-menu-text-active-color);
-      background: var(--b-menu-bg-active-color);
+      color: var(--f-menu-text-active-color);
+      background: var(--f-menu-bg-active-color);
     }
   }
 }
@@ -334,7 +334,7 @@
 }
 
 .fei-menu--collapse {
-  width: var(--b-menu-collapse-width);
+  width: var(--f-menu-collapse-width);
 
   .fei-submenu .fei-menu {
     position: absolute;

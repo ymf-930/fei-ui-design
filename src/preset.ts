@@ -11,7 +11,7 @@ import create from './create'
 
 const plugins = [LoadingBar, Message, MessageBox, Notice]
 
-const BinUI = create({
+const FeiUI = create({
   components: Object.keys(components).map(key => components[key as keyof typeof components]),
   directives: Object.keys(directives).map(key => ({
     name: key,
@@ -20,8 +20,8 @@ const BinUI = create({
   plugins
 })
 
-export default BinUI
+export default FeiUI
 
-export const install = BinUI.install
+export const install = FeiUI.install
 
 export { LoadingBar, Message, MessageBox, Notice }

@@ -1,6 +1,5 @@
 <template>
   <div
-    v-if="active == number"
     class="header-notification">
     <div
       @click="handleClick"

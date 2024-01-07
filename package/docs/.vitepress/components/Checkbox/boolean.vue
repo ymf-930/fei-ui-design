@@ -18,6 +18,6 @@ export default {
 </script>
 <style scoped lang="stylus">
 .con-checkbox
-  >>>.vs-checkbox-content
+  :deep(.vs-checkbox-content)
     min-width 80px
 </style>

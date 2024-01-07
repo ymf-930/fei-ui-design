@@ -84,6 +84,6 @@ export default {
       p
         margin 0px
         font-size .85rem
-  >>>.vs-switch
+  :deep(.vs-switch)
     margin 5px
 </style>

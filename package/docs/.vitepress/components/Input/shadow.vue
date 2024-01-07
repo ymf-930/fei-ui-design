@@ -29,6 +29,6 @@ export default {
   display flex
   align-items center
   justify-content center
-  >>>.vs-input-parent
+  :deep(.vs-input-parent)
     margin 10px
 </style>

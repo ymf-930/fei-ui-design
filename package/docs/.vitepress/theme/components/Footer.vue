@@ -164,7 +164,7 @@ getVar(var)
     padding-bottom 15px
     text-align left
     padding-left 10px
-    >>>b
+    :deep(b)
       color getColor('primary',1) !important
   #mc_embed_signup_scroll
     display flex

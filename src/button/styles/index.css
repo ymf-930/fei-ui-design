@@ -1,19 +1,19 @@
 @import './dark.css';
 
 .fei-button {
-  --b-btn-font-weight: var(--fei-base-font-weight);
-  --b-btn-border-color: var(--fei-border-color-base);
-  --b-btn-bg-color: var(--fei-white-color);
-  --b-btn-text-color: var(--fei-color-text-default);
-  --b-btn-disabled-text-color: var(--fei-color-text-disabled);
-  --b-btn-disabled-bg-color: var(--fei-white-color);
-  --b-btn-disabled-border-color: var(--fei-disabled-border-color);
-  --b-btn-hover-text-color: var(--fei-color-primary);
-  --b-btn-hover-bg-color: var(--fei-color-primary-light6);
-  --b-btn-hover-border-color: var(--fei-color-primary);
-  --b-btn-active-text-color: var(--fei-color-primary-active);
-  --b-btn-active-bg-color: var(--b-btn-hover-bg-color);
-  --b-btn-active-border-color: var(--fei-color-primary-active);
+  --f-btn-font-weight: var(--fei-base-font-weight);
+  --f-btn-border-color: var(--fei-border-color-base);
+  --f-btn-bg-color: var(--fei-white-color);
+  --f-btn-text-color: var(--fei-color-text-default);
+  --f-btn-disabled-text-color: var(--fei-color-text-disabled);
+  --f-btn-disabled-bg-color: var(--fei-white-color);
+  --f-btn-disabled-border-color: var(--fei-disabled-border-color);
+  --f-btn-hover-text-color: var(--fei-color-primary);
+  --f-btn-hover-bg-color: var(--fei-color-primary-light6);
+  --f-btn-hover-border-color: var(--fei-color-primary);
+  --f-btn-active-text-color: var(--fei-color-primary-active);
+  --f-btn-active-bg-color: var(--f-btn-hover-bg-color);
+  --f-btn-active-border-color: var(--fei-color-primary-active);
   --f-icon-margin: 6px;
   --f-icon-size: 16px;
 }
@@ -27,9 +27,9 @@
   line-height: 1;
   white-space: nowrap;
   cursor: pointer;
-  background: var(--b-btn-bg-color);
-  border: 1px solid var(--b-btn-border-color);
-  color: var(--b-btn-text-color);
+  background: var(--f-btn-bg-color);
+  border: 1px solid var(--f-btn-border-color);
+  color: var(--f-btn-text-color);
   -webkit-appearance: none;
   text-align: center;
   box-sizing: border-box;
@@ -67,19 +67,19 @@
   &:hover,
   &:focus {
     outline: none;
-    color: var(--b-btn-hover-text-color);
-    border-color: var(--b-btn-hover-border-color);
-    background-color: var(--b-btn-hover-bg-color);
+    color: var(--f-btn-hover-text-color);
+    border-color: var(--f-btn-hover-border-color);
+    background-color: var(--f-btn-hover-bg-color);
   }
   &:active {
-    color: var(--b-btn-active-text-color);
-    border-color: var(--b-btn-active-border-color);
-    background-color: var(--b-btn-active-bg-color);
+    color: var(--f-btn-active-text-color);
+    border-color: var(--f-btn-active-border-color);
+    background-color: var(--f-btn-active-bg-color);
   }
   &.is-plain {
-    --b-btn-hover-text-color: var(--fei-color-primary);
-    --b-btn-hover-bg-color: var(--b-btn-bg-color);
-    --b-btn-hover-border-color: var(--fei-color-primary);
+    --f-btn-hover-text-color: var(--fei-color-primary);
+    --f-btn-hover-bg-color: var(--f-btn-bg-color);
+    --f-btn-hover-border-color: var(--fei-color-primary);
   }
   &.is-circle {
     border-radius: 50%;
@@ -108,9 +108,9 @@
   &[disabled]:focus,
   &[disabled]:hover {
     cursor: not-allowed;
-    color: var(--b-btn-disabled-text-color);
-    border-color: var(--b-btn-disabled-border-color);
-    background-color: var(--b-btn-disabled-bg-color);
+    color: var(--f-btn-disabled-text-color);
+    border-color: var(--f-btn-disabled-border-color);
+    background-color: var(--f-btn-disabled-bg-color);
   }
   &.fei-button--default {
     &.is-disabled,
@@ -118,38 +118,38 @@
     &.is-disabled:hover,
     &.is-loading {
       cursor: not-allowed;
-      color: var(--b-btn-disabled-text-color);
-      border-color: var(--b-btn-disabled-border-color);
-      background-color: var(--b-btn-disabled-bg-color);
+      color: var(--f-btn-disabled-text-color);
+      border-color: var(--f-btn-disabled-border-color);
+      background-color: var(--f-btn-disabled-bg-color);
     }
   }
   &.fei-button--text {
-    --b-btn-text-color: var(--fei-color-primary);
-    --b-btn-hover-text-color: var(--fei-color-primary-light1);
-    --b-btn-active-text-color: var(--fei-color-primary-active);
-    --b-btn-bg-color: transparent;
-    --b-btn-border-color: transparent;
-    --b-btn-hover-bg-color: transparent;
-    --b-btn-hover-border-color: transparent;
-    --b-btn-active-bg-color: transparent;
-    --b-btn-active-border-color: transparent;
-    --b-btn-disabled-border-color: transparent;
+    --f-btn-text-color: var(--fei-color-primary);
+    --f-btn-hover-text-color: var(--fei-color-primary-light1);
+    --f-btn-active-text-color: var(--fei-color-primary-active);
+    --f-btn-bg-color: transparent;
+    --f-btn-border-color: transparent;
+    --f-btn-hover-bg-color: transparent;
+    --f-btn-hover-border-color: transparent;
+    --f-btn-active-bg-color: transparent;
+    --f-btn-active-border-color: transparent;
+    --f-btn-disabled-border-color: transparent;
     border-color: transparent;
-    color: var(--b-btn-text-color);
+    color: var(--f-btn-text-color);
     background: transparent;
     background-image: none;
     padding: 0;
     height: auto;
     &:focus,
     &:hover {
-      color: var(--b-btn-hover-text-color);
+      color: var(--f-btn-hover-text-color);
       border-color: transparent;
       background-color: transparent;
       box-shadow: none;
     }
 
     &:active {
-      color: var(--b-btn-active-text-color);
+      color: var(--f-btn-active-text-color);
     }
     &.is-disabled,
     &.is-disabled:focus,
@@ -157,7 +157,7 @@
     &[disabled],
     &[disabled]:focus,
     &[disabled]:hover {
-      color: var(--b-btn-disabled-text-color);
+      color: var(--f-btn-disabled-text-color);
       background-image: none;
       cursor: not-allowed;
       background-color: transparent;
@@ -167,89 +167,89 @@
   }
   @each $val in primary, success, warning, info, danger {
     &.fei-button--$(val) {
-      --b-btn-text-color: var(--fei-white-color);
-      --b-btn-bg-color: var(--fei-color-$(val));
-      --b-btn-border-color: var(--fei-color-$(val));
+      --f-btn-text-color: var(--fei-white-color);
+      --f-btn-bg-color: var(--fei-color-$(val));
+      --f-btn-border-color: var(--fei-color-$(val));
 
-      --b-btn-hover-text-color: var(--fei-white-color);
-      --b-btn-hover-bg-color: var(--fei-color-$(val)-light1);
-      --b-btn-hover-border-color: var(--fei-color-$(val)-light1);
+      --f-btn-hover-text-color: var(--fei-white-color);
+      --f-btn-hover-bg-color: var(--fei-color-$(val)-light1);
+      --f-btn-hover-border-color: var(--fei-color-$(val)-light1);
 
-      --b-btn-active-text-color: var(--fei-white-color);
-      --b-btn-active-bg-color: var(--fei-color-$(val)-active);
-      --b-btn-active-border-color: var(--fei-color-$(val)-active);
+      --f-btn-active-text-color: var(--fei-white-color);
+      --f-btn-active-bg-color: var(--fei-color-$(val)-active);
+      --f-btn-active-border-color: var(--fei-color-$(val)-active);
 
-      --b-btn-disabled-text-color: var(--fei-white-color);
-      --b-btn-disabled-bg-color: var(--fei-color-$(val)-light2);
-      --b-btn-disabled-border-color: var(--fei-color-$(val)-light2);
+      --f-btn-disabled-text-color: var(--fei-white-color);
+      --f-btn-disabled-bg-color: var(--fei-color-$(val)-light2);
+      --f-btn-disabled-border-color: var(--fei-color-$(val)-light2);
     }
     &.fei-button--$(val).is-dashed {
-      --b-btn-text-color: var(--fei-color-$(val));
-      --b-btn-bg-color: var(--fei-white-color);
-      --b-btn-border-color: var(--fei-color-$(val));
+      --f-btn-text-color: var(--fei-color-$(val));
+      --f-btn-bg-color: var(--fei-white-color);
+      --f-btn-border-color: var(--fei-color-$(val));
 
-      --b-btn-hover-text-color: var(--fei-color-$(val)-light1);
-      --b-btn-hover-bg-color: var(--fei-white-color);
-      --b-btn-hover-border-color: var(--fei-color-$(val)-light1);
+      --f-btn-hover-text-color: var(--fei-color-$(val)-light1);
+      --f-btn-hover-bg-color: var(--fei-white-color);
+      --f-btn-hover-border-color: var(--fei-color-$(val)-light1);
 
-      --b-btn-active-text-color: var(--fei-color-$(val)-active);
-      --b-btn-active-bg-color: var(--fei-color-$(val)-light6);
-      --b-btn-active-border-color: var(--fei-color-$(val)-active);
+      --f-btn-active-text-color: var(--fei-color-$(val)-active);
+      --f-btn-active-bg-color: var(--fei-color-$(val)-light6);
+      --f-btn-active-border-color: var(--fei-color-$(val)-active);
 
-      --b-btn-disabled-text-color: var(--fei-color-$(val)-light3);
-      --b-btn-disabled-bg-color: var(--fei-white-color);
-      --b-btn-disabled-border-color: var(--fei-color-$(val)-light3);
+      --f-btn-disabled-text-color: var(--fei-color-$(val)-light3);
+      --f-btn-disabled-bg-color: var(--fei-white-color);
+      --f-btn-disabled-border-color: var(--fei-color-$(val)-light3);
     }
     &.fei-button--$(val).is-plain {
-      --b-btn-text-color: var(--fei-color-$(val));
-      --b-btn-bg-color: var(--fei-color-$(val)-light5);
-      --b-btn-border-color: var(--fei-color-$(val)-light4);
+      --f-btn-text-color: var(--fei-color-$(val));
+      --f-btn-bg-color: var(--fei-color-$(val)-light5);
+      --f-btn-border-color: var(--fei-color-$(val)-light4);
 
-      --b-btn-hover-text-color: var(--fei-color-$(val)-light1);
-      --b-btn-hover-bg-color: var(--fei-color-$(val)-light5);
-      --b-btn-hover-border-color: var(--fei-color-$(val)-light3);
+      --f-btn-hover-text-color: var(--fei-color-$(val)-light1);
+      --f-btn-hover-bg-color: var(--fei-color-$(val)-light5);
+      --f-btn-hover-border-color: var(--fei-color-$(val)-light3);
 
-      --b-btn-active-text-color: var(--fei-color-$(val)-active);
-      --b-btn-active-bg-color: var(--fei-color-$(val)-light5);
-      --b-btn-active-border-color: var(--fei-color-$(val)-light1);
+      --f-btn-active-text-color: var(--fei-color-$(val)-active);
+      --f-btn-active-bg-color: var(--fei-color-$(val)-light5);
+      --f-btn-active-border-color: var(--fei-color-$(val)-light1);
 
-      --b-btn-disabled-text-color: var(--fei-color-$(val)-light3);
-      --b-btn-disabled-bg-color: var(--fei-color-$(val)-light5);
-      --b-btn-disabled-border-color: var(--fei-color-$(val)-light3);
+      --f-btn-disabled-text-color: var(--fei-color-$(val)-light3);
+      --f-btn-disabled-bg-color: var(--fei-color-$(val)-light5);
+      --f-btn-disabled-border-color: var(--fei-color-$(val)-light3);
     }
     &.fei-button--$(val).is-transparent {
-      --b-btn-text-color: var(--fei-color-$(val));
-      --b-btn-bg-color: transparent;
-      --b-btn-border-color: var(--fei-color-$(val)-light1);
+      --f-btn-text-color: var(--fei-color-$(val));
+      --f-btn-bg-color: transparent;
+      --f-btn-border-color: var(--fei-color-$(val)-light1);
 
-      --b-btn-hover-text-color: var(--b-btn-text-color);
-      --b-btn-hover-bg-color: var(--b-btn-bg-color);
-      --b-btn-hover-border-color: var(--fei-color-$(val)-light1);
+      --f-btn-hover-text-color: var(--f-btn-text-color);
+      --f-btn-hover-bg-color: var(--f-btn-bg-color);
+      --f-btn-hover-border-color: var(--fei-color-$(val)-light1);
 
-      --b-btn-active-text-color: var(--fei-color-$(val)-active);
-      --b-btn-active-bg-color: var(--b-btn-bg-color);
-      --b-btn-active-border-color: var(--fei-color-$(val)-active);
+      --f-btn-active-text-color: var(--fei-color-$(val)-active);
+      --f-btn-active-bg-color: var(--f-btn-bg-color);
+      --f-btn-active-border-color: var(--fei-color-$(val)-active);
 
-      --b-btn-disabled-text-color: var(--fei-color-$(val)-light2);
-      --b-btn-disabled-bg-color: var(--b-btn-bg-color);
-      --b-btn-disabled-border-color: var(--fei-color-$(val)-light2);
+      --f-btn-disabled-text-color: var(--fei-color-$(val)-light2);
+      --f-btn-disabled-bg-color: var(--f-btn-bg-color);
+      --f-btn-disabled-border-color: var(--fei-color-$(val)-light2);
     }
     &.fei-button--$(val).fei-button--text {
-      --b-btn-text-color: var(--fei-color-$(val));
-      --b-btn-bg-color: transparent;
-      --b-btn-border-color: transparent;
+      --f-btn-text-color: var(--fei-color-$(val));
+      --f-btn-bg-color: transparent;
+      --f-btn-border-color: transparent;
 
-      --b-btn-hover-text-color: var(--fei-color-$(val)-light1);
-      --b-btn-hover-bg-color: transparent;
-      --b-btn-hover-border-color: transparent;
+      --f-btn-hover-text-color: var(--fei-color-$(val)-light1);
+      --f-btn-hover-bg-color: transparent;
+      --f-btn-hover-border-color: transparent;
 
-      --b-btn-active-text-color: var(--fei-color-$(val)-active);
-      --b-btn-active-bg-color: transparent;
-      --b-btn-active-border-color: transparent;
+      --f-btn-active-text-color: var(--fei-color-$(val)-active);
+      --f-btn-active-bg-color: transparent;
+      --f-btn-active-border-color: transparent;
 
-      --b-btn-disabled-text-color: var(--fei-color-$(val)-light3);
-      --b-btn-disabled-bg-color: transparent;
-      --b-btn-disabled-border-color: transparent;
+      --f-btn-disabled-text-color: var(--fei-color-$(val)-light3);
+      --f-btn-disabled-bg-color: transparent;
+      --f-btn-disabled-border-color: transparent;
     }
   }
 }

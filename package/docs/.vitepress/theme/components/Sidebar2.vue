@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import SidebarLinks from '@theme/components/SidebarLinks.vue'
+import SidebarLinks from './SidebarLinks.vue'
 
 export default {
   name: 'Sidebar2',

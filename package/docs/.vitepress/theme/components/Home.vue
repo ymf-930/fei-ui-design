@@ -12,7 +12,7 @@
         <div class="content-hero">
           <h1 v-if="data.heroText !== null" v-html="data.heroText || 'Hello'" id="main-title"/>
 
-          <p v-html="data.tagline || 'Welcome to your VuePress site'" class="description"/>
+          <p v-html="data.tagline || 'Welcome to your VitePress site'" class="description"/>
 
           <div class="con-btns">
             <NavLink
@@ -22,7 +22,6 @@
                 class="action-button"
                 :item="actionLink"
             />
-
             <a
                 @mouseleave="time('discord')"
                 @mouseenter="discord = true, expand = true"
@@ -37,7 +36,6 @@
                 title="Github" class="github" target="_blank" href="https://github.com/lusaxweb/vuesax">
               <i class='bx bxl-github'></i>
               <span title="Stargazers" class="badge-star">
-<!--                 <i class='bx bxs-star' ></i>-->
                 {{ numberWithCommas }}
               </span>
             </a>
@@ -53,19 +51,10 @@
         }"/>
     </div>
 
-    <!--    <Patrons />-->
-
-    <Illustration1 :data="data.homeFeatures[0]"/>
-    <Illustration2 :data="data.homeFeatures[1]"/>
-<!--    <Uses/>-->
-<!--    <Illustration3 :data="data.homeFeatures[2]"/>-->
-<!--    <Illustration4 :data="data.homeFeatures[3]"/>-->
-<!--    <twitter/>-->
-    <Premium-themes :data="data.premiumThemes"/>
-
-    <!--        <Content class="custom"/>-->
-
-    <Footer/>
+<!--    <Illustration1 :data="data.homeFeatures[0]"/>-->
+<!--    <Illustration2 :data="data.homeFeatures[1]"/>-->
+<!--    <Premium-themes :data="data.premiumThemes"/>-->
+<!--    <Footer/>-->
   </main>
 </template>
 
@@ -77,13 +66,8 @@ import Footer from './Footer.vue'
 import HomeInit from './homeInit.vue'
 import Illustration1 from './HomeIllustration1.vue'
 import Illustration2 from './HomeIllustration2.vue'
-import Illustration3 from './HomeIllustration3.vue'
-import Illustration4 from './HomeIllustration4.vue'
 import components from './HomeComponents.vue'
 import PremiumThemes from './premiumThemes.vue'
-// import Patrons from './HomePatrons.vue'
-import twitter from './HomeTwiter.vue'
-import Uses from './HomeUses.vue'
 
 
 const star = ref(3020)

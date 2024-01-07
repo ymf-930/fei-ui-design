@@ -583,7 +583,7 @@ getVar(var)
         transform translate(0, 5px)
       .vs-input-parent
         width calc(100% - 50px)
-        >>>input
+        :deep(input)
           width 100% !important
       ul
         margin 0px
@@ -680,7 +680,7 @@ getVar(var)
       left 0px
       transition all .25s ease
       animation componentAnimate 20s infinite ease alternate
-      >>>input
+      :deep(input)
         background getVar(theme-layout)
         padding 10px 15px
         box-shadow 0px 8px 20px 0px rgba(0,0,0,.04)
@@ -1022,9 +1022,9 @@ getVar(var)
           width 42px
           height 42px
           margin-left 10px
-        >>>.vs-input-parent
+        :deep(.vs-input-parent)
           width calc(100% - 60px)
-        >>>input
+        :deep(input)
           width 100%
           padding 10px 14px
           border 0px

@@ -12,7 +12,7 @@ title: 在 SFC 中使用
 
 你可以直接导入组件并进行使用这种情况下，只有导入的组件才会被打包。
 
-如果你想知道如何按需引入主题和语言包，请参考 [按需引入](/docs/import-on-demand.html)。
+如果你想知道如何按需引入主题和语言包，请参考 [按需引入](/guide/import-on-demand.html)。
 
 ```vue
 <template>
@@ -104,10 +104,10 @@ export default defineConfig({
 import { createApp } from 'vue'
 import App from './App.vue'
 
-import FUI from 'fei-ui-design'
+import FeiUI from 'fei-ui-design'
 import 'fei-ui-design/dist/styles/index.css'
 
 const app = createApp(App)
-app.use(FUI)
+app.use(FeiUI)
 app.mount('#app')
 ```

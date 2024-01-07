@@ -1,18 +1,18 @@
 .fei-collapse {
-  --b-collapse-border: var(--fei-border-base-light);
-  --b-collapse-bg: var(--fei-fill-color-1);
-  --b-collapse-header-text-color: var(--fei-color-text-primary);
-  --b-collapse-header-text-color-disabled: var(--fei-color-text-disabled);
-  --b-collapse-content-text-color: var(--fei-color-text-default);
-  --b-collapse-content-bg: var(--fei-white-color);
+  --f-collapse-border: var(--fei-border-base-light);
+  --f-collapse-bg: var(--fei-fill-color-1);
+  --f-collapse-header-text-color: var(--fei-color-text-primary);
+  --f-collapse-header-text-color-disabled: var(--fei-color-text-disabled);
+  --f-collapse-content-text-color: var(--fei-color-text-default);
+  --f-collapse-content-bg: var(--fei-white-color);
 }
 .fei-collapse {
-  background-color: var(--b-collapse-bg);
+  background-color: var(--f-collapse-bg);
   border-radius: var(--fei-border-radius-default);
   border: var(--fei-border-base-light);
 
   > .fei-collapse-item {
-    border-top: var(--b-collapse-border);
+    border-top: var(--f-collapse-border);
 
     &:first-child {
       border-top: none;
@@ -23,13 +23,13 @@
       align-items: center;
       line-height: var(--fei-base-line-height);
       padding: 10px 16px;
-      color: var(--b-collapse-header-text-color);
+      color: var(--f-collapse-header-text-color);
       cursor: pointer;
       position: relative;
       border-bottom: 1px solid transparent;
       transition: all var(--fei-animation-duration-base) ease-in-out;
       > i.f-icon-right {
-        color: var(--b-collapse-header-text-color);
+        color: var(--f-collapse-header-text-color);
         transition: transform var(--fei-animation-duration-base) ease-in-out;
         margin-right: 10px;
         vertical-align: -1px;
@@ -39,7 +39,7 @@
 
     &.fei-collapse-item-active {
       > .fei-collapse-header {
-        border-bottom: var(--b-collapse-border);
+        border-bottom: var(--f-collapse-border);
         > i.f-icon-right {
           -webkit-transform: rotate(90deg);
           transform: rotate(90deg);
@@ -49,16 +49,16 @@
     &.is-disabled {
       > .fei-collapse-header {
         cursor: not-allowed;
-        --b-collapse-header-text-color: var(--b-collapse-header-text-color-disabled);
+        --f-collapse-header-text-color: var(--f-collapse-header-text-color-disabled);
       }
     }
   }
 }
 
 .fei-collapse-content {
-  color: var(--b-collapse-content-text-color);
+  color: var(--f-collapse-content-text-color);
   padding: 0 16px;
-  background-color: var(--b-collapse-content-bg);
+  background-color: var(--f-collapse-content-bg);
 
   > .fei-collapse-content-box {
     padding-top: 16px;
@@ -75,27 +75,27 @@
 }
 
 .fei-collapse-wrap {
-  --b-collapse-bg: var(--fei-white-color);
-  --b-collapse-border: var(--fei-border-base-light);
-  --b-collapse-shadow: 0 0 0 1px var(--fei-border-color-light);
-  --b-collapse-header-text: var(--fei-color-text-primary);
-  --b-collapse-header-size: 14px;
-  --b-collapse-header-height: 40px;
-  --b-collapse-header-weight: 500;
-  --b-collapse-header-tip: var(--fei-color-primary);
-  --b-collapse-content-text-color: var(--fei-color-text-default);
-  --b-collapse-content-bg: var(--fei-white-color);
+  --f-collapse-bg: var(--fei-white-color);
+  --f-collapse-border: var(--fei-border-base-light);
+  --f-collapse-shadow: 0 0 0 1px var(--fei-border-color-light);
+  --f-collapse-header-text: var(--fei-color-text-primary);
+  --f-collapse-header-size: 14px;
+  --f-collapse-header-height: 40px;
+  --f-collapse-header-weight: 500;
+  --f-collapse-header-tip: var(--fei-color-primary);
+  --f-collapse-content-text-color: var(--fei-color-text-default);
+  --f-collapse-content-bg: var(--fei-white-color);
 
-  background-color: var(--b-collapse-bg);
-  box-shadow: var(--b-collapse-shadow);
+  background-color: var(--f-collapse-bg);
+  box-shadow: var(--f-collapse-shadow);
   .header {
     position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    color: var(--b-collapse-header-text);
-    background: var(--b-collapse-bg);
+    color: var(--f-collapse-header-text);
+    background: var(--f-collapse-bg);
     transition: var(--fei-animation-duration-base);
     &.is-collapse {
       cursor: pointer;
@@ -105,13 +105,13 @@
       display: inline-block;
       vertical-align: middle;
       padding: 0 16px;
-      line-height: var(--b-collapse-header-height);
-      font-size: var(--b-collapse-header-size);
-      font-weight: var(--b-collapse-header-weight);
+      line-height: var(--f-collapse-header-height);
+      font-size: var(--f-collapse-header-size);
+      font-weight: var(--f-collapse-header-weight);
       &:after {
         content: '';
         position: absolute;
-        background-color: var(--b-collapse-header-tip);
+        background-color: var(--f-collapse-header-tip);
         left: 0;
         top: 12px;
         bottom: 12px;
@@ -146,12 +146,12 @@
     }
   }
   .content {
-    color: var(--b-collapse-content-text-color);
-    background-color: var(--b-collapse-content-bg);
+    color: var(--f-collapse-content-text-color);
+    background-color: var(--f-collapse-content-bg);
   }
   &-active {
     .header {
-      box-shadow: var(--b-collapse-shadow);
+      box-shadow: var(--f-collapse-shadow);
       .arrow {
         transform: translateY(-50%) rotate(180deg);
       }

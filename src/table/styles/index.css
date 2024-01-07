@@ -1,6 +1,6 @@
 .fei-table {
-  --b-table-header-bg: var(--fei-table-header-bg);
-  --b-table-header-text: var(--fei-table-header-text);
+  --f-table-header-bg: var(--fei-table-header-bg);
+  --f-table-header-text: var(--fei-table-header-text);
 }
 
 .fei-table {
@@ -114,12 +114,12 @@
     height: 50px;
     white-space: nowrap;
     overflow: hidden;
-    background-color: var(--b-table-header-bg);
+    background-color: var(--f-table-header-bg);
     color: var(--fei-color-text-primary);
     font-weight: 500;
 
     .fei-table-cell {
-      color: var(--b-table-header-text);
+      color: var(--f-table-header-text);
     }
   }
 
@@ -267,7 +267,7 @@
   &-stripe &-fixed-body {
     tr:nth-child(2n) {
       td {
-        background-color: var(--b-table-header-bg);
+        background-color: var(--f-table-header-bg);
       }
     }
 
@@ -368,7 +368,7 @@
     position: absolute;
     top: -1px;
     right: 0;
-    background-color: var(--b-table-header-bg);
+    background-color: var(--f-table-header-bg);
     border-top: var(--fei-border-table);
     border-bottom: var(--fei-border-table);
   }

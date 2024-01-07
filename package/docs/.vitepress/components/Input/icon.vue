@@ -23,6 +23,6 @@ export default {
 </script>
 <style lang="stylus" scoped>
 .content-inputs
-  >>>.vs-input-parent
+  :deep(.vs-input-parent)
     margin 10px
 </style>

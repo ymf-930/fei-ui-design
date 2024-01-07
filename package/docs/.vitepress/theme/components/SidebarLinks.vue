@@ -27,10 +27,10 @@
 </template>
 
 <script>
-import SidebarGroup from '@theme/components/SidebarGroup.vue'
-import SidebarLink from '@theme/components/SidebarLink.vue'
+// import Vue from 'vue'
+import SidebarGroup from './SidebarGroup.vue'
+import SidebarLink from './SidebarLink.vue'
 import { isActive } from '../util'
-import Vue from 'vue'
 export default {
   name: 'SidebarLinks',
 
@@ -52,8 +52,8 @@ export default {
 
   created () {
     this.refreshIndex()
-    Vue.observable(this.$site.themeConfig)
-    Vue.observable(this.$vsTheme)
+    // Vue.observable(this.$site.themeConfig)
+    // Vue.observable(this.$vsTheme)
   },
 
   watch: {

@@ -77,7 +77,7 @@ export default {
 <style lang="stylus" scoped>
 .center
   flex-wrap wrap
-  >>>.vs-button-group
+  :deep(.vs-button-group)
     margin 20px 20px
 </style>
 

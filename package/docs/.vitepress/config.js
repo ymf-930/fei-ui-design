@@ -1,22 +1,25 @@
 import { defineConfig } from 'vitepress'
-import sidebarDocs from "./sidebar-docs.js";
-import sidebarComps from "./sidebar-comps.js";
+import { containerPreview, componentPreview } from '@vitepress-demo-preview/plugin'
+import { fileURLToPath, URL } from 'node:url'
+import sidebarDocs from "./sidebar-docs.js"
+import sidebarComps from "./sidebar-comps.js"
 
 const baseUrl = process.env.NODE_ENV === 'production' ? '/fei-ui-design/' : '/'
 
 export default defineConfig({
   locales: {
     '/': {
-      // lang: 'Engl+ish',
-      lang: 'en-US',
-      text: 'English',
+      // lang: '中文',
+      lang: 'zh-CN',
+      text: '中文',
     },
     '/es/': {
-      // lang: 'Español',
-      lang: 'es-ES',
-      text: 'Español',
+      // lang: 'English',
+      lang: 'en-US',
+      text: 'English',
     }
   },
+  lang: 'zh-CN',
   base: baseUrl,
   ignoreDeadLinks: true,
   outDir: '../../site',
@@ -25,7 +28,7 @@ export default defineConfig({
     ['link', { rel: 'icon', href: `/logos/logo-vuesax-logotipo-vuesax-png-8.png`, media: '(prefers-color-scheme:dark)', type: 'image/png' }],
     ['link', { rel: 'icon', href: `/logos/logo-vuesax-logotipo-vuesax-png-7.png`, media: '(prefers-color-scheme:light)', type: 'image/png' }],
     ['meta', { name: 'viewport', content: 'width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1, shrink-to-fit=no' }],
-    ['meta', { name: 'author', content: 'Lusaxweb' }],
+    ['meta', { name: 'author', content: 'ymf' }],
     ['meta', { name: 'google', content: 'nositelinkssearchbox' }],
     ['meta', { hid: 'description', name: 'description', content: 'FEI-UI-DESIGN Framework Components for Vuejs' }],
     ['meta', { property: 'og:image', content: 'https://vuesax.com/vuesax_components.png' }],
@@ -34,6 +37,7 @@ export default defineConfig({
     ['meta', { property: 'og:url', content: 'https://vuesax.com/'}],
     ['meta', { name: 'twitter:card', content: 'summary_large_image'}],
   ],
+  localePath: '/',
   themeConfig: {
     socialLinks: [
       { icon: 'github', link: 'https://github.com/gumingWu/vitepress-fun' }
@@ -42,14 +46,14 @@ export default defineConfig({
     docsDir: 'packages/docs',
     nav: [
       { text: '首页', link: '/' },
-      { text: '文档', link: '/docs/introduction' },
+      { text: '文档', link: '/guide/introduction' },
       { text: '组件', link: '/components/button' }
     ],
     sidebar: {
-      '/docs/': sidebarDocs,
+      '/guide/': sidebarDocs,
       '/components/': sidebarComps
     },
-/*    locales: {
+    locales: {
       '/': {
         ...getNavbar(),
         ...getSidebar()
@@ -58,10 +62,32 @@ export default defineConfig({
         ...getNavbar('/es/'),
         ...getSidebar('/es/')
       }
-    },*/
+    },
     lastUpdated: true,
     linkPrevVersion: 'https://lusaxweb.github.io/vuesax/',
     searchPlaceholder: 'FEI-UI-DESIGN Search',
+  },
+  markdown: {
+    theme: {
+      light: 'slack-ochin',
+      dark: 'rose-pine-moon'
+    },
+    config(md) {
+      md.use(containerPreview)
+      md.use(componentPreview)
+    }
+  },
+  vite: {
+    server: {
+      host: '0.0.0.0',
+      port: 8000,
+      open: true
+    },
+    resolve: {
+      alias: {
+        'fei-ui-design': fileURLToPath(new URL('../../src', import.meta.url))
+      }
+    }
   }
 })
 
@@ -70,24 +96,23 @@ function getNavbar (lang = '/') {
   return {
     nav: [
       {
-        text: lang !== '/'? `Home` : `首页`,
+        text: lang !== '/'? `首页` : `Home`,
         link: `${lang}docs/`,
       },
       {
-        text: lang !== '/'? `Guía` : `文档`,
+        text: lang !== '/'? `文档` : `Document`,
         link: `${lang}docs/guide/`,
         items: [
-          { text: lang !== '/'? `Introducción` : `Introduction`, link: `${lang}docs/guide/` },
-          { text: lang !== '/'? `Empezando` : `Getting Started`, link: `${lang}docs/guide/gettingStarted` },
-          { text: `FEI-UI-DESIGN + Nuxtjs`, link: `${lang}docs/guide/nuxt` }
+          { text: lang !== '/'? `介绍` : `Introduction`, link: `${lang}docs/guide/` },
+          { text: lang !== '/'? `开始` : `Getting Started`, link: `${lang}docs/guide/gettingStarted` },
         ]
       },
       {
-        text: lang !== '/'? `Documentación` : `组件`,
+        text: lang !== '/'? `组件` : `Components`,
         link: `${lang}docs/components`,
         items: [
           {
-            text: lang !== '/'? `Componentes` : `Components`,
+            text: lang !== '/'? `组件` : `Components`,
             items: [
               { text: `Button`, link: `${lang}docs/components/` },
               { text: `Alert`, link: `${lang}docs/components/Alert` },
@@ -119,23 +144,21 @@ function getSidebar (lang = '/') {
     sidebar: {
       [`${lang}docs/`]: [
         {
-          title: lang !== '/'? `Guía` : `Guide`,
+          title: lang !== '/'? `概览` : `Guide`,
           collapsable: false,
           children: [
             `${lang}docs/guide/`,
-            `${lang}docs/guide/gettingStarted`,
-            `${lang}docs/guide/nuxt`,
           ]
         },
         {
-          title: lang !== '/'? `Tema` : `Theme`,
+          title: lang !== '/'? `主题` : `Theme`,
           collapsable: false,
           children: [
             `${lang}docs/theme/`,
           ]
         },
         {
-          title: lang !== '/'? `Componentes` : `Components`,
+          title: lang !== '/'? `组件` : `Components`,
           collapsable: false,
           children: [
             `${lang}docs/components/`,
@@ -155,11 +178,10 @@ function getSidebar (lang = '/') {
 						`${lang}docs/components/Navbar`,
 						`${lang}docs/components/Sidebar`,
 						`${lang}docs/components/Card`,
-						// new component slot 2
           ]
         },
         {
-          title: lang !== '/'? `Diseño` : `Layout`,
+          title: lang !== '/'? `布局` : `Layout`,
           collapsable: false,
           children: [
             `${lang}docs/layout/`,
