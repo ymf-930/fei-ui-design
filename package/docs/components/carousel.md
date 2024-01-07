@@ -2,7 +2,7 @@
 title: 轮播 Carousel
 ---
 
-<f-back-top></f-back-top>
+
 
 # 轮播 Carousel
 

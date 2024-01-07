@@ -2,7 +2,7 @@
 title: 提示 Tooltip
 ---
 
-<f-back-top></f-back-top>
+
 
 # 提示 Tooltip
 

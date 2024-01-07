@@ -2,7 +2,7 @@
 title: 分页器 Page
 ---
 
-<f-back-top></f-back-top>
+
 
 # 分页器 Page
 

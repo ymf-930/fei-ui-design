@@ -402,7 +402,7 @@ getVar(var)
     pre[class*="language-"]
       margin 0px
 .con-api
-  max-width 900px
+  max-width 1200px
   margin auto
   padding: 1rem 10px;
   padding-top 0px

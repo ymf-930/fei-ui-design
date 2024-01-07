@@ -2,7 +2,7 @@
 title: 输入框 Input
 ---
 
-<f-back-top></f-back-top>
+
 
 # 输入框 Input
 

@@ -2,7 +2,7 @@
 title: 标签页 Tabs
 ---
 
-<f-back-top></f-back-top>
+
 
 # 标签页 Tabs
 

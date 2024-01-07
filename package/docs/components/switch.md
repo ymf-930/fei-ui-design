@@ -2,7 +2,7 @@
 title: 开关 Switch
 ---
 
-<f-back-top></f-back-top>
+
 
 # 开关 Switch
 

@@ -2,7 +2,7 @@
 title: 按需引入
 ---
 
-<f-back-top></f-back-top>
+
 
 # 按需引入（Tree Shaking）
 

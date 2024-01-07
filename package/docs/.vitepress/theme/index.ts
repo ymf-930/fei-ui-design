@@ -8,6 +8,7 @@ import FeiUI from "../../../../src";
 // import FeiUI from "fei-ui-design";
 
 import '@vitepress-demo-preview/component/dist/style.css'
+import './index.css'
 import '../../../../src/_styles/index.css'
 
 export default {
@@ -17,7 +18,8 @@ export default {
   Layout: Layout,
   enhanceApp({app, router, siteData}) {
     app.use(FeiUI)
-    // app.component(RouterLink)
+    // app.component(router)
+    app.use(router)
     app.component('demo-preview', ElementPlusContainer)
     // app is the Vue 3 app instance from createApp()
     // router is VitePress' custom router (see `lib/app/router.js`)

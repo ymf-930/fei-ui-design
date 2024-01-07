@@ -2,7 +2,7 @@
 title: 时间选择器 TimePicker
 ---
 
-<f-back-top></f-back-top>
+
 
 # 时间选择器 TimePicker
 

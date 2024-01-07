@@ -9,12 +9,13 @@
       `depth-${depth}`
     ]"
   >
+<!--    v-if="item.path"-->
+<!--    'active': isActive($route, item.path)-->
     <router-link
       v-if="item.path"
       class="sidebar-heading clickable"
       :class="{
         open,
-        'active': isActive($route, item.path)
       }"
       :to="item.path"
       @click.native="$emit('toggle')"
@@ -43,31 +44,50 @@
     </p>
 
     <DropdownTransition>
+<!--      v-if="open || !collapsable"-->
       <SidebarLinks
         class="sidebar-group-items"
         :items="item.children"
-        v-if="open || !collapsable"
         :sidebarDepth="item.sidebarDepth"
         :depth="depth + 1"
       />
     </DropdownTransition>
   </section>
 </template>
-
 <script>
-import { isActive } from '../util'
-import DropdownTransition from '@theme/components/DropdownTransition.vue'
+import {defineComponent} from "vue";
 
-export default {
-  name: 'SidebarGroup',
-  props: ['item', 'open', 'collapsable', 'depth', 'fixed'],
-  components: { DropdownTransition },
-  // ref: https://vuejs.org/v2/guide/components-edge-cases.html#Circular-References-Between-Components
-  beforeCreate () {
-    this.$options.components.SidebarLinks = require('./SidebarLinks.vue').default
+export default defineComponent({
+  name: 'SidebarGroup'
+})
+</script>
+<script setup>
+import { isActive } from '../util'
+import DropdownTransition from './DropdownTransition.vue'
+import SidebarLinks from "./SidebarLinks.vue"
+
+const props = defineProps({
+  item:{
+    type: Object,
+    default: () => {}
   },
-  methods: { isActive }
-}
+  open:{
+    type: Boolean,
+    default: false
+  },
+  collapsable:{
+    type: Boolean,
+    default: false
+  },
+  depth:{
+    type: String,
+    default: ''
+  },
+  fixed:{
+    type: Boolean,
+    default: false
+  }
+})
 </script>
 
 <style lang="stylus">

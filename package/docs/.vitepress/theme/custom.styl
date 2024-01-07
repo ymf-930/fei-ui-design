@@ -104,7 +104,7 @@
   opacity: 0
 
 :root
-  --vs-primary: 26,92,255
+  --vs-primary: 26, 92, 255
   --vs-theme-bg: #f4f7f8
   --vs-theme-color: #2c3e50
   --vs-theme-layout: #fff
@@ -118,6 +118,7 @@
   display: block
   background: getVar(theme-layout)
 }
+
 *::-webkit-scrollbar-thumb {
   // background: darken(#f5f7fb, 15%);
   // background: darken(#f5f7fb, 15%);
@@ -137,9 +138,11 @@
 
 .darken
   .data
-    background: rgba(0,0,0,.3) !important
+    background: rgba(0, 0, 0, .3) !important
+
   .has-darken
     display block
+
   .not-darken
     display none
 
@@ -149,14 +152,15 @@
   justify-content: center
   padding: 20px
   flex-wrap: wrap
+
 // vs-clipboard
 
 getColor(colorx, alpha = 1)
-  unquote("rgba(var(--"+colorx+"), "+alpha+")")
+  unquote("rgba(var(--" + colorx + "), " +alpha + ")")
 
 
 getVar(var)
-  unquote("var(--vs-"+var+")")
+  unquote("var(--vs-" + var + ")")
 
 // .darken
 //   .vs-loading:not(.vs-loading--background)
@@ -171,21 +175,27 @@ getVar(var)
 
 box-icon
   fill getVar(theme-color)
+
   g
     fill getVar(theme-color)
 
 .hidden-sidebar
   .config
     left 0px !important
+
     .hidden-sidebar-hidden
       display: none
+
     .visible-sidebar-hidden
       display: block
+
   .sidebar
     transform: translate(-100%) !important
-  .page,.docs-home
+
+  .page, .docs-home
     margin-left: 0px !important
     width 100%
+
     .sidebar
       transform: translate(0%) !important
 
@@ -239,7 +249,7 @@ button
   width 100vw
   height 100vh
   display none
-  background: rgba(0,0,0,.3)
+  background: rgba(0, 0, 0, .3)
 
 .sidebar
   font-size 16px
@@ -296,6 +306,7 @@ blockquote
   border-left .5rem solid #dfe2e5
   margin 0.5rem 0
   padding .25rem 0 .25rem 1rem
+
   & > p
     margin 0
 
@@ -317,6 +328,7 @@ h1, h2, h3, h4, h5, h6
   //    margin-bottom 1rem
   //    + p, + pre, + .custom-block
   //      margin-top 2rem
+
   &:hover .header-anchor
     opacity: 1
 
@@ -339,6 +351,7 @@ a.header-anchor
   padding-right 0.23em
   margin-top 0.125em
   opacity 0
+
   &:hover
     text-decoration none
 
@@ -359,6 +372,7 @@ table
 
 tr
   border-top 1px solid #dfe2e5
+
   &:nth-child(2n)
     background-color transparent
 
@@ -370,23 +384,29 @@ th, td
   &.sidebar-open
     .sidebar-mask
       display: block
+
   &.no-navbar
     .content:not(.custom) > h1, h2, h3, h4, h5, h6
       margin-top 1.5rem
       padding-top 0
+
     .sidebar
       top 0
 
 .no-sidebar
   .navbar
-    box-shadow: 0px 0px 0px 0px rgba(0,0,0,.1)
+    box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, .1)
+
   .navbar.fixed
-    box-shadow: 0px 0px 15px 0px rgba(0,0,0,.04)
+    box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, .04)
 
 
 @media (min-width: 1000px)
   .theme-container.no-sidebar
     .sidebar
       display none
+
     .page
       padding-left 0
+
+

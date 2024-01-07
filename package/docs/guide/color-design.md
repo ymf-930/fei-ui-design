@@ -2,7 +2,7 @@
 title: 色彩设计
 ---
 
-<f-back-top></f-back-top>
+
 
 # 色彩设计
 

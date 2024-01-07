@@ -2,7 +2,7 @@
 title: 全局配置  ConfigProvider
 ---
 
-<f-back-top></f-back-top>
+
 
 # 基础用法
 

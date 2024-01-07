@@ -2,7 +2,7 @@
 title: 颜色选择器 ColorPicker
 ---
 
-<f-back-top></f-back-top>
+
 
 # 颜色选择器 ColorPicker
 

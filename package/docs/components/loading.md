@@ -2,7 +2,7 @@
 title: 加载 Loading
 ---
 
-<f-back-top></f-back-top>
+
 
 # 加载 Loading
 

@@ -121,17 +121,19 @@ export function resolveSidebarItems (page, regularPath, site, localePath) {
   const localeConfig = localePath && themeConfig.locales
     ? themeConfig.locales[localePath] || themeConfig
     : themeConfig
-
+  console.log('localeConfig',localeConfig);
   const pageSidebarConfig = page.frontmatter.sidebar || localeConfig.sidebar || themeConfig.sidebar
   if (pageSidebarConfig === 'auto') {
     return resolveHeaders(page)
   }
-
+  console.log('pageSidebarConfig', pageSidebarConfig);
   const sidebarConfig = localeConfig.sidebar || themeConfig.sidebar
+  console.log('sidebarConfig', sidebarConfig);
   if (!sidebarConfig) {
     return []
   } else {
     const { base, config } = resolveMatchingConfig(regularPath, sidebarConfig)
+    console.log(base, config);
     return config
       ? config.map(item => resolveItem(item, pages, base))
       : []
@@ -185,6 +187,7 @@ export function resolveNavLinkItem (linkItem) {
  * @returns { base: string, config: SidebarConfig }
  */
 export function resolveMatchingConfig (regularPath, config) {
+  console.log(regularPath, config);
   if (Array.isArray(config)) {
     return {
       base: '/',
@@ -192,12 +195,14 @@ export function resolveMatchingConfig (regularPath, config) {
     }
   }
   for (const base in config) {
-    if (ensureEndingSlash(regularPath).indexOf(encodeURI(base)) === 0) {
+    console.log(ensureEndingSlash(regularPath));
+    console.log(encodeURI(base));
+    // if (ensureEndingSlash(regularPath).indexOf(encodeURI(base)) === 0) {
       return {
         base,
         config: config[base]
       }
-    }
+    // }
   }
   return {}
 }
@@ -209,6 +214,7 @@ function ensureEndingSlash (path) {
 }
 
 function resolveItem (item, pages, base, groupDepth = 1) {
+  console.log(pages);
   if (typeof item === 'string') {
     return resolvePage(pages, item, base)
   } else if (Array.isArray(item)) {
@@ -222,17 +228,18 @@ function resolveItem (item, pages, base, groupDepth = 1) {
       )
     }
     const children = item.children || []
-    if (children.length === 0 && item.path) {
+ /*   if (children.length === 0 && item.path) {
       return Object.assign(resolvePage(pages, item.path, base), {
         title: item.title
       })
-    }
+    }*/
     return {
       type: 'group',
       path: item.path,
       title: item.title,
       sidebarDepth: item.sidebarDepth,
-      children: children.map(child => resolveItem(child, pages, base, groupDepth + 1)),
+      // children: children.map(child => resolveItem(child, pages, base, groupDepth + 1)),
+      children: item.children,
       collapsable: item.collapsable !== false
     }
   }

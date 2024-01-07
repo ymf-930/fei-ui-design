@@ -1,23 +1,23 @@
 <template>
   <div
-      id="app"
-      class="theme-container"
-      :class="pageClasses"
-      @touchstart="onTouchStart"
-      @touchend="onTouchEnd"
+    id="app"
+    class="theme-container"
+    :class="pageClasses"
+    @touchstart="onTouchStart"
+    @touchend="onTouchEnd"
   >
     <!--    <HeaderNotification/>-->
     <ClientOnly>
       <Navbar
-          v-if="shouldShowNavbar"
-          v-show="!frontmatter.navbar"
-          @toggle-sidebar="toggleSidebar"
-          :class="{'transparent': frontmatter.branding, isSidebarOpen: isSidebarOpen}"
+        v-if="shouldShowNavbar"
+        v-show="!frontmatter.navbar"
+        @toggle-sidebar="toggleSidebar"
+        :class="{'transparent': frontmatter.branding, isSidebarOpen: isSidebarOpen}"
       />
     </ClientOnly>
     <div
-        class="sidebar-mask"
-        @click="toggleSidebar(false)"
+      class="sidebar-mask"
+      @click="toggleSidebar(false)"
     ></div>
     <Home v-if="frontmatter.home"/>
 
@@ -26,33 +26,33 @@
     <!--    <Pass-layout :sidebar-items="sidebarItems" v-else-if="frontmatter.passLayout"/>-->
 
     <navbar v-else-if="frontmatter.navbar"/>
-        <Page
-            v-else
-            :sidebar-items="sidebarItems"
-        >
-          <slot
-              name="page-top"
-              slot="top"
-          />
-          <slot
-              name="page-bottom"
-              slot="bottom"
-          />
-        </Page>
+    <Page
+      v-else
+      :sidebar-items="sidebarItems"
+    >
+      <slot
+        name="page-top"
+        slot="top"
+      />
+      <slot
+        name="page-bottom"
+        slot="bottom"
+      />
+    </Page>
 
-    <!--    <Sidebar-->
-    <!--        :items="sidebarItems"-->
-    <!--        @toggle-sidebar="toggleSidebar"-->
-    <!--    >-->
-    <!--      <slot-->
-    <!--          name="sidebar-top"-->
-    <!--          slot="top"-->
-    <!--      />-->
-    <!--      <slot-->
-    <!--          name="sidebar-bottom"-->
-    <!--          slot="bottom"-->
-    <!--      />-->
-    <!--    </Sidebar>-->
+    <Sidebar
+      :items="sidebarItems"
+      @toggle-sidebar="toggleSidebar"
+    >
+      <slot
+        name="sidebar-top"
+        slot="top"
+      />
+      <slot
+        name="sidebar-bottom"
+        slot="bottom"
+      />
+    </Sidebar>
     <ClientOnly>
       <Config v-if="!frontmatter.navbar"/>
     </ClientOnly>
@@ -67,7 +67,7 @@ import {resolveSidebarItems} from '../util'
 import Home from '../components/Home.vue'
 import Navbar from '../components/Navbar.vue'
 import Page from '../components/Page.vue'
-// import Sidebar from '../components/Sidebar.vue'
+import Sidebar from '../components/Sidebar.vue'
 // import DocsHome from '../components/DocsHome'
 import Config from '../components/Config.vue'
 import PassLayout from '../components/PassLayout.vue'
@@ -99,19 +99,20 @@ const shouldShowNavbar = computed(() => {
 })
 const shouldShowSidebar = computed(() => {
   return (
-      !frontmatter.value.home
-      && frontmatter.value.sidebar !== false
-      // && sidebarItems.value.length
+    !frontmatter.value.home
+    && frontmatter.value.sidebar !== false
+    // && sidebarItems.value.length
   )
 })
 const sidebarItems = computed(() => {
   return resolveSidebarItems(
-      page.value,
-      page.value.filePath,
-      site.value,
-      localePath.value
+    page.value,
+    page.value.filePath,
+    site.value,
+    localePath.value
   )
 })
+console.log(sidebarItems.value);
 const pageClasses = computed(() => {
   const userPageClass = frontmatter.value.pageClass
   return [
@@ -135,7 +136,7 @@ function loadDarkModeFavicon() {
   (function (mod) {
     function collectLinks() {
       return Array.prototype.slice.apply(
-          document.head.querySelectorAll('link[rel*="icon"]')
+        document.head.querySelectorAll('link[rel*="icon"]')
       )
     }
 

@@ -2,11 +2,7 @@
 title: 按钮 Button
 ---
 
-<f-back-top></f-back-top>
-
 # 按钮 Button
-
-常用的操作按钮。
 
 ## 基础用法
 
@@ -79,8 +75,6 @@ title: 按钮 Button
 可以设置 `v-waves` 指令来更改点击反馈动画
 
 <preview path="./demo/Button/Waves.vue"></preview>
-
-## Props
 
 ## Props
 

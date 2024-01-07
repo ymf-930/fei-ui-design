@@ -2,7 +2,7 @@
 title: 图钉 Affix
 ---
 
-<f-back-top></f-back-top>
+
 
 # 图钉 Affix
 

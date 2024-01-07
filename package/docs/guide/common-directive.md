@@ -2,7 +2,7 @@
 title: 组件指令
 ---
 
-<f-back-top></f-back-top>
+
 
 # 组件指令
 

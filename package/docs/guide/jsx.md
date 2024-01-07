@@ -2,7 +2,7 @@
 title: JSX & TSX
 ---
 
-<f-back-top></f-back-top>
+
 
 # JSX & TSX
 

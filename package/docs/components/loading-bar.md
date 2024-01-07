@@ -2,7 +2,7 @@
 title: 加载条 LoadingBar
 ---
 
-<f-back-top></f-back-top>
+
 
 # 加载条 LoadingBar
 

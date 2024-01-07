@@ -2,7 +2,7 @@
 title: 通知 Notice
 ---
 
-<f-back-top></f-back-top>
+
 
 # 通知 Notice
 

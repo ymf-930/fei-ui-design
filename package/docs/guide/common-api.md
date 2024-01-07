@@ -2,7 +2,7 @@
 title: 帮助函数
 ---
 
-<f-back-top></f-back-top>
+
 
 # 帮助函数
 

@@ -2,7 +2,7 @@
 title: 日期选择器 DatePicker
 ---
 
-<f-back-top></f-back-top>
+
 
 # 日期选择器 DatePicker
 

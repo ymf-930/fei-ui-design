@@ -2,7 +2,7 @@
 title: 返回顶部 Backtop
 ---
 
-<f-back-top></f-back-top>
+
 
 # 返回顶部 Backtop
 

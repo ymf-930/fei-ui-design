@@ -2,7 +2,7 @@
 title: 内置动画
 ---
 
-<f-back-top></f-back-top>
+
 
 # 内置动画
 

@@ -2,7 +2,7 @@
 title: 安装
 ---
 
-<f-back-top></f-back-top>
+
 
 # 安装
 

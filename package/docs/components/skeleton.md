@@ -2,7 +2,7 @@
 title: 骨架屏 Skeleton
 ---
 
-<f-back-top></f-back-top>
+
 
 # 骨架屏 Skeleton
 

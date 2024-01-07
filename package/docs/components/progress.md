@@ -2,7 +2,7 @@
 title: 进度条 Progress
 ---
 
-<f-back-top></f-back-top>
+
 
 # 进度条 Progress
 

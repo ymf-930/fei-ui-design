@@ -2,7 +2,7 @@
 title: 弹框提示 MessageBox
 ---
 
-<f-back-top></f-back-top>
+
 
 # 弹框提示 MessageBox
 

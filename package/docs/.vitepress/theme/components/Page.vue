@@ -7,7 +7,6 @@
         <i class="bx bx-left-arrow-alt"></i>
       </router-link>
 
-
       <div class="header__content">
         <div ref="flex" class="flex-header">
 
@@ -99,7 +98,7 @@
     <slot name="top"/>
 
     <transition name="fade">
-      <div class="content__default">
+      <div class="vp-doc content__default">
         <Content/>
       </div>
     </transition>

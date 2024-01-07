@@ -2,7 +2,7 @@
 title: 多选框 Checkbox
 ---
 
-<f-back-top></f-back-top>
+
 
 # 多选框 Checkbox
 

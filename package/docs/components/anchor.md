@@ -2,7 +2,7 @@
 title: 锚点 Anchor
 ---
 
-<f-back-top></f-back-top>
+
 
 # 锚点 Anchor
 

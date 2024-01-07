@@ -2,7 +2,7 @@
 title: 滑块组件 Slider
 ---
 
-<f-back-top></f-back-top>
+
 
 # 滑块组件 Slider
 

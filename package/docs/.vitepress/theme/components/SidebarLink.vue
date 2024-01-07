@@ -1,19 +1,17 @@
 <script>
 import { isActive, hashRE, groupHeaders } from '../util'
-
 export default {
   functional: true,
 
   props: ['item', 'sidebarDepth'],
-
   render (h,
     {
       parent: {
-        $page,
-        $site,
+        page,
+        site,
         $route,
-        $themeConfig,
-        $themeLocaleConfig
+        themeConfig,
+        themeLocaleConfig
       },
       props: {
         item,

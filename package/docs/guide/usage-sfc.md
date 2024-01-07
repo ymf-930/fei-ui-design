@@ -2,7 +2,7 @@
 title: 在 SFC 中使用
 ---
 
-<f-back-top></f-back-top>
+
 
 # 在 SFC 中使用
 

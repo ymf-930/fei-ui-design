@@ -2,7 +2,7 @@
 title: 滚动组件 Scrollbar
 ---
 
-<f-back-top></f-back-top>
+
 
 # 滚动组件 Scrollbar
 

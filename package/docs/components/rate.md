@@ -2,7 +2,7 @@
 title: 评分 Rate
 ---
 
-<f-back-top></f-back-top>
+
 
 # 评分 Rate
 

@@ -2,7 +2,7 @@
 title: 标记 Badge
 ---
 
-<f-back-top></f-back-top>
+
 
 # 标记 Badge
 

@@ -2,7 +2,7 @@
 title: 模态框 Modal
 ---
 
-<f-back-top></f-back-top>
+
 
 # 模态框 Modal
 

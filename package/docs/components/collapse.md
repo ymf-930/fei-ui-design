@@ -2,7 +2,7 @@
 title: 折叠面板 Collapse
 ---
 
-<f-back-top></f-back-top>
+
 
 # 折叠面板 Collapse
 

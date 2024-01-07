@@ -2,7 +2,7 @@
 title: 数字输入 InputNumber
 ---
 
-<f-back-top></f-back-top>
+
 
 # 数字输入 InputNumber
 

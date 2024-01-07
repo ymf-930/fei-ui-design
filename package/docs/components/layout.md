@@ -2,7 +2,7 @@
 title: 布局组件 Layout
 ---
 
-<f-back-top></f-back-top>
+
 
 # 布局组件 Layout
 

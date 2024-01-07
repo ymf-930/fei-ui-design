@@ -2,7 +2,7 @@
 title: 通用样式
 ---
 
-<f-back-top></f-back-top>
+
 
 # 通用样式
 

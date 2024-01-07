@@ -2,7 +2,7 @@
 title: 警告提示 Alert
 ---
 
-<f-back-top></f-back-top>
+
 
 # 警告提示 Alert
 

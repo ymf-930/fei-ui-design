@@ -2,7 +2,7 @@
 title: 分割面板 Split
 ---
 
-<f-back-top></f-back-top>
+
 
 # 分割面板 Split
 

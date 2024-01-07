@@ -2,7 +2,7 @@
 title: 消息提示 Message
 ---
 
-<f-back-top></f-back-top>
+
 
 # 消息提示 Message
 

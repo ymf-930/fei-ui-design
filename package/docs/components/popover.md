@@ -2,7 +2,7 @@
 title: 弹出信息 Popover
 ---
 
-<f-back-top></f-back-top>
+
 
 # 弹出信息 Popover
 

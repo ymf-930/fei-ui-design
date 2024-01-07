@@ -2,7 +2,7 @@
 title: 分割线 Divider
 ---
 
-<f-back-top></f-back-top>
+
 
 # 分割线 Divider
 

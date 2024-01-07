@@ -253,7 +253,6 @@ getVar(var)
 .search-box
   display inline-block
   margin-right 1rem
-  margin-right 0px
   position relative
 
   &.showSuggestions

@@ -2,7 +2,7 @@
 title: 数字动画 CountTo
 ---
 
-<f-back-top></f-back-top>
+
 
 # 数字动画 CountTo
 
