@@ -4,8 +4,8 @@
       <header class="hero">
         <div class="points-init">
           <span
-              v-for="span in 16"
-              :key="span"
+            v-for="span in 16"
+            :key="span"
           ></span>
         </div>
         <div class="circle-init"></div>
@@ -16,24 +16,24 @@
 
           <div class="con-btns">
             <NavLink
-                @mouseleave.native="time('vuesax')"
-                @mouseenter.native="vuesax = true, expand = true"
-                title="Get Started"
-                class="action-button"
-                :item="actionLink"
+              @mouseleave.native="time('vuesax')"
+              @mouseenter.native="vuesax = true, expand = true"
+              title="Get Started"
+              class="action-button"
+              :item="actionLink"
             />
             <a
-                @mouseleave="time('discord')"
-                @mouseenter="discord = true, expand = true"
-                title="Discord" class="discord" target="_blank" href="https://discord.gg/6AZNXEa">
+              @mouseleave="time('discord')"
+              @mouseenter="discord = true, expand = true"
+              title="Discord" class="discord" target="_blank" href="https://discord.gg/6AZNXEa">
               <i class='bx bxl-discord'></i>
               Discord
             </a>
 
             <a
-                @mouseleave="time('github')"
-                @mouseenter="github = true, expand = true"
-                title="Github" class="github" target="_blank" href="https://github.com/lusaxweb/vuesax">
+              @mouseleave="time('github')"
+              @mouseenter="github = true, expand = true"
+              title="Github" class="github" target="_blank" href="https://github.com/lusaxweb/vuesax">
               <i class='bx bxl-github'></i>
               <span title="Stargazers" class="badge-star">
                 {{ numberWithCommas }}
@@ -51,10 +51,10 @@
         }"/>
     </div>
 
-<!--    <Illustration1 :data="data.homeFeatures[0]"/>-->
-<!--    <Illustration2 :data="data.homeFeatures[1]"/>-->
-<!--    <Premium-themes :data="data.premiumThemes"/>-->
-<!--    <Footer/>-->
+    <!--    <Illustration1 :data="data.homeFeatures[0]"/>-->
+    <!--    <Illustration2 :data="data.homeFeatures[1]"/>-->
+    <!--    <Premium-themes :data="data.premiumThemes"/>-->
+    <!--    <Footer/>-->
   </main>
 </template>
 
@@ -287,9 +287,9 @@ getVar(var)
   i
     font-size 1.4rem
 
-  //&.github
-  //  padding 10px
-  //  margin-left 0px
+//&.github
+//  padding 10px
+//  margin-left 0px
 
 .logo-vuesax
   max-width 260px

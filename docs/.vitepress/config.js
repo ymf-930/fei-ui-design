@@ -1,8 +1,8 @@
 import { defineConfig } from 'vitepress'
 import { containerPreview, componentPreview } from '@vitepress-demo-preview/plugin'
 import { fileURLToPath, URL } from 'node:url'
-import sidebarDocs from "./sidebar-docs.js"
-import sidebarComps from "./sidebar-comps.js"
+// import sidebarDocs from "./sidebar-docs.js"
+// import sidebarComps from "./sidebar-comps.js"
 
 const baseUrl = process.env.NODE_ENV === 'production' ? '/fei-ui-design/' : '/'
 
@@ -22,7 +22,7 @@ export default defineConfig({
   lang: 'zh-CN',
   base: baseUrl,
   ignoreDeadLinks: true,
-  outDir: '../../site',
+  outDir: '../site',
   title: 'FEI-UI-DESIGN',
   head: [
     ['link', { rel: 'icon', href: `/logos/logo-vuesax-logotipo-vuesax-png-8.png`, media: '(prefers-color-scheme:dark)', type: 'image/png' }],
@@ -49,10 +49,10 @@ export default defineConfig({
       { text: '文档', link: '/guide/introduction' },
       { text: '组件', link: '/components/button' }
     ],
-    sidebar: {
+   /* sidebar: {
       '/guide/': sidebarDocs,
       '/components/': sidebarComps
-    },
+    },*/
     locales: {
       '/': {
         ...getNavbar(),
@@ -101,36 +101,36 @@ function getNavbar (lang = '/') {
       },
       {
         text: lang !== '/'? `文档` : `Document`,
-        link: `${lang}docs/guide/`,
+        link: `${lang}/guide/`,
         items: [
-          { text: lang !== '/'? `介绍` : `Introduction`, link: `${lang}docs/guide/` },
-          { text: lang !== '/'? `开始` : `Getting Started`, link: `${lang}docs/guide/gettingStarted` },
+          { text: lang !== '/'? `介绍` : `Introduction`, link: `${lang}/guide/` },
+          { text: lang !== '/'? `开始` : `Getting Started`, link: `${lang}/guide/gettingStarted` },
         ]
       },
       {
         text: lang !== '/'? `组件` : `Components`,
-        link: `${lang}docs/components`,
+        link: `${lang}/components`,
         items: [
           {
             text: lang !== '/'? `组件` : `Components`,
             items: [
-              { text: `Button`, link: `${lang}docs/components/` },
-              { text: `Alert`, link: `${lang}docs/components/Alert` },
-              { text: `Loading`, link: `${lang}docs/components/Loading` },
-              { text: `Input`, link: `${lang}docs/components/Input` },
-							{ text: 'Checkbox', link: `${lang}docs/components/Checkbox` },
-							{ text: 'Switch', link: `${lang}docs/components/Switch` },
-							{ text: 'Select', link: `${lang}docs/components/Select` },
-							{ text: 'Avatar', link: `${lang}docs/components/Avatar` },
-							{ text: 'Notification', link: `${lang}docs/components/Notification` },
-							{ text: 'Radio', link: `${lang}docs/components/Radio` },
-							{ text: 'Tooltip', link: `${lang}docs/components/Tooltip` },
-							{ text: 'Dialog', link: `${lang}docs/components/Dialog` },
-							{ text: 'Pagination', link: `${lang}docs/components/Pagination` },
-							{ text: 'Table', link: `${lang}docs/components/Table` },
-							{ text: 'Navbar', link: `${lang}docs/components/Navbar` },
-							{ text: 'Sidebar', link: `${lang}docs/components/Sidebar` },
-							{ text: 'Card', link: `${lang}docs/components/Card` },
+              { text: `Button`, link: `${lang}/components/` },
+              { text: `Alert`, link: `${lang}/components/Alert` },
+              { text: `Loading`, link: `${lang}/components/Loading` },
+              { text: `Input`, link: `${lang}/components/Input` },
+							{ text: 'Checkbox', link: `${lang}/components/Checkbox` },
+							{ text: 'Switch', link: `${lang}/components/Switch` },
+							{ text: 'Select', link: `${lang}/components/Select` },
+							{ text: 'Avatar', link: `${lang}/components/Avatar` },
+							{ text: 'Notification', link: `${lang}/components/Notification` },
+							{ text: 'Radio', link: `${lang}/components/Radio` },
+							{ text: 'Tooltip', link: `${lang}/components/Tooltip` },
+							{ text: 'Dialog', link: `${lang}/components/Dialog` },
+							{ text: 'Pagination', link: `${lang}/components/Pagination` },
+							{ text: 'Table', link: `${lang}/components/Table` },
+							{ text: 'Navbar', link: `${lang}/components/Navbar` },
+							{ text: 'Sidebar', link: `${lang}/components/Sidebar` },
+							{ text: 'Card', link: `${lang}/components/Card` },
             ]
           }
         ]

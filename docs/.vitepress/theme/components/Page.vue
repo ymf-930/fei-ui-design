@@ -210,7 +210,7 @@ const prev = computed(() => {
 const next = computed(() => {
   const next = frontmatter.value.next
   const obj = {
-    path: '/docs/guide/',
+    path: '/guide/introduction',
     title: 'introduction'
   }
   if (next === false) {

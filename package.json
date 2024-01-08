@@ -26,9 +26,9 @@
     "url": "https://gitee.com/ymf930/fei-ui-design.git"
   },
   "scripts": {
-    "dev": "vitepress dev package/docs",
+    "dev": "vitepress dev docs",
     "build:package": "pnpm run gen-version && pnpm clean && pnpm build:lib && pnpm build:style",
-    "build:site": "vitepress build package/docs",
+    "build:site": "vitepress build docs",
     "preview": "vite preview",
     "clean": "rimraf dist es lib",
     "build:lib": "vite build",

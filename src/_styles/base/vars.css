@@ -1,5 +1,6 @@
 :root {
-  --colors: (primary: #1089ff, success: #52c41a, warning: #fa8c16, danger: #f5222d, info: #35495e);
+  /*--colors: (primary: #1089ff, success: #52c41a, warning: #fa8c16, danger: #f5222d, info: #35495e);*/
+  --colors: (primary: #1a5cff, success: #46c93a, warning: #ffba00, danger: #ff4757, info: #1e1e1e);
 
   @each $val, $color in var(--colors) {
     --fei-color-$(val): $(color);
@@ -56,8 +57,9 @@
   --fei-border-popper-color: #ebeef5;
   /* radius */
   --fei-border-radius-none: 0;
-  --fei-border-radius-default: 2px;
-  --fei-border-radius-medium: 4px;
+  --fei-border-radius-default: 6px;
+  --fei-border-radius-medium: 8px;
+  --fei-border-radius-large: 10px;
   /* font-size */
   --fei-font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei,
     SimSun, sans-serif;

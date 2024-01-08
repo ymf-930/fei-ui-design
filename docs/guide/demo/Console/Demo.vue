@@ -40,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import { Utils } from 'fei-ui-design'
+import { Utils } from '../../../../src'
 
 const Log = Utils.log
 </script>

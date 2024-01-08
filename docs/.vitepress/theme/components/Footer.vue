@@ -62,15 +62,15 @@ export default {
           items: [
             {
               text: 'What is FEI-UI-DESIGN?',
-              link: '/docs/guide/#whats-is-vuesax'
+              link: '/guide/#whats-is-vuesax'
             },
             {
               text: 'Why FEI-UI-DESIGN?',
-              link: '/docs/guide/#why-vuesax'
+              link: '/guide/#why-vuesax'
             },
             {
               text: 'What\'s new in v4',
-              link: '/docs/guide/#features'
+              link: '/guide/#features'
             },
             {
               text: 'FAQ',

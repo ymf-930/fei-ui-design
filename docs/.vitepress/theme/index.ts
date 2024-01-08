@@ -4,12 +4,11 @@ import Layout from "./layouts/Layout.vue"
 import DefaultTheme from "vitepress/theme"
 // import {RouterLink} from 'vue-router'
 import {ElementPlusContainer} from "@vitepress-demo-preview/component";
-import FeiUI from "../../../../src";
-// import FeiUI from "fei-ui-design";
+import FeiUI from "fei-ui-design";
 
 import '@vitepress-demo-preview/component/dist/style.css'
 import './index.css'
-import '../../../../src/_styles/index.css'
+import '../../../src/_styles/index.css'
 
 export default {
   ...DefaultTheme,
