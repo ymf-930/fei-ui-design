@@ -44,13 +44,13 @@
     </p>
 
     <DropdownTransition>
-<!--      v-if="open || !collapsable"-->
+<!--        v-if="open || !collapsable"-->
       <SidebarLinks
         class="sidebar-group-items"
         :items="item.children"
-        :sidebarDepth="item.sidebarDepth"
-        :depth="depth + 1"
       />
+<!--        :sidebarDepth="item.sidebarDepth"-->
+<!--        :depth="depth + 1"-->
     </DropdownTransition>
   </section>
 </template>
@@ -80,8 +80,8 @@ const props = defineProps({
     default: false
   },
   depth:{
-    type: String,
-    default: ''
+    type: Number,
+    default: null
   },
   fixed:{
     type: Boolean,

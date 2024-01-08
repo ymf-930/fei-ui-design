@@ -129,7 +129,7 @@
                           Daniel Churchill
                         </h5>
                         <p>
-                          August 16, 2022
+                          August 16, 2023
                         </p>
                       </div>
 
@@ -164,7 +164,7 @@
                           Bruno Hoffman
                         </h5>
                         <p>
-                          April 25, 2022
+                          April 25, 2023
                         </p>
                       </div>
 
@@ -279,7 +279,7 @@
                         Daniel Churchill
                       </h5>
                       <p>
-                        August 16, 2022
+                        August 16, 2023
                       </p>
                     </div>
 
@@ -314,7 +314,7 @@
                         Bruno Hoffman
                       </h5>
                       <p>
-                        April 25, 2022
+                        April 25, 2023
                       </p>
                     </div>
 

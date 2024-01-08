@@ -316,7 +316,6 @@ getVar(var)
 .switch-dark
   position relative
   width auto !important
-  margin-left: 10px;
 
   &:hover
     .switch-con
@@ -475,6 +474,7 @@ getVar(var)
   button
     width 32px
     height 45px
+    padding 1px 6px
     border-radius 0px
     display flex
     align-items center

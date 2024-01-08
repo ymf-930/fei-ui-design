@@ -112,7 +112,6 @@ getColor(var, alpha = 1)
 
 a.sidebar-link
   font-size .95rem
-  font-weight 400
   display inline-block
   // color $textColor
   color getVar(theme-color)
@@ -120,10 +119,13 @@ a.sidebar-link
   width: 100%
   box-sizing: border-box
   transition all .25s ease
-  opacity .5
+  opacity 0.8
   font-weight normal
   position relative
   margin-left 0px
+  span{
+    font-size .8rem
+  }
   &:after
     content: ''
     position absolute
@@ -137,6 +139,8 @@ a.sidebar-link
     border-radius 0px 5px 5px 0px
   &.active, &:hover
     opacity 1
+    background-color: rgba(0, 0, 0, 0.06);
+    border-radius 0.45rem;
   &.active
     &:after
       height 30px

@@ -17,14 +17,12 @@
         @toggle="toggleGroup(i)"
       />
       <!-- :collapsable="item.collapsable || item.collapsible" -->
-      <ul v-else class="sidebar-links sidebar-group-items">
-        <li>
-          <a :href="item" title="" class="sidebar-link">
-            {{item}}
-          </a>
-        </li>
-      </ul>
-      <!--      <SidebarLink
+      <a  v-else :href="item.link" title="" class="sidebar-link">
+        <f-icon :name="item.icon"></f-icon>
+        {{item.title}}
+        <span v-if="item.alias">({{item.alias}})</span>
+      </a>
+<!--            <SidebarLink
               v-else
               :sidebarDepth="sidebarDepth"
               :item="item"
@@ -42,7 +40,7 @@ export default defineComponent({
 <script setup>
 // import Vue from 'vue'
 import SidebarGroup from './SidebarGroup.vue'
-// import SidebarLink from './SidebarLink.vue'
+import SidebarLink from './SidebarLink.vue'
 import {useData} from "vitepress";
 import {ref} from "vue";
 

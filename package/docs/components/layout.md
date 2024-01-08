@@ -1,10 +1,10 @@
 ---
-title: 布局组件 Layout
+title: 布局 Layout
 ---
 
 
 
-# 布局组件 Layout
+# 布局 Layout
 
 ## 基础用法
 

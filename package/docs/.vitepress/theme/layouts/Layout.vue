@@ -105,6 +105,8 @@ const shouldShowSidebar = computed(() => {
   )
 })
 const sidebarItems = computed(() => {
+  console.log(page.value);
+  // return page.value
   return resolveSidebarItems(
     page.value,
     page.value.filePath,

@@ -68,7 +68,7 @@
               </a>
             </li>
             <li title="View Code Github">
-              <a target="_blank" href="https://github.com/lusaxweb/vuesax-next">
+              <a target="_blank" href="https://github.com/ymf930/fei-ui-design">
                 <i class="bx bx-code-alt"></i>
               </a>
             </li>

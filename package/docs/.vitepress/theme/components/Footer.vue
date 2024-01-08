@@ -40,7 +40,7 @@
 
     <div class="copy">
       <span class="span-copy">
-        Copyright © 2022 FEI-UI-DESIGN
+        Copyright © 2023 FEI-UI-DESIGN
       </span>
       <span class="span-lusaxweb">
         <span>
@@ -91,7 +91,7 @@ export default {
             },
             {
               text: 'Github',
-              link: 'https://github.com/lusaxweb/vuesax-next'
+              link: 'https://github.com/ymf930/fei-ui-design'
             },
             {
               text: 'Privacy Policy',
@@ -104,7 +104,7 @@ export default {
           items: [
             {
               text: 'Github Issues',
-              link: 'https://github.com/lusaxweb/vuesax-next/issues'
+              link: 'https://github.com/ymf930/fei-ui-design/issues'
             },
             // {
             //   text: 'Latest Releases',
@@ -125,7 +125,7 @@ export default {
             },
             {
               text: 'Github',
-              link: 'https://github.com/lusaxweb/vuesax-next/'
+              link: 'https://github.com/ymf930/fei-ui-design/'
             }
           ]
         }
