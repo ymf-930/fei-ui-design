@@ -6,8 +6,8 @@
     <li
       v-for="(item, i) in items"
       :key="i"
+      :class="{'active': item.link === route.path.slice(0,-5)}"
     >
-      <!--      :class="{'active': item.path === $route.path}"-->
       <SidebarGroup
         v-if="item.type === 'group'"
         :item="item"
@@ -61,14 +61,13 @@ const props = defineProps({
 const openGroupIndex = ref(0)
 const allOpen = ref(false)
 const {site, page, theme} = useData()
-// console.log(props.items);
+console.log(props.items);
 // refreshIndex()
 // Vue.observable(this.$site.themeConfig)
 // Vue.observable(this.$vsTheme)
 watch(() => route, () => {
   refreshIndex()
 })
-
 
 function refreshIndex() {
   const index = resolveOpenGroupIndex(route, props.items)
@@ -82,6 +81,7 @@ function toggleGroup(index) {
 }
 
 function isActive(page) {
+  console.log(page);
   return isActive(route, page.value?.regularPath)
 }
 
@@ -96,3 +96,6 @@ function resolveOpenGroupIndex(route, items) {
   return -1
 }
 </script>
+<style lang="stylus" scoped>
+
+</style>

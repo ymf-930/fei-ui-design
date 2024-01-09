@@ -1,5 +1,6 @@
 <template>
-  <a :href="item.link" title="" class="sidebar-link">
+  <a :href="item.link" title=""
+     :class="['sidebar-link', {'active': item.link === route.path.slice(0,-5)}]">
     <f-icon v-if="item.icon" :name="item.icon"></f-icon>
     {{ item.title }}
     <span v-if="item.alias">({{ item.alias }})</span>
@@ -8,8 +9,8 @@
 
 <script setup>
 import {isActive, hashRE, groupHeaders} from '../util'
-import {useData} from "vitepress";
-
+import {useData, useRoute} from "vitepress";
+const route = useRoute()
 const props = defineProps({
   item: {
     type: Object,

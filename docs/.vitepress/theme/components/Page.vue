@@ -170,7 +170,7 @@ const props = defineProps({
   }
 })
 
-const {frontmatter, theme, page, site} = useData()
+const {frontmatter, page, site} = useData()
 const pageRef = ref(null)
 const up = ref(null)
 const header = ref(null)
