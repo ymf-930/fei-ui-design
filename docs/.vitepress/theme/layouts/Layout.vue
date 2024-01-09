@@ -21,7 +21,7 @@
     ></div>
     <Home v-if="frontmatter.home"/>
 
-    <!--    <Docs-home :sidebar-items="sidebarItems" v-else-if="frontmatter.docsHome"/>-->
+<!--        <Docs-home :sidebar-items="sidebarItems" v-else-if="frontmatter.docsHome"/>-->
 
     <!--    <Pass-layout :sidebar-items="sidebarItems" v-else-if="frontmatter.passLayout"/>-->
 
@@ -61,7 +61,7 @@
 
 <script setup>
 import {computed, onMounted, ref} from 'vue'
-import {useData} from 'vitepress'
+import {useData, useRouter} from 'vitepress'
 import {resolveSidebarItems} from '../util'
 
 import Home from '../components/Home.vue'
@@ -72,12 +72,13 @@ import Sidebar from '../components/Sidebar.vue'
 import Config from '../components/Config.vue'
 import PassLayout from '../components/PassLayout.vue'
 // import HeaderNotification from '../components/HeaderNotification.vue'
-import Codefund from '../components/Codefund.vue'
+// import Codefund from '../components/Codefund.vue'
 // import DocsHome from "../components/DocsHome.vue";
 // import navbar from '../components/navbarLayout.vue'
 
 const {site, page, theme, frontmatter} = useData()
-console.log(useData());
+const router = useRouter()
+console.log(router);
 const isSidebarOpen = ref(false)
 const noAdvertiser = ref(false)
 const localePath = ref('/')
@@ -128,9 +129,7 @@ const pageClasses = computed(() => {
 })
 
 onMounted(() => {
-  this.$router.afterEach(() => {
-    isSidebarOpen.value = false
-  })
+  isSidebarOpen.value = false
   loadDarkModeFavicon()
 })
 

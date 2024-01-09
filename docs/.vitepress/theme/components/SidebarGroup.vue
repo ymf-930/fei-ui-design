@@ -9,16 +9,14 @@
       `depth-${depth}`
     ]"
   >
-<!--    v-if="item.path"-->
-<!--    'active': isActive($route, item.path)-->
-    <router-link
-      v-if="item.path"
-      class="sidebar-heading clickable"
-      :class="{
+    <a v-if="item.path"
+       class="sidebar-heading clickable"
+       :class="{
         open,
+        'active': isActive(route, item.path)
       }"
-      :to="item.path"
-      @click.native="$emit('toggle')"
+       :href="item.path"
+       @click.native="$emit('toggle')"
     >
       <span>{{ item.title }}</span>
       <span
@@ -26,7 +24,7 @@
         v-if="collapsable"
         :class="open ? 'down' : 'right'">
       </span>
-    </router-link>
+    </a>
 
     <p
       v-else
@@ -44,13 +42,13 @@
     </p>
 
     <DropdownTransition>
-<!--        v-if="open || !collapsable"-->
+      <!--        v-if="open || !collapsable"-->
       <SidebarLinks
         class="sidebar-group-items"
         :items="item.children"
       />
-<!--        :sidebarDepth="item.sidebarDepth"-->
-<!--        :depth="depth + 1"-->
+      <!--        :sidebarDepth="item.sidebarDepth"-->
+      <!--        :depth="depth + 1"-->
     </DropdownTransition>
   </section>
 </template>
@@ -62,28 +60,30 @@ export default defineComponent({
 })
 </script>
 <script setup>
-import { isActive } from '../util'
+import {isActive} from '../util'
 import DropdownTransition from './DropdownTransition.vue'
 import SidebarLinks from "./SidebarLinks.vue"
-
+import {useRoute} from "vitepress";
+const route = useRoute()
 const props = defineProps({
-  item:{
+  item: {
     type: Object,
-    default: () => {}
+    default: () => {
+    }
   },
-  open:{
+  open: {
     type: Boolean,
     default: false
   },
-  collapsable:{
+  collapsable: {
     type: Boolean,
     default: false
   },
-  depth:{
+  depth: {
     type: Number,
     default: null
   },
-  fixed:{
+  fixed: {
     type: Boolean,
     default: false
   }
@@ -92,29 +92,38 @@ const props = defineProps({
 
 <style lang="stylus">
 getVar(var)
-    unquote("var(--vs-"+var+")")
+  unquote("var(--vs-" + var + ")")
+
 .sidebar-group
   .sidebar-group
     padding-left 0.5em
+
   &:not(.collapsable)
     .sidebar-heading:not(.clickable)
       cursor auto
       color inherit
+
   // refine styles of nested sidebar groups
+
   &.is-sub-group
     padding-left 0
+
     & > .sidebar-heading
       font-size 0.95em
       line-height 1.4
       font-weight normal
       padding-left 2rem
+
       &:not(.clickable)
         opacity 0.5
+
     & > .sidebar-group-items
       padding-left 1rem
+
       & > li > .sidebar-link
         font-size: 0.95em;
         border-left none
+
   &.depth-2
     & > .sidebar-heading
       border-left none
@@ -134,22 +143,27 @@ getVar(var)
   display flex
   align-items center
   justify-content flex-start
+
   box-icon
     max-width 20px
     margin-bottom -4px
     margin-left 4px
+
   &.open
     box-icon
       transform rotate(90deg)
+
   .arrow
     position relative
     top -0.12em
     left 0.5em
+
   &.clickable
     &.active
       font-weight 600
       color $accentColor
       border-left-color $accentColor
+
     &:hover
       color $accentColor
 

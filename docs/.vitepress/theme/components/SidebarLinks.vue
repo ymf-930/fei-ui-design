@@ -16,17 +16,12 @@
         :depth="depth"
         @toggle="toggleGroup(i)"
       />
-      <!-- :collapsable="item.collapsable || item.collapsible" -->
-      <a  v-else :href="item.link" title="" class="sidebar-link">
-        <f-icon :name="item.icon"></f-icon>
-        {{item.title}}
-        <span v-if="item.alias">({{item.alias}})</span>
-      </a>
-<!--            <SidebarLink
-              v-else
-              :sidebarDepth="sidebarDepth"
-              :item="item"
-            />-->
+      <SidebarLink
+        v-else
+        :collapsable="item.collapsable"
+        :sidebarDepth="sidebarDepth"
+        :item="item"
+      />
     </li>
   </ul>
 </template>
@@ -38,24 +33,24 @@ export default defineComponent({
 })
 </script>
 <script setup>
-// import Vue from 'vue'
 import SidebarGroup from './SidebarGroup.vue'
 import SidebarLink from './SidebarLink.vue'
-import {useData} from "vitepress";
-import {ref} from "vue";
+import {useData, useRoute} from "vitepress"
+import {ref, watch} from "vue"
 
+const route = useRoute()
 const props = defineProps({
   items: {
     type: Array,
     default: () => []
   },
   depth: {
-    type: Boolean,
-    default: false
+    type: Number,
+    default: 0
   },
   sidebarDepth: {
-    type: Array,
-    default: () => []
+    type: Number,
+    default: 0
   },
   fixed: {
     type: Boolean,
@@ -66,32 +61,28 @@ const props = defineProps({
 const openGroupIndex = ref(0)
 const allOpen = ref(false)
 const {site, page, theme} = useData()
-
-console.log(useData());
-console.log(props.items);
+// console.log(props.items);
 // refreshIndex()
 // Vue.observable(this.$site.themeConfig)
 // Vue.observable(this.$vsTheme)
+watch(() => route, () => {
+  refreshIndex()
+})
 
-/*  watch: {
-    '$route' () {
-      this.refreshIndex()
-    }
-  },*/
 
-/*function refreshIndex() {
-  const index = resolveOpenGroupIndex(this.$route, props.items)
+function refreshIndex() {
+  const index = resolveOpenGroupIndex(route, props.items)
   if (index > -1) {
     openGroupIndex.value = index
   }
-}*/
+}
 
 function toggleGroup(index) {
   openGroupIndex.value = index === openGroupIndex.value ? -1 : index
 }
 
 function isActive(page) {
-  return isActive(this.$route, page.regularPath)
+  return isActive(route, page.value?.regularPath)
 }
 
 

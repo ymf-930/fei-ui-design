@@ -1,41 +1,41 @@
 <template>
   <div
-      class="search-box"
-      :class="{focused, showSuggestions}"
+    class="search-box"
+    :class="{focused, showSuggestions}"
   >
     <div class="con-input">
       <input
-          @input="query = $event.target.value"
-          aria-label="Search"
-          :value="query"
-          :class="{ 'focused': focused }"
-          :placeholder="placeholder"
-          autocomplete="off"
-          spellcheck="false"
-          @focus="focused = true, $emit('focus')"
-          @blur="focused = false, $emit('blur')"
-          @keyup.enter="go(focusIndex)"
-          @keyup.up="onUp"
-          @keyup.down="onDown"
-          ref="input"
+        @input="searchVal = $event.target.value"
+        aria-label="Search"
+        :value="searchVal"
+        :class="{ 'focused': focused }"
+        :placeholder="placeholder"
+        autocomplete="off"
+        spellcheck="false"
+        @focus="focused = true, emit('focus')"
+        @blur="focused = false, emit('blur')"
+        @keyup.enter="go(focusIndex)"
+        @keyup.up="onUp"
+        @keyup.down="onDown"
+        ref="input"
       >
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
         <path
-            d="M10,18c1.846,0,3.543-0.635,4.897-1.688l4.396,4.396l1.414-1.414l-4.396-4.396C17.365,13.543,18,11.846,18,10 c0-4.411-3.589-8-8-8s-8,3.589-8,8S5.589,18,10,18z M10,4c3.309,0,6,2.691,6,6s-2.691,6-6,6s-6-2.691-6-6S6.691,4,10,4z"/>
+          d="M10,18c1.846,0,3.543-0.635,4.897-1.688l4.396,4.396l1.414-1.414l-4.396-4.396C17.365,13.543,18,11.846,18,10 c0-4.411-3.589-8-8-8s-8,3.589-8,8S5.589,18,10,18z M10,4c3.309,0,6,2.691,6,6s-2.691,6-6,6s-6-2.691-6-6S6.691,4,10,4z"/>
       </svg>
     </div>
     <transition name="fade">
       <ul
-          v-if="showSuggestions"
-          class="suggestions"
-          :class="{ 'align-right': alignRight }"
-          @mouseleave="unfocus"
+        v-if="showSuggestions"
+        class="suggestions"
+        :class="{ 'align-right': alignRight }"
+        @mouseleave="unfocus"
       >
         <li
-            class="suggestion"
-            v-for="(s, i) in suggestions"
-            :key="i"
-            :class="{ focused: i === focusIndex }"
+          class="suggestion"
+          v-for="(s, i) in suggestions"
+          :key="i"
+          :class="{ focused: i === focusIndex }"
         >
           <!--          @mousedown="go(i)"-->
           <!--          @mouseenter="focus(i)"-->
@@ -49,192 +49,183 @@
   </div>
 </template>
 
-<script>
+<script setup>
 /* global SEARCH_MAX_SUGGESTIONS, SEARCH_PATHS, SEARCH_HOTKEYS */
 import {useData} from "vitepress";
+import {computed, onBeforeUnmount, onMounted, ref, watch} from "vue";
 
+const {site} = useData()
+const emit = defineEmits(['focus','blur','showSuggestions'])
 const SEARCH_MAX_SUGGESTIONS = 5
 const SEARCH_PATHS = null
 const SEARCH_HOTKEYS = ['s', '/']
-export default {
-  data() {
-    return {
-      query: '',
-      focused: false,
-      focusIndex: 0,
-      // placeholder: undefined
-      placeholder: 'search'
+
+const input = ref(null)
+const searchVal = ref('')
+const focused = ref(false)
+const focusIndex = ref(0)
+const placeholder = ref(undefined)
+
+const showSuggestions = computed(() => {
+  const active = (
+    focused.value
+    && suggestions.value
+    && suggestions.value.length
+  )
+  return active
+})
+const suggestions = computed(() => {
+  const query = searchVal.value.trim().toLowerCase()
+  if (!query) {
+    return
+  }
+
+  const {pages} = site.value
+  const max = site.value.themeConfig.searchMaxSuggestions || SEARCH_MAX_SUGGESTIONS
+  // const localePath = this.$localePath
+  const localePath = '/'
+  const matches = item => (
+    item
+    && item.title
+    && item.title.toLowerCase().indexOf(query) > -1
+  )
+  const res = []
+  for (let i = 0; i < pages.length; i++) {
+    if (res.length >= max) break
+    const p = pages[i]
+    // filter out results that do not match current locale
+    if (getPageLocalePath(p) !== localePath) {
+      continue
     }
-  },
 
-  mounted() {
-    const {theme} = useData()
-    console.log(theme);
-    this.placeholder = theme.value.searchPlaceholder || 'search'
-    document.addEventListener('keydown', this.onHotkey)
-  },
-
-  beforeDestroy() {
-    document.removeEventListener('keydown', this.onHotkey)
-  },
-
-  watch: {
-    suggestions() {
-      const active = (
-          this.focused
-          && this.suggestions
-          && this.suggestions.length
-      )
-      this.$emit('showSuggestions', active)
-    },
-    focused() {
-      const active = (
-          this.focused
-          && this.suggestions
-          && this.suggestions.length
-      )
-      this.$emit('showSuggestions', active)
+    // filter out results that do not match searchable paths
+    if (!isSearchable(p)) {
+      continue
     }
-  },
 
-  computed: {
-    showSuggestions() {
-      const active = (
-          this.focused
-          && this.suggestions
-          && this.suggestions.length
-      )
-      return active
-    },
-
-    suggestions() {
-      const query = this.query.trim().toLowerCase()
-      if (!query) {
-        return
-      }
-
-      const {pages} = this.$site
-      const max = this.$site.themeConfig.searchMaxSuggestions || SEARCH_MAX_SUGGESTIONS
-      const localePath = this.$localePath
-      const matches = item => (
-          item
-          && item.title
-          && item.title.toLowerCase().indexOf(query) > -1
-      )
-      const res = []
-      for (let i = 0; i < pages.length; i++) {
+    if (matches(p)) {
+      res.push(p)
+    } else if (p.headers) {
+      for (let j = 0; j < p.headers.length; j++) {
         if (res.length >= max) break
-        const p = pages[i]
-        // filter out results that do not match current locale
-        if (this.getPageLocalePath(p) !== localePath) {
-          continue
-        }
-
-        // filter out results that do not match searchable paths
-        if (!this.isSearchable(p)) {
-          continue
-        }
-
-        if (matches(p)) {
-          res.push(p)
-        } else if (p.headers) {
-          for (let j = 0; j < p.headers.length; j++) {
-            if (res.length >= max) break
-            const h = p.headers[j]
-            if (matches(h)) {
-              res.push(Object.assign({}, p, {
-                path: p.path + '#' + h.slug,
-                header: h
-              }))
-            }
-          }
+        const h = p.headers[j]
+        if (matches(h)) {
+          res.push(Object.assign({}, p, {
+            path: p.path + '#' + h.slug,
+            header: h
+          }))
         }
       }
-      return res
-    },
-
-    // make suggestions align right when there are not enough items
-    alignRight() {
-      const navCount = (this.$site.themeConfig.nav || []).length
-      const repo = this.$site.repo ? 1 : 0
-      return navCount + repo <= 2
     }
-  },
+  }
+  return res
+})
+// make suggestions align right when there are not enough items
+const alignRight = computed(() => {
+  const navCount = (site.value.themeConfig.nav || []).length
+  const repo = site.value.repo ? 1 : 0
+  return navCount + repo <= 2
+})
+onMounted(() => {
+  const {theme} = useData()
+  console.log(theme);
+  placeholder.value = theme.value.searchPlaceholder || 'search'
+  document.addEventListener('keydown', onHotkey)
+})
+onBeforeUnmount(() => {
+  document.removeEventListener('keydown', onHotkey)
+})
+watch(() => suggestions.value, () => {
+  const active = (
+    focused.value
+    && suggestions.value
+    && suggestions.value.length
+  )
+  emit('showSuggestions', active)
+})
+watch(() => focused.value, () => {
+  const active = (
+    focused.value
+    && suggestions.value
+    && suggestions.value.length
+  )
+  emit('showSuggestions', active)
+})
 
-  methods: {
-    getPageLocalePath(page) {
-      for (const localePath in this.$site.locales || {}) {
-        if (localePath !== '/' && page.path.indexOf(localePath) === 0) {
-          return localePath
-        }
-      }
-      return '/'
-    },
+function getPageLocalePath(page) {
+  for (const localePath in site.value.locales || {}) {
+    if (localePath !== '/' && page.path.indexOf(localePath) === 0) {
+      return localePath
+    }
+  }
+  return '/'
+}
 
-    isSearchable(page) {
-      let searchPaths = SEARCH_PATHS
+function isSearchable(page) {
+  let searchPaths = SEARCH_PATHS
 
-      // all paths searchables
-      if (searchPaths === null) {
-        return true
-      }
+  // all paths searchables
+  if (searchPaths === null) {
+    return true
+  }
 
-      searchPaths = Array.isArray(searchPaths) ? searchPaths : new Array(searchPaths)
+  searchPaths = Array.isArray(searchPaths) ? searchPaths : new Array(searchPaths)
 
-      return searchPaths.filter(path => {
-        return page.path.match(path)
-      }).length > 0
-    },
+  return searchPaths.filter(path => {
+    return page.path.match(path)
+  }).length > 0
+}
 
-    onHotkey(event) {
-      if (event.srcElement === document.body && SEARCH_HOTKEYS.includes(event.key)) {
-        this.$refs.input.focus()
-        event.preventDefault()
-      }
-    },
+function onHotkey(event) {
+  if (event.srcElement === document.body && SEARCH_HOTKEYS.includes(event.key)) {
+    input.value && input.value.focus()
+    event.preventDefault()
+  }
+}
 
-    onUp() {
-      if (this.showSuggestions) {
-        if (this.focusIndex > 0) {
-          this.focusIndex--
-        } else {
-          this.focusIndex = this.suggestions.length - 1
-        }
-      }
-    },
-
-    onDown() {
-      if (this.showSuggestions) {
-        if (this.focusIndex < this.suggestions.length - 1) {
-          this.focusIndex++
-        } else {
-          this.focusIndex = 0
-        }
-      }
-    },
-
-    go(i) {
-      if (!this.showSuggestions) {
-        return
-      }
-      this.$router.push(this.suggestions[i].path)
-      this.query = ''
-      this.focusIndex = 0
-    },
-
-    focus(i) {
-      this.focusIndex = i
-    },
-
-    unfocus() {
-      this.focusIndex = -1
+function onUp() {
+  if (showSuggestions.value) {
+    if (focusIndex.value > 0) {
+      focusIndex.value--
+    } else {
+      focusIndex.value = suggestions.value.length - 1
     }
   }
 }
+
+function onDown() {
+  if (showSuggestions.value) {
+    if (focusIndex.value < suggestions.value.length - 1) {
+      focusIndex.value++
+    } else {
+      focusIndex.value = 0
+    }
+  }
+}
+
+function go(i) {
+  if (!showSuggestions.value) {
+    return
+  }
+  router.push(suggestions.value[i].path)
+  searchVal.value = ''
+  focusIndex.value = 0
+}
+
+
+function focus(i) {
+  focusIndex.value = i
+}
+
+function unfocus() {
+  focusIndex.value = -1
+}
+
+
 </script>
 
 <style scoped lang="stylus">
-$borderColor = rgba(0,0,0, .1)
+$borderColor = rgba(0, 0, 0, .1)
 getVar(var)
   unquote("var(--vs-" + var + ")")
 

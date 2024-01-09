@@ -2,18 +2,15 @@
   <header class="navbar fixed">
     <SidebarButton @toggle-sidebar="$emit('toggle-sidebar')"/>
 
-    <router-link
-        to="/"
-        class="home-link"
-    >
+    <a href="/" class="home-link">
       <div flex="cross:center">
         <img class="logo-img" src="../../../public/vuesax-only.png" alt="">
         <h1 class="logo-title pl-10">F-UI-DESIGN</h1>
       </div>
-    </router-link>
+    </a>
     <div :class="{'remove-links': focused}"
          class="external-links-search">
-      <div class="links"
+      <div ref='linkRef' class="links"
            :style="linksWrapMaxWidth
            ? {'max-width': linksWrapMaxWidth + 'px'}
            : {}"
@@ -27,10 +24,10 @@
         </a>
       </div>
       <SearchBox
-          @focus="focused = true"
-          @blur="focused = false"
-          @showSuggestions="handleShowSuggestions"
-          v-if="theme.search !== false && frontmatter.search !== false"/>
+        @focus="focused = true"
+        @blur="focused = false"
+        @showSuggestions="handleShowSuggestions"
+        v-if="theme.search !== false && frontmatter.search !== false"/>
     </div>
   </header>
 </template>
@@ -43,6 +40,7 @@ import SearchBox from './SearchBox.vue'
 import {onMounted, ref} from "vue";
 
 const {frontmatter, theme} = useData()
+const linkRef = ref(null)
 const linksWrapMaxWidth = ref(null)
 const showSuggestions = ref(false)
 const focused = ref(false)
@@ -50,13 +48,9 @@ const focused = ref(false)
 
 onMounted(() => {
   const MOBILE_DESKTOP_BREAKPOINT = 719 // refer to config.styl
-  const NAVBAR_VERTICAL_PADDING = parseInt(css(this.$el, 'paddingLeft')) + parseInt(css(this.$el, 'paddingRight'))
   const handleLinksWrapWidth = () => {
     if (document.documentElement.clientWidth < MOBILE_DESKTOP_BREAKPOINT) {
-      this.linksWrapMaxWidth = null
-    } else {
-      this.linksWrapMaxWidth = this.$el.offsetWidth - NAVBAR_VERTICAL_PADDING
-          - (this.$refs.siteName && this.$refs.siteName.offsetWidth || 0)
+      linksWrapMaxWidth.value = null
     }
   }
   handleLinksWrapWidth()
@@ -64,15 +58,15 @@ onMounted(() => {
 
   window.addEventListener('scroll', () => {
     if (window.pageYOffset > 0) {
-      this.$el.classList.add('fixed')
+      linkRef.value.classList.add('fixed')
     } else {
-      this.$el.classList.remove('fixed')
+      linkRef.value.classList.remove('fixed')
     }
   })
 })
 
 function handleShowSuggestions(active) {
-  this.showSuggestions = active
+  showSuggestions.value = active
 }
 
 function css(el, property) {

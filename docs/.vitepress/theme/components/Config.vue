@@ -289,7 +289,8 @@ function ChangeTheme() {
 onMounted(() => {
   // const returnTheme = $vs.setTheme()
   // $vsTheme.themeDarken = returnTheme == 'dark'
-  const returnTheme = 'dark'
+  // const returnTheme = 'dark'
+  const returnTheme = 'light'
   if (returnTheme === 'dark') {
     document.body.classList.add('darken')
   } else {

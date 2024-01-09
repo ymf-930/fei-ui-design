@@ -2,7 +2,6 @@ import "./custom.styl"
 import 'boxicons/css/boxicons.min.css'
 import Layout from "./layouts/Layout.vue"
 import DefaultTheme from "vitepress/theme"
-// import {RouterLink} from 'vue-router'
 import {ElementPlusContainer} from "@vitepress-demo-preview/component";
 import FeiUI from "fei-ui-design";
 
@@ -16,9 +15,8 @@ export default {
   extends: DefaultTheme,
   Layout: Layout,
   enhanceApp({app, router, siteData}) {
+    console.log(router);
     app.use(FeiUI)
-    // app.component(router)
-    app.use(router)
     app.component('demo-preview', ElementPlusContainer)
     // app is the Vue 3 app instance from createApp()
     // router is VitePress' custom router (see `lib/app/router.js`)

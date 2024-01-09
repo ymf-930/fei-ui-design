@@ -2,10 +2,10 @@
   <main ref="pageRef" class="page">
 
     <header ref="header" class="header-page">
-<!--      <router-link v-if="$route.path.indexOf('/docs/') !== -1" class="back-link" to="/docs/">-->
-      <router-link class="back-link" to="/docs/">
+      <!--      <router-link v-if="$route.path.indexOf('/docs/') !== -1" class="back-link" to="/docs/">-->
+      <a class="back-link" href="/docs/">
         <i class="bx bx-left-arrow-alt"></i>
-      </router-link>
+      </a>
 
       <div class="header__content">
         <div ref="flex" class="flex-header">
@@ -115,35 +115,27 @@
 
     <div class="page-nav" v-if="prev || next">
       <p class="inner">
-        <!-- v-show="prev" -->
-        <span
-          class="prev"
-          v-if="prev"
-        >
-          <router-link
-            class="prev"
-            :to="prev.path"
-          >
+        <span class="prev" v-if="prev">
+          <a class="prev" :href="prev.path">
             <i class="bx bx-chevron-left"></i>
             <span>
               {{ prev.title || prev.path }}
             </span>
-          </router-link>
+          </a>
         </span>
 
         <span
           v-if="next"
           class="next"
         >
-          <router-link
-            v-if="next"
-            :to="next.path"
+          <a v-if="next"
+             :href="next.path"
           >
             <span>
               {{ next.title || next.path }}
             </span>
             <i class="bx bx-chevron-right"></i>
-          </router-link>
+          </a>
         </span>
       </p>
     </div>
@@ -162,11 +154,14 @@
 </template>
 
 <script setup>
-import {resolvePage} from '../util'
+import {endingSlashRE, normalize, outboundRE, resolvePage} from '../util'
 import Sidebar2 from './sidebar2.vue'
 import Footer from './Footer.vue'
 import {computed, onMounted, ref} from "vue";
-import {useData} from "vitepress"
+import {useData, useRoute} from "vitepress"
+import dayjs from "dayjs";
+
+const route = useRoute()
 
 const props = defineProps({
   sidebarItems: {
@@ -183,7 +178,7 @@ const title = ref(null)
 const flex = ref(null)
 
 const lastUpdated = computed(() => {
-  return page.value.lastUpdated
+  return dayjs(page.value.lastUpdated).format('YYYY-MM-DD HH:mm:ss')
 })
 
 const lastUpdatedText = computed(() => {
@@ -201,7 +196,7 @@ const prev = computed(() => {
   if (prev === false) {
     return
   } else if (prev) {
-    return resolvePage(site.value.pages, prev, this.$route.path)
+    return resolvePage(site.value.pages, prev, useRouter().path)
   } else {
     return resolvePrev(site.value.pages, props.sidebarItems)
   }
@@ -216,9 +211,29 @@ const next = computed(() => {
   if (next === false) {
     return obj
   } else if (next) {
-    return resolvePage(site.value.pages, next, this.$route.path) || obj
+    return resolvePage(site.value.pages, next, route.path) || obj
   } else {
     return resolveNext(site.value.pages, props.sidebarItems) || obj
+  }
+})
+
+const editLink = computed(() => {
+  const {
+    repo,
+    editLinks,
+    docsDir = '',
+    docsBranch = 'master',
+    docsRepo = repo
+  } = site.value.themeConfig
+
+  let path = normalize(page.value.path)
+  if (endingSlashRE.test(path)) {
+    path += 'README.md'
+  } else {
+    path += '.md'
+  }
+  if (docsRepo && editLinks) {
+    return createEditLink(repo, docsRepo, docsDir, docsBranch, path)
   }
 })
 onMounted(() => {
@@ -267,6 +282,34 @@ onMounted(() => {
 
 function handleUp() {
   window.scrollTo({top: 0, behavior: 'smooth'})
+}
+
+function createEditLink(repo, docsRepo, docsDir, docsBranch, path) {
+  const bitbucket = /bitbucket.org/
+  if (bitbucket.test(repo)) {
+    const base = outboundRE.test(docsRepo)
+      ? docsRepo
+      : repo
+    return (
+      base.replace(endingSlashRE, '')
+      + `/src`
+      + `/${docsBranch}`
+      + (docsDir ? '/' + docsDir.replace(endingSlashRE, '') : '')
+      + path
+      + `?mode=edit&spa=0&at=${docsBranch}&fileviewer=file-view-default`
+    )
+  }
+
+  const base = outboundRE.test(docsRepo)
+    ? docsRepo
+    : `https://github.com/${docsRepo}`
+
+  return (
+    base.replace(endingSlashRE, '')
+    + `/edit/${docsBranch}`
+    + (docsDir ? '/' + docsDir.replace(endingSlashRE, '') : '')
+    + path
+  )
 }
 
 function resolvePrev(page, items) {
@@ -705,6 +748,7 @@ getVar(var)
   padding-top 1rem
   padding-bottom 0
   position relative
+  font-size: 16px;
 
   box-icon
     max-width 18px
@@ -716,7 +760,7 @@ getVar(var)
     align-items center
     justify-content center
     padding 5px 10px
-    padding-left 5px
+    //padding-left 5px
     border-radius 12px
     transition all .25s ease
 
