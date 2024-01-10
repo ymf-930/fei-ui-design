@@ -21,11 +21,8 @@
     ></div>
     <Home v-if="frontmatter.home"/>
 
-<!--        <Docs-home :sidebar-items="sidebarItems" v-else-if="frontmatter.docsHome"/>-->
+    <Docs-home :sidebar-items="sidebarItems" v-else-if="frontmatter.docsHome"/>
 
-    <!--    <Pass-layout :sidebar-items="sidebarItems" v-else-if="frontmatter.passLayout"/>-->
-
-    <navbar v-else-if="frontmatter.navbar"/>
     <Page
       v-else
       :sidebar-items="sidebarItems"
@@ -39,7 +36,6 @@
         slot="bottom"
       />
     </Page>
-
     <Sidebar
       :items="sidebarItems"
       @toggle-sidebar="toggleSidebar"
@@ -68,34 +64,32 @@ import Home from '../components/Home.vue'
 import Navbar from '../components/Navbar.vue'
 import Page from '../components/Page.vue'
 import Sidebar from '../components/Sidebar.vue'
-// import DocsHome from '../components/DocsHome'
+import DocsHome from '../components/DocsHome.vue'
 import Config from '../components/Config.vue'
-import PassLayout from '../components/PassLayout.vue'
 // import HeaderNotification from '../components/HeaderNotification.vue'
-// import Codefund from '../components/Codefund.vue'
-// import DocsHome from "../components/DocsHome.vue";
-// import navbar from '../components/navbarLayout.vue'
 
-const {site, page, theme, frontmatter} = useData()
+const {site, page, frontmatter, title} = useData()
 const router = useRouter()
-console.log(router);
+console.log(useData());
 const isSidebarOpen = ref(false)
-const noAdvertiser = ref(false)
 const localePath = ref('/')
 
 const shouldShowNavbar = computed(() => {
-  // if (
-  //     frontmatter.value.navbar === false
-  //     || theme.navbar === false) {
-  //   return false
-  // }
-  // return (
-  //     frontmatter.value.title
-  //     || theme.logo
-  //     || theme.repo
-  //     || theme.nav
-  //     // || frontmatter.value.themeLocaleConfig.nav
-  // )
+  const { themeConfig } = site.value
+  const { frontmatter } = page.value
+  console.log(themeConfig);
+  if (
+      frontmatter.navbar === false
+      || themeConfig.navbar === false) {
+    return false
+  }
+  return (
+      frontmatter.title
+      || themeConfig.logo
+      || themeConfig.repo
+      || themeConfig.nav
+      // || frontmatter.value.themeLocaleConfig.nav
+  )
   return true
 })
 const shouldShowSidebar = computed(() => {

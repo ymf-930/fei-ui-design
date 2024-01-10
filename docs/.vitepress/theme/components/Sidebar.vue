@@ -98,8 +98,6 @@ getVar(var)
       max-width 20px
       max-height 20px
 
-// vuesax-theme
-
 
 .sidebar
   padding-right 5px

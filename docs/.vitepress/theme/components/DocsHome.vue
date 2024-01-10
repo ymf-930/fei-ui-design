@@ -4,7 +4,6 @@
       :items="sidebarItems"
       :fixed="true"
     />
-
     <Footer />
   </div>
 </template>

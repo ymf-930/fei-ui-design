@@ -43,7 +43,7 @@ export default defineConfig({
       { icon: 'github', link: 'https://github.com/gumingWu/vitepress-fun' }
     ],
     repo: 'ymf930/fei-ui-design',
-    docsDir: 'packages/docs',
+    docsDir: '/docs',
     nav: [
       { text: '首页', link: '/' },
       { text: '文档', link: '/guide/introduction' },

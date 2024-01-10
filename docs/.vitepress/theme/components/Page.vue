@@ -258,19 +258,17 @@ onMounted(() => {
       flex.value.style.marginBottom = `${70 - (window.pageYOffset / 2) > 0 ? 70 - (window.pageYOffset / 2) : 0}px`
     }
 
-    if (header.value) {
-      if (window.pageYOffset > 140) {
-        header.value.classList.add('fixed')
-        header.value.style.width = `${pageRef.value.offsetWidth}px`
-      } else {
-        header.value.style.width = `100%`
-        header.value.classList.remove('fixed')
-      }
+    if (header.value && window.pageYOffset > 140) {
+      header.value.classList.add('fixed')
+      header.value.style.width = `${pageRef.value.offsetWidth}px`
+    } else {
+      header.value.style.width = `100%`
+      header.value.classList.remove('fixed')
     }
   })
 
   window.addEventListener('resize', () => {
-    if (window.pageYOffset > 140) {
+    if (header.value && window.pageYOffset > 140) {
       header.value.classList.add('fixed')
       header.value.style.width = `${pageRef.value.offsetWidth}px`
     } else {

@@ -32,6 +32,9 @@ dependencies:
   vue:
     specifier: ^3.4.5
     version: 3.4.5(typescript@5.3.3)
+  vuesax:
+    specifier: 4.0.1-alpha.25
+    version: 4.0.1-alpha.25(vue@3.4.5)
 
 devDependencies:
   '@esbuild-kit/cjs-loader':
@@ -7730,6 +7733,14 @@ packages:
       - supports-color
     dev: true
 
+  /vue-router@3.6.5(vue@3.4.5):
+    resolution: {integrity: sha512-VYXZQLtjuvKxxcshuRAwjHnciqZVoXAjTjcqBTz4rKc8qih9g9pI3hbDjmqXaHdgL3v8pV6P8Z335XvHzESxLQ==, tarball: https://registry.npmmirror.com/vue-router/-/vue-router-3.6.5.tgz}
+    peerDependencies:
+      vue: ^2
+    dependencies:
+      vue: 3.4.5(typescript@5.3.3)
+    dev: false
+
   /vue-template-compiler@2.7.16:
     resolution: {integrity: sha512-AYbUWAJHLGGQM7+cNTELw+KsOG9nl2CnSv467WobS5Cv9uk3wFcnr1Etsz2sEIHEZvw1U+o9mRlEO6QbZvUPGQ==}
     dependencies:
@@ -7763,6 +7774,15 @@ packages:
       '@vue/server-renderer': 3.4.5(vue@3.4.5)
       '@vue/shared': 3.4.5
       typescript: 5.3.3
+
+  /vuesax@4.0.1-alpha.25(vue@3.4.5):
+    resolution: {integrity: sha512-cVLpKsem/YsMSbiy2s2M0O6rr8wrakOUFn0JYxtVQ1WgbVUD0/kU2/GMPVeRBNOh+30tRy2TKreFmjqc53vIBQ==, tarball: https://registry.npmmirror.com/vuesax/-/vuesax-4.0.1-alpha.25.tgz}
+    requiresBuild: true
+    dependencies:
+      vue-router: 3.6.5(vue@3.4.5)
+    transitivePeerDependencies:
+      - vue
+    dev: false
 
   /w3c-xmlserializer@5.0.0:
     resolution: {integrity: sha512-o8qghlI8NZHU1lLPrpi2+Uq7abh4GGPpYANlalzWxyWteJOCsr/P+oPBA49TOLu5FTZO4d3F9MnWJfiMo4BkmA==}

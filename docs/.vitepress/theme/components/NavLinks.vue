@@ -1,21 +1,21 @@
 <template>
   <nav
-      class="nav-links"
-      v-if="userLinks.length || repoLink"
+    class="nav-links"
+    v-if="userLinks.length || repoLink"
   >
     <!-- user links -->
     <div
-        class="nav-item"
-        v-for="item in userLinks"
-        :key="item.link"
+      class="nav-item"
+      v-for="item in userLinks"
+      :key="item.link"
     >
       <DropdownLink
-          v-if="item.type === 'links'"
-          :item="item"
+        v-if="item.type === 'links'"
+        :item="item"
       />
       <NavLink
-          v-else
-          :item="item"
+        v-else
+        :item="item"
       />
     </div>
   </nav>
@@ -28,17 +28,16 @@ import {useData} from "vitepress"
 import {computed} from "vue"
 
 const {site, theme} = useData()
-
+const {themeConfig} = site.value
 const userLinks = computed(() => {
-  return site.value.themeConfig.nav || []
+  return themeConfig.nav || []
 })
-console.log(userLinks.value);
 const repoLink = computed(() => {
-  const {repo} = theme
+  const {repo} = site.value.themeConfig
   if (repo) {
     return /^https?:/.test(repo)
-        ? repo
-        : `https://github.com/${repo}`
+      ? repo
+      : `https://github.com/${repo}`
   }
 })
 </script>
@@ -46,8 +45,9 @@ const repoLink = computed(() => {
 <style lang="stylus">
 getVar(var)
   unquote("var(--vs-" + var + ")")
+
 getColor(vsColor, alpha = 1)
-  unquote("rgba(var(--vs-"+vsColor+"), "+alpha+")")
+  unquote("rgba(var(--vs-" + vsColor + "), " +alpha + ")")
 
 .nav-links
   display flex

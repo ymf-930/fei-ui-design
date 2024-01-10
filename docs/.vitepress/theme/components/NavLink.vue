@@ -1,18 +1,17 @@
 <template>
-  <a class="nav-link"
-      :href="link"
-      v-if="!isExternal(link)"
+  <a :class="['nav-link',{'router-link-active': isActive}]"
+     :href="link"
+     v-if="!isExternal(link)"
   >
     {{ item.text }}
     <i class="bx bx-chevron-down"></i>
   </a>
-<!--      :exact="exact || $route.path.indexOf('/guide/') !== -1 && item.text === 'Documentation' || item.text === 'Button'"-->
   <a
-      v-else
-      :href="link"
-      class="nav-link external"
-      :target="isMailto(link) || isTel(link) ? null : '_blank'"
-      :rel="isMailto(link) || isTel(link) ? null : 'noopener noreferrer'"
+    v-else
+    :href="link"
+    class="nav-link external"
+    :target="isMailto(link) || isTel(link) ? null : '_blank'"
+    :rel="isMailto(link) || isTel(link) ? null : 'noopener noreferrer'"
   >
     {{ item.text }}
     <!-- <OutboundLink/> -->
@@ -20,10 +19,12 @@
 </template>
 
 <script setup>
-import {isExternal, isMailto, isTel, ensureExt} from '../util'
 import {computed} from "vue";
-import {useData} from "vitepress"
-const {theme} = useData()
+import {isExternal, isMailto, isTel, ensureExt} from '../util'
+import {useData, useRoute} from "vitepress"
+
+const route = useRoute()
+const {theme, site} = useData()
 const props = defineProps({
   item: {
     required: true
@@ -34,11 +35,10 @@ const props = defineProps({
 const link = computed(() => {
   return ensureExt(props.item.link)
 })
-const exact = computed(() => {
-  if (theme.value.locales) {
-    return Object.keys(theme.value.locales).some(rootLink => rootLink === props.item.link)
-  }
-  return link.value === '/'
+const isActive = computed(() => {
+  return props.item.text !== '首页'
+    && route.path.indexOf('/guide/') !== -1 && props.item.text === '文档'
+    || route.path.indexOf('/components/') !== -1 && props.item.text === '组件'
 })
 </script>
 <style lang="stylus">
