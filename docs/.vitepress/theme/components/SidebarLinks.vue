@@ -18,10 +18,14 @@
       />
       <SidebarLink
         v-else
-        :collapsable="item.collapsable"
         :sidebarDepth="sidebarDepth"
         :item="item"
       />
+<!--      <ASidebarLink
+        v-else
+        :sidebarDepth="sidebarDepth"
+        :item="item"
+      />-->
     </li>
   </ul>
 </template>
@@ -37,6 +41,7 @@ import SidebarGroup from './SidebarGroup.vue'
 import SidebarLink from './SidebarLink.vue'
 import {useData, useRoute} from "vitepress"
 import {ref, watch} from "vue"
+// import ASidebarLink from "./ASidebarLink.vue"
 
 const route = useRoute()
 const props = defineProps({
@@ -61,7 +66,7 @@ const props = defineProps({
 const openGroupIndex = ref(0)
 const allOpen = ref(false)
 const {site, page, theme} = useData()
-console.log(props.items);
+// console.log(props.items);
 // refreshIndex()
 // Vue.observable(this.$site.themeConfig)
 // Vue.observable(this.$vsTheme)

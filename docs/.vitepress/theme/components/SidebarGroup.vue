@@ -9,13 +9,13 @@
       `depth-${depth}`
     ]"
   >
-    <a v-if="item.path"
+    <a v-if="item.link"
        class="sidebar-heading clickable"
        :class="{
         open,
-        'active': isActive(route, item.path)
+        'active': isActive(route, item.link)
       }"
-       :href="item.path"
+       :href="item.link"
        @click.native="$emit('toggle')"
     >
       <span>{{ item.title }}</span>

@@ -117,18 +117,18 @@ function resolvePath (relative, base, append) {
  */
 export function resolveSidebarItems (page, regularPath, site, localePath) {
   const { pages, themeConfig } = site
-
+  console.log(site);
   const localeConfig = localePath && themeConfig.locales
     ? themeConfig.locales[localePath] || themeConfig
     : themeConfig
-  console.log('localeConfig',localeConfig);
+  // console.log('localeConfig',localeConfig);
   const pageSidebarConfig = page.frontmatter.sidebar || localeConfig.sidebar || themeConfig.sidebar
   if (pageSidebarConfig === 'auto') {
     return resolveHeaders(page)
   }
-  console.log('pageSidebarConfig', pageSidebarConfig);
+  // console.log('pageSidebarConfig', pageSidebarConfig);
   const sidebarConfig = localeConfig.sidebar || themeConfig.sidebar
-  console.log('sidebarConfig', sidebarConfig);
+  // console.log('sidebarConfig', sidebarConfig);
   if (!sidebarConfig) {
     return []
   } else {
@@ -195,8 +195,8 @@ export function resolveMatchingConfig (regularPath, config) {
     }
   }
   for (const base in config) {
-    console.log(ensureEndingSlash(regularPath));
-    console.log(encodeURI(base));
+    // console.log(ensureEndingSlash(regularPath));
+    // console.log(encodeURI(base));
     // if (ensureEndingSlash(regularPath).indexOf(encodeURI(base)) === 0) {
       return {
         base,
@@ -214,7 +214,8 @@ function ensureEndingSlash (path) {
 }
 
 function resolveItem (item, pages, base, groupDepth = 1) {
-  console.log(pages);
+  // console.log(item);
+  // console.log(pages);
   if (typeof item === 'string') {
     return resolvePage(pages, item, base)
   } else if (Array.isArray(item)) {
@@ -228,14 +229,14 @@ function resolveItem (item, pages, base, groupDepth = 1) {
       )
     }
     const children = item.children || []
- /*   if (children.length === 0 && item.path) {
-      return Object.assign(resolvePage(pages, item.path, base), {
+ /*   if (children.length === 0 && item.link) {
+      return Object.assign(resolvePage(pages, item.link, base), {
         title: item.title
       })
     }*/
     return {
       type: 'group',
-      path: item.path,
+      path: item.link,
       title: item.title,
       sidebarDepth: item.sidebarDepth,
       // children: children.map(child => resolveItem(child, pages, base, groupDepth + 1)),

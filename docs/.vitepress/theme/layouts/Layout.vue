@@ -69,15 +69,14 @@ import Config from '../components/Config.vue'
 // import HeaderNotification from '../components/HeaderNotification.vue'
 
 const {site, page, frontmatter, title} = useData()
-const router = useRouter()
 console.log(useData());
+const router = useRouter()
 const isSidebarOpen = ref(false)
 const localePath = ref('/')
 
 const shouldShowNavbar = computed(() => {
   const { themeConfig } = site.value
   const { frontmatter } = page.value
-  console.log(themeConfig);
   if (
       frontmatter.navbar === false
       || themeConfig.navbar === false) {
@@ -100,16 +99,14 @@ const shouldShowSidebar = computed(() => {
   )
 })
 const sidebarItems = computed(() => {
-  console.log(page.value);
   // return page.value
   return resolveSidebarItems(
     page.value,
-    page.value.filePath,
+    page.value.regularPath || '/',
     site.value,
-    localePath.value
+    localePath.value || '/'
   )
 })
-console.log(sidebarItems.value);
 const pageClasses = computed(() => {
   const userPageClass = frontmatter.value.pageClass
   return [

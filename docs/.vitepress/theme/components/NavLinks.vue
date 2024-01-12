@@ -85,7 +85,7 @@ getColor(vsColor, alpha = 1)
         transition all .25s ease
 
       &:hover, &.router-link-active
-        color getColor(primary) !important
+        color getVar(theme-color) !important
 
       &.router-link-active
         &:after

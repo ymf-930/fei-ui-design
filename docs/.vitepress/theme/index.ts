@@ -17,7 +17,6 @@ export default {
   extends: DefaultTheme,
   Layout: Layout,
   enhanceApp({app, router, siteData}) {
-    console.log(router);
     app.use(FeiUI)
     // app.use(Vuesax)
     app.component('demo-preview', ElementPlusContainer)

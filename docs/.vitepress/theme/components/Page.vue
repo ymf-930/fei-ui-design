@@ -93,7 +93,12 @@
       </svg>
     </header>
 
-    <Sidebar2 key="sidebar-new" :fixed="true" :items="sidebarItems"/>
+    <AsideNav
+      key="sidebar-new"
+      :fixed="true"
+      :anchors="anchors"
+      :currentNav="currentNav"
+    />
 
     <slot name="top"/>
 
@@ -155,14 +160,14 @@
 
 <script setup>
 import {endingSlashRE, normalize, outboundRE, resolvePage} from '../util'
-import Sidebar2 from './sidebar2.vue'
 import Footer from './Footer.vue'
-import {computed, onMounted, ref} from "vue";
+import {computed, nextTick, onMounted, ref, watch} from "vue";
 import {useData, useRoute} from "vitepress"
 import dayjs from "dayjs";
+import AsideNav from "./AsideNav.vue";
 
+const {frontmatter, page, site} = useData()
 const route = useRoute()
-
 const props = defineProps({
   sidebarItems: {
     type: Array,
@@ -170,8 +175,9 @@ const props = defineProps({
   }
 })
 
-const {frontmatter, page, site} = useData()
 const pageRef = ref(null)
+const anchors = ref([])
+const currentNav = ref('')
 const up = ref(null)
 const header = ref(null)
 const title = ref(null)
@@ -236,8 +242,10 @@ const editLink = computed(() => {
     return createEditLink(repo, docsRepo, docsDir, docsBranch, path)
   }
 })
+
 onMounted(() => {
-  window.addEventListener('scroll', () => {
+  fetchAnchors()
+  window.addEventListener('scroll', (e) => {
     if (up.value) {
       if (window.pageYOffset > 300) {
         up.value.classList.add('active')
@@ -258,23 +266,47 @@ onMounted(() => {
       flex.value.style.marginBottom = `${70 - (window.pageYOffset / 2) > 0 ? 70 - (window.pageYOffset / 2) : 0}px`
     }
 
-    if (header.value && window.pageYOffset > 140) {
-      header.value.classList.add('fixed')
-      header.value.style.width = `${pageRef.value.offsetWidth}px`
-    } else {
-      header.value.style.width = `100%`
-      header.value.classList.remove('fixed')
+    if (header.value) {
+      if (window.pageYOffset > 140) {
+        header.value.classList.add('fixed')
+        header.value.style.width = `${pageRef.value.offsetWidth}px`
+      } else {
+        header.value.style.width = `100%`
+        header.value.classList.remove('fixed')
+      }
     }
-  })
+
+    if (pageRef.value){
+      anchors.value.forEach((item, index) => {
+        var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+        console.log(scrollTop);
+        if (scrollTop >= item.scrollTopNum) {
+          currentNav.value = item.id
+        }
+      })
+      console.log(currentNav.value);
+    }
+  },)
 
   window.addEventListener('resize', () => {
-    if (header.value && window.pageYOffset > 140) {
-      header.value.classList.add('fixed')
-      header.value.style.width = `${pageRef.value.offsetWidth}px`
-    } else {
-      header.value.style.width = `100%`
-      header.value.classList.remove('fixed')
+    if (header.value) {
+      if (window.pageYOffset > 140) {
+        header.value.classList.add('fixed')
+        header.value.style.width = `${pageRef.value.offsetWidth}px`
+      } else {
+        header.value.style.width = `100%`
+        header.value.classList.remove('fixed')
+      }
     }
+  })
+})
+
+watch(
+  () => route.path,
+  () => {
+  anchors.value = []
+  nextTick(() => {
+    fetchAnchors()
   })
 })
 
@@ -339,6 +371,20 @@ function flatten(items, res) {
   }
 }
 
+function fetchAnchors() {
+  if (!pageRef.value) return
+  const content = pageRef.value.querySelector('.vp-doc.content__default')
+  if (!content) return
+  const h3 = content.querySelectorAll('h2')
+  anchors.value = Array.from(h3).map(item => {
+    const text = item.innerText.trim()
+    const id = item.getAttribute('id')
+    const scrollTopNum = document.getElementById(id).offsetTop
+    let active = false
+    return {id, text, scrollTopNum, active}
+  })
+  console.log(anchors.value);
+}
 </script>
 
 <style lang="stylus">
@@ -629,7 +675,7 @@ getVar(var)
     width auto
     background transparent
     z-index 1200
-    max-height calc(100vh - 470px)
+    max-height 100vh
     overflow auto
     transition 0s !important
 

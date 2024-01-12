@@ -8,7 +8,7 @@
   </div>
 </template>
 <script>
-import Sidebar from '../components/Sidebar2.vue'
+import Sidebar from './AsideNav.vue'
 import Footer from './Footer.vue'
 export default {
   components: {
