@@ -82,7 +82,7 @@
           <f-icon name="setting-fill"></f-icon>
           <template #title>导航四</template>
         </f-menu-item>
-      </b-menu>
+      </f-menu>
     </f-col>
   </f-row>
 </template>
@@ -97,7 +97,7 @@ function handleClose(key, keyPath) {
 </script>
 
 <style scoped>
-.b-menu-vertical-demo {
+.f-menu-vertical-demo {
   width: 240px;
   border-right: 1px solid #f0f0f0;
 }
