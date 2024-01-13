@@ -6,15 +6,15 @@
     <div class="ul">
       <a target="_blank" href="https://tipe.io/">
         <img class="type" src="tipe.png" alt="">
-        <img class="type themeDarken" src="/tipe.png" alt="">
+        <img class="type themeDarken" src="/home/tipe.png" alt="">
       </a>
       <a target="_blank" href="https://bit.dev/">
         <img src="bit-share-code.png" alt="">
-        <img class="themeDarken" src="/bit-share-code2.png" alt="">
+        <img class="themeDarken" src="/home/bit-share-code2.png" alt="">
       </a>
       <a target="_blank" href="https://www.wrappixel.com/?ref=102">
         <img src="wrappixel-logo.png" alt="">
-        <img class="themeDarken" src="/wrappixel-logo2.png" alt="">
+        <img class="themeDarken" src="/home/wrappixel-logo2.png" alt="">
       </a>
       <a class="plus" target="_blank" href="https://www.patreon.com/bePatron?c=1567892">
         <i class='bx bx-plus'></i>

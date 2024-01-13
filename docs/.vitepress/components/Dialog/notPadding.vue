@@ -5,7 +5,7 @@
     </vs-button>
     <vs-dialog not-close auto-width not-padding v-model="active">
       <div class="con-image">
-        <img src="/foto1.png" alt="">
+        <img src="/home/foto1.png" alt="">
       </div>
     </vs-dialog>
   </div>

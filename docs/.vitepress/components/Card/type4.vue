@@ -5,7 +5,7 @@
         <h3>Art paintings</h3>
       </template>
       <template #img>
-        <img src="/foto2.jpg" alt="">
+        <img src="/home/foto2.jpg" alt="">
       </template>
       <template #text>
         <p>

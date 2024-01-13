@@ -4,7 +4,7 @@
 
     <a href="/" class="home-link">
       <div flex="cross:center">
-        <img class="logo-img" src="/vuesax-only.png" alt="">
+        <img class="logo-img" src="/home/vuesax-only.png" alt="">
         <h1 class="logo-title pl-10">F-UI-DESIGN</h1>
       </div>
     </a>

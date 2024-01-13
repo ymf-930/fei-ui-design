@@ -5,7 +5,7 @@
         <h3>Change destiny</h3>
       </template>
       <template #img>
-        <img src="/foto6.png" alt="">
+        <img src="/home/foto6.png" alt="">
       </template>
       <template #text>
         <p>

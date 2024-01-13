@@ -1,6 +1,6 @@
 <template>
   <div class="call">
-    <img src="/woman.jpg" alt="">
+    <img src="/home/woman.jpg" alt="">
     <footer>
       <vs-button dark icon>
         <i class='bx bx-video-off' ></i>

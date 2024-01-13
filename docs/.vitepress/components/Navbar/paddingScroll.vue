@@ -2,7 +2,7 @@
   <div class="center example-nav">
     <vs-navbar target-scroll="#padding-scroll-content" padding-scroll center-collapsed v-model="active">
       <template #left>
-        <img src="/logo2.png" alt="">
+        <img src="/home/logo2.png" alt="">
       </template>
       <vs-navbar-item :active="active == 'guide'" id="guide">
         Guide

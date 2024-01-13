@@ -5,7 +5,7 @@
         <h3>Live a life of madness</h3>
       </template>
       <template #img>
-        <img src="/foto1.png" alt="">
+        <img src="/home/foto1.png" alt="">
       </template>
       <template #text>
         <p>

@@ -5,7 +5,7 @@
         <h3>Sand to today's time</h3>
       </template>
       <template #img>
-        <img src="/foto13.png" alt="">
+        <img src="/home/foto13.png" alt="">
       </template>
       <template #text>
         <p>

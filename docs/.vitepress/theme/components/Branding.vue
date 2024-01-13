@@ -2,8 +2,8 @@
   <div class="con-branding">
     <div class="content-b">
       <header>
-        <img class="not-darken" src="/vuesax-brand-white.svg" alt="">
-        <img class="has-darken" src="/vuesax-brand-dark.svg" alt="">
+        <img class="not-darken" src="/home/vuesax-brand-white.svg" alt="">
+        <img class="has-darken" src="/home/vuesax-brand-dark.svg" alt="">
       </header>
 
       <div class="b-text">
