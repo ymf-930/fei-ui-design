@@ -64,10 +64,10 @@ import {computed, ref} from 'vue'
 import NavLink from './NavLink.vue'
 import Footer from './Footer.vue'
 import HomeInit from './homeInit.vue'
-import Illustration1 from './HomeIllustration1.vue'
-import Illustration2 from './HomeIllustration2.vue'
+// import Illustration1 from './HomeIllustration1.vue'
+// import Illustration2 from './HomeIllustration2.vue'
 import components from './HomeComponents.vue'
-import PremiumThemes from './premiumThemes.vue'
+// import PremiumThemes from './premiumThemes.vue'
 
 
 const star = ref(3020)
@@ -81,7 +81,7 @@ const {frontmatter} = useData()
 const data = computed(() => {
   return frontmatter.value
 })
-console.log(data.value);
+
 const actionLink = computed(() => {
   return {
     link: data.value.actionLink,
@@ -98,8 +98,8 @@ const numberWithCommas = computed(() => {
 
 
 function time(name) {
-  this.expand = false
-  this[name] = false
+  expand.value = false
+  [name].value = false
 }
 
 </script>
