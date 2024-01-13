@@ -46,8 +46,8 @@ export default defineConfig({
     docsDir: '/docs',
     nav: [
       { text: '首页', link: '/' },
-      { text: '文档', link: '/guide/introduction' },
-      { text: '组件', link: '/components/button' }
+      { text: '文档', link: `${baseUrl}/guide/introduction` },
+      { text: '组件', link: `${baseUrl}/components/button` }
     ],
    /* sidebar: {
       '/guide/': sidebarDocs,
