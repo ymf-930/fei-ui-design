@@ -99,7 +99,13 @@ const numberWithCommas = computed(() => {
 
 function time(name) {
   expand.value = false
-  [name].value = false
+  if (name === 'github'){
+    github.value = false
+  } else if (name === 'discord') {
+    discord.value = false
+  } else if (name === 'vuesax') {
+    vuesax.value = false
+  }
 }
 
 </script>
