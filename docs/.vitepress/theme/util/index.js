@@ -28,6 +28,15 @@ export function isTel (path) {
   return /^tel:/.test(path)
 }
 
+export function isGuide (path) {
+  return /^guide/.test(path)
+}
+
+export function isComponents (path) {
+  return /^components/.test(path)
+}
+
+
 export function ensureExt (path) {
   if (isExternal(path)) {
     return path
@@ -117,7 +126,6 @@ function resolvePath (relative, base, append) {
  */
 export function resolveSidebarItems (page, regularPath, site, localePath) {
   const { pages, themeConfig } = site
-  console.log(site);
   const localeConfig = localePath && themeConfig.locales
     ? themeConfig.locales[localePath] || themeConfig
     : themeConfig
@@ -133,7 +141,7 @@ export function resolveSidebarItems (page, regularPath, site, localePath) {
     return []
   } else {
     const { base, config } = resolveMatchingConfig(regularPath, sidebarConfig)
-    console.log(base, config);
+    // console.log(base, config);
     return config
       ? config.map(item => resolveItem(item, pages, base))
       : []
@@ -149,13 +157,13 @@ function resolveHeaders (page) {
   return [{
     type: 'group',
     collapsable: false,
-    title: page.title,
+    title: page.text,
     path: null,
     children: headers.map(h => ({
       type: 'auto',
       title: h.title,
-      basePath: page.path,
-      path: page.path + '#' + h.slug,
+      basePath: page.link,
+      path: page.link + '#' + h.slug,
       children: h.children || []
     }))
   }]
@@ -187,7 +195,7 @@ export function resolveNavLinkItem (linkItem) {
  * @returns { base: string, config: SidebarConfig }
  */
 export function resolveMatchingConfig (regularPath, config) {
-  console.log(regularPath, config);
+  // console.log(regularPath, config);
   if (Array.isArray(config)) {
     return {
       base: '/',
@@ -214,7 +222,6 @@ function ensureEndingSlash (path) {
 }
 
 function resolveItem (item, pages, base, groupDepth = 1) {
-  // console.log(item);
   // console.log(pages);
   if (typeof item === 'string') {
     return resolvePage(pages, item, base)
@@ -238,6 +245,7 @@ function resolveItem (item, pages, base, groupDepth = 1) {
       type: 'group',
       path: item.link,
       title: item.title,
+      navType: item.navType,
       sidebarDepth: item.sidebarDepth,
       // children: children.map(child => resolveItem(child, pages, base, groupDepth + 1)),
       children: item.children,

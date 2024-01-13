@@ -21,11 +21,6 @@
         :sidebarDepth="sidebarDepth"
         :item="item"
       />
-<!--      <ASidebarLink
-        v-else
-        :sidebarDepth="sidebarDepth"
-        :item="item"
-      />-->
     </li>
   </ul>
 </template>

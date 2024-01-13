@@ -58,7 +58,7 @@
 <script setup>
 import {computed, onMounted, ref} from 'vue'
 import {useData, useRouter} from 'vitepress'
-import {resolveSidebarItems} from '../util'
+import {isComponents, isGuide, resolveSidebarItems} from '../util'
 
 import Home from '../components/Home.vue'
 import Navbar from '../components/Navbar.vue'
@@ -69,7 +69,6 @@ import Config from '../components/Config.vue'
 // import HeaderNotification from '../components/HeaderNotification.vue'
 
 const {site, page, frontmatter, title} = useData()
-console.log(useData());
 const router = useRouter()
 const isSidebarOpen = ref(false)
 const localePath = ref('/')
@@ -100,12 +99,19 @@ const shouldShowSidebar = computed(() => {
 })
 const sidebarItems = computed(() => {
   // return page.value
-  return resolveSidebarItems(
+  const {filePath} = page.value
+  const sidebarList = resolveSidebarItems(
     page.value,
     page.value.regularPath || '/',
     site.value,
     localePath.value || '/'
   )
+  if (isGuide(filePath)){
+    return sidebarList.filter(item=>item.navType === 'guide') || []
+  }
+  if (isComponents(filePath)){
+    return sidebarList.filter(item=>item.navType === 'components') || []
+  }
 })
 const pageClasses = computed(() => {
   const userPageClass = frontmatter.value.pageClass

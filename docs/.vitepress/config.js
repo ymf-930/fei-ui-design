@@ -46,8 +46,8 @@ export default defineConfig({
     docsDir: '/docs',
     nav: [
       { text: '首页', link: '/' },
-      { text: '文档', link: `${baseUrl}/guide/introduction` },
-      { text: '组件', link: `${baseUrl}/components/button` }
+      { text: '文档', link: `${baseUrl}guide/introduction` },
+      { text: '组件', link: `${baseUrl}components/button` }
     ],
    /* sidebar: {
       '/guide/': sidebarDocs,
@@ -65,7 +65,7 @@ export default defineConfig({
     },
     lastUpdated: true,
     linkPrevVersion: 'https://lusaxweb.github.io/vuesax/',
-    searchPlaceholder: 'FEI-UI-DESIGN Search',
+    searchPlaceholder: 'Search',
   },
   markdown: {
     theme: {
@@ -146,36 +146,40 @@ function getSidebar (lang = '/') {
         {
           title: lang !== '/'? `Introduce` : `介绍`,
           collapsable: false,
+          navType:'guide',
           children: [
-            { title: 'Fei UI Design', link: `${baseUrl}/guide/introduction` },
-            { title: '变更日志', link: `${baseUrl}/guide/changelog` }
+            { title: 'Fei UI Design', link: `${baseUrl}guide/introduction` },
+            { title: '变更日志', link: `${baseUrl}guide/changelog` }
           ]
         },
         {
           title: lang !== '/'? `Get Started` : `快速上手`,
           collapsable: false,
+          navType:'guide',
           children: [
-            { title: '安装', link: `${baseUrl}/guide/installation` },
-            { title: '在 SFC 中使用', link: `${baseUrl}/guide/usage-sfc` },
-            { title: '按需引入', link: `${baseUrl}/guide/import-on-demand` }
+            { title: '安装', link: `${baseUrl}guide/installation` },
+            { title: '在 SFC 中使用', link: `${baseUrl}guide/usage-sfc` },
+            { title: '按需引入', link: `${baseUrl}guide/import-on-demand` }
           ]
         },
         {
           title: lang !== '/'? `Guide` : `指南`,
           collapsable: false,
+          navType:'guide',
           children: [
-            { title: 'JSX & TSX', link: `${baseUrl}/guide/jsx` },
-            { title: '色彩设计', link: `${baseUrl}/guide/color-design` },
-            { title: '调整主题', link: `${baseUrl}/guide/custom-theme` },
-            { title: '通用样式', link: `${baseUrl}/guide/common-css` },
-            { title: '帮助函数', link: `${baseUrl}/guide/common-api` },
-            { title: '组件指令', link: `${baseUrl}/guide/common-directive` },
-            { title: '内置动画', link: `${baseUrl}/guide/common-transition` }
+            { title: 'JSX & TSX', link: `${baseUrl}guide/jsx` },
+            { title: '色彩设计', link: `${baseUrl}guide/color-design` },
+            { title: '调整主题', link: `${baseUrl}guide/custom-theme` },
+            { title: '通用样式', link: `${baseUrl}guide/common-css` },
+            { title: '帮助函数', link: `${baseUrl}guide/common-api` },
+            { title: '组件指令', link: `${baseUrl}guide/common-directive` },
+            { title: '内置动画', link: `${baseUrl}guide/common-transition` }
           ]
         },
         {
           title: lang !== '/'? `Common Components` : `通用组件`,
           collapsable: false,
+          navType:'components',
           children: [
             { title: '图标', link: `${baseUrl}components/icon`, icon: 'fire', alias: 'Icon' },
             { title: '按钮', link: `${baseUrl}components/button`, icon: 'Youtube', alias: 'Button' },
@@ -189,6 +193,7 @@ function getSidebar (lang = '/') {
         {
           title: lang !== '/'? `Layout Components` : `布局组件`,
           collapsable: false,
+          navType:'components',
           children: [
             { title: '布局', link: `${baseUrl}components/layout`, icon: 'layout', alias: 'Layout' },
             { title: '栅格', link: `${baseUrl}components/grid`, icon: 'appstore', alias: 'Grid' },
@@ -199,6 +204,7 @@ function getSidebar (lang = '/') {
         {
           title: lang !== '/'? `Data entry component` : `数据录入组件`,
           collapsable: false,
+          navType:'components',
           children: [
             { title: '输入框', link: `${baseUrl}components/input`, icon: 'edit-square', alias: 'Input' },
             { title: '数字输入', link: `${baseUrl}components/input-number`, icon: 'shake', alias: 'InputNumber' },
@@ -219,6 +225,7 @@ function getSidebar (lang = '/') {
         {
           title: lang !== '/'? `Data display Components` : `数据展示组件`,
           collapsable: false,
+          navType:'components',
           children: [
             { title: '树结构', link: `${baseUrl}components/tree`, icon: 'branches', alias: 'Tree' },
             { title: '表格', link: `${baseUrl}components/table`, icon: 'table', alias: 'Table' },
@@ -233,6 +240,7 @@ function getSidebar (lang = '/') {
         {
           title: lang !== '/'? `Navigation Components` : `导航组件`,
           collapsable: false,
+          navType:'components',
           children: [
             { title: '图钉', link: `${baseUrl}components/affix`, icon: 'pushpin', alias: 'Affix' },
             { title: '锚点', link: `${baseUrl}components/anchor`, icon: 'attachment', alias: 'Anchor' },
@@ -247,6 +255,7 @@ function getSidebar (lang = '/') {
         {
           title: lang !== '/'? `Feedback Components` : `反馈组件`,
           collapsable: false,
+
           children: [
             { title: '警告信息', link: `${baseUrl}components/alert`, icon: 'error-fill', alias: 'Alert' },
             { title: '标记', link: `${baseUrl}components/badge`, icon: 'border', alias: 'Badge' },
@@ -266,6 +275,7 @@ function getSidebar (lang = '/') {
         {
           title: lang !== '/'? `Built-in Components` : `内置组件`,
           collapsable: false,
+          navType:'components',
           children: [
             { title: '空状态', link: `${baseUrl}components/empty`, icon: 'border', alias: 'Empty' },
             { title: '滚动组件', link: `${baseUrl}components/scrollbar`, icon: 'container', alias: 'Scrollbar' },
@@ -275,6 +285,7 @@ function getSidebar (lang = '/') {
         {
           title: lang !== '/'? `Configure Components` : `配置组件`,
           collapsable: false,
+          navType:'components',
           children: [
             {title: '全局配置', link: `${lang}components/config-provider`, icon: 'setting', alias: 'ConfigProvider'}
           ]

@@ -194,7 +194,7 @@ const lastUpdatedText = computed(() => {
   if (typeof site.value.themeConfig.lastUpdated === 'string') {
     return site.value.themeConfig.lastUpdated
   }
-  return 'Last Updated'
+  return '最后更新'
 })
 
 const prev = computed(() => {
@@ -279,12 +279,12 @@ onMounted(() => {
     if (pageRef.value){
       anchors.value.forEach((item, index) => {
         var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
-        console.log(scrollTop);
+        // console.log(scrollTop);
         if (scrollTop >= item.scrollTopNum) {
           currentNav.value = item.id
         }
       })
-      console.log(currentNav.value);
+      // console.log(currentNav.value);
     }
   },)
 
@@ -383,7 +383,6 @@ function fetchAnchors() {
     let active = false
     return {id, text, scrollTopNum, active}
   })
-  console.log(anchors.value);
 }
 </script>
 
