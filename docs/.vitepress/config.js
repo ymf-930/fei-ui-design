@@ -97,14 +97,14 @@ function getNavbar (lang = '/') {
     nav: [
       {
         text: lang !== '/'? `首页` : `Home`,
-        link: `${lang}`,
+        link: `${baseUrl}`,
       },
       {
         text: lang !== '/'? `文档` : `Document`,
         link: `${baseUrl}/guide/`,
         items: [
-          { text: lang !== '/'? `介绍` : `Introduction`, link: `${lang}/guide/` },
-          { text: lang !== '/'? `开始` : `Getting Started`, link: `${lang}/guide/gettingStarted` },
+          { text: lang !== '/'? `介绍` : `Introduction`, link: `${baseUrl}/guide/` },
+          { text: lang !== '/'? `开始` : `Getting Started`, link: `${baseUrl}/guide/gettingStarted` },
         ]
       },
       {
@@ -147,30 +147,30 @@ function getSidebar (lang = '/') {
           title: lang !== '/'? `Introduce` : `介绍`,
           collapsable: false,
           children: [
-            { title: 'Fei UI Design', link: '/guide/introduction' },
-            { title: '变更日志', link: '/guide/changelog' }
+            { title: 'Fei UI Design', link: `${baseUrl}/guide/introduction` },
+            { title: '变更日志', link: `${baseUrl}/guide/changelog` }
           ]
         },
         {
           title: lang !== '/'? `Get Started` : `快速上手`,
           collapsable: false,
           children: [
-            { title: '安装', link: '/guide/installation' },
-            { title: '在 SFC 中使用', link: '/guide/usage-sfc' },
-            { title: '按需引入', link: '/guide/import-on-demand' }
+            { title: '安装', link: `${baseUrl}/guide/installation` },
+            { title: '在 SFC 中使用', link: `${baseUrl}/guide/usage-sfc` },
+            { title: '按需引入', link: `${baseUrl}/guide/import-on-demand` }
           ]
         },
         {
           title: lang !== '/'? `Guide` : `指南`,
           collapsable: false,
           children: [
-            { title: 'JSX & TSX', link: '/guide/jsx' },
-            { title: '色彩设计', link: '/guide/color-design' },
-            { title: '调整主题', link: '/guide/custom-theme' },
-            { title: '通用样式', link: '/guide/common-css' },
-            { title: '帮助函数', link: '/guide/common-api' },
-            { title: '组件指令', link: '/guide/common-directive' },
-            { title: '内置动画', link: '/guide/common-transition' }
+            { title: 'JSX & TSX', link: `${baseUrl}/guide/jsx` },
+            { title: '色彩设计', link: `${baseUrl}/guide/color-design` },
+            { title: '调整主题', link: `${baseUrl}/guide/custom-theme` },
+            { title: '通用样式', link: `${baseUrl}/guide/common-css` },
+            { title: '帮助函数', link: `${baseUrl}/guide/common-api` },
+            { title: '组件指令', link: `${baseUrl}/guide/common-directive` },
+            { title: '内置动画', link: `${baseUrl}/guide/common-transition` }
           ]
         },
         {
