@@ -61,7 +61,7 @@
                   <i class='bx bx-bug' ></i>
                 </a>
 
-                <a target="_blank" :href="`https://github.com/lusaxweb/vuesax/`" >
+                <a target="_blank" :href="`https://github.com/ymf-930/fei-ui-design/`" >
                   <i class='bx bx-terminal' ></i>
                 </a>
               </td>

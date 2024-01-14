@@ -16,8 +16,8 @@
 
           <div class="con-btns">
             <NavLink
-              @mouseleave.native="time('vuesax')"
-              @mouseenter.native="vuesax = true, expand = true"
+              @mouseleave.native="time('fuidesign')"
+              @mouseenter.native="fuidesign = true, expand = true"
               title="Get Started"
               class="action-button"
               :item="actionLink"
@@ -33,7 +33,7 @@
             <a
               @mouseleave="time('github')"
               @mouseenter="github = true, expand = true"
-              title="Github" class="github" target="_blank" href="https://github.com/lusaxweb/vuesax">
+              title="Github" class="github" target="_blank" href="https://github.com/ymf-930/fei-ui-design">
               <f-icon name="github-fill"></f-icon>
               <span title="Stargazers" class="badge-star">
                 {{ numberWithCommas }}
@@ -46,7 +46,7 @@
       <components :class="{
         'github-hover':github,
         'gitee-hover':gitee,
-        'vuesax-hover':vuesax,
+        'fuidesign-hover':fuidesign,
         'btn-hover': expand,
         }"/>
     </div>
@@ -73,7 +73,7 @@ import components from './HomeComponents.vue'
 const star = ref(3020)
 const github = ref(false)
 const gitee = ref(false)
-const vuesax = ref(false)
+const fuidesign = ref(false)
 const expand = ref(false)
 
 const {frontmatter} = useData()
@@ -103,8 +103,8 @@ function time(name) {
     github.value = false
   } else if (name === 'gitee') {
     gitee.value = false
-  } else if (name === 'vuesax') {
-    vuesax.value = false
+  } else if (name === 'fuidesign') {
+    fuidesign.value = false
   }
 }
 
@@ -297,7 +297,7 @@ getVar(var)
 //  padding 10px
 //  margin-left 0px
 
-.logo-vuesax
+.logo-fuidesign
   max-width 260px
   fill getVar(theme-color)
 

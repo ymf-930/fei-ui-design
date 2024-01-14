@@ -13,6 +13,8 @@
   &.is-hover-shadow:focus,
   &.is-hover-shadow:hover {
     box-shadow: var(--fei-shadow-popper);
+    -webkit-transform: scale(1.02);
+    transform: scale(1.02);
   }
 
   &.is-never-shadow,

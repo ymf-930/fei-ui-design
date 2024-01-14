@@ -1402,7 +1402,7 @@ getVar(var)
     z-index 100
     // overflow hidden
     &.btn-hover
-      &.vuesax-hover
+      &.fuidesign-hover
         .vuesax-logo
           transform scale(1)
           opacity 1
