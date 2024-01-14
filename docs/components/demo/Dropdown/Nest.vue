@@ -12,7 +12,7 @@
           <f-dropdown placement="right-start">
             <f-dropdown-item>
               特色菜系
-              <f-icon name="right"></f-icon>
+              <i class='bx bx-chevron-right'></i>
             </f-dropdown-item>
             <template #dropdown>
               <f-dropdown-menu>

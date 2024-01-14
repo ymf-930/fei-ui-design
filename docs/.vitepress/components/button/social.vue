@@ -114,7 +114,7 @@
 
     <vs-button
       icon
-      color="discord"
+      color="gitee"
     >
       <i class='bx bxl-discord'></i>
     </vs-button>

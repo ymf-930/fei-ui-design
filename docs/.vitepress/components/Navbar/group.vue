@@ -30,8 +30,8 @@
           <vs-navbar-item :active="active == 'Github'" id="Github">
             Github
           </vs-navbar-item>
-          <vs-navbar-item :active="active == 'Discord'" id="Discord">
-            Discord
+          <vs-navbar-item :active="active == 'Gitee'" id="Gitee">
+            Gitee
           </vs-navbar-item>
           <vs-navbar-item :active="active == 'Twitter'" id="Twitter">
             Twitter
@@ -48,7 +48,7 @@
 
       <template #right>
         <vs-button flat >Login</vs-button>
-        <vs-button>Get Started</vs-button>
+        <vs-button>快速开始</vs-button>
       </template>
     </vs-navbar>
     <div class="square">

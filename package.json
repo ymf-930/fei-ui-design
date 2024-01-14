@@ -17,13 +17,13 @@
   ],
   "private": false,
   "type": "module",
-  "homepage": "https://ymf930.gitee.io/fei-ui-design/",
+  "homepage": "https://ymf-930.gitee.io/fei-ui-design/",
   "main": "./lib/src/index.js",
   "module": "./es/src/index.mjs",
   "types": "./dist/@types/src/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://gitee.com/ymf930/fei-ui-design.git"
+    "url": "https://gitee.com/ymf-930/fei-ui-design.git"
   },
   "scripts": {
     "dev": "vitepress dev docs",

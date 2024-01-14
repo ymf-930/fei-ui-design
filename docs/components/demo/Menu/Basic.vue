@@ -22,7 +22,7 @@
       </f-submenu>
       <f-menu-item index="3" disabled>消息中心</f-menu-item>
       <f-menu-item index="4">
-        <a href="https://ymf930.gitee.io/fei-ui-design/" target="_blank">文档外链</a>
+        <a href="https://ymf-930.gitee.io/fei-ui-design/" target="_blank">文档外链</a>
       </f-menu-item>
     </f-menu>
     <f-divider />
@@ -51,7 +51,7 @@
       </f-submenu>
       <f-menu-item index="3" disabled>消息中心</f-menu-item>
       <f-menu-item index="4">
-        <a href="https://ymf930.gitee.io/fei-ui-design/" target="_blank">文档外链</a>
+        <a href="https://ymf-930.gitee.io/fei-ui-design/" target="_blank">文档外链</a>
       </f-menu-item>
     </f-menu>
   </div>

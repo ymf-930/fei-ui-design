@@ -1,7 +1,7 @@
 <template>
   <footer class="footer">
     <!-- Begin Mailchimp Signup Form -->
-    <div class="subscribe-content" id="mc_embed_signup">
+<!--    <div class="subscribe-content" id="mc_embed_signup">
       <div class="con-form">
         <h4 v-if="data" v-html="data" />
         <h4 v-else>
@@ -11,13 +11,13 @@
             <div id="mc_embed_signup_scroll">
 
           <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="Email" required>
-            <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+            &lt;!&ndash; real people should not fill this in and expect good things - do not remove this or risk form bot signups&ndash;&gt;
             <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_0437617d8716e89975fcc0f14_8188b99f63" tabindex="-1" value=""></div>
             <div class="clear"><input type="submit" value="SUSCRIBE!" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
             </div>
         </form>
       </div>
-    </div>
+    </div>-->
     <!--End mc_embed_signup-->
     <div class="footer__uls">
       <ul
@@ -61,72 +61,56 @@ export default {
           title: 'FEI-UI-DESIGN',
           items: [
             {
-              text: 'What is FEI-UI-DESIGN?',
-              link: '/guide/#whats-is-vuesax'
+              text: '介绍',
+              link: '/guide/introduction'
             },
             {
-              text: 'Why FEI-UI-DESIGN?',
-              link: '/guide/#why-vuesax'
+              text: '快速上手',
+              link: '/guide/installation'
             },
             {
-              text: 'What\'s new in v4',
-              link: '/guide/#features'
-            },
-            {
-              text: 'FAQ',
-              link: '/license/#faq'
+              text: '指南',
+              link: '/guide/jsx'
             }
           ]
         },
         {
-          title: 'Resources',
+          title: '资源',
           items: [
-            // {
-            //   text: 'Blog',
-            //   link: '/'
-            // },
             {
-              text: 'Documentation',
-              link: '/docs/'
+              text: '文档',
+              link: '/guide/introduction'
             },
             {
-              text: 'Github',
-              link: 'https://github.com/ymf930/fei-ui-design'
-            },
-            {
-              text: 'Privacy Policy',
-              link: '/license/'
+              text: '组件',
+              link: '/components/button'
             }
           ]
         },
         {
-          title: 'Help',
+          title: '帮助',
           items: [
             {
               text: 'Github Issues',
-              link: 'https://github.com/ymf930/fei-ui-design/issues'
+              link: 'https://github.com/ymf-930/fei-ui-design/issues'
             },
-            // {
-            //   text: 'Latest Releases',
-            //   link: '/'
-            // },
             {
-              text: 'FAQ',
-              link: '/license/#faq'
+              text: 'Gitee Issues',
+              link: 'https://gitee.com/ymf930/fei-ui-design/issues'
             }
           ]
         },
         {
-          title: 'Community',
+          title: '社区',
           items: [
             {
-              text: 'Discord',
-              link: 'https://discord.gg/6AZNXEa'
+              text: 'Github',
+              link: 'https://github.com/ymf-930/fei-ui-design/'
             },
             {
-              text: 'Github',
-              link: 'https://github.com/ymf930/fei-ui-design/'
-            }
+              text: 'Gitee',
+              link: 'https://gitee.com/ymf930/fei-ui-design'
+            },
           ]
         }
       ]

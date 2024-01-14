@@ -39,8 +39,8 @@
         </p>
         <p class="mb-10">
           gitee:
-          <a href="https://gitee.com/ymf930/fei-ui-design" target="_blank">
-            https://gitee.com/ymf930/fei-ui-design
+          <a href="https://gitee.com/ymf-930/fei-ui-design" target="_blank">
+            https://gitee.com/ymf-930/fei-ui-design
           </a>
         </p>
       </div>

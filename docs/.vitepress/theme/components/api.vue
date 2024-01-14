@@ -57,7 +57,7 @@
               </td>
 
               <td class="bugx">
-                <a target="_blank" :href="`https://github.com/lusaxweb/vuesax/issues/new?title=[${page.title}] prop (${tr.name}) - Your Bug Name&amp;body=**Steps to Reproduce**%0A1. Do something%0A2. Do something else.%0A3. Do one last thing.%0A%0A**Expected**%0AThe ${tr.name} should do this%0A%0A**Result**%0AThe ${tr.name} does not do this%0A%0A**Testcase**%0A(fork this to get started)%0Ahttp://jsfiddle.net/example-bug/1/`" >
+                <a target="_blank" :href="`https://github.com/ymf-930/fei-ui-design/issues/new?title=[${page.title}] prop (${tr.name}) - Your Bug Name&amp;body=**Steps to Reproduce**%0A1. Do something%0A2. Do something else.%0A3. Do one last thing.%0A%0A**Expected**%0AThe ${tr.name} should do this%0A%0A**Result**%0AThe ${tr.name} does not do this%0A%0A**Testcase**%0A(fork this to get started)%0Ahttp://jsfiddle.net/example-bug/1/`" >
                   <i class='bx bx-bug' ></i>
                 </a>
 

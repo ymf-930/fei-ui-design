@@ -7,14 +7,14 @@
       <div class="github-logo__2"></div>
       <div class="github-logo__3"></div>
     </div>
-    <div class="con-logo discord-logo">
+    <div class="con-logo gitee-logo">
       <i class='bx bxl-discord'></i>
       <div class="github-logo__1"></div>
       <div class="github-logo__2"></div>
       <div class="github-logo__3"></div>
     </div>
     <div class="con-logo github-logo">
-      <i class='bx bxl-github'></i>
+      <f-icon name="github-fill"></f-icon>
       <div class="github-logo__1"></div>
       <div class="github-logo__2"></div>
       <div class="github-logo__3"></div>
@@ -503,7 +503,7 @@ getVar(var)
     img
       width 50%
       z-index 100
-  &.discord-logo
+  &.gitee-logo
     width 180px
     height 180px
     border-radius 40px 40px 5px 40px
@@ -1407,8 +1407,8 @@ getVar(var)
           transform scale(1)
           opacity 1
 
-      &.discord-hover
-        .discord-logo
+      &.gitee-hover
+        .gitee-logo
           transform scale(1)
           opacity 1
       &.github-hover

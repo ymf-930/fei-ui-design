@@ -31,7 +31,7 @@
   <div class="demo-button">
     <f-button
       @click="
-        Log.printVersion('fei-ui-design', '1.0.0', 'https://ymf930.gitee.io/fei-ui-design/')
+        Log.printVersion('fei-ui-design', '1.0.0', 'https://ymf-930.gitee.io/fei-ui-design/')
       "
     >
       打印版本号连接

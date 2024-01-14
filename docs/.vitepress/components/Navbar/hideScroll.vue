@@ -18,7 +18,7 @@
       </vs-navbar-item>
       <template #right>
         <vs-button flat >Login</vs-button>
-        <vs-button>Get Started</vs-button>
+        <vs-button>快速开始</vs-button>
       </template>
     </vs-navbar>
     <div id="hide-scroll-content" class="square">

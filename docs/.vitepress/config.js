@@ -42,7 +42,7 @@ export default defineConfig({
     socialLinks: [
       { icon: 'github', link: 'https://github.com/gumingWu/vitepress-fun' }
     ],
-    repo: 'ymf930/fei-ui-design',
+    repo: 'ymf-930/fei-ui-design',
     docsDir: '/docs',
     nav: [
       { text: '首页', link: '/' },
@@ -104,7 +104,7 @@ function getNavbar (lang = '/') {
         link: `${baseUrl}/guide/`,
         items: [
           { text: lang !== '/'? `介绍` : `Introduction`, link: `${baseUrl}/guide/` },
-          { text: lang !== '/'? `开始` : `Getting Started`, link: `${baseUrl}/guide/gettingStarted` },
+          { text: lang !== '/'? `快速开始` : `Getting Started`, link: `${baseUrl}/guide/gettingStarted` },
         ]
       },
       {

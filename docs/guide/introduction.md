@@ -8,7 +8,7 @@ title: 介绍
 
 Fei UI Design 是一个 Vue3 的组件库。
 
-要了解如何安装，参见 [安装](/docs/installation.html)
+要了解如何安装，参见 [安装](/guide/installation.html)
 
 它是基于 [f-ui-one](https://ymf930.gitee.io/f-ui-one/#/guide) 更新而来，可以平滑的过度和切换。
 

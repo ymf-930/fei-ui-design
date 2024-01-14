@@ -4,6 +4,8 @@ import Layout from "./layouts/Layout.vue"
 import DefaultTheme from "vitepress/theme"
 import {ElementPlusContainer} from "@vitepress-demo-preview/component";
 import FeiUI from "fei-ui-design";
+import card from "./global-components/card.vue"
+// import codex from "./global-components/codex.vue"
 // import Vuesax from 'vuesax'
 // import 'vuesax/dist/vuesax.css' //Vuesax styles
 
@@ -20,6 +22,8 @@ export default {
     app.use(FeiUI)
     // app.use(Vuesax)
     app.component('demo-preview', ElementPlusContainer)
+    app.component('card', card)
+    // app.component('codex', codex)
     // app is the Vue 3 app instance from createApp()
     // router is VitePress' custom router (see `lib/app/router.js`)
     // siteData is a ref of current site-level metadata.

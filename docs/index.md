@@ -3,8 +3,8 @@
 home: true
 layout: home
 heroText: <b>FEI-UI-DESIGN</b> Framework <br> Components for <a target="_blank" href="https://vuejs.org/" >Vuejs</a>
-tagline: We love what we do. Let us help you do what <b>You love</b>.
-actionText: Get Started
+tagline: 我们热爱我们的工作，让我们帮助你做<b>你喜欢</b>的事。
+actionText: 快速开始
 actionLink: /fei-ui-design/guide/introduction
 suscribe: <b>Subscribe</b> to our <br> Weekly Newsletter
 premiumThemes:

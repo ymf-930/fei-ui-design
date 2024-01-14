@@ -38,7 +38,7 @@
         v-if="collapsable"
         :class="open ? 'down' : 'right'">
       </span> -->
-      <i class="bx bx-chevron-right"></i>
+      <i class='bx bx-chevron-right'></i>
     </p>
 
     <DropdownTransition>

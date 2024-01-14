@@ -21,7 +21,7 @@
               </a>
             </li> -->
 
-            <li title="Share">
+<!--            <li title="Share">
               <button>
                 <i class="bx bx-share-alt"></i>
                 <ul class="options">
@@ -60,15 +60,15 @@
                   </li>
                 </ul>
               </button>
-            </li>
-            <li class="divider"/>
+            </li>-->
+<!--            <li class="divider"/>-->
             <li title="Package NPM">
-              <a target="_blank" href="https://www.npmjs.com/package/vuesax">
+              <a target="_blank" href="https://www.npmjs.com/package/fei-ui-design">
                 <i class="bx bx-package"></i>
               </a>
             </li>
             <li title="View Code Github">
-              <a target="_blank" href="https://github.com/ymf930/fei-ui-design">
+              <a target="_blank" href="https://github.com/ymf-930/fei-ui-design">
                 <i class="bx bx-code-alt"></i>
               </a>
             </li>
@@ -80,7 +80,7 @@
             <li title="Report a Bug">
               <a
                 target="_blank"
-                :href="`https://github.com/lusaxweb/vuesax/issues/new?title=[${page.title}] - Your Bug Name&amp;body=**Steps to Reproduce**%0A1. Do something%0A2. Do something else.%0A3. Do one last thing.%0A%0A**Expected**%0AThe ${page.title} should do this%0A%0A**Result**%0AThe ${page.title} does not do this%0A%0A**Testcase**%0A(fork this to get started)%0Ahttp://jsfiddle.net/exmple-bug/1/`">
+                :href="`https://github.com/ymf-930/fei-ui-design/issues/new?title=[${page.title}] - Your Bug Name&amp;body=**Steps to Reproduce**%0A1. Do something%0A2. Do something else.%0A3. Do one last thing.%0A%0A**Expected**%0AThe ${page.title} should do this%0A%0A**Result**%0AThe ${page.title} does not do this%0A%0A**Testcase**%0A(fork this to get started)%0Ahttp://jsfiddle.net/exmple-bug/1/`">
                 <i class="bx bx-bug"></i>
               </a>
             </li>
@@ -139,7 +139,7 @@
             <span>
               {{ next.title || next.path }}
             </span>
-            <i class="bx bx-chevron-right"></i>
+            <i class='bx bx-chevron-right'></i>
           </a>
         </span>
       </p>
@@ -479,7 +479,7 @@ getVar(var)
   &.fixed
     position fixed
     top 57px
-    z-index 9999
+    z-index 999
     border-radius 0px
     background getVar(theme-bg)
     margin 0px
@@ -703,7 +703,7 @@ getVar(var)
       position fixed !important
       top 55px !important
       z-index 10000 !important
-      max-height calc(100vh - 270px)
+      max-height 100vh
 
     .sidebar-link, .sidebar-heading
       display none

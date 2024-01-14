@@ -18,10 +18,8 @@
           <i title="reload config" class="bx bx-rotate-left"></i>
         </li>
         <li @click="ChangeSidebar">
-          <!-- <box-icon :title="`Hidden Sidebar`" class="hidden-sidebar-hidden" name='left-indent'></box-icon> -->
-          <i title="Hidden Sidebar" class="bx bx-left-indent hidden-sidebar-hidden"></i>
-          <!-- <box-icon :title="`Open Sidebar`" class="visible-sidebar-hidden" name='right-indent' ></box-icon> -->
-          <i title="Open Sidebar" class="bx bx-right-indent visible-sidebar-hidden"></i>
+          <i v-if="sideBarOpen" title="Hidden Sidebar" class="bx bx-left-indent"></i>
+          <i v-else title="Open Sidebar" class="bx bx-right-indent"></i>
         </li>
 <!--        <li :title="`${ !$vsTheme.sidebarCollapseOpen ? 'Open' : 'Close'} sidebar items`" @click="ChangeMenu"
             :class="{'active': !$vsTheme.sidebarCollapseOpen}">
@@ -74,7 +72,7 @@
       </ul>
     </button>
 
-    <button class="btn-lang theme-translate">
+    <button class="btn-lang theme-translate" @click="changeLang">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
         <path d="M0 0h24v24H0z" fill="none"/>
         <path
@@ -111,8 +109,10 @@
 <script setup>
 import {computed, onMounted, ref} from 'vue'
 import {useData} from "vitepress"
+import { Message } from 'fei-ui-design'
 
 const themeDarken = ref(false)
+const sideBarOpen = ref(true)
 const lang = computed(() => {
   const {site, page, theme} = useData()
   const {locales} = site.value
@@ -182,6 +182,7 @@ function reloadConfig() {
 }
 
 function ChangeSidebar() {
+  sideBarOpen.value = !sideBarOpen.value
   if (document.body.classList.contains('hidden-sidebar')) {
     document.body.classList.remove('hidden-sidebar')
   } else {
@@ -270,13 +271,19 @@ function ChangeOpenCode() {
 }
 
 function ChangeTheme() {
-  const returnTheme = this.$vs.toggleTheme()
+  Message.info({message:'暂未开发！', zIndex:3000})
+/*  const returnTheme = this.$vs.toggleTheme()
   this.$vsTheme.themeDarken = returnTheme == 'dark'
   if (returnTheme === 'dark') {
     document.body.classList.add('darken')
   } else {
     document.body.classList.remove('darken')
-  }
+  }*/
+}
+
+
+function changeLang() {
+  Message.info({message:'暂未开发！', zIndex:3000})
 }
 
 // Vue.prototype.$mobile = { active: (localStorage.mobile != 'true') || false }

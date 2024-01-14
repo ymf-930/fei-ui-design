@@ -76,11 +76,11 @@
           </template>
           Codepen
         </vs-sidebar-item>
-        <vs-sidebar-item id="discord">
+        <vs-sidebar-item id="gitee">
           <template #icon>
             <i class='bx bxl-discord'></i>
           </template>
-          Discord
+          Gitee
         </vs-sidebar-item>
         <vs-sidebar-item id="Javascript">
           <template #icon>

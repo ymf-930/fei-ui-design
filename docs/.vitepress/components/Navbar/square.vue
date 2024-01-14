@@ -18,7 +18,7 @@
       </vs-navbar-item>
       <template #right>
         <vs-button color="#fff" flat >Login</vs-button>
-        <vs-button color="#fff" border >Get Started</vs-button>
+        <vs-button color="#fff" border >快速开始</vs-button>
       </template>
     </vs-navbar>
     <div class="square">

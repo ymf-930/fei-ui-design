@@ -19,7 +19,7 @@
       </div>
       <span title="Previous Version" class="v-old">v3.x</span>
       <div class="con-links">
-        <a title="Github" target="_blank" href="https://github.com/ymf930/fei-ui-design">
+        <a title="Github" target="_blank" href="https://github.com/ymf-930/fei-ui-design">
           <i class="bx bxl-github"></i>
         </a>
       </div>

@@ -23,18 +23,18 @@
               :item="actionLink"
             />
             <a
-              @mouseleave="time('discord')"
-              @mouseenter="discord = true, expand = true"
-              title="Discord" class="discord" target="_blank" href="https://discord.gg/6AZNXEa">
+              @mouseleave="time('gitee')"
+              @mouseenter="gitee = true, expand = true"
+              title="Gitee" class="gitee" target="_blank" href="https://gitee.gg/6AZNXEa">
               <i class='bx bxl-discord'></i>
-              Discord
+              Gitee
             </a>
 
             <a
               @mouseleave="time('github')"
               @mouseenter="github = true, expand = true"
               title="Github" class="github" target="_blank" href="https://github.com/lusaxweb/vuesax">
-              <i class='bx bxl-github'></i>
+              <f-icon name="github-fill"></f-icon>
               <span title="Stargazers" class="badge-star">
                 {{ numberWithCommas }}
               </span>
@@ -45,7 +45,7 @@
 
       <components :class="{
         'github-hover':github,
-        'discord-hover':discord,
+        'gitee-hover':gitee,
         'vuesax-hover':vuesax,
         'btn-hover': expand,
         }"/>
@@ -72,7 +72,7 @@ import components from './HomeComponents.vue'
 
 const star = ref(3020)
 const github = ref(false)
-const discord = ref(false)
+const gitee = ref(false)
 const vuesax = ref(false)
 const expand = ref(false)
 
@@ -101,8 +101,8 @@ function time(name) {
   expand.value = false
   if (name === 'github'){
     github.value = false
-  } else if (name === 'discord') {
-    discord.value = false
+  } else if (name === 'gitee') {
+    gitee.value = false
   } else if (name === 'vuesax') {
     vuesax.value = false
   }
@@ -122,7 +122,7 @@ getVar(var)
     &:after
       background-image: radial-gradient(getVar(theme-bg) 0%, getVar(theme-bg) 30%, transparent 70%);
 
-  .discord
+  .gitee
     background getVar(theme-bg)
     color #fff !important
 
@@ -225,7 +225,7 @@ getVar(var)
   align-items center
   justify-content center
 
-.discord
+.gitee
   // background getColor('primary', .1)
   border 0px
   padding 11px 25px
