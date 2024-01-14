@@ -25,7 +25,7 @@
             <a
               @mouseleave="time('gitee')"
               @mouseenter="gitee = true, expand = true"
-              title="Gitee" class="gitee" target="_blank" href="https://gitee.gg/6AZNXEa">
+              title="Gitee" class="gitee" target="_blank" href="https://gitee.com/ymf930/fei-ui-design">
               <i class='bx bxl-discord'></i>
               Gitee
             </a>
