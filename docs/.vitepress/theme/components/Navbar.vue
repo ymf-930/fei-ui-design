@@ -5,7 +5,7 @@
     <a href="/" class="home-link">
       <div flex="cross:center">
         <img class="logo-img" src="/home/vuesax-only.png" alt="">
-        <h1 class="logo-title pl-10 pr-16">F-UI-DESIGN</h1>
+        <h1 class="logo-title pl-10 pr-16">FEI-UI-DESIGN</h1>
         <f-tag type="success" palin>开发中</f-tag>
       </div>
     </a>
@@ -157,7 +157,7 @@ getVar(var)
     background transparent
 
   a, span, img
-    display inline-block
+    //display inline-block
 
   .logo
     height $navbarHeight - 1.4rem

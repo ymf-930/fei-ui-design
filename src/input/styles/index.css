@@ -27,6 +27,13 @@
     color: var(--fei-color-text-secondary);
   }
 
+  &.fei-input-group-with-prepend {
+    > .fei-input {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+
   &.fei-input-group-with-prepend,
   &.fei-input-group-with-append {
     display: inline-flex;
@@ -45,13 +52,25 @@
   }
 
   &.fei-input-group-with-append {
+    display: inline-flex;
+
     .fei-input-icon-clear {
       right: 80px;
     }
-  }
 
-  &.fei-input-group-with-append {
-    display: inline-flex;
+    .fei-input.fei-input-with-suffix {
+      border-radius: var(--fei-border-radius-default);
+    }
+
+    .fei-input {
+      border-top-right-radius: 0;
+      border-end-end-radius: 0;
+    }
+
+    .fei-button {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
   }
 
   .fei-input-group-prepend,
@@ -62,11 +81,17 @@
   .fei-input-group-prepend {
     right: -1px;
     z-index: 1;
+
+    .fei-button {
+      border-top-right-radius: 0;
+      border-end-end-radius: 0;
+    }
   }
 
   .fei-input-group-append {
     left: -1px;
   }
+
   &.is-disabled {
     i {
       color: var(--fei-color-text-disabled) !important;
@@ -122,10 +147,10 @@
   position: relative;
   cursor: text;
   font-weight: normal;
-  transition:
-    border var(--fei-animation-duration-base) ease-in-out,
-    background var(--fei-animation-duration-base) ease-in-out,
-    box-shadow var(--fei-animation-duration-base) ease;
+  transition: border var(--fei-animation-duration-base) ease-in-out,
+  background var(--fei-animation-duration-base) ease-in-out,
+  box-shadow var(--fei-animation-duration-base) ease;
+
   &::-moz-placeholder {
     color: var(--fei-color-text-placeholder);
     opacity: 1;
@@ -186,14 +211,15 @@
   font-size: 14px;
   text-align: center;
   color: var(--fei-color-text-secondary);
+  display: flex;
   justify-content: center;
   align-items: center;
 
-  &-normal {
+  & -normal {
     display: flex;
   }
 
-  &-clear {
+  & -clear {
     z-index: 1;
   }
 }

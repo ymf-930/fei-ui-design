@@ -1,7 +1,7 @@
 .fei-switch {
   display: inline-block;
   width: 44px;
-  height: 22px;
+  height: 25px;
   border-radius: 22px;
   vertical-align: middle;
   border: 1px solid var(--fei-border-color-base);
@@ -15,11 +15,12 @@
     content: '';
     width: 18px;
     height: 18px;
-    border-radius: 18px;
+    border-radius: 50%;
     background-color: var(--fei-white-color);
     position: absolute;
-    left: 1px;
-    top: 1px;
+    left: 2px;
+    top: 50%;
+    transform: translateY(-50%);
     cursor: pointer;
     transition:
       left var(--fei-animation-duration-base) ease-in-out,
@@ -37,24 +38,29 @@
 
   .f-icon-loading {
     position: absolute;
-    left: 1px;
-    top: 1px;
+    left: 3px;
+    top: 4px;
     display: flex;
     justify-content: center;
     align-items: center;
     color: var(--fei-color-primary);
     z-index: 1;
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     transition:
       left var(--fei-animation-duration-base) ease-in-out,
       width var(--fei-animation-duration-base) ease-in-out;
+
+    &::before {
+      transform: scale(0.75);
+      display: block;
+    }
   }
 }
 
 .fei-switch-inner {
   position: absolute;
-  left: 23px;
+  left: 24px;
   top: 50%;
   transform: translate3d(0, -50%, 0);
   height: auto;
@@ -88,21 +94,33 @@
   }
 
   .f-icon-loading {
-    left: 23px;
+    left: 24px;
   }
 }
 
 .fei-switch-large {
   width: 56px;
+  height: 28px;
+
+  &:after {
+    width: 21px;
+    height: 21px;
+    left: 3px;
+  }
 
   .f-icon-loading {
-    left: 1px;
+    width: 21px;
+    height: 21px;
+    left: 3px;
+    top: 3px;
   }
 
   &.fei-switch-checked {
     &:after,
     .f-icon-loading {
-      left: 35px;
+      width: 21px;
+      height: 21px;
+      left: 32px;
     }
   }
 
@@ -112,13 +130,13 @@
     }
 
     &:after {
-      width: 30px;
+      width: 32px;
     }
 
     &.fei-switch-disabled,
     &.is-confirm {
       &.fei-switch-checked:after {
-        left: 35px;
+        left: 32px;
       }
 
       &:after {
@@ -129,14 +147,15 @@
 }
 
 .fei-switch-small {
-  width: 28px;
-  height: 16px;
+  width: 35px;
+  height: 22px;
   line-height: 14px;
 
   .f-icon-loading {
-    left: 1px;
-    width: 12px;
-    height: 12px;
+    left: 2px;
+    top: 3px;
+    width: 14px;
+    height: 14px;
     font-size: 12px;
 
     &::before {
@@ -148,13 +167,15 @@
   &.fei-switch-checked {
     &:after,
     .f-icon-loading {
-      left: 13px;
+      width: 14px;
+      height: 14px;
+      left: 18px;
     }
   }
 
   &:after {
-    width: 12px;
-    height: 12px;
+    width: 14px;
+    height: 14px;
   }
 
   &:active {

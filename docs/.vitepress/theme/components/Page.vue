@@ -204,7 +204,7 @@ const prev = computed(() => {
   if (prev === false) {
     return
   } else if (prev) {
-    return resolvePage(site.value.pages, prev, useRouter().path)
+    return resolvePage(site.value.pages, prev, route.path)
   } else {
     return resolvePrev(site.value.pages, props.sidebarItems)
   }
