@@ -1,7 +1,7 @@
 <template>
   <ul
     v-click-outside:[triggerElm]="_hide"
-    class="feidropdown-menu"
+    class="fei-dropdown-menu"
     @mouseenter.stop="show"
     @mouseleave.stop="hide"
   >
