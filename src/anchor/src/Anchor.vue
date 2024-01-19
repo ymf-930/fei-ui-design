@@ -64,11 +64,11 @@ const iconStyle = computed(() => {
 })
 const activeColorStr = computed(() => {
   const colorMap = {
-    primary: '#1089ff',
-    success: '#52c41a',
+    primary: '#1a5cff',
+    success: '#46c93a',
     info: '#35495E',
-    warning: '#fa8c16',
-    danger: '#f5222d'
+    warning: '#ffba00',
+    danger: '#ff4757'
   }
   return props.activeColor // @ts-ignore
     ? colorMap[props.activeColor] // @ts-ignore

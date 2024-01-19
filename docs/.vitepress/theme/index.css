@@ -1,3 +1,5 @@
+@import './styles/grid.css';
+
 .vp-doc {
   color: var(--fei-color-text-default);
   p {

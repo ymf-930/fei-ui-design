@@ -185,7 +185,7 @@ hr {
     import 'flex.css/dist/data-flex.css';
   -->
 <!-- flex属性匹配，简单的子元素居中例子： -->
-<div flex="main:center cross:center" style="height: 80px; border:1px solid #1089ff">
+<div flex="main:center cross:center" style="height: 80px; border:1px solid #1a5cff">
   <div style="background: #fff;padding: 15px;">看看我是不是居中的</div>
 </div>
 
@@ -201,7 +201,7 @@ hr {
     import 'flex.css/dist/data-flex.css';
   -->
 <!-- flex属性匹配，简单的子元素居中例子： -->
-<div flex="main:center cross:center" style="height: 80px; border:1px solid #1089ff">
+<div flex="main:center cross:center" style="height: 80px; border:1px solid #1a5cff">
   <div style="background: #fff;padding: 15px;">看看我是不是居中的</div>
 </div>
 ```
@@ -512,10 +512,10 @@ flex-box:
 }
 
 .f-color-blue {
-  color: #1089ff;
+  color: #1a5cff;
 }
 .f-color-red {
-  color: #f5222d;
+  color: #ff4757;
 }
 .f-color-333 {
   color: #333333;
@@ -529,12 +529,12 @@ flex-box:
 
 .link {
   cursor: pointer;
-  color: #1089ff;
+  color: #1a5cff;
 }
 
 .link-red {
   cursor: pointer;
-  color: #f5222d;
+  color: #ff4757;
 }
 .g-relative {
   position: relative;

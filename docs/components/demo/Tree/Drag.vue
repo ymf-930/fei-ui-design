@@ -190,11 +190,11 @@ function renderContent1({ root, node, data }) {
     measure: 'linechart'
   }
   const colorMap = {
-    root: '#1089ff',
-    hierarchy: '#1089ff',
-    folder: '#35495e',
-    dimension: '#1089ff',
-    measure: '#52c41a'
+    root: '#1a5cff',
+    hierarchy: '#1a5cff',
+    folder: '#1e1e1e',
+    dimension: '#1a5cff',
+    measure: '#46c93a'
   }
   const iconType = data.nodeType === 'attribute' ? data.type : data.nodeType
   const inline = [

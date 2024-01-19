@@ -4,7 +4,7 @@
       v-model="value"
       :icon-classes="iconClasses"
       void-icon-class="heart"
-      :colors="['#99A9BF', '#F7BA2A', '#fa8c16']"
+      :colors="['#99A9BF', '#F7BA2A', '#ffba00']"
     ></f-rate>
   </div>
 </template>

@@ -101,7 +101,7 @@ getVar(var)
 
 .sidebar
   padding-right 5px
-  z-index 18000 !important
+  z-index 1800 !important
   transition all .25s ease
   overflow inherit !important
 

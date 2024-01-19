@@ -266,10 +266,10 @@
 }
 
 .f-color-blue {
-  color: #1089ff;
+  color: #1a5cff;
 }
 .f-color-red {
-  color: #f5222d;
+  color: #ff4757;
 }
 .f-color-333 {
   color: #333333;
@@ -283,12 +283,12 @@
 
 .link {
   cursor: pointer;
-  color: #1089ff;
+  color: #1a5cff;
 }
 
 .link-red {
   cursor: pointer;
-  color: #f5222d;
+  color: #ff4757;
 }
 .g-relative {
   position: relative;

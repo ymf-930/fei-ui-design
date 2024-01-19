@@ -470,7 +470,7 @@ getVar(var)
   position fixed
   bottom 0px
   left 260px
-  z-index 12000
+  z-index 1200
   border 0px
   border-radius 0px 20px 0px 0px
   transition all .25s ease

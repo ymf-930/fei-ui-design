@@ -255,7 +255,7 @@ function getSidebar (lang = '/') {
         {
           title: lang !== '/'? `Feedback Components` : `反馈组件`,
           collapsable: false,
-
+          navType:'components',
           children: [
             { title: '警告信息', link: `${baseUrl}components/alert`, icon: 'error-fill', alias: 'Alert' },
             { title: '标记', link: `${baseUrl}components/badge`, icon: 'border', alias: 'Badge' },

@@ -20,11 +20,11 @@ import { reactive } from 'vue'
 import { Utils } from 'fei-ui-design'
 
 const data = reactive({
-  primary: '#1089ff',
-  success: '#52c41a',
-  info: '#35495e',
-  warning: '#fa8c16',
-  danger: '#f5222d',
+  primary: '#1a5cff',
+  success: '#46c93a',
+  info: '#1e1e1e',
+  warning: '#ffba00',
+  danger: '#ff4757',
 
   garyColor: [
   '#ffffff',
@@ -49,12 +49,12 @@ const data = reactive({
   customColor4: '#a0d911',
   customColor5: '#fa541c',
   customColor6: '#2f54eb',
-  custom: '#1089ff',
+  custom: '#1a5cff',
   colorsList: [
-  '#1089ff',
-  '#52c41a',
-  '#fa8c16',
-  '#f5222d',
+  '#1a5cff',
+  '#46c93a',
+  '#ffba00',
+  '#ff4757',
   '#2f54eb',
   '#faad14',
   '#722ed1',

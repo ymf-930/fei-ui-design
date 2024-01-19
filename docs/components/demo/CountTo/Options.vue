@@ -2,7 +2,7 @@
   <div>
     <f-button type="primary" @click="restart">restart</f-button>
     <div class="mt-15" flex="cross:center">
-      <div style="font-size: 18px; color: #1089ff; width: 120px; margin-right: 16px">
+      <div style="font-size: 18px; color: #1a5cff; width: 120px; margin-right: 16px">
         <f-count-to
           ref="countTo1"
           :start-val="startVal"
@@ -10,7 +10,7 @@
           :duration="3000"
         ></f-count-to>
       </div>
-      <div style="font-size: 18px; color: #1089ff; width: 120px; margin-right: 16px">
+      <div style="font-size: 18px; color: #1a5cff; width: 120px; margin-right: 16px">
         <f-count-to
           ref="countTo2"
           :start-val="startVal"
@@ -19,7 +19,7 @@
           :decimals="2"
         ></f-count-to>
       </div>
-      <div style="font-size: 18px; color: #1089ff; width: 120px; margin-right: 16px">
+      <div style="font-size: 18px; color: #1a5cff; width: 120px; margin-right: 16px">
         <f-count-to
           ref="countTo3"
           :start-val="startVal"
@@ -28,7 +28,7 @@
           separator=""
         ></f-count-to>
       </div>
-      <div style="font-size: 18px; color: #1089ff; width: 120px; margin-right: 16px">
+      <div style="font-size: 18px; color: #1a5cff; width: 120px; margin-right: 16px">
         <f-count-to
           ref="countTo4"
           :start-val="startVal"

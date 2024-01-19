@@ -36,7 +36,7 @@ const props = withDefaults(defineProps<CircleProps>(), {
   percent: 0,
   size: 120,
   strokeWidth: 6,
-  strokeColor: '#1089ff',
+  strokeColor: '#1a5cff',
   strokeLinecap: 'round',
   trailWidth: 5,
   trailColor: '#eaeef2'

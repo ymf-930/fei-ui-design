@@ -3,7 +3,7 @@
     <f-button type="danger" plain>确认气泡框</f-button>
     <template #content>
       <p>
-        <f-icon name="question-circle" size="16" color="#f5222d"></f-icon>
+        <f-icon name="question-circle" size="16" color="#ff4757"></f-icon>
         Are you sure delete this item?
       </p>
       <div style="text-align: right; margin-top: 4px">

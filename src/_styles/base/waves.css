@@ -17,7 +17,7 @@
     transform 0.6s ease-out;
 }
 html {
-  --fei-wave-shadow-color: #1089ff;
+  --fei-wave-shadow-color: #1a5cff;
 }
 .fei-click-animating-node {
   position: absolute;

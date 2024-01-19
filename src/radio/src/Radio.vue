@@ -36,14 +36,14 @@
         @change="handleChange"
       />
     </span>
-    <span v-if="$slots.default || label" class="f-ui-designradio__label" @keydown.stop>
+    <span v-if="$slots.default || label" class="fei-radio__label" @keydown.stop>
       <slot></slot>
       <template v-if="!$slots.default">{{ label }}</template>
     </span>
   </label>
   <label
     v-else
-    class="f-ui-designradio"
+    class="fei-radio"
     :class="{
       'is-disabled': isDisabled,
       'is-focus': focus,
@@ -55,17 +55,17 @@
     :tabindex="tabIndex"
   >
     <span
-      class="f-ui-designradio__input"
+      class="fei-radio__input"
       :class="{
         'is-disabled': isDisabled,
         'is-checked': model === label
       }"
     >
-      <span class="f-ui-designradio__inner"></span>
+      <span class="fei-radio__inner"></span>
       <input
         ref="radioRef"
         v-model="model"
-        class="f-ui-designradio__original"
+        class="fei-radio__original"
         :value="label"
         type="radio"
         aria-hidden="true"

@@ -15,7 +15,7 @@
 import { ref } from 'vue'
 const value1 = ref(null)
 const value2 = ref(null)
-const colors = ['#99A9BF', '#F7BA2A', '#fa8c16']
+const colors = ['#99A9BF', '#F7BA2A', '#ffba00']
 </script>
 
 <style scoped>

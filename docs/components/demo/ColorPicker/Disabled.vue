@@ -10,5 +10,5 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const color = ref('#1089ff')
+const color = ref('#1a5cff')
 </script>

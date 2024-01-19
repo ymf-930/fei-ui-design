@@ -15,10 +15,10 @@ import { ref } from 'vue'
 const color1 = ref('#2d8cf0')
 const color2 = ref('#2d8cf0')
 const colors1 = [
-  '#1089ff',
-  '#52c41a',
-  '#fa8c16',
-  '#f5222d',
+  '#1a5cff',
+  '#46c93a',
+  '#ffba00',
+  '#ff4757',
   '#2f54eb',
   '#faad14',
   '#722ed1',

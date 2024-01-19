@@ -16,7 +16,7 @@
     <f-modal v-model="confirm" width="420px" :show-close="false">
       <div class="p8">
         <div class="f-s-18" flex="cross:center">
-          <f-icon name="info-circle" size="24" color="#fa8c16"></f-icon>
+          <f-icon name="info-circle" size="24" color="#ffba00"></f-icon>
           <span class="ml-8">提示</span>
         </div>
         <div style="padding: 8px 0 8px 32px">确认注销登录吗？</div>

@@ -35,7 +35,7 @@ const data = ref([
           h('span', data.title),
           h('i', {
             class: ['f-iconfont', 'f-icon-plus-square-fill'],
-            style: { fontSize: '16px', color: '#1089ff', marginRight: '4px' },
+            style: { fontSize: '16px', color: '#1a5cff', marginRight: '4px' },
             onClick: () => {
               append(data)
             }
@@ -95,7 +95,7 @@ function renderContent({ root, node, data }) {
         }),
         h('i', {
           class: ['f-iconfont', 'f-icon-minus-square-fill'],
-          style: { fontSize: '16px', color: '#f5222d' },
+          style: { fontSize: '16px', color: '#ff4757' },
           onClick: e => {
             e.stopPropagation()
             remove(root, node, data)
