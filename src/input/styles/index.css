@@ -81,7 +81,10 @@
   .fei-input-group-prepend {
     right: -1px;
     z-index: 1;
-
+    .fei-select .fei-input {
+      border-top-right-radius: 0;
+      border-end-end-radius: 0;
+    }
     .fei-button {
       border-top-right-radius: 0;
       border-end-end-radius: 0;

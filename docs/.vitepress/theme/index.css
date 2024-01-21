@@ -4,8 +4,16 @@ body {
   width: unset;
 }
 
+.vitepress-demo-preview__element-plus__container{
+  background-color: #fff;
+}
+
 .vp-doc {
   color: var(--fei-color-text-default);
+
+  li + li {
+    margin-top: 0;
+  }
 
   p {
     line-height: 1.6;
@@ -57,9 +65,9 @@ body {
     margin: 0;
   }
 
-  li + li {
-    margin: 0;
-  }
+  /*li + li {*/
+  /*  margin: 0;*/
+  /*}*/
 
   tr {
     border-top: none;

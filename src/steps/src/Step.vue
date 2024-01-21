@@ -1,7 +1,7 @@
 <template>
   <div :class="wrapClasses">
     <div class="fei-steps-tail"><i></i></div>
-    <div class="f-ui-designsteps-head">
+    <div class="fei-steps-head">
       <div class="fei-steps-head-inner">
         <span
           v-if="!icon && !$slots.icon && currentStatus !== 'finish' && currentStatus !== 'error'"
