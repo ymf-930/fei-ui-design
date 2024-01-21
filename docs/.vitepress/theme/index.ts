@@ -6,8 +6,6 @@ import {ElementPlusContainer} from "@vitepress-demo-preview/component";
 import FeiUI from "fei-ui-design";
 import card from "./global-components/card.vue"
 // import codex from "./global-components/codex.vue"
-// import Vuesax from 'vuesax'
-// import 'vuesax/dist/vuesax.css' //Vuesax styles
 
 import '@vitepress-demo-preview/component/dist/style.css'
 import './index.css'
@@ -20,7 +18,6 @@ export default {
   Layout: Layout,
   enhanceApp({app, router, siteData}) {
     app.use(FeiUI)
-    // app.use(Vuesax)
     app.component('demo-preview', ElementPlusContainer)
     app.component('card', card)
     // app.component('codex', codex)
