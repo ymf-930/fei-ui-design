@@ -25,8 +25,7 @@ export default defineConfig({
   outDir: '../site',
   title: 'FEI-UI-DESIGN',
   head: [
-    ['link', { rel: 'icon', href: `/logos/f-ui-logo-white.png`, media: '(prefers-color-scheme:dark)', type: 'image/png' }],
-    ['link', { rel: 'icon', href: `/logos/f-ui-logo.png`, media: '(prefers-color-scheme:light)', type: 'image/png' }],
+    ['link', { rel: 'icon', href: `/favicon.ico` }],
     ['meta', { name: 'viewport', content: 'width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1, shrink-to-fit=no' }],
     ['meta', { name: 'author', content: 'ymf' }],
     ['meta', { name: 'google', content: 'nositelinkssearchbox' }],
