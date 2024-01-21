@@ -1,8 +1,8 @@
 <template>
   <div class="con-components">
     <div class="con-logo vuesax-logo">
-      <img class="not-darken" src="/home/vuesax-only.png" alt="">
-      <img class="has-darken" src="/home/vuesax-only-b.png" alt="">
+      <img class="not-darken" src="/logos/f-ui-logo.png" alt="">
+      <img class="has-darken" src="/logos/f-ui-logo-white.png" alt="">
       <div class="github-logo__1"></div>
       <div class="github-logo__2"></div>
       <div class="github-logo__3"></div>
@@ -14,7 +14,8 @@
       <div class="github-logo__3"></div>
     </div>
     <div class="con-logo github-logo">
-      <f-icon name="github-fill"></f-icon>
+      <i class='bx bxl-github'></i>
+<!--      <f-icon name="github-fill"></f-icon>-->
       <div class="github-logo__1"></div>
       <div class="github-logo__2"></div>
       <div class="github-logo__3"></div>
@@ -51,8 +52,8 @@
       </div>
 
       <div class="component2">
-        <img class="not-darken" src="/home/vuesax-only.png" alt="">
-        <img class="has-darken" src="/home/vuesax-only-b.png" alt="">
+        <img class="not-darken" src="/logos/f-ui-logo.png" alt="">
+        <img class="has-darken" src="/logos/f-ui-logo-white.png" alt="">
       </div>
 
       <div class="component3">

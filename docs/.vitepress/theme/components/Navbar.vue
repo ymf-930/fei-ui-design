@@ -4,7 +4,7 @@
 
     <a href="/" class="home-link">
       <div flex="cross:center">
-        <img class="logo-img" src="/home/vuesax-only.png" alt="">
+        <img class="logo-img" src="/logos/f-ui-logo.png" alt="">
         <h1 class="logo-title pl-10 pr-16">FEI-UI-DESIGN</h1>
         <f-tag type="success" palin>开发中</f-tag>
       </div>

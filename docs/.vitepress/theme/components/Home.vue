@@ -34,7 +34,8 @@
               @mouseleave="time('github')"
               @mouseenter="github = true, expand = true"
               title="Github" class="github" target="_blank" href="https://github.com/ymf-930/fei-ui-design">
-              <f-icon name="github-fill"></f-icon>
+              <i class='bx bxl-github'></i>
+<!--              <f-icon name="github-fill"></f-icon>-->
               <span title="Stargazers" class="badge-star">
                 {{ numberWithCommas }}
               </span>
