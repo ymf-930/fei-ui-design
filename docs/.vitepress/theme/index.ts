@@ -20,6 +20,13 @@ export default {
     app.use(FeiUI)
     app.component('demo-preview', ElementPlusContainer)
     app.component('card', card)
+    // 注册能够被应用内所有组件实例访问到的全局属性的对象
+    app.config.globalProperties.vsTheme = {
+      mobileActive: false,
+      openCode: false,
+      themeDarken: false,
+      sidebarCollapseOpen: true,
+    }
     // app.component('codex', codex)
     // app is the Vue 3 app instance from createApp()
     // router is VitePress' custom router (see `lib/app/router.js`)

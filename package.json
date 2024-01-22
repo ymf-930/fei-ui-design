@@ -48,8 +48,7 @@
     "mitt": "^3.0.1",
     "resize-observer-polyfill": "^1.5.1",
     "sortablejs": "^1.15.1",
-    "vue": "^3.4.5",
-    "vuesax": "4.0.1-alpha.25"
+    "vue": "^3.4.5"
   },
   "devDependencies": {
     "@esbuild-kit/cjs-loader": "^2.4.4",
@@ -79,7 +78,7 @@
     "eslint-config-standard-with-typescript": "^43.0.0",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-n": "^16.6.1",
-    "eslint-plugin-prettier": "^5.1.2",
+    "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-vue": "^9.19.2",
     "fs-extra": "^11.2.0",
@@ -96,7 +95,7 @@
     "postcss-functions": "^4.0.2",
     "postcss-import": "^16.0.0",
     "postcss-nested": "^6.0.1",
-    "prettier": "^3.1.1",
+    "prettier": "^3.0.3",
     "rimraf": "^5.0.5",
     "stylus": "^0.62.0",
     "sucrase": "^3.35.0",

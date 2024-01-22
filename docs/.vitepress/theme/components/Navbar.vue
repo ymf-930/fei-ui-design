@@ -4,7 +4,7 @@
 
     <a href="/" class="home-link">
       <div flex="cross:center">
-        <img class="logo-img" src="/logos/f-ui-logo.png" alt="">
+        <img class="logo-img" :src="vsThemeVal.themeDarken ?'/logos/f-ui-logo.png' : '/logos/f-ui-logo-white.png'" alt="">
         <h1 class="logo-title pl-10 pr-16">FEI-UI-DESIGN</h1>
         <f-tag type="success" palin>开发中</f-tag>
       </div>
@@ -34,18 +34,22 @@
 </template>
 
 <script setup>
+import {onMounted, ref, getCurrentInstance} from "vue"
 import {useData} from "vitepress"
 import SidebarButton from '../components/SidebarButton.vue'
 import NavLinks from './NavLinks.vue'
 import SearchBox from './SearchBox.vue'
-import {onMounted, ref} from "vue";
 
 const {frontmatter, theme} = useData()
 const linkRef = ref(null)
 const linksWrapMaxWidth = ref(null)
 const showSuggestions = ref(false)
 const focused = ref(false)
+const vsThemeVal = ref(null)
 
+
+const { vsTheme } = getCurrentInstance().appContext.config.globalProperties
+vsThemeVal.value = {...vsTheme} 
 
 onMounted(() => {
   const MOBILE_DESKTOP_BREAKPOINT = 719 // refer to config.styl

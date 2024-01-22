@@ -9,7 +9,7 @@ body {
 }
 
 .vp-doc {
-  color: var(--fei-color-text-default);
+  color: var(--vs-theme-color);
 
   li + li {
     margin-top: 0;
@@ -20,14 +20,14 @@ body {
   }
 
   h1 {
-    color: #2c3e50;
+    color: var(--vs-theme-color);
     font-weight: 600;
   }
 
   h2 {
     margin: 16px 0 16px;
     border-top: none;
-    color: #2c3e50;
+    color: var(--vs-theme-color);
     font-weight: 600;
   }
 
@@ -47,7 +47,19 @@ body {
     border-collapse: collapse;
     border-spacing: 0;
     width: 100%;
+    color: var(--vs-theme-code);
     overflow-x: hidden;
+  }
+
+  :not(pre) > code {
+    border-radius: 4px;
+    padding: 3px 6px;
+    color: var(--vs-theme-color);
+    transition: color .5s,background-color .5s;
+  }
+  
+  .fei-message__content{
+    color: var(--vs-theme-code);
   }
 }
 

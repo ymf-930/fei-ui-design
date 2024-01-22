@@ -170,6 +170,7 @@ const router = useRouter()
 
 const {frontmatter, page, site} = useData()
 const route = useRoute()
+
 const props = defineProps({
   sidebarItems: {
     type: Array,

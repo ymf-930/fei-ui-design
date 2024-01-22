@@ -92,13 +92,10 @@
       </ul>-->
     </button>
 
-    <button @click="ChangeTheme" :class="{'active': false}"
-            class="li-darken switch-dark">
+    <button @click="ChangeTheme" :class="{'active': vsThemeVal.themeDarken}" :title="`Theme ${ !vsThemeVal.themeDarken ? 'Dark' : 'Light'}`" class="li-darken switch-dark">
       <div class="switch-con">
           <span class="circle">
-            <!-- <i v-if="$vsTheme.themeDarken" class="bx bx-brightness"></i> -->
-<!--            <i v-if="$vsTheme.themeDarken" class="bx bxs-sun"></i>-->
-            <i v-if="themeDarken" class="bx bxs-sun"></i>
+            <i v-if="vsThemeVal.themeDarken" class="bx bxs-sun"></i>
             <i v-else class='bx bxs-moon'></i>
           </span>
       </div>
@@ -107,11 +104,12 @@
   </div>
 </template>
 <script setup>
-import {computed, onMounted, ref} from 'vue'
+import {computed, onMounted, ref, getCurrentInstance} from 'vue'
 import {useData} from "vitepress"
 import { Message } from 'fei-ui-design'
 
-const themeDarken = ref(false)
+const vsThemeVal = ref(null)
+
 const sideBarOpen = ref(true)
 const lang = computed(() => {
   const {site, page, theme} = useData()
@@ -163,17 +161,17 @@ function reloadConfig() {
   config.style.removeProperty(`--vs-theme-color`)
   document.body.classList.remove('hidden-sidebar')
   document.body.style.setProperty(`--vs-primary`, '26, 92, 255')
-  this.$vsTheme.mobileActive = false
+  vsThemeVal.value.mobileActive = false
   localStorage.mobile = false
 
-  this.$vsTheme.sidebarCollapseOpen = true
+  vsThemeVal.value.sidebarCollapseOpen = true
   localStorage.sidebarCollapseOpen = true
 
-  this.$vsTheme.openCode = false
+  vsThemeVal.value.openCode = false
 
   localStorage.theme = 'dark'
-  const returnTheme = this.$vs.setTheme()
-  this.$vsTheme.themeDarken = returnTheme == 'dark'
+  const returnTheme = setTheme()
+  vsThemeVal.value.themeDarken = returnTheme == 'dark'
   if (returnTheme == 'dark') {
     document.body.classList.add('darken')
   } else {
@@ -257,28 +255,89 @@ function ChangeColor(evt) {
 }
 
 function ChangeMenu() {
-  this.$vsTheme.sidebarCollapseOpen = !this.$vsTheme.sidebarCollapseOpen
-  localStorage.sidebarCollapseOpen = !this.$vsTheme.sidebarCollapseOpen
+  vsThemeVal.value.sidebarCollapseOpen = !vsThemeVal.value.sidebarCollapseOpen
+  localStorage.sidebarCollapseOpen = !vsThemeVal.value.sidebarCollapseOpen
 }
 
 function ChangeMobile() {
-  this.$vsTheme.mobileActive = !this.$vsTheme.mobileActive
-  localStorage.mobile = !this.$vsTheme.mobileActive
+  vsThemeVal.value.mobileActive = !vsThemeVal.value.mobileActive
+  localStorage.mobile = !vsThemeVal.value.mobileActive
 }
 
 function ChangeOpenCode() {
-  this.$vsTheme.openCode = !this.$vsTheme.openCode
+  vsThemeVal.value.openCode = !vsThemeVal.value.openCode
+}
+
+const setTheme = (forceTheme) => {
+  document.body.classList.add('vs-remove-transition')
+  const media = window.matchMedia('(prefers-color-scheme: dark)')
+
+  let isThemeDark = media.matches
+
+  if (localStorage.vsTheme) {
+    isThemeDark = localStorage.vsTheme == 'dark'
+  }
+
+  if (isThemeDark) {
+    document.body.setAttribute('vs-theme', 'dark')
+  } else {
+    document.body.removeAttribute('vs-theme')
+  }
+
+  if (forceTheme == 'dark') {
+    document.body.setAttribute('vs-theme', 'dark')
+  } else if (forceTheme == 'light') {
+    document.body.removeAttribute('vs-theme')
+  }
+
+  localStorage.vsTheme = isThemeDark ? 'dark' : 'light'
+
+  setTimeout(() => {
+    document.body.classList.remove('vs-remove-transition')
+  }, 100)
+
+  return isThemeDark ? 'dark' : 'light'
+}
+
+const toggleTheme = (forceTheme) => {
+  document.body.classList.add('vs-remove-transition')
+  const media = window.matchMedia('(prefers-color-scheme: dark)')
+
+  let isThemeDark = media.matches
+
+  if (localStorage.vsTheme) {
+    isThemeDark = localStorage.vsTheme == 'dark'
+  }
+
+  if (!isThemeDark) {
+    document.body.setAttribute('vs-theme', 'dark')
+  } else {
+    document.body.removeAttribute('vs-theme')
+  }
+
+  if (forceTheme == 'dark') {
+    document.body.removeAttribute('vs-theme')
+  } else if (forceTheme == 'light') {
+    document.body.setAttribute('vs-theme', 'dark')
+  }
+
+  localStorage.vsTheme =  !isThemeDark ? 'dark' : 'light'
+
+  setTimeout(() => {
+    document.body.classList.remove('vs-remove-transition')
+  }, 100);
+
+  return !isThemeDark ? 'dark' : 'light'
 }
 
 function ChangeTheme() {
-  Message.info({message:'暂未开发！', zIndex:3000})
-/*  const returnTheme = this.$vs.toggleTheme()
-  this.$vsTheme.themeDarken = returnTheme == 'dark'
+  const returnTheme = toggleTheme()
+  vsThemeVal.value.themeDarken = returnTheme == 'dark'
   if (returnTheme === 'dark') {
     document.body.classList.add('darken')
   } else {
     document.body.classList.remove('darken')
-  }*/
+  }
 }
 
 
@@ -289,15 +348,17 @@ function changeLang() {
 // Vue.prototype.$mobile = { active: (localStorage.mobile != 'true') || false }
 // Vue.prototype.$menu = { active: (localStorage.menu != 'true') || false }
 // Vue.observable(this.$site.sidebarCollapseOpen)
-// Vue.observable(this.$vsTheme)
+// Vue.observable(vsThemeVal.value)
 // Vue.observable(this.$mobile)
 // Vue.observable(this.$site.themeConfig)
 
+const { vsTheme } = getCurrentInstance().appContext.config.globalProperties
+console.log(vsTheme);
+vsThemeVal.value = {...vsTheme} 
+
 onMounted(() => {
-  // const returnTheme = $vs.setTheme()
-  // $vsTheme.themeDarken = returnTheme == 'dark'
-  // const returnTheme = 'dark'
-  const returnTheme = 'light'
+  const returnTheme = setTheme()
+  vsThemeVal.value.themeDarken = returnTheme == 'dark'
   if (returnTheme === 'dark') {
     document.body.classList.add('darken')
   } else {
