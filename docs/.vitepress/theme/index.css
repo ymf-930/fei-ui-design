@@ -58,9 +58,6 @@ body {
     transition: color .5s,background-color .5s;
   }
   
-  .fei-message__content{
-    color: var(--vs-theme-code);
-  }
 }
 
 .vitepress-demo-preview-preview {
