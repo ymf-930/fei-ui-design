@@ -33,17 +33,12 @@
       @click="$emit('toggle')"
     >
       <span>{{ item.title }}</span>
-      <!-- <span
-        class="arrow"
-        v-if="collapsable"
-        :class="open ? 'down' : 'right'">
-      </span> -->
       <i class='bx bx-chevron-right'></i>
     </p>
 
     <DropdownTransition>
-      <!--        v-if="open || !collapsable"-->
       <SidebarLinks
+        v-if="open || !collapsable"
         class="sidebar-group-items"
         :items="item.children"
       />

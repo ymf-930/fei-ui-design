@@ -2,7 +2,7 @@ import "./custom.styl"
 import 'boxicons/css/boxicons.min.css'
 import Layout from "./layouts/Layout.vue"
 import DefaultTheme from "vitepress/theme"
-import {ElementPlusContainer} from "@vitepress-demo-preview/component";
+import { ElementPlusContainer } from "@vitepress-demo-preview/component";
 import FeiUI from "fei-ui-design";
 import card from "./global-components/card.vue"
 // import codex from "./global-components/codex.vue"
@@ -16,7 +16,7 @@ export default {
   NotFound: () => "404", // <- this is a Vue 3 functional component
   extends: DefaultTheme,
   Layout: Layout,
-  enhanceApp({app, router, siteData}) {
+  enhanceApp({ app, router, siteData }) {
     app.use(FeiUI)
     app.component('demo-preview', ElementPlusContainer)
     app.component('card', card)

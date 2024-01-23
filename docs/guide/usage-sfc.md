@@ -97,7 +97,7 @@ export default defineConfig({
 
 安装全局组件，会失去 tree-shaking 的能力，打包有冗余代码。
 
-如果你想全局安装但是不想安装全部组件，请参考 [按需引入](/docs/import-on-demand.html)。
+如果你想全局安装但是不想安装全部组件，请参考 [按需引入](/guide/import-on-demand.html)。
 
 ```javascript
 // main.js

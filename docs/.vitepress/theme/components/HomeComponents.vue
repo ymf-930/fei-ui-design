@@ -450,8 +450,9 @@ getVar(var)
   100%
     transform translate(0px)
 
-.has-darken
-  display none
+.con-components
+  .has-darken
+    display none
 
 .darken
   .component13

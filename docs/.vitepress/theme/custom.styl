@@ -110,6 +110,10 @@
 ::selection
   background: alpha(#2564ff, .15)
 
+.vs-remove-transition
+  *, *:after, *:before
+    transition: all 0s !important
+
 .all-transition
   *
     transition: all 0s !important
@@ -300,7 +304,7 @@ strong
 
 h1, h2, h3, h4, h5, h6
   font-weight 600
-  line-height 1.25!important
+  line-height 1.25 !important
   //.content:not(.custom) > &
   //  margin-top (0.5rem - $navbarHeight)
   //  padding-top ($navbarHeight + 1rem)

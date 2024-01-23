@@ -164,7 +164,7 @@ import {computed, nextTick, onMounted, ref, watch} from "vue";
 import {useData, useRoute, useRouter} from "vitepress"
 import dayjs from "dayjs";
 import AsideNav from "./AsideNav.vue";
-import { Message } from 'fei-ui-design'
+import {Message} from 'fei-ui-design'
 
 const router = useRouter()
 
@@ -727,7 +727,10 @@ getVar(var)
           padding 3px
           padding-right 25px
           opacity .6
-          max-width 200px
+          max-width 200px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
 
           &:after
             content: ''

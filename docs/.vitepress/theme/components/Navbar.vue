@@ -4,7 +4,9 @@
 
     <a href="/" class="home-link">
       <div flex="cross:center">
-        <img class="logo-img" :src="vsThemeVal.themeDarken ?'/logos/f-ui-logo.png' : '/logos/f-ui-logo-white.png'" alt="">
+        <img class="logo-img not-darken" src="/logos/f-ui-logo.png" alt="">
+        <img class="logo-img has-darken" src="/logos/f-ui-logo-white.png" alt="">
+        <!--        <img class="logo-img" :src="vsTheme === 'dark' ?'/logos/f-ui-logo-white.svg' : '/logos/f-ui-logo.png'" alt="">-->
         <h1 class="logo-title pl-10 pr-16">FEI-UI-DESIGN</h1>
         <f-tag type="success" palin>开发中</f-tag>
       </div>
@@ -45,11 +47,6 @@ const linkRef = ref(null)
 const linksWrapMaxWidth = ref(null)
 const showSuggestions = ref(false)
 const focused = ref(false)
-const vsThemeVal = ref(null)
-
-
-const { vsTheme } = getCurrentInstance().appContext.config.globalProperties
-vsThemeVal.value = {...vsTheme} 
 
 onMounted(() => {
   const MOBILE_DESKTOP_BREAKPOINT = 719 // refer to config.styl
@@ -90,7 +87,18 @@ getVar(var)
 
 .logo-img
   fill getVar(theme-color)
+  width 28px
   height 28px
+.home-link
+  .has-darken
+    display none
+
+.darken
+  .not-darken
+    display none
+
+  .has-darken
+    display block
 
 .logo-title
   font-size: 1.4rem;
@@ -162,7 +170,6 @@ getVar(var)
 
   a, span, img
     //display inline-block
-
   .logo
     height $navbarHeight - 1.4rem
     min-width $navbarHeight - 1.4rem

@@ -1,7 +1,6 @@
 <template>
   <div class="config">
     <button class="config-btn">
-      <!-- <box-icon name='cog' ></box-icon> -->
       <i class="bx bx-cog"></i>
       <svg class="effect1config" xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160">
         <path id="Trazado_200" data-name="Trazado 200" d="M0-10,150,0l10,150S137.643,80.734,100.143,43.234,0-10,0-10Z"
@@ -15,38 +14,36 @@
         </svg>
         <li @click="reloadConfig">
           <!-- <box-icon name='rotate-left'></box-icon> -->
-          <i title="reload config" class="bx bx-rotate-left"></i>
+          <i title="重新加载配置" class="bx bx-rotate-left"></i>
         </li>
         <li @click="ChangeSidebar">
-          <i v-if="sideBarOpen" title="Hidden Sidebar" class="bx bx-left-indent"></i>
-          <i v-else title="Open Sidebar" class="bx bx-right-indent"></i>
+          <i v-if="sideBarOpen" title="收起侧边栏" class="bx bx-left-indent"></i>
+          <i v-else title="展开侧边栏" class="bx bx-right-indent"></i>
         </li>
-<!--        <li :title="`${ !$vsTheme.sidebarCollapseOpen ? 'Open' : 'Close'} sidebar items`" @click="ChangeMenu"
-            :class="{'active': !$vsTheme.sidebarCollapseOpen}">
-          &lt;!&ndash; <box-icon v-if="$vsTheme.sidebarCollapseOpen" name='list-minus'></box-icon> &ndash;&gt;
-          <i v-if="$vsTheme.sidebarCollapseOpen" class="bx bx-list-minus"></i>
-          &lt;!&ndash; <box-icon v-else name='list-plus'></box-icon> &ndash;&gt;
+        <li :title="`${ !vsThemeVal.sidebarCollapseOpen ? '打开' : '关闭'}侧边栏子栏目`" @click="ChangeMenu"
+            :class="{'active': !vsThemeVal.sidebarCollapseOpen}">
+          <i v-if="vsThemeVal.sidebarCollapseOpen" class="bx bx-list-minus"></i>
           <i v-else class="bx bx-list-plus"></i>
         </li>
-        &lt;!&ndash; <li title="View examples mobile style" @click="ChangeMobile" :class="{'active': $vsTheme.mobileActive}">
+        <!-- <li title="View examples mobile style" @click="ChangeMobile" :class="{'active': vsThemeVal.mobileActive}">
           <i class="bx bx-mobile-alt"></i>
-        </li> &ndash;&gt;
-        <li :title="`${ !$vsTheme.openCode ? 'Open' : 'Close'} all Code`" @click="ChangeOpenCode"
-            :class="{'active': $vsTheme.openCode}">
+        </li> -->
+        <li :title="`${ !vsThemeVal.openCode ? '打开' : '关闭'}所有代码`" @click="ChangeOpenCode"
+            :class="{'active': vsThemeVal.openCode}">
           <i class="bx bx-code-block"></i>
         </li>
-        <li class="theme-color-layout" title="Theme Color Layout">
+        <li class="theme-color-layout" title="主题色彩布局">
           <i class="bx bx-paint-roll"></i>
-          <input @change="ChangeColorLayout($event.target.value)" type="color" value="#2564ff">
-        </li>-->
-        <!-- <li :title="`Theme ${ !$vsTheme.themeDarken ? 'Dark' : 'Light'}`" class="li-darken" @click="ChangeTheme" :class="{'active': $vsTheme.themeDarken}">
-          <i v-if="!$vsTheme.themeDarken" class="bx bx-brightness-half"></i>
+          <input @change="changeColorLayout($event.target.value)" type="color" value="#2564ff">
+        </li>
+         <li :title="`${ !vsThemeVal.themeDarken ? '黑色' : '白色'}主题`" class="li-darken" @click="ChangeTheme" :class="{'active': vsThemeVal.themeDarken}">
+          <i v-if="!vsThemeVal.themeDarken" class="bx bx-brightness-half"></i>
           <i v-else class="bx bx-brightness"></i>
-        </li> -->
-        <li class="theme-color-primary" title="Theme Primary Color">
+        </li>
+        <!-- <li class="theme-color-primary" title="Theme Primary Color">
           <i class="bx bxs-color-fill"></i>
           <input @change="ChangeColor" type="color" value="#2564ff">
-        </li>
+        </li> -->
         <!--
                 <li class="theme-translate" title="Theme translate">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>
@@ -114,11 +111,8 @@ const sideBarOpen = ref(true)
 const lang = computed(() => {
   const {site, page, theme} = useData()
   const {locales} = site.value
-  console.log(locales.value);
-  console.log(page.value);
     if (locales.value && Object.keys(locales.value).length > 1) {
       const currentLink = page.value.path
-      // const routes = this.$router.options.routes
       const themeLocales = theme.value.locales || {}
       const languageDropdown = {
         text: 'Languages',
@@ -171,8 +165,8 @@ function reloadConfig() {
 
   localStorage.theme = 'dark'
   const returnTheme = setTheme()
-  vsThemeVal.value.themeDarken = returnTheme == 'dark'
-  if (returnTheme == 'dark') {
+  vsThemeVal.value.themeDarken = returnTheme === 'dark'
+  if (returnTheme === 'dark') {
     document.body.classList.add('darken')
   } else {
     document.body.classList.remove('darken')
@@ -206,7 +200,7 @@ function hexToRgb(hex) {
 function contrastColor(element) {
   let c = element
   if (/[#]/g.test(element)) {
-    let rgb = this.hexToRgb(element)
+    let rgb = hexToRgb(element)
     c = `rgb(${rgb.r},${rgb.g},${rgb.b})`
   }
   var rgb = c.replace(/^(rgb|rgba)\(/, '').replace(/\)$/, '').replace(/\s/g, '').split(',');
@@ -218,9 +212,8 @@ function contrastColor(element) {
   }
 }
 
-function ChangeColorLayout(colorBase) {
+function changeColorLayout(colorBase) {
   document.body.classList.add('all-transition')
-  this.$el.focus()
 
   const sidebar = document.querySelector('.theme-container > .sidebar')
   const navbar = document.querySelector('.theme-container > .navbar')
@@ -232,7 +225,7 @@ function ChangeColorLayout(colorBase) {
   navbar.style.setProperty(`--vs-theme-bg2`, colorBase)
   config.style.setProperty(`--vs-theme-layout`, colorBase)
 
-  if (this.contrastColor(colorBase)) {
+  if (contrastColor(colorBase)) {
     sidebar.style.setProperty(`--vs-theme-color`, '#2c3e50')
     navbar.style.setProperty(`--vs-theme-color`, '#2c3e50')
     config.style.setProperty(`--vs-theme-color`, '#2c3e50')
@@ -249,12 +242,13 @@ function ChangeColorLayout(colorBase) {
 
 function ChangeColor(evt) {
   evt.target.closest('button').focus()
-  const rgb = this.hexToRgb(evt.target.value)
+  const rgb = hexToRgb(evt.target.value)
   const color = `${rgb.r},${rgb.g},${rgb.b}`
   document.body.style.setProperty(`--vs-primary`, color)
 }
 
 function ChangeMenu() {
+  Message.info('暂未开发')
   vsThemeVal.value.sidebarCollapseOpen = !vsThemeVal.value.sidebarCollapseOpen
   localStorage.sidebarCollapseOpen = !vsThemeVal.value.sidebarCollapseOpen
 }
@@ -265,6 +259,7 @@ function ChangeMobile() {
 }
 
 function ChangeOpenCode() {
+  Message.info('开发中')
   vsThemeVal.value.openCode = !vsThemeVal.value.openCode
 }
 
@@ -275,7 +270,7 @@ const setTheme = (forceTheme) => {
   let isThemeDark = media.matches
 
   if (localStorage.vsTheme) {
-    isThemeDark = localStorage.vsTheme == 'dark'
+    isThemeDark = localStorage.vsTheme === 'dark'
   }
 
   if (isThemeDark) {
@@ -284,9 +279,9 @@ const setTheme = (forceTheme) => {
     document.body.removeAttribute('vs-theme')
   }
 
-  if (forceTheme == 'dark') {
+  if (forceTheme === 'dark') {
     document.body.setAttribute('vs-theme', 'dark')
-  } else if (forceTheme == 'light') {
+  } else if (forceTheme === 'light') {
     document.body.removeAttribute('vs-theme')
   }
 
@@ -306,7 +301,7 @@ const toggleTheme = (forceTheme) => {
   let isThemeDark = media.matches
 
   if (localStorage.vsTheme) {
-    isThemeDark = localStorage.vsTheme == 'dark'
+    isThemeDark = localStorage.vsTheme === 'dark'
   }
 
   if (!isThemeDark) {
@@ -315,9 +310,9 @@ const toggleTheme = (forceTheme) => {
     document.body.removeAttribute('vs-theme')
   }
 
-  if (forceTheme == 'dark') {
+  if (forceTheme === 'dark') {
     document.body.removeAttribute('vs-theme')
-  } else if (forceTheme == 'light') {
+  } else if (forceTheme === 'light') {
     document.body.setAttribute('vs-theme', 'dark')
   }
 
@@ -332,7 +327,7 @@ const toggleTheme = (forceTheme) => {
 
 function ChangeTheme() {
   const returnTheme = toggleTheme()
-  vsThemeVal.value.themeDarken = returnTheme == 'dark'
+  vsThemeVal.value.themeDarken = returnTheme === 'dark'
   if (returnTheme === 'dark') {
     document.body.classList.add('darken')
   } else {
@@ -354,7 +349,7 @@ function changeLang() {
 
 const { vsTheme } = getCurrentInstance().appContext.config.globalProperties
 console.log(vsTheme);
-vsThemeVal.value = {...vsTheme} 
+vsThemeVal.value = {...vsTheme}
 
 onMounted(() => {
   const returnTheme = setTheme()

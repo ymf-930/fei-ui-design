@@ -11,7 +11,7 @@
       <SidebarGroup
         v-if="item.type === 'group'"
         :item="item"
-        :open="fixed || i === openGroupIndex"
+        :open="fixed || i === openGroupIndex || vsThemeVal.sidebarCollapseOpen"
         :collapsable="true"
         :depth="depth"
         @toggle="toggleGroup(i)"
@@ -35,8 +35,7 @@ export default defineComponent({
 import SidebarGroup from './SidebarGroup.vue'
 import SidebarLink from './SidebarLink.vue'
 import {useData, useRoute} from "vitepress"
-import {ref, watch} from "vue"
-// import ASidebarLink from "./ASidebarLink.vue"
+import {getCurrentInstance, ref, watch} from "vue"
 
 const route = useRoute()
 const props = defineProps({
@@ -60,11 +59,11 @@ const props = defineProps({
 
 const openGroupIndex = ref(0)
 const allOpen = ref(false)
+const vsThemeVal = ref(false)
 const {site, page, theme} = useData()
-// console.log(props.items);
+const { vsTheme } = getCurrentInstance().appContext.config.globalProperties
+vsThemeVal.value = {...vsTheme}
 // refreshIndex()
-// Vue.observable(this.$site.themeConfig)
-// Vue.observable(this.$vsTheme)
 watch(() => route, () => {
   refreshIndex()
 })
