@@ -6,7 +6,6 @@
       <div flex="cross:center">
         <img class="logo-img not-darken" src="/logos/f-ui-logo.png" alt="">
         <img class="logo-img has-darken" src="/logos/f-ui-logo-white.png" alt="">
-        <!--        <img class="logo-img" :src="vsTheme === 'dark' ?'/logos/f-ui-logo-white.svg' : '/logos/f-ui-logo.png'" alt="">-->
         <h1 class="logo-title pl-10 pr-16">FEI-UI-DESIGN</h1>
         <f-tag type="success" palin>开发中</f-tag>
       </div>

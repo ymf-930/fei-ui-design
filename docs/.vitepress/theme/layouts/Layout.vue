@@ -226,6 +226,26 @@ function onTouchEnd(e) {
 </script>
 
 <style lang="stylus" scoped>
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* 进入dark模式和退出dark模式时，两个图像的位置顺序正好相反 */
+.darken::view-transition-old(root) {
+  z-index: 1;
+}
+.darken::view-transition-new(root) {
+  z-index: 9999999;
+}
+
+::view-transition-old(root) {
+  z-index: 9999999;
+}
+::view-transition-new(root) {
+  z-index: 1;
+}
 .fade-code-enter-active, .fade-code-leave-active
   transition: opacity .5s;
 
@@ -233,4 +253,4 @@ function onTouchEnd(e) {
   opacity: 0
 </style>
 
-<style src="../styles/theme.styl" lang="stylus"></style>
+<!-- <style src="../styles/theme.styl" lang="stylus"></style> -->

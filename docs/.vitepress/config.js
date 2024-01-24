@@ -1,5 +1,5 @@
 import { defineConfig } from 'vitepress'
-import { containerPreview, componentPreview } from '@vitepress-demo-preview/plugin'
+// import { containerPreview, componentPreview } from '@vitepress-demo-preview/plugin'
 import { fileURLToPath, URL } from 'node:url'
 // import sidebarDocs from "./sidebar-docs.js"
 // import sidebarComps from "./sidebar-comps.js"
@@ -70,8 +70,8 @@ export default defineConfig({
       dark: 'rose-pine-moon'
     },
     config(md) {
-      md.use(containerPreview)
-      md.use(componentPreview)
+      // md.use(containerPreview)
+      // md.use(componentPreview)
     }
   },
   vite: {
@@ -206,6 +206,7 @@ function getSidebar (lang = '/') {
             { title: '输入框', link: `${baseUrl}components/input`, icon: 'edit-square', alias: 'Input' },
             { title: '数字输入', link: `${baseUrl}components/input-number`, icon: 'shake', alias: 'InputNumber' },
             { title: '单选框', link: `${baseUrl}components/radio`, icon: 'plus-circle', alias: 'Radio' },
+            { title: '单选框111', link: `${baseUrl}components/RadioText`, icon: 'plus-circle', alias: 'RadioText' },
             { title: '多选框', link: `${baseUrl}components/checkbox`, icon: 'check-square', alias: 'Checkbox' },
             { title: '开关', link: `${baseUrl}components/switch`, icon: 'build', alias: 'Switch' },
             { title: '选择器', link: `${baseUrl}components/select`, icon: 'unorderedlist', alias: 'Select' },

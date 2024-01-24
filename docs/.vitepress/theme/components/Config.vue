@@ -2,15 +2,35 @@
   <div class="config">
     <button class="config-btn">
       <i class="bx bx-cog"></i>
-      <svg class="effect1config" xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160">
-        <path id="Trazado_200" data-name="Trazado 200" d="M0-10,150,0l10,150S137.643,80.734,100.143,43.234,0-10,0-10Z"
-              transform="translate(0 10)"/>
+      <svg
+        class="effect1config"
+        xmlns="http://www.w3.org/2000/svg"
+        width="160"
+        height="160"
+        viewBox="0 0 160 160"
+      >
+        <path
+          id="Trazado_200"
+          data-name="Trazado 200"
+          d="M0-10,150,0l10,150S137.643,80.734,100.143,43.234,0-10,0-10Z"
+          transform="translate(0 10)"
+        />
       </svg>
 
       <ul class="options">
-        <svg class="effect1config" xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160">
-          <path id="Trazado_200" data-name="Trazado 200" d="M0-10,150,0l10,150S137.643,80.734,100.143,43.234,0-10,0-10Z"
-                transform="translate(0 10)"/>
+        <svg
+          class="effect1config"
+          xmlns="http://www.w3.org/2000/svg"
+          width="160"
+          height="160"
+          viewBox="0 0 160 160"
+        >
+          <path
+            id="Trazado_200"
+            data-name="Trazado 200"
+            d="M0-10,150,0l10,150S137.643,80.734,100.143,43.234,0-10,0-10Z"
+            transform="translate(0 10)"
+          />
         </svg>
         <li @click="reloadConfig">
           <!-- <box-icon name='rotate-left'></box-icon> -->
@@ -20,23 +40,34 @@
           <i v-if="sideBarOpen" title="收起侧边栏" class="bx bx-left-indent"></i>
           <i v-else title="展开侧边栏" class="bx bx-right-indent"></i>
         </li>
-        <li :title="`${ !vsThemeVal.sidebarCollapseOpen ? '打开' : '关闭'}侧边栏子栏目`" @click="ChangeMenu"
-            :class="{'active': !vsThemeVal.sidebarCollapseOpen}">
+        <li
+          :title="`${!vsThemeVal.sidebarCollapseOpen ? '打开' : '关闭'}侧边栏子栏目`"
+          @click="ChangeMenu"
+          :class="{ active: !vsThemeVal.sidebarCollapseOpen }"
+        >
           <i v-if="vsThemeVal.sidebarCollapseOpen" class="bx bx-list-minus"></i>
           <i v-else class="bx bx-list-plus"></i>
         </li>
         <!-- <li title="View examples mobile style" @click="ChangeMobile" :class="{'active': vsThemeVal.mobileActive}">
           <i class="bx bx-mobile-alt"></i>
         </li> -->
-        <li :title="`${ !vsThemeVal.openCode ? '打开' : '关闭'}所有代码`" @click="ChangeOpenCode"
-            :class="{'active': vsThemeVal.openCode}">
+        <li
+          :title="`${!vsThemeVal.openCode ? '打开' : '关闭'}所有代码`"
+          @click="ChangeOpenCode"
+          :class="{ active: vsThemeVal.openCode }"
+        >
           <i class="bx bx-code-block"></i>
         </li>
         <li class="theme-color-layout" title="主题色彩布局">
           <i class="bx bx-paint-roll"></i>
-          <input @change="changeColorLayout($event.target.value)" type="color" value="#2564ff">
+          <input @change="changeColorLayout($event.target.value)" type="color" value="#2564ff" />
         </li>
-         <li :title="`${ !vsThemeVal.themeDarken ? '黑色' : '白色'}主题`" class="li-darken" @click="ChangeTheme" :class="{'active': vsThemeVal.themeDarken}">
+        <li
+          :title="`${!vsThemeVal.themeDarken ? '黑色' : '白色'}主题`"
+          class="li-darken"
+          @click="ChangeTheme"
+          :class="{ active: vsThemeVal.themeDarken }"
+        >
           <i v-if="!vsThemeVal.themeDarken" class="bx bx-brightness-half"></i>
           <i v-else class="bx bx-brightness"></i>
         </li>
@@ -61,22 +92,32 @@
                   </ul>
                 </li> -->
 
-        <svg class="effect1config invert" xmlns="http://www.w3.org/2000/svg" width="160" height="160"
-             viewBox="0 0 160 160">
-          <path id="Trazado_200" data-name="Trazado 200" d="M0-10,150,0l10,150S137.643,80.734,100.143,43.234,0-10,0-10Z"
-                transform="translate(0 10)"/>
+        <svg
+          class="effect1config invert"
+          xmlns="http://www.w3.org/2000/svg"
+          width="160"
+          height="160"
+          viewBox="0 0 160 160"
+        >
+          <path
+            id="Trazado_200"
+            data-name="Trazado 200"
+            d="M0-10,150,0l10,150S137.643,80.734,100.143,43.234,0-10,0-10Z"
+            transform="translate(0 10)"
+          />
         </svg>
       </ul>
     </button>
 
     <button class="btn-lang theme-translate" @click="changeLang">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-        <path d="M0 0h24v24H0z" fill="none"/>
+        <path d="M0 0h24v24H0z" fill="none" />
         <path
-            d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/>
+          d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"
+        />
       </svg>
 
-<!--      <ul class="lang">
+      <!--      <ul class="lang">
         <li
             v-for="(item, i) in lang[0].items"
             :key="i"
@@ -89,54 +130,58 @@
       </ul>-->
     </button>
 
-    <button @click="ChangeTheme" :class="{'active': vsThemeVal.themeDarken}" :title="`Theme ${ !vsThemeVal.themeDarken ? 'Dark' : 'Light'}`" class="li-darken switch-dark">
+    <button
+      @click="ChangeTheme"
+      :class="{ active: vsThemeVal.themeDarken }"
+      :title="`Theme ${!vsThemeVal.themeDarken ? 'Dark' : 'Light'}`"
+      class="li-darken switch-dark"
+    >
       <div class="switch-con">
-          <span class="circle">
-            <i v-if="vsThemeVal.themeDarken" class="bx bxs-sun"></i>
-            <i v-else class='bx bxs-moon'></i>
-          </span>
+        <span class="circle">
+          <i v-if="vsThemeVal.themeDarken" class="bx bxs-sun"></i>
+          <i v-else class="bx bxs-moon"></i>
+        </span>
       </div>
     </button>
-
   </div>
 </template>
 <script setup>
-import {computed, onMounted, ref, getCurrentInstance} from 'vue'
-import {useData} from "vitepress"
+import { computed, onMounted, ref, getCurrentInstance, nextTick } from 'vue'
+import { useData } from 'vitepress'
 import { Message } from 'fei-ui-design'
 
 const vsThemeVal = ref(null)
 
 const sideBarOpen = ref(true)
 const lang = computed(() => {
-  const {site, page, theme} = useData()
-  const {locales} = site.value
-    if (locales.value && Object.keys(locales.value).length > 1) {
-      const currentLink = page.value.path
-      const themeLocales = theme.value.locales || {}
-      const languageDropdown = {
-        text: 'Languages',
-        items: Object.keys(locales.value).map(path => {
-          const locale = locales.value[path]
-          const text = themeLocales[path] && themeLocales[path].label || locale.text
-          let link
-          // Stay on the current page
-          if (locale.lang === lang.value) {
-            link = currentLink
+  const { site, page, theme } = useData()
+  const { locales } = site.value
+  if (locales.value && Object.keys(locales.value).length > 1) {
+    const currentLink = page.value.path
+    const themeLocales = theme.value.locales || {}
+    const languageDropdown = {
+      text: 'Languages',
+      items: Object.keys(locales.value).map(path => {
+        const locale = locales.value[path]
+        const text = (themeLocales[path] && themeLocales[path].label) || locale.text
+        let link
+        // Stay on the current page
+        if (locale.lang === lang.value) {
+          link = currentLink
+        }
+        /*else {
+          // Try to stay on the same page
+          link = currentLink.replace(this.$localeConfig.path, path)
+          // fallback to homepage
+          if (!routes.some(route => route.path === link)) {
+            link = path
           }
-          /*else {
-            // Try to stay on the same page
-            link = currentLink.replace(this.$localeConfig.path, path)
-            // fallback to homepage
-            if (!routes.some(route => route.path === link)) {
-              link = path
-            }
-          }*/
-          return { text, link }
-        })
-      }
-      return [ languageDropdown]
+        }*/
+        return { text, link }
+      }),
     }
+    return [languageDropdown]
+  }
   return []
 })
 
@@ -184,17 +229,19 @@ function ChangeSidebar() {
 
 function hexToRgb(hex) {
   // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
-  var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+  var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i
   hex = hex.replace(shorthandRegex, function (m, r, g, b) {
-    return r + r + g + g + b + b;
-  });
+    return r + r + g + g + b + b
+  })
 
-  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  return result ? {
-    r: parseInt(result[1], 16),
-    g: parseInt(result[2], 16),
-    b: parseInt(result[3], 16)
-  } : null;
+  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+  return result
+    ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16),
+      }
+    : null
 }
 
 function contrastColor(element) {
@@ -203,8 +250,12 @@ function contrastColor(element) {
     let rgb = hexToRgb(element)
     c = `rgb(${rgb.r},${rgb.g},${rgb.b})`
   }
-  var rgb = c.replace(/^(rgb|rgba)\(/, '').replace(/\)$/, '').replace(/\s/g, '').split(',');
-  var yiq = ((rgb[0] * 299) + (rgb[1] * 587) + (rgb[2] * 114)) / 1000;
+  var rgb = c
+    .replace(/^(rgb|rgba)\(/, '')
+    .replace(/\)$/, '')
+    .replace(/\s/g, '')
+    .split(',')
+  var yiq = (rgb[0] * 299 + rgb[1] * 587 + rgb[2] * 114) / 1000
   if (yiq >= 128) {
     return true
   } else {
@@ -237,7 +288,7 @@ function changeColorLayout(colorBase) {
 
   setTimeout(() => {
     document.body.classList.remove('all-transition')
-  }, 100);
+  }, 100)
 }
 
 function ChangeColor(evt) {
@@ -263,7 +314,7 @@ function ChangeOpenCode() {
   vsThemeVal.value.openCode = !vsThemeVal.value.openCode
 }
 
-const setTheme = (forceTheme) => {
+const setTheme = forceTheme => {
   document.body.classList.add('vs-remove-transition')
   const media = window.matchMedia('(prefers-color-scheme: dark)')
 
@@ -294,50 +345,59 @@ const setTheme = (forceTheme) => {
   return isThemeDark ? 'dark' : 'light'
 }
 
-const toggleTheme = (forceTheme) => {
-  document.body.classList.add('vs-remove-transition')
+function ChangeTheme(event) {
   const media = window.matchMedia('(prefers-color-scheme: dark)')
-
   let isThemeDark = media.matches
 
   if (localStorage.vsTheme) {
     isThemeDark = localStorage.vsTheme === 'dark'
   }
 
-  if (!isThemeDark) {
-    document.body.setAttribute('vs-theme', 'dark')
-  } else {
-    document.body.removeAttribute('vs-theme')
-  }
+  localStorage.vsTheme = !isThemeDark ? 'dark' : 'light'
+  const returnTheme = !isThemeDark ? 'dark' : 'light'
 
-  if (forceTheme === 'dark') {
-    document.body.removeAttribute('vs-theme')
-  } else if (forceTheme === 'light') {
-    document.body.setAttribute('vs-theme', 'dark')
-  }
+  document.body.classList.add('vs-remove-transition')
+  vsThemeVal.value.themeDarken = returnTheme === 'dark'
+  console.log(!vsThemeVal.value.themeDarken)
 
-  localStorage.vsTheme =  !isThemeDark ? 'dark' : 'light'
+  const x = event.clientX
+  const y = event.clientY
+  const endRadius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y))
+  console.log(endRadius)
+
+  const transition = document.startViewTransition(async () => {
+    if (returnTheme === 'dark') {
+      document.body.setAttribute('vs-theme', 'dark')
+      document.body.classList.add('darken')
+    } else {
+      document.body.removeAttribute('vs-theme')
+      document.body.classList.remove('darken')
+    }
+  })
+
+  transition.ready.then(() => {
+    const clipPath = [`circle(0px at ${x}px ${y}px)`, `circle(${endRadius}px at ${x}px ${y}px)`]
+    document.documentElement.animate(
+      {
+        clipPath: !vsThemeVal.value.themeDarken ? [...clipPath].reverse() : clipPath,
+      },
+      {
+        duration: 500,
+        easing: 'ease-in',
+        pseudoElement: !vsThemeVal.value.themeDarken
+          ? '::view-transition-old(root)'
+          : '::view-transition-new(root)',
+      },
+    )
+  })
 
   setTimeout(() => {
     document.body.classList.remove('vs-remove-transition')
-  }, 100);
-
-  return !isThemeDark ? 'dark' : 'light'
+  }, 500)
 }
-
-function ChangeTheme() {
-  const returnTheme = toggleTheme()
-  vsThemeVal.value.themeDarken = returnTheme === 'dark'
-  if (returnTheme === 'dark') {
-    document.body.classList.add('darken')
-  } else {
-    document.body.classList.remove('darken')
-  }
-}
-
 
 function changeLang() {
-  Message.info({message:'暂未开发！', zIndex:3000})
+  Message.info({ message: '暂未开发！', zIndex: 3000 })
 }
 
 // Vue.prototype.$mobile = { active: (localStorage.mobile != 'true') || false }
@@ -348,8 +408,7 @@ function changeLang() {
 // Vue.observable(this.$site.themeConfig)
 
 const { vsTheme } = getCurrentInstance().appContext.config.globalProperties
-console.log(vsTheme);
-vsThemeVal.value = {...vsTheme}
+vsThemeVal.value = { ...vsTheme }
 
 onMounted(() => {
   const returnTheme = setTheme()
@@ -360,7 +419,6 @@ onMounted(() => {
     document.body.classList.remove('darken')
   }
 })
-
 </script>
 <style lang="stylus">
 getColor(vsColor, alpha = 1)

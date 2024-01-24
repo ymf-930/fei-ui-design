@@ -2,7 +2,43 @@
 title: 单选框 Radio
 ---
 
+# Radio
 
+<card>
+
+## Default
+
+<template #example>
+  Radio-default111111
+</template>
+
+<template #template>
+
+  ```html{3,4,5}
+    <template>
+      <div class="center">
+          aaaaa
+      </div>
+    </template>
+  ```
+
+</template>
+
+<template #script>
+
+  ```html{4}
+    <script>
+      export default {
+        data:() => ({
+          picked: 1,
+        })
+      }
+    </script>
+  ```
+
+</template>
+
+</card>
 
 # 单选框 Radio
 

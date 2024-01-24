@@ -4,35 +4,51 @@
       <slot></slot>
     </div>
 
-    <div v-if="$slots.example" class="example" :class="{'mobile': $vsTheme.mobileActive}">
+    <!-- <div  class="example" :class="{'mobile': vsThemeVal.mobileActive}"> -->
+    <div v-if="slots.example" class="example" :class="{'mobile': vsThemeVal.mobileActive}">
       <slot name="example" />
     </div>
 
-
-    <div v-if="$slots.template || $slots.script || $slots.style" class="slotcode">
-      aaaaa
-<!--      <codex :codesandbox="codesandbox" :codepen="codepen">
-        <div v-if="$slots.template" slot="template">
+   <div v-if="slots.template || slots.script || slots.style" class="slotcode">
+    <!-- <div class="slotcode"> -->
+     <codex :codesandbox="codesandbox" :codepen="codepen">
+        <!-- <div v-if="slots.template" slot="template">
           <slot name="template" />
         </div>
-        <div v-if="$slots.script" slot="script">
+        <div v-if="slots.script" slot="script">
           <slot name="script" />
         </div>
-        <div v-if="$slots.style" slot="style">
+        <div v-if="slots.style" slot="style">
           <slot name="style" />
-        </div>
-      </codex>-->
+        </div> -->
+          <slot name="template" />
+          <slot name="script" />
+          <slot name="style" />
+      </codex>
     </div>
   </div>
 </template>
-<script>
-// import codex from './codex.vue'
-export default {
-  props:['codepen', 'codesandbox'],
-  components:{
-    // codex
+<script setup>
+import { useSlots } from 'vue'
+import codex from './codex.vue'
+const slots = useSlots()
+
+const props = defineProps({
+  codepen:{
+    type: Boolean,
+    default: false
+  },
+  codesandbox:{
+    type: Object,
+    default: ()=>{}
   }
-}
+})
+
+
+const vsThemeVal = ref(null)
+const { vsTheme } = getCurrentInstance().appContext.config.globalProperties
+vsThemeVal.value = {...vsTheme}
+
 </script>
 <style lang="stylus">
 getVar(var)

@@ -53,20 +53,20 @@
       <div ref="codex" v-show="active" class="con-code">
         <ul ref="ul" class="ul-codes">
           <li
-            v-if="$slots.template"
-            :class="{'active': activeSlot == 0}" @click="activeSlot = 0">Template
+            v-if="slots.template"
+            :class="{'active': activeSlot === 0}" @click="activeSlot = 0">Template
           </li>
           <li
-            v-if="$slots.script"
-            :class="{'active': activeSlot == 1}" @click="activeSlot = 1">Script
+            v-if="slots.script"
+            :class="{'active': activeSlot === 1}" @click="activeSlot = 1">Script
           </li>
           <li
-            v-if="$slots.style"
-            :class="{'active': activeSlot == 2}"
+            v-if="slots.style"
+            :class="{'active': activeSlot === 2}"
             @click="activeSlot = 2">
             Style
           </li>
-          <li v-if="Object.keys(this.$slots).length > 1" :class="{'active': activeSlot == 3}" @click="activeSlot = 3">
+          <li v-if="Object.keys(slots).length > 1" :class="{'active': activeSlot === 3}" @click="activeSlot = 3">
             All
           </li>
         </ul>
@@ -78,7 +78,7 @@
             v-on:enter="entercodes"
             v-on:leave="leavecodes"
           >
-            <div ref="slot0" key="0" v-if="activeSlot == 0" class="slot-template slots">
+            <div ref="slot0" key="0" v-if="activeSlot === 0" class="slot-template slots">
               <slot name="template"/>
 
               <footer
@@ -94,7 +94,7 @@
             v-on:enter="entercodes"
             v-on:leave="leavecodes"
           >
-            <div ref="slot1" key="1" v-if="activeSlot == 1" class="slot-script slots">
+            <div ref="slot1" key="1" v-if="activeSlot === 1" class="slot-script slots">
               <slot name="script"/>
 
               <footer
@@ -111,7 +111,7 @@
             v-on:enter="entercodes"
             v-on:leave="leavecodes"
           >
-            <div ref="slot2" key="2" v-if="activeSlot == 2" class="slot-style slots">
+            <div ref="slot2" key="2" v-if="activeSlot === 2" class="slot-style slots">
               <slot name="style"/>
 
               <footer
@@ -128,7 +128,7 @@
             v-on:enter="entercodes"
             v-on:leave="leavecodes"
           >
-            <div ref="slot3" key="3" v-if="activeSlot == 3" class="slot-all slots">
+            <div ref="slot3" key="3" v-if="activeSlot === 3" class="slot-all slots">
               <slot name="template"/>
               <slot name="script"/>
               <slot name="style"/>
@@ -146,118 +146,134 @@
     </transition>
   </div>
 </template>
-<script>
-import Vue from 'vue'
-
-export default {
-  props: ['codepen', 'codesandbox'],
-  data: () => ({
-    active: false,
-    check: false,
-    activeSlot: 0
-  }),
-    watch: {
-      '$vsTheme.openCode': function (val) {
-        this.active = val
-        localStorage.openCode = val
-      },
-      activeSlot() {
-        this.$nextTick(() => {
-          let ul = this.$refs.ul.scrollHeight
-          let h = this.$refs['slot' + this.activeSlot].scrollHeight
-          this.$refs.codex.style.height = (h + ul) - 1 + 'px'
-        })
-      }
-    },
-  created() {
-    Vue.observable(this.$site.themeConfig)
+<script setup>
+import {getCurrentInstance, nextTick, onMounted, ref, useSlots, watch} from 'vue'
+import {useRoute, useRouter} from "vitepress";
+const router = useRouter()
+const route = useRoute()
+const slots = useSlots()
+const active = ref(false)
+const check = ref(false)
+const activeSlot = ref(0)
+const vsThemeVal = ref(null)
+const props = defineProps({
+  codepen: {
+    type: Boolean,
+    default: false
   },
-  mounted() {
-    this.$vsTheme.openCode = (localStorage.openCode == 'true')
-  },
-    methods: {
-      toggleCode() {
-        this.active = !this.active
-        // this.$router.replace(!this.active ? `${this.$route.hash.replace('-view', '')}-hide` : `${this.$route.hash.replace('-hide', '')}-view`)
-      },
-      openCodepen(url) {
-        window.open(this.codepen)
-      },
-      openCodesandbox(url) {
-        document.body.style.overflow = 'hidden'
-        this.$codesandbox.url = this.codesandbox
-      },
-      clipboard(text) {
-
-        var aux = document.createElement("textarea");
-        aux.value = text
-        aux.className = "vs-clipboard"
-        document.body.appendChild(aux);
-        aux.focus();
-        aux.select();
-        document.execCommand("copy");
-        document.body.removeChild(aux);
-      },
-      copy() {
-        let slot = 'template'
-        console.log(this.activeSlot);
-        if (this.activeSlot == 1) {
-          slot = 'script'
-        } else if (this.activeSlot == 2) {
-          slot = 'style'
-        }
-
-        let text = this.$slots[slot][0].elm.innerText
-        if (this.activeSlot == 3) {
-          text = `
-            ${this.$slots['template'] ? this.$slots['template'][0].elm.innerText.trim() : ''}
-            ${this.$slots['script'] ? this.$slots['script'][0].elm.innerText.trim() : ''}
-            ${this.$slots['style'] ? this.$slots['style'][0].elm.innerText.trim() : ''}
-          `
-        }
-
-        this.clipboard(text)
-
-        this.check = true
-        setTimeout(() => {
-          this.check = false
-        }, 1000);
-
-        this.$router.replace(`${this.$route.hash}-c`)
-      },
-      // animation
-      beforeEnter(el) {
-        el.style.height = 0
-      },
-      enter(el, done) {
-        let h = el.scrollHeight
-        el.style.height = h - 1 + 'px'
-        done()
-      },
-      leave: function (el, done) {
-        el.style.height = '0px'
-      },
-      beforeEntercodes(el) {
-        el.style.height = 0
-        el.style.opacity = 0
-        el.style.position = 'absolute'
-      },
-      entercodes(el, done) {
-        let h = el.scrollHeight
-        el.style.height = h - 1 + 'px'
-        el.style.opacity = 1
-        el.style.position = 'relative'
-        done()
-      },
-      leavecodes: function (el, done) {
-        el.style.height = '0px'
-        el.style.opacity = 0
-        el.style.position = 'absolute'
-      },
+  codesandbox: {
+    type: Object,
+    default: () => {
     }
+  }
+})
+const {vsTheme} = getCurrentInstance().appContext.config.globalProperties
+console.log(vsTheme);
+vsThemeVal.value = {...vsTheme}
+watch(() => vsThemeVal.value.openCode, val => {
+  active.value = val
+  localStorage.openCode = val
+})
+watch(() => activeSlot.value, async val => {
+  await nextTick()
+  let ul = this.$refs.ul.scrollHeight
+  let h = this.$refs['slot' + activeSlot.value].scrollHeight
+  this.$refs.codex.style.height = (h + ul) - 1 + 'px'
+})
+// Vue.observable(this.$site.themeConfig)
+onMounted(() => {
+  vsThemeVal.value.openCode = (localStorage.openCode === 'true')
+})
+
+function toggleCode() {
+  active.value = !active.value
+  // router.replace(!active.value ? `${this.$route.hash.replace('-view', '')}-hide` : `${this.$route.hash.replace('-hide', '')}-view`)
+}
+
+function openCodepen(url) {
+  window.open(props.codepen)
+}
+
+function openCodesandbox(url) {
+  document.body.style.overflow = 'hidden'
+  // this.$codesandbox.url = props.codesandbox
+}
+
+function clipboard(text) {
+  var aux = document.createElement("textarea");
+  aux.value = text
+  aux.className = "vs-clipboard"
+  document.body.appendChild(aux);
+  aux.focus();
+  aux.select();
+  document.execCommand("copy");
+  document.body.removeChild(aux);
+}
+
+function copy() {
+  let slot = 'template'
+  console.log(activeSlot.value);
+  if (activeSlot.value === 1) {
+    slot = 'script'
+  } else if (activeSlot.value === 2) {
+    slot = 'style'
+  }
+
+  let text = slots[slot][0].elm.innerText
+  if (activeSlot.value === 3) {
+    text = `
+            ${slots['template'] ? slots['template'][0].elm.innerText.trim() : ''}
+            ${slots['script'] ? slots['script'][0].elm.innerText.trim() : ''}
+            ${slots['style'] ? slots['style'][0].elm.innerText.trim() : ''}
+          `
+  }
+
+  clipboard(text)
+
+  check.value = true
+  setTimeout(() => {
+    check.value = false
+  }, 1000);
+
+  router.replace(`${route.hash}-c`)
+}
+
+// animation
+function beforeEnter(el) {
+  el.style.height = 0
+}
+
+function enter(el, done) {
+  let h = el.scrollHeight
+  el.style.height = h - 1 + 'px'
+  done()
+}
+
+function leave(el, done) {
+  el.style.height = '0px'
+}
+
+function beforeEntercodes(el) {
+  el.style.height = 0
+  el.style.opacity = 0
+  el.style.position = 'absolute'
+}
+
+function entercodes(el, done) {
+  let h = el.scrollHeight
+  el.style.height = h - 1 + 'px'
+  el.style.opacity = 1
+  el.style.position = 'relative'
+  done()
+}
+
+function leavecodes(el, done) {
+  el.style.height = '0px'
+  el.style.opacity = 0
+  el.style.position = 'absolute'
 }
 </script>
-<style lang="stylus">
+<style lang="stylus" scoped>
 getVar(var)
   unquote("var(--vs-" + var + ")")
 
@@ -325,7 +341,6 @@ getVar(var)
   position relative
   width 100%
 
-// overflow hidden
 .slots
   transition all .25s ease
   width 100%
@@ -335,12 +350,9 @@ getVar(var)
 
   div
     width 100%
-    // overflow hidden
 
     pre
       width 100%
-
-  // overflow hidden
 
   > div
     &:last-child
@@ -414,82 +426,71 @@ getVar(var)
   pre
     margin-top 0px !important
 
-.header-codex
-  width 100%
-  display flex
-  align-items center
-  justify-content center
-
-  ul
-    display flex
-    align-items center
-    margin 0px
-    padding 0px
-    justify-content center
-    width 100%
-    padding 0px 4px
-    align-items: stretch
-    padding-top 10px
-
-    li
-      list-style none
-      color getVar(theme-color)
-      opacity .6
-      padding 3px 10px
-      transition all .25s ease
-      display flex
-      align-items center
-      cursor pointer
-      border-radius 12px
-      background transparent
-      outline none !important
-
-      &.copied
-        transform scale(1.3)
-        opacity 1 !important
-
-        i
-          color rgb(70, 201, 58) !important
-
-      &:nth-last-child(3)
-        position relative
-        padding-right 15px
-        margin-right 5px
-
-        &:after
-          content ''
-          position absolute
-          right 0px
-          height 60%
-          top 20%
-          width 1px
-          background alpha($borderColor, 1)
-          display block
-
-      &.active
-        color $accentColor !important
-        opacity 1
-        border-radius 12px 12px 0px 0px
-        background getVar(theme-code2)
-
-        i
-          color #fff !important
-
-      // &.not-a
-
-      svg, i
-        max-width 18px
-        fill getVar(theme-color) !important
-
-      &:hover
-        opacity 1
-
-      &:not(.not-a)
-        svg
-          transition all .25s ease
-          fill alpha($textColor, .6)
-          pointer-events none
-
+//.header-codex
+//  width 100%
+//  display flex
+//  align-items center
+//  justify-content center
+//
+//  ul
+//    display flex
+//    align-items center
+//    margin 0px
+//    padding 0px
+//    justify-content center
+//    width 100%
+//    padding 0px 4px
+//    align-items: stretch
+//    padding-top 10px
+//
+//    li
+//      list-style none
+//      color getVar(theme-color)
+//      opacity .6
+//      padding 3px 10px
+//      transition all .25s ease
+//      display flex
+//      align-items center
+//      cursor pointer
+//      border-radius 12px
+//      background transparent
+//      outline none !important
+//      &.copied
+//        transform scale(1.3)
+//        opacity 1 !important
+//        i
+//          color rgb(70, 201, 58) !important
+//      &:nth-last-child(3)
+//        position relative
+//        padding-right 15px
+//        margin-right 5px
+//        &:after
+//          content ''
+//          position absolute
+//          right 0px
+//          height 60%
+//          top 20%
+//          width 1px
+//          background alpha($borderColor, 1)
+//          display block
+//      &.active
+//        color $accentColor !important
+//        opacity 1
+//        border-radius 12px 12px 0px 0px
+//        background getVar(theme-code2)
+//        i
+//          color #fff !important
+//      // &.not-a
+//      svg, i
+//        max-width 18px
+//        fill getVar(theme-color) !important
+//      &:hover
+//        opacity 1
+//      &:not(.not-a)
+//        svg
+//          transition all .25s ease
+//          fill alpha($textColor, .6)
+//          pointer-events none
 @media (max-width: 500px)
   .code
     .con-code
