@@ -1,5 +1,5 @@
 <template>
-  <div flex="main:justify box:mean">
+  <div flex="main:justify box:mean" style="width: 100%">
     <div style="padding: 0 10px">
       <f-card class="box-card" shadow="always">
         <div>总是显示</div>

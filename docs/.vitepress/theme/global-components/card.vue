@@ -3,62 +3,56 @@
     <div class="text">
       <slot></slot>
     </div>
-
-    <!-- <div  class="example" :class="{'mobile': vsThemeVal.mobileActive}"> -->
-    <div v-if="slots.example" class="example" :class="{'mobile': vsThemeVal.mobileActive}">
-      <slot name="example" />
+    <div v-if="slots.example" class="example" :class="{ mobile: vsThemeVal.mobileActive }">
+      <div class="center">
+        <slot name="example" />
+      </div>
     </div>
 
-   <div v-if="slots.template || slots.script || slots.style" class="slotcode">
-    <!-- <div class="slotcode"> -->
-     <codex :codesandbox="codesandbox" :codepen="codepen">
-        <!-- <div v-if="slots.template" slot="template">
+    <div v-if="slots.template || slots.script || slots.style" class="slotcode">
+      <codex :codesandbox="codesandbox" :codepen="codepen">
+        <template #template v-if="slots.template">
           <slot name="template" />
-        </div>
-        <div v-if="slots.script" slot="script">
+        </template>
+        <template #script v-if="slots.script">
           <slot name="script" />
-        </div>
-        <div v-if="slots.style" slot="style">
+        </template>
+        <template #style v-if="slots.style">
           <slot name="style" />
-        </div> -->
-          <slot name="template" />
-          <slot name="script" />
-          <slot name="style" />
+        </template>
       </codex>
     </div>
   </div>
 </template>
 <script setup>
-import { useSlots } from 'vue'
+import { useSlots, ref, getCurrentInstance } from 'vue'
 import codex from './codex.vue'
 const slots = useSlots()
 
 const props = defineProps({
-  codepen:{
+  codepen: {
     type: Boolean,
-    default: false
+    default: false,
   },
-  codesandbox:{
-    type: Object,
-    default: ()=>{}
-  }
+  codesandbox: {
+    type: String,
+    default: '',
+  },
 })
-
 
 const vsThemeVal = ref(null)
 const { vsTheme } = getCurrentInstance().appContext.config.globalProperties
-vsThemeVal.value = {...vsTheme}
-
+vsThemeVal.value = { ...vsTheme }
 </script>
 <style lang="stylus">
 getVar(var)
     unquote("var(--vs-"+var+")")
 
-h1
+h5
   + .card
       .text
         h2
-          padding-top 20px !important
+          padding-top 30px !important
 .card
   // background rgb(255,255,255)
   border-radius 20px
@@ -67,6 +61,10 @@ h1
   margin-top 20px
   margin-bottom -50px
   width 100%
+  &:first-child
+    .text
+        h2
+          padding-top 30px !important
   &:last-of-type
     margin-bottom 0px
   > .text
@@ -99,6 +97,9 @@ h1
     transition all .25s ease
     width 100%
     height auto
+    .center
+      justify-content flex-start
+
     &:after
       transition all .25s ease
       width 100%
@@ -159,7 +160,8 @@ h1
       &:hover
         padding-left 40px
     h2
-      padding-top 120px
+      padding-top 100px
+
     p
       padding 5px 20px
       margin 0px

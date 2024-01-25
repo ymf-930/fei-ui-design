@@ -358,12 +358,10 @@ function ChangeTheme(event) {
 
   document.body.classList.add('vs-remove-transition')
   vsThemeVal.value.themeDarken = returnTheme === 'dark'
-  console.log(!vsThemeVal.value.themeDarken)
 
   const x = event.clientX
   const y = event.clientY
   const endRadius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y))
-  console.log(endRadius)
 
   const transition = document.startViewTransition(async () => {
     if (returnTheme === 'dark') {

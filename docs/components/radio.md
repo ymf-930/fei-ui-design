@@ -1,74 +1,373 @@
 ---
 title: 单选框 Radio
+PROPS:
+  - name: color
+    type: String
+    values: Vuesax Colors, RGB, HEX
+    description: Change the color of the radio.
+    default: primary
+    link: null
+    usage: '#color'
+    code: >
+            <vs-radio success v-model="picked" val="2">
+              Success
+            </vs-radio>
+
+  - name: disabled
+    type: Boolean
+    values: true,false
+    description: Determine if the component is in the disabled state.
+    default: false
+    link: null
+    usage: '#default'
+    code: >
+            <vs-radio disabled v-model="picked" val="3">
+              Option C
+            </vs-radio>
+
+  - name: loading
+    type: Boolean
+    values: true,false
+    description: Determine if the component has a loading animation and is disabled.
+    default: false
+    link: null
+    usage: '#loading'
+    code: >
+            <vs-radio loading v-model="picked" val="1">
+              Option 1
+            </vs-radio>
+
+  - name: val
+    type: String
+    values: String
+    description: Determine the value of the radio input.
+    default: null
+    link: null
+    usage: '#default'
+    code: >
+            <vs-radio v-model="picked" val="1">
+              Option A
+            </vs-radio>
+
+SLOTS:
+  - name: default
+    type: slot
+    values: null
+    description: Add a label to the component.
+    default: null
+    link: null
+    usage: '#label'
+    code: >
+            <vs-radio v-model="picked" val="1">
+              Label
+            </vs-radio>
+  - name: icon
+    type: slot
+    values: null
+    description: Add an icon inside the radio.
+    default: null
+    link: null
+    usage: '#icon'
+    code: >
+            <vs-radio v-model="picked" val="1">
+              Yen
+              <template #icon>
+                <i class='bx bx-yen' ></i>
+              </template>
+            </vs-radio>
+
+NEWS:
+  - loading
+  - icon
+  - label
 ---
 
-# Radio
+<script setup>
+import Basic from './demo/Radio/Basic.vue'
+import Group from './demo/Radio/Group.vue'
+import Disabled from './demo/Radio/Disabled.vue'
+import ButtonType from './demo/Radio/ButtonType.vue'
+import CapsuleType from './demo/Radio/CapsuleType.vue'
+</script>
+
+##### 单选框。主要用于一组可选项单项选择，或者单独用于切换到选中状态。
 
 <card>
 
-## Default
+## 基础用法
 
 <template #example>
-  Radio-default111111
+
+  <Basic/>
+  
 </template>
 
 <template #template>
 
-  ```html{3,4,5}
-    <template>
-      <div class="center">
-          aaaaa
-      </div>
-    </template>
-  ```
+```html
+<template>
+  <f-radio v-model="single">Radio</f-radio>
+  <span style="color: #ff4511">{{ single }}</span>
+</template>
+```
 
 </template>
 
 <template #script>
 
-  ```html{4}
-    <script>
-      export default {
-        data:() => ({
-          picked: 1,
-        })
-      }
-    </script>
-  ```
+```html
+<script setup lang="ts">
+  import { ref } from 'vue'
+  const single = ref(false)
+</script>
+```
 
 </template>
 
 </card>
 
-# 单选框 Radio
-
-单选框。主要用于一组可选项单项选择，或者单独用于切换到选中状态。
-
-## 基础用法
-
-<preview path="./demo/Radio/Basic.vue"></preview>
+<card>
 
 ## 组合使用
 
-<preview path="./demo/Radio/Group.vue"></preview>
+<template #example>
+
+  <Group/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div>
+    <f-radio-group v-model="social">
+      <f-radio label="twitter">
+        <span>Twitter</span>
+      </f-radio>
+      <f-radio label="facebook">
+        <span>Facebook</span>
+      </f-radio>
+      <f-radio label="github">
+        <span>Github</span>
+      </f-radio>
+      <f-radio label="snapchat">
+        <span>Snapchat</span>
+      </f-radio>
+    </f-radio-group>
+    <p style="color: #ff4511; margin: 5px 0">{{ social }}</p>
+    <f-radio-group v-model="fruit">
+      <f-radio label="香蕉"></f-radio>
+      <f-radio label="苹果"></f-radio>
+      <f-radio label="西瓜"></f-radio>
+    </f-radio-group>
+    <p style="color: #ff4511; margin: 5px 0">{{ fruit }}</p>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+  import { ref } from 'vue'
+  const social = ref('facebook')
+  const fruit = ref('苹果')
+</script>
+```
+
+</template>
+
+</card>
+
+
+<card>
 
 ## 禁用状态
 
 设置 `disabled` 可以禁用单选组或者某个单选值
 
-<preview path="./demo/Radio/Disabled.vue"></preview>
+<template #example>
+
+  <Disabled/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div>
+    <f-radio v-model="disabledSingle" disabled>Checkbox</f-radio>
+    <f-radio-group v-model="disabledGroup">
+      <f-radio label="香蕉" disabled></f-radio>
+      <f-radio label="苹果" disabled></f-radio>
+      <f-radio label="西瓜"></f-radio>
+    </f-radio-group>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+  import { ref } from 'vue'
+  const disabledSingle = ref(true)
+  const disabledGroup = ref('苹果')
+</script>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 按钮类型
 
 设置 `type="button"` 可以设置单选框为按钮类型
 
-<preview path="./demo/Radio/ButtonType.vue"></preview>
+<template #example>
+
+  <ButtonType/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div flex>
+    <div>
+      <f-radio-group v-model="fruit" type="button">
+        <f-radio label="香蕉"></f-radio>
+        <f-radio label="苹果"></f-radio>
+        <f-radio label="西瓜"></f-radio>
+      </f-radio-group>
+      <div class="p10" />
+      <f-radio-group v-model="fruit" type="button" size="small">
+        <f-radio label="香蕉"></f-radio>
+        <f-radio label="苹果"></f-radio>
+        <f-radio label="西瓜"></f-radio>
+      </f-radio-group>
+      <div class="p10" />
+      <f-radio-group v-model="fruit" type="button" size="mini">
+        <f-radio label="香蕉"></f-radio>
+        <f-radio label="苹果"></f-radio>
+        <f-radio label="西瓜"></f-radio>
+      </f-radio-group>
+    </div>
+    <div style="margin-left: 24px">
+      <f-radio-group v-model="fruit" type="button">
+        <f-radio label="香蕉" disabled></f-radio>
+        <f-radio label="苹果"></f-radio>
+        <f-radio label="西瓜"></f-radio>
+      </f-radio-group>
+      <br />
+      <f-radio-group v-model="fruit" type="button" disabled>
+        <f-radio label="香蕉" disabled></f-radio>
+        <f-radio label="苹果"></f-radio>
+        <f-radio label="西瓜"></f-radio>
+      </f-radio-group>
+    </div>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+  import { ref } from 'vue'
+  const fruit = ref('苹果')
+</script>
+```
+
+</template>
+
+</card>
+
+
+<card>
 
 ## 胶囊类型
 
 设置 `type="capsule"` 可以设置单选框为胶囊类型
 
-<preview path="./demo/Radio/CapsuleType.vue"></preview>
+<template #example>
+
+  <CapsuleType/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div flex>
+    <div>
+      <f-radio-group v-model="fruit" type="capsule">
+        <f-radio label="香蕉"></f-radio>
+        <f-radio label="苹果"></f-radio>
+        <f-radio label="桃子"></f-radio>
+        <f-radio label="西瓜"></f-radio>
+      </f-radio-group>
+      <div class="p10" />
+      <f-radio-group v-model="fruit" type="capsule" size="small">
+        <f-radio label="香蕉"></f-radio>
+        <f-radio label="苹果"></f-radio>
+        <f-radio label="桃子"></f-radio>
+        <f-radio label="西瓜"></f-radio>
+      </f-radio-group>
+      <div class="p10" />
+      <f-radio-group v-model="fruit" type="capsule" size="mini">
+        <f-radio label="香蕉"></f-radio>
+        <f-radio label="苹果"></f-radio>
+        <f-radio label="桃子"></f-radio>
+        <f-radio label="西瓜"></f-radio>
+      </f-radio-group>
+    </div>
+
+    <div style="margin-left: 24px">
+      <f-radio-group v-model="fruit" type="capsule">
+        <f-radio label="香蕉" disabled></f-radio>
+        <f-radio label="苹果"></f-radio>
+        <f-radio label="桃子"></f-radio>
+        <f-radio label="西瓜"></f-radio>
+      </f-radio-group>
+      <div class="p10" />
+      <f-radio-group v-model="fruit" type="capsule" disabled>
+        <f-radio label="香蕉" disabled></f-radio>
+        <f-radio label="苹果"></f-radio>
+        <f-radio label="桃子"></f-radio>
+        <f-radio label="西瓜"></f-radio>
+      </f-radio-group>
+    </div>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+  import { ref } from 'vue'
+  const fruit = ref('苹果')
+</script>
+```
+
+</template>
+
+</card>
 
 ## Props
 

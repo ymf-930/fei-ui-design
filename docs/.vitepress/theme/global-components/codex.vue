@@ -1,91 +1,87 @@
 <template>
   <div class="code">
-    <div
-      :class="{'copied': check}"
-      class="noti-code"
-    >
-      <i class='bx bx-check'></i> Code copied
+    <div :class="{ copied: check }" class="noti-code">
+      <i class="bx bx-check"></i>
+      Code copied
     </div>
     <header class="header-codex">
       <ul>
         <li title="Codepen" v-if="codepen" @click="openCodepen" class="con-link">
-          <i class='bx bxl-codepen'></i>
+          <i class="bx bxl-codepen"></i>
         </li>
 
         <li title="Codesandbox" v-if="codesandbox" @click="openCodesandbox">
-          <svg t="1514359261842" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" fill="currentColor"
-               xmlns="http://www.w3.org/2000/svg" p-id="9197" xmlns:xlink="http://www.w3.org/1999/xlink" width="15px"
-               height="15px">
+          <svg
+            t="1514359261842"
+            class="icon"
+            style=""
+            viewBox="0 0 1024 1024"
+            version="1.1"
+            fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+            p-id="9197"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            width="15px"
+            height="15px"
+          >
             <path
               d="M755 140.3l0.5-0.3h0.3L512 0 268.3 140h-0.3l0.8 0.4L68.6 256v512L512 1024l443.4-256V256L755 140.3z m-30 506.4v171.2L548 920.1V534.7L883.4 341v215.7l-158.4 90z m-584.4-90.6V340.8L476 534.4v385.7L300 818.5V646.7l-159.4-90.6zM511.7 280l171.1-98.3 166.3 96-336.9 194.5-337-194.6 165.7-95.7L511.7 280z"
-              p-id="9198"></path>
+              p-id="9198"
+            ></path>
           </svg>
         </li>
 
-        <li title="Copy code" :class="{'copied': check}" @click="copy">
-          <i v-if="!check" class='bx bx-copy'></i>
-          <i v-else class='bx bx-check'></i>
+        <li title="Copy code" :class="{ copied: check }" @click="copy">
+          <i v-if="!check" class="bx bx-copy"></i>
+          <i v-else class="bx bx-check"></i>
         </li>
-
-        <!-- <li class="con-api-link">
-          <a href="#vs-api">
-            <!API
-            <i class='bx bx-list-ul' ></i>
-          </a>
-        </li> -->
-
         <li
           :title="active ? 'hide code' : 'View code'"
-          :class="{'active': active}"
-          class="not-a con-link" @click="toggleCode">
+          :class="{ active: active }"
+          class="not-a con-link"
+          @click="toggleCode"
+        >
+          <i v-if="!active" class="bx bx-code-alt"></i>
 
-          <i v-if="!active" class='bx bx-code-alt'></i>
-
-          <i v-else class='bx bx-hide'></i>
+          <i v-else class="bx bx-hide"></i>
         </li>
       </ul>
     </header>
-    <transition
-      v-on:before-enter="beforeEnter"
-      v-on:enter="enter"
-      v-on:leave="leave"
-    >
-      <div ref="codex" v-show="active" class="con-code">
-        <ul ref="ul" class="ul-codes">
-          <li
-            v-if="slots.template"
-            :class="{'active': activeSlot === 0}" @click="activeSlot = 0">Template
+    <transition v-on:before-enter="beforeEnter" v-on:enter="enter" v-on:leave="leave">
+      <div ref="codexRef" v-show="active" class="con-code">
+        <ul ref="ulRef" class="ul-codes">
+          <li v-if="slots.template" :class="{ active: activeSlot === 0 }" @click="activeSlot = 0">
+            Template
           </li>
-          <li
-            v-if="slots.script"
-            :class="{'active': activeSlot === 1}" @click="activeSlot = 1">Script
+          <li v-if="slots.script" :class="{ active: activeSlot === 1 }" @click="activeSlot = 1">
+            Script
           </li>
-          <li
-            v-if="slots.style"
-            :class="{'active': activeSlot === 2}"
-            @click="activeSlot = 2">
+          <li v-if="slots.style" :class="{ active: activeSlot === 2 }" @click="activeSlot = 2">
             Style
           </li>
-          <li v-if="Object.keys(slots).length > 1" :class="{'active': activeSlot === 3}" @click="activeSlot = 3">
+          <li
+            v-if="Object.keys(slots).length > 0"
+            :class="{ active: activeSlot === 3 }"
+            @click="activeSlot = 3"
+          >
             All
           </li>
         </ul>
         <div class="con-codes">
-
-
           <transition
             v-on:before-enter="beforeEntercodes"
             v-on:enter="entercodes"
             v-on:leave="leavecodes"
           >
-            <div ref="slot0" key="0" v-if="activeSlot === 0" class="slot-template slots">
-              <slot name="template"/>
+            <div ref="slot0Ref" key="0" v-if="activeSlot === 0" class="slot-template slots">
+              <slot name="template" />
 
               <footer
                 @click="toggleCode"
                 :title="active ? 'Hide code' : 'View code'"
-                class="footer-code">
-                <i class='bx bx-hide'></i>
+                class="footer-code"
+              >
+                <i class="bx bx-hide"></i>
               </footer>
             </div>
           </transition>
@@ -94,31 +90,15 @@
             v-on:enter="entercodes"
             v-on:leave="leavecodes"
           >
-            <div ref="slot1" key="1" v-if="activeSlot === 1" class="slot-script slots">
-              <slot name="script"/>
+            <div ref="slot1Ref" key="1" v-if="activeSlot === 1" class="slot-script slots">
+              <slot name="script" />
 
               <footer
                 @click="toggleCode"
                 :title="active ? 'Hide code' : 'View code'"
-                class="footer-code">
-                <i class='bx bx-hide'></i>
-              </footer>
-            </div>
-          </transition>
-
-          <transition
-            v-on:before-enter="beforeEntercodes"
-            v-on:enter="entercodes"
-            v-on:leave="leavecodes"
-          >
-            <div ref="slot2" key="2" v-if="activeSlot === 2" class="slot-style slots">
-              <slot name="style"/>
-
-              <footer
-                @click="toggleCode"
-                :title="active ? 'Hide code' : 'View code'"
-                class="footer-code">
-                <i class='bx bx-hide'></i>
+                class="footer-code"
+              >
+                <i class="bx bx-hide"></i>
               </footer>
             </div>
           </transition>
@@ -128,16 +108,35 @@
             v-on:enter="entercodes"
             v-on:leave="leavecodes"
           >
-            <div ref="slot3" key="3" v-if="activeSlot === 3" class="slot-all slots">
-              <slot name="template"/>
-              <slot name="script"/>
-              <slot name="style"/>
+            <div ref="slot2Ref" key="2" v-if="activeSlot === 2" class="slot-style slots">
+              <slot name="style" />
 
               <footer
                 @click="toggleCode"
                 :title="active ? 'Hide code' : 'View code'"
-                class="footer-code">
-                <i class='bx bx-hide'></i>
+                class="footer-code"
+              >
+                <i class="bx bx-hide"></i>
+              </footer>
+            </div>
+          </transition>
+
+          <transition
+            v-on:before-enter="beforeEntercodes"
+            v-on:enter="entercodes"
+            v-on:leave="leavecodes"
+          >
+            <div ref="slot3Ref" key="3" v-if="activeSlot === 3" class="slot-all slots">
+              <slot name="template" />
+              <slot name="script" />
+              <slot name="style" />
+
+              <footer
+                @click="toggleCode"
+                :title="active ? 'Hide code' : 'View code'"
+                class="footer-code"
+              >
+                <i class="bx bx-hide"></i>
               </footer>
             </div>
           </transition>
@@ -147,42 +146,55 @@
   </div>
 </template>
 <script setup>
-import {getCurrentInstance, nextTick, onMounted, ref, useSlots, watch} from 'vue'
-import {useRoute, useRouter} from "vitepress";
+import { computed, getCurrentInstance, nextTick, onMounted, ref, useSlots, watch } from 'vue'
+import { useRoute, useRouter } from 'vitepress'
 const router = useRouter()
 const route = useRoute()
 const slots = useSlots()
+console.log(slots);
 const active = ref(false)
 const check = ref(false)
 const activeSlot = ref(0)
 const vsThemeVal = ref(null)
+const ulRef = ref(null)
+const codexRef = ref(null)
+const slot0Ref = ref(null)
+const slot1Ref = ref(null)
+const slot2Ref = ref(null)
+const slot3Ref = ref(null)
+
 const props = defineProps({
   codepen: {
     type: Boolean,
-    default: false
+    default: false,
   },
   codesandbox: {
-    type: Object,
-    default: () => {
-    }
-  }
+    type: String,
+    default: '',
+  },
 })
-const {vsTheme} = getCurrentInstance().appContext.config.globalProperties
-console.log(vsTheme);
-vsThemeVal.value = {...vsTheme}
-watch(() => vsThemeVal.value.openCode, val => {
-  active.value = val
-  localStorage.openCode = val
-})
-watch(() => activeSlot.value, async val => {
-  await nextTick()
-  let ul = this.$refs.ul.scrollHeight
-  let h = this.$refs['slot' + activeSlot.value].scrollHeight
-  this.$refs.codex.style.height = (h + ul) - 1 + 'px'
-})
+const { vsTheme } = getCurrentInstance().appContext.config.globalProperties
+vsThemeVal.value = { ...vsTheme }
+watch(
+  () => vsThemeVal.value.openCode,
+  val => {
+    active.value = val
+    localStorage.openCode = val
+  },
+)
+watch(
+  () => activeSlot.value,
+  async val => {
+    await nextTick()
+    const slotRefs = [slot0Ref, slot1Ref, slot2Ref, slot3Ref]
+    let h = slotRefs[val].value.scrollHeight
+    let ul = ulRef.value.scrollHeight
+    codexRef.value.style.height = h + ul - 1 + 'px'
+  },
+)
 // Vue.observable(this.$site.themeConfig)
 onMounted(() => {
-  vsThemeVal.value.openCode = (localStorage.openCode === 'true')
+  vsThemeVal.value.openCode = localStorage.openCode === 'true'
 })
 
 function toggleCode() {
@@ -200,42 +212,27 @@ function openCodesandbox(url) {
 }
 
 function clipboard(text) {
-  var aux = document.createElement("textarea");
+  var aux = document.createElement('textarea')
   aux.value = text
-  aux.className = "vs-clipboard"
-  document.body.appendChild(aux);
-  aux.focus();
-  aux.select();
-  document.execCommand("copy");
-  document.body.removeChild(aux);
+  aux.className = 'vs-clipboard'
+  document.body.appendChild(aux)
+  aux.focus()
+  aux.select()
+  document.execCommand('copy')
+  document.body.removeChild(aux)
 }
 
 function copy() {
-  let slot = 'template'
-  console.log(activeSlot.value);
-  if (activeSlot.value === 1) {
-    slot = 'script'
-  } else if (activeSlot.value === 2) {
-    slot = 'style'
-  }
+  const slotRefs = { 0: slot0Ref, 1: slot1Ref, 2: slot2Ref, 3: slot3Ref }
+  let text = slotRefs[activeSlot.value].value.innerText
 
-  let text = slots[slot][0].elm.innerText
-  if (activeSlot.value === 3) {
-    text = `
-            ${slots['template'] ? slots['template'][0].elm.innerText.trim() : ''}
-            ${slots['script'] ? slots['script'][0].elm.innerText.trim() : ''}
-            ${slots['style'] ? slots['style'][0].elm.innerText.trim() : ''}
-          `
-  }
-
+  // clipboard(text.replace('html', ''))
   clipboard(text)
 
   check.value = true
   setTimeout(() => {
     check.value = false
-  }, 1000);
-
-  router.replace(`${route.hash}-c`)
+  }, 1000)
 }
 
 // animation
@@ -426,71 +423,71 @@ getVar(var)
   pre
     margin-top 0px !important
 
-//.header-codex
-//  width 100%
-//  display flex
-//  align-items center
-//  justify-content center
-//
-//  ul
-//    display flex
-//    align-items center
-//    margin 0px
-//    padding 0px
-//    justify-content center
-//    width 100%
-//    padding 0px 4px
-//    align-items: stretch
-//    padding-top 10px
-//
-//    li
-//      list-style none
-//      color getVar(theme-color)
-//      opacity .6
-//      padding 3px 10px
-//      transition all .25s ease
-//      display flex
-//      align-items center
-//      cursor pointer
-//      border-radius 12px
-//      background transparent
-//      outline none !important
-//      &.copied
-//        transform scale(1.3)
-//        opacity 1 !important
-//        i
-//          color rgb(70, 201, 58) !important
-//      &:nth-last-child(3)
-//        position relative
-//        padding-right 15px
-//        margin-right 5px
-//        &:after
-//          content ''
-//          position absolute
-//          right 0px
-//          height 60%
-//          top 20%
-//          width 1px
-//          background alpha($borderColor, 1)
-//          display block
-//      &.active
-//        color $accentColor !important
-//        opacity 1
-//        border-radius 12px 12px 0px 0px
-//        background getVar(theme-code2)
-//        i
-//          color #fff !important
-//      // &.not-a
-//      svg, i
-//        max-width 18px
-//        fill getVar(theme-color) !important
-//      &:hover
-//        opacity 1
-//      &:not(.not-a)
-//        svg
-//          transition all .25s ease
-//          fill alpha($textColor, .6)
-//          pointer-events none
+.header-codex
+  width 100%
+  display flex
+  align-items center
+  justify-content center
+
+  ul
+    display flex
+    align-items center
+    margin 0px
+    padding 0px
+    justify-content center
+    width 100%
+    padding 0px 4px
+    align-items: stretch
+    padding-top 10px
+
+    li
+      list-style none
+      color getVar(theme-color)
+      opacity .6
+      padding 3px 10px
+      transition all .25s ease
+      display flex
+      align-items center
+      cursor pointer
+      border-radius 12px
+      background transparent
+      outline none !important
+      &.copied
+        transform scale(1.3)
+        opacity 1 !important
+        i
+          color rgb(70, 201, 58) !important
+      &:nth-last-child(3)
+        position relative
+        padding-right 15px
+        margin-right 5px
+        &:after
+          content ''
+          position absolute
+          right 0px
+          height 60%
+          top 20%
+          width 1px
+          background getVar(theme-layout)
+          display block
+      &.active
+        color $accentColor !important
+        opacity 1
+        border-radius 12px 12px 0px 0px
+        background getVar(theme-code2)
+        i
+          color #fff !important
+      svg, i
+        max-width 18px
+        fill getVar(theme-color) !important
+      &:hover
+        opacity 1
+      &:not(.not-a)
+        svg
+          transition all .25s ease
+          fill alpha(#fff, .6)
+          pointer-events none
+
 @media (max-width: 500px)
   .code
     .con-code

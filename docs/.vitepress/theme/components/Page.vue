@@ -61,7 +61,7 @@
                           </button>
                         </li>-->
             <!--            <li class="divider"/>-->
-            <li title="Package NPM">
+                <li title="Package NPM">
               <a target="_blank" href="https://www.npmjs.com/package/fei-ui-design">
                 <i class="bx bx-package"></i>
               </a>
@@ -103,6 +103,7 @@
 
     <transition name="fade">
       <div class="vp-doc content__default">
+      <!-- <div class="content__default"> -->
         <Content/>
       </div>
     </transition>

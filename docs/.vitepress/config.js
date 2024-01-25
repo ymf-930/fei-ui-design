@@ -1,5 +1,5 @@
 import { defineConfig } from 'vitepress'
-// import { containerPreview, componentPreview } from '@vitepress-demo-preview/plugin'
+import { containerPreview, componentPreview } from '@vitepress-demo-preview/plugin'
 import { fileURLToPath, URL } from 'node:url'
 // import sidebarDocs from "./sidebar-docs.js"
 // import sidebarComps from "./sidebar-comps.js"
@@ -61,17 +61,19 @@ export default defineConfig({
       }
     },
     lastUpdated: true,
+    lastUpdatedText: "最后更新",
     linkPrevVersion: 'https://lusaxweb.github.io/vuesax/',
     searchPlaceholder: 'Search',
   },
   markdown: {
     theme: {
-      light: 'slack-ochin',
+      // light: 'slack-ochin',
+      light: 'rose-pine-moon',
       dark: 'rose-pine-moon'
     },
     config(md) {
-      // md.use(containerPreview)
-      // md.use(componentPreview)
+      md.use(containerPreview)
+      md.use(componentPreview)
     }
   },
   vite: {
@@ -175,28 +177,28 @@ function getSidebar (lang = '/') {
         },
         {
           title: lang !== '/'? `Common Components` : `通用组件`,
-          collapsable: false,
-          navType:'components',
-          children: [
-            { title: '图标', link: `${baseUrl}components/icon`, icon: 'fire', alias: 'Icon' },
-            { title: '按钮', link: `${baseUrl}components/button`, icon: 'Youtube', alias: 'Button' },
-            { title: '卡片', link: `${baseUrl}components/card`, icon: 'creditcard', alias: 'Card' },
-            { title: '折叠面板', link: `${baseUrl}components/collapse`, icon: 'interation', alias: 'Collapse' },
-            { title: '分割线', link: `${baseUrl}components/divider`, icon: 'line', alias: 'Divider' },
-            { title: '下拉菜单', link: `${baseUrl}components/dropdown`, icon: 'caret-down', alias: 'Dropdown' },
-            { title: '标签', link: `${baseUrl}components/tag`, icon: 'tags', alias: 'Tag' },
-          ]
+        collapsable: false,
+        navType:'components',
+        children: [
+        { title: '图标', link: `${baseUrl}components/icon`, icon: 'fire', alias: 'Icon' },
+        { title: '按钮', link: `${baseUrl}components/button`, icon: 'Youtube', alias: 'Button' },
+        { title: '卡片', link: `${baseUrl}components/card`, icon: 'creditcard', alias: 'Card' },
+        { title: '折叠面板', link: `${baseUrl}components/collapse`, icon: 'interation', alias: 'Collapse' },
+        { title: '分割线', link: `${baseUrl}components/divider`, icon: 'line', alias: 'Divider' },
+        { title: '下拉菜单', link: `${baseUrl}components/dropdown`, icon: 'caret-down', alias: 'Dropdown' },
+        { title: '标签', link: `${baseUrl}components/tag`, icon: 'tags', alias: 'Tag' },
+        ]
         },
         {
           title: lang !== '/'? `Layout Components` : `布局组件`,
-          collapsable: false,
-          navType:'components',
-          children: [
-            { title: '布局', link: `${baseUrl}components/layout`, icon: 'layout', alias: 'Layout' },
-            { title: '栅格', link: `${baseUrl}components/grid`, icon: 'appstore', alias: 'Grid' },
-            { title: '间距', link: `${baseUrl}components/space`, icon: 'swap', alias: 'Space' },
-            { title: '分割面板', link: `${baseUrl}components/split`, icon: 'block', alias: 'Split' }
-          ]
+        collapsable: false,
+        navType:'components',
+        children: [
+        { title: '布局', link: `${baseUrl}components/layout`, icon: 'layout', alias: 'Layout' },
+        { title: '栅格', link: `${baseUrl}components/grid`, icon: 'appstore', alias: 'Grid' },
+        { title: '间距', link: `${baseUrl}components/space`, icon: 'swap', alias: 'Space' },
+        { title: '分割面板', link: `${baseUrl}components/split`, icon: 'block', alias: 'Split' }
+        ]
         },
         {
           title: lang !== '/'? `Data entry component` : `数据录入组件`,
@@ -222,71 +224,71 @@ function getSidebar (lang = '/') {
         },
         {
           title: lang !== '/'? `Data display Components` : `数据展示组件`,
-          collapsable: false,
-          navType:'components',
-          children: [
-            { title: '树结构', link: `${baseUrl}components/tree`, icon: 'branches', alias: 'Tree' },
-            { title: '表格', link: `${baseUrl}components/table`, icon: 'table', alias: 'Table' },
-            { title: '分页', link: `${baseUrl}components/page`, icon: 'read', alias: 'Page' },
-            { title: '描述', link: `${baseUrl}components/desc`, icon: 'unorderedlist', alias: 'Desc' },
-            { title: '时间线', link: `${baseUrl}components/timeline`, icon: 'arrowdown', alias: 'Timeline' },
-            { title: '日历', link: `${baseUrl}components/calendar`, icon: 'calendar-fill', alias: 'Calendar' },
-            { title: '轮播', link: `${baseUrl}components/carousel`, icon: 'appstore-fill', alias: 'Carousel' },
-            { title: '数字动画', link: `${baseUrl}components/count-to`, icon: 'orderedlist', alias: 'CountTo' }
-          ]
+        collapsable: false,
+        navType:'components',
+        children: [
+        { title: '树结构', link: `${baseUrl}components/tree`, icon: 'branches', alias: 'Tree' },
+        { title: '表格', link: `${baseUrl}components/table`, icon: 'table', alias: 'Table' },
+        { title: '分页', link: `${baseUrl}components/page`, icon: 'read', alias: 'Page' },
+        { title: '描述', link: `${baseUrl}components/desc`, icon: 'unorderedlist', alias: 'Desc' },
+        { title: '时间线', link: `${baseUrl}components/timeline`, icon: 'arrowdown', alias: 'Timeline' },
+        { title: '日历', link: `${baseUrl}components/calendar`, icon: 'calendar-fill', alias: 'Calendar' },
+        { title: '轮播', link: `${baseUrl}components/carousel`, icon: 'appstore-fill', alias: 'Carousel' },
+        { title: '数字动画', link: `${baseUrl}components/count-to`, icon: 'orderedlist', alias: 'CountTo' }
+        ]
         },
         {
           title: lang !== '/'? `Navigation Components` : `导航组件`,
-          collapsable: false,
-          navType:'components',
-          children: [
-            { title: '图钉', link: `${baseUrl}components/affix`, icon: 'pushpin', alias: 'Affix' },
-            { title: '锚点', link: `${baseUrl}components/anchor`, icon: 'attachment', alias: 'Anchor' },
-            { title: '返回顶部', link: `${baseUrl}components/back-top`, icon: 'up', alias: 'BackTop' },
-            { title: '面包屑', link: `${baseUrl}components/breadcrumb`, icon: 'right', alias: 'Breadcrumb' },
-            { title: '加载条', link: `${baseUrl}components/loading-bar`, icon: 'minus', alias: 'Loading Bar' },
-            { title: '菜单', link: `${baseUrl}components/menu`, icon: 'menu', alias: 'Menu' },
-            { title: '标签页', link: `${baseUrl}components/tabs`, icon: 'project', alias: 'Tabs' },
-            { title: '步骤', link: `${baseUrl}components/steps`, icon: 'arrowright', alias: 'Steps' }
-          ]
+        collapsable: false,
+        navType:'components',
+        children: [
+        { title: '图钉', link: `${baseUrl}components/affix`, icon: 'pushpin', alias: 'Affix' },
+        { title: '锚点', link: `${baseUrl}components/anchor`, icon: 'attachment', alias: 'Anchor' },
+        { title: '返回顶部', link: `${baseUrl}components/back-top`, icon: 'up', alias: 'BackTop' },
+        { title: '面包屑', link: `${baseUrl}components/breadcrumb`, icon: 'right', alias: 'Breadcrumb' },
+        { title: '加载条', link: `${baseUrl}components/loading-bar`, icon: 'minus', alias: 'Loading Bar' },
+        { title: '菜单', link: `${baseUrl}components/menu`, icon: 'menu', alias: 'Menu' },
+        { title: '标签页', link: `${baseUrl}components/tabs`, icon: 'project', alias: 'Tabs' },
+        { title: '步骤', link: `${baseUrl}components/steps`, icon: 'arrowright', alias: 'Steps' }
+        ]
         },
         {
           title: lang !== '/'? `Feedback Components` : `反馈组件`,
-          collapsable: false,
-          navType:'components',
-          children: [
-            { title: '警告信息', link: `${baseUrl}components/alert`, icon: 'error-fill', alias: 'Alert' },
-            { title: '标记', link: `${baseUrl}components/badge`, icon: 'border', alias: 'Badge' },
-            { title: '模态框', link: `${baseUrl}components/modal`, icon: 'idcard', alias: 'Modal' },
-            { title: '消息提示', link: `${baseUrl}components/message`, icon: 'message', alias: 'Message' },
-            { title: '弹框提示', link: `${baseUrl}components/message-box`, icon: 'mail', alias: 'MessageBox' },
-            { title: '通知', link: `${baseUrl}components/notice`, icon: 'notification', alias: 'Notice' },
-            { title: '弹出提示', link: `${baseUrl}components/tooltip`, icon: 'info-circle', alias: 'Tooltip' },
-            { title: '弹出信息', link: `${baseUrl}components/popover`, icon: 'question-circle', alias: 'Popover'},
-            { title: '抽屉', link: `${baseUrl}components/drawer`, icon: 'build', alias: 'Drawer' },
-            { title: '骨架屏', link: `${baseUrl}components/skeleton`, icon: 'sever-fill', alias: 'Skeleton' },
-            { title: '加载', link: `${baseUrl}components/loading`, icon: 'loading', alias: 'Loading' },
-            { title: '进度条', link: `${baseUrl}components/progress`, icon: 'hourglass', alias: 'Progress' },
-            { title: '进度环', link: `${baseUrl}components/circle`, icon: 'redo', alias: 'Circle' }
-          ]
+        collapsable: false,
+        navType:'components',
+        children: [
+        { title: '警告信息', link: `${baseUrl}components/alert`, icon: 'error-fill', alias: 'Alert' },
+        { title: '标记', link: `${baseUrl}components/badge`, icon: 'border', alias: 'Badge' },
+        { title: '模态框', link: `${baseUrl}components/modal`, icon: 'idcard', alias: 'Modal' },
+        { title: '消息提示', link: `${baseUrl}components/message`, icon: 'message', alias: 'Message' },
+        { title: '弹框提示', link: `${baseUrl}components/message-box`, icon: 'mail', alias: 'MessageBox' },
+        { title: '通知', link: `${baseUrl}components/notice`, icon: 'notification', alias: 'Notice' },
+        { title: '弹出提示', link: `${baseUrl}components/tooltip`, icon: 'info-circle', alias: 'Tooltip' },
+        { title: '弹出信息', link: `${baseUrl}components/popover`, icon: 'question-circle', alias: 'Popover'},
+        { title: '抽屉', link: `${baseUrl}components/drawer`, icon: 'build', alias: 'Drawer' },
+        { title: '骨架屏', link: `${baseUrl}components/skeleton`, icon: 'sever-fill', alias: 'Skeleton' },
+        { title: '加载', link: `${baseUrl}components/loading`, icon: 'loading', alias: 'Loading' },
+        { title: '进度条', link: `${baseUrl}components/progress`, icon: 'hourglass', alias: 'Progress' },
+        { title: '进度环', link: `${baseUrl}components/circle`, icon: 'redo', alias: 'Circle' }
+        ]
         },
         {
           title: lang !== '/'? `Built-in Components` : `内置组件`,
-          collapsable: false,
-          navType:'components',
-          children: [
-            { title: '空状态', link: `${baseUrl}components/empty`, icon: 'border', alias: 'Empty' },
-            { title: '滚动组件', link: `${baseUrl}components/scrollbar`, icon: 'container', alias: 'Scrollbar' },
-            { title: '弹层', link: `${baseUrl}components/popper`, icon: 'pic-center', alias: 'Popper' }
-          ]
+        collapsable: false,
+        navType:'components',
+        children: [
+        { title: '空状态', link: `${baseUrl}components/empty`, icon: 'border', alias: 'Empty' },
+        { title: '滚动组件', link: `${baseUrl}components/scrollbar`, icon: 'container', alias: 'Scrollbar' },
+        { title: '弹层', link: `${baseUrl}components/popper`, icon: 'pic-center', alias: 'Popper' }
+        ]
         },
         {
           title: lang !== '/'? `Configure Components` : `配置组件`,
-          collapsable: false,
-          navType:'components',
-          children: [
-            {title: '全局配置', link: `${lang}components/config-provider`, icon: 'setting', alias: 'ConfigProvider'}
-          ]
+        collapsable: false,
+        navType:'components',
+        children: [
+        {title: '全局配置', link: `${lang}components/config-provider`, icon: 'setting', alias: 'ConfigProvider'}
+        ]
         },
       ],
     }

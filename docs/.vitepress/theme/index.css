@@ -1,10 +1,11 @@
 @import './styles/grid.css';
+@import './styles/code.styl';
 
 body {
   width: unset;
 }
 
-.vitepress-demo-preview__element-plus__container{
+.vitepress-demo-preview__element-plus__container {
   background-color: #fff;
 }
 
@@ -55,9 +56,41 @@ body {
     border-radius: 4px;
     padding: 3px 6px;
     color: var(--vs-theme-color);
-    transition: color .5s,background-color .5s;
+    transition:
+      color 0.5s,
+      background-color 0.5s;
   }
-  
+
+  [class*='language-'] pre {
+    padding: 0;
+  }
+
+  /* [class*='language-'] code .highlighted {
+    background-color: transparent;
+  } */
+
+  [class*='language-'] > span.lang {
+    color: rgba(255, 255, 255, 0.4);
+    top: -0.5em;
+    right: 1em;
+  }
+
+  [class*='language-'] > button.copy {
+    display: none;
+  }
+
+  [class*='language-']:hover > button.copy + span.lang,
+  [class*='language-'] > button.copy:focus + span.lang {
+    opacity: 1;
+  }
+
+  div[class*='language-'] {
+    background-color: transparent;
+  }
+
+  .header-anchor {
+    position: unset;
+  }
 }
 
 .vitepress-demo-preview-preview {

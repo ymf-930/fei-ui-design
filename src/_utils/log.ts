@@ -81,11 +81,11 @@ const printVersion = (
   versionColor = '#999'
 ) => {
   console.log(
-    `%c${title.toUpperCase()} %cV${version}  ${link}`,
-    `color: ${typeColor(
-      type
-    )};font-weight: 500;font-size: ${fontSize};font-family: Source Sans Pro,Helvetica Neue,Arial,sans-serif;`,
-    `color: ${versionColor};`
+  `%c${title.toUpperCase()} %cV${version}  ${link}`,
+  `color: ${typeColor(
+  type
+  )};font-weight: 500;font-size: ${fontSize};font-family: Source Sans Pro,Helvetica Neue,Arial,sans-serif;`,
+  `color: ${versionColor};`
   )
 }
 const log = {

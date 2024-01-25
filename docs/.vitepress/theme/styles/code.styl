@@ -1,3 +1,4 @@
+$textColor = #fff
 getVar(var)
     unquote("var(--vs-"+var+")")
 code
@@ -19,7 +20,7 @@ code
 
 pre, pre[class*="language-"]
   line-height 1.4
-  padding 1.25rem 1.5rem
+  // padding 1.25rem 1.5rem
   margin 0
   // background-color #3f3d56
   background-color getVar(theme-code)
@@ -35,6 +36,7 @@ div[class*="language-"]
   position relative
   background-color getVar(theme-code)
   border-radius 6px
+
   .tag
     line-height 1.6
   .highlight-lines
