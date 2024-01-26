@@ -2,19 +2,119 @@
 title: 弹层 Popper
 ---
 
+<script setup>
+import Basic from './demo/Popper/Basic.vue'
+import ColumnSelect from './demo/Popper/ColumnSelect.vue'
+</script>
 
+##### popper借助了第三方插件<a href="https://popper.js.org/" target="_blank">popper.js</a>，可参考文档进行配置，组件内部弹层都借助此基础组件实现，你也可以自行编写扩展。
 
-# 弹层 Popper
-
-popper借助了第三方插件<a href="https://popper.js.org/" target="_blank">popper.js</a>，可参考文档进行配置，组件内部弹层都借助此基础组件实现，你也可以自行编写扩展。
+<card>
 
 ## 基础用法
 
-<preview path="./demo/Popper/Basic.vue"></preview>
+<template #example>
+
+  <Basic/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div style="width: 200px">
+    <f-popper trigger="click" theme="light" :z-index="1000">
+      <template #default>这是一段内容这是一段内容这是一段内容</template>
+      <template #trigger>
+        <f-button>触发popper</f-button>
+      </template>
+    </f-popper>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+const visible = ref(false)
+</script>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 选择列
 
-<preview path="./demo/Popper/ColumnSelect.vue"></preview>
+<template #example>
+
+  <ColumnSelect/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div>
+    <div style="width: 200px">
+      <f-popper
+        trigger="click"
+        theme="light"
+        :show-arrow="false"
+        :offset="4"
+        placement="bottom-start"
+        transition="zoom-in-top"
+        popper-class="fei-select__popper"
+        :gpu-acceleration="false"
+      >
+        <template #default>
+          <div style="width: 120px">
+            <div style="padding: 8px 10px 10px; border-bottom: 1px solid #eee">选择列</div>
+            <div v-for="(item, index) in list" :key="index" style="padding: 4px 8px">
+              <f-checkbox v-model="item.checked">{{ item.name }}</f-checkbox>
+            </div>
+          </div>
+        </template>
+        <template #trigger>
+          <f-button>选择列</f-button>
+        </template>
+      </f-popper>
+    </div>
+
+    <pre>{{ list }}</pre>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+const list = ref([
+  { name: '姓名', checked: false },
+  { name: '年龄', checked: false },
+  { name: '电话', checked: false },
+  { name: '性别', checked: false },
+  { name: '地址', checked: false },
+  { name: '备注', checked: false }
+])
+</script>
+```
+
+</template>
+
+</card>
 
 ## Props
 

@@ -2,41 +2,264 @@
 title: 分页器 Page
 ---
 
+<script setup>
+import Basic from './demo/Page/Basic.vue'
+import Number from './demo/Page/Number.vue'
+import Elevator from './demo/Page/Elevator.vue'
+import Total from './demo/Page/Total.vue'
+import Mini from './demo/Page/Mini.vue'
+import Text from './demo/Page/Text.vue'
+import Simple from './demo/Page/Simple.vue'
+</script>
 
+##### 空显示状态，用于给内部无数据情况的展示。十分简单
 
-# 分页器 Page
-
-空显示状态，用于给内部无数据情况的展示。十分简单
+<card>
 
 ## 基础用法
 
 直接用组件默认插槽插入即可
 
-<preview path="./demo/Page/Basic.vue"></preview>
+<template #example>
+
+  <Basic/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <f-page v-model:current="current" :total="100"></f-page>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const current = ref(2)
+</script>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 每页数量
 
-<preview path="./demo/Page/Number.vue"></preview>
+<template #example>
+
+  <Number/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <f-page v-model:current="current" :total="100" show-sizer></f-page>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const current = ref(2)
+</script>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 电梯
 
-<preview path="./demo/Page/Elevator.vue"></preview>
+<template #example>
+
+  <Elevator/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <f-page v-model:current="current" :total="100" show-elevator></f-page>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const current = ref(2)
+</script>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 总数
 
-<preview path="./demo/Page/Total.vue"></preview>
+<template #example>
+
+  <Total/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <f-page v-model:current="current" :total="100" show-total></f-page>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const current = ref(2)
+</script>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## mini型
 
-<preview path="./demo/Page/Mini.vue"></preview>
+<template #example>
+
+  <Mini/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <f-page
+    v-model:current="current"
+    :total="100"
+    size="small"
+    show-elevator
+    show-sizer
+    show-total
+  ></f-page>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const current = ref(2)
+</script>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 上一页下一页文字
 
-<preview path="./demo/Page/Text.vue"></preview>
+<template #example>
+
+  <Text/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <f-page v-model:current="current" :total="100" prev-text="上一页" next-text="下一页"></f-page>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const current = ref(2)
+</script>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 简洁模式
 
-<preview path="./demo/Page/Simple.vue"></preview>
+<template #example>
+
+  <Simple/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <f-page v-model:current="current" :total="100" simple></f-page>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const current = ref(2)
+</script>
+```
+
+</template>
+
+</card>
 
 ## Props
 

@@ -2,41 +2,253 @@
 title: 步骤 Steps
 ---
 
+<script setup>
+import Basic from './demo/Steps/Basic.vue'
+import Small from './demo/Steps/Small.vue'
+import Icon from './demo/Steps/Icon.vue'
+import Vertical from './demo/Steps/Vertical.vue'
+import Status from './demo/Steps/Status.vue'
+</script>
 
+##### 提示某个任务的步骤
 
-# 步骤 Steps
-
-提示某个任务的步骤
+<card>
 
 ## 基础用法
 
 基本用法，组件会根据current自动判断各步骤状态。
 
-<preview path="./demo/Steps/Basic.vue"></preview>
+<template #example>
+
+  <Basic/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div>
+    <f-steps :current="current">
+      <f-step title="已完成" content="这里是该步骤的描述信息"></f-step>
+      <f-step title="进行中" content="这里是该步骤的描述信息"></f-step>
+      <f-step title="待进行" content="这里是该步骤的描述信息"></f-step>
+      <f-step title="待进行" content="这里是该步骤的描述信息"></f-step>
+    </f-steps>
+    <f-button type="primary" @click="next">下一步</f-button>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const current = ref(0)
+
+function next() {
+  if (current.value === 3) {
+    current.value = 0
+  } else {
+    current.value += 1
+  }
+}
+</script>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 小型步骤条
 
 设置 `size="small"`开启显示小型步骤条
 
-<preview path="./demo/Steps/Small.vue"></preview>
+<template #example>
+
+  <Small/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div>
+    <f-steps :current="current" size="small">
+      <f-step title="已完成"></f-step>
+      <f-step title="进行中"></f-step>
+      <f-step title="待进行"></f-step>
+      <f-step title="待进行"></f-step>
+    </f-steps>
+    <f-button type="primary" @click="next">下一步</f-button>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const current = ref(0)
+
+function next() {
+  if (current.value === 3) {
+    current.value = 0
+  } else {
+    current.value += 1
+  }
+}
+</script>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 自定义图标
 
 设置 `icon`自定义设置图标
 
-<preview path="./demo/Steps/Icon.vue"></preview>
+<template #example>
+
+  <Icon/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div>
+    <f-steps :current="current">
+      <f-step title="已完成" icon="sketch"></f-step>
+      <f-step title="进行中" icon="block"></f-step>
+      <f-step title="待进行" icon="Gitlab"></f-step>
+    </f-steps>
+    <f-button type="primary" @click="next">下一步</f-button>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const current = ref(0)
+
+function next() {
+  if (current.value === 2) {
+    current.value = 0
+  } else {
+    current.value += 1
+  }
+}
+</script>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 竖型步骤
 
 设置`direction="vertical"`可以开启竖向的步骤
 
-<preview path="./demo/Steps/Vertical.vue"></preview>
+<template #example>
+
+  <Vertical/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div>
+    <f-steps :current="current" direction="vertical">
+      <f-step title="已完成" content="这里是该步骤的描述信息"></f-step>
+      <f-step title="进行中" content="这里是该步骤的描述信息"></f-step>
+      <f-step title="待进行" content="这里是该步骤的描述信息"></f-step>
+      <f-step title="待进行" content="这里是该步骤的描述信息"></f-step>
+    </f-steps>
+    <f-button type="primary" @click="next">下一步</f-button>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const current = ref(0)
+
+function next() {
+  if (current.value === 3) {
+    current.value = 0
+  } else {
+    current.value += 1
+  }
+}
+</script>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 设置状态
 
 基本用法，组件会根据current自动判断各步骤状态。
 
-<preview path="./demo/Steps/Status.vue"></preview>
+<template #example>
+
+  <Status/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div>
+    <f-steps :current="2" status="error">
+      <f-step title="已完成" content="这里是该步骤的描述信息"></f-step>
+      <f-step title="进行中" content="这里是该步骤的描述信息"></f-step>
+      <f-step title="待进行" content="这里是该步骤的描述信息"></f-step>
+      <f-step title="待进行" content="这里是该步骤的描述信息"></f-step>
+    </f-steps>
+  </div>
+</template>
+```
+
+</template>
+
+</card>
 
 ## Steps Props
 

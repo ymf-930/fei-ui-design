@@ -2,39 +2,198 @@
 title: 消息提示 Message
 ---
 
+<script setup>
+import Basic from './demo/Message/Basic.vue'
+import Types from './demo/Message/Types.vue'
+import Options from './demo/Message/Options.vue'
+import Close from './demo/Message/Close.vue'
+</script>
 
+##### 轻量级的信息反馈组件，在顶部居中显示，并自动消失。有多种不同的提示状态可选择。
 
-# 消息提示 Message
-
-轻量级的信息反馈组件，在顶部居中显示，并自动消失。有多种不同的提示状态可选择。
+<card>
 
 ## 基础用法
 
 基本用法，默认在 3 秒后关闭
 
-<preview path="./demo/Message/Basic.vue"></preview>
+<template #example>
+
+  <Basic/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div>
+    <f-button @click="message1">info</f-button>
+    <f-button @click="message2">render函数</f-button>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { h } from 'vue'
+import { Message } from 'fei-ui-design'
+
+function message1() {
+  Message('普通的消息提示！')
+}
+
+function message2() {
+  Message.info({
+    message: h('i', { style: 'color: red' }, '我是render函数渲染出来的内容')
+  })
+}
+</script>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 不同类别
 
 用来显示「成功、警告、消息、错误」类的操作反馈。
 
-<preview path="./demo/Message/Types.vue"></preview>
+<template #example>
+
+  <Types/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div>
+    <f-button type="primary" plain @click="message1">info</f-button>
+    <f-button type="success" plain @click="message2">success</f-button>
+    <f-button type="warning" plain @click="message3">warning</f-button>
+    <f-button type="danger" plain @click="message4">error</f-button>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { Message } from 'fei-ui-design'
+
+function message1() {
+  Message.info('我是普通消息提示')
+}
+function message2() {
+  Message.success('成功的提示消息')
+}
+function message3() {
+  Message.warning('警告的提示消息')
+}
+function message4() {
+  Message.error('错误的提示消息')
+}
+</script>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 其他参数
 
 可以设置配置参数来渲染
 
-<preview path="./demo/Message/Options.vue"></preview>
+<template #example>
+
+  <Options/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <f-layout has-sider>
+    <template #sider>
+      <div style="height: 300px">侧边栏</div>
+    </template>
+    <div>右侧容器</div>
+  </f-layout>
+</template>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 手动关闭
 
 可以调用Message模块的 `closeAll()` 函数来手动关闭
 
-<preview path="./demo/Message/Close.vue"></preview>
+<template #example>
+
+  <Close/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div>
+    <f-button @click="message">创建三条不会关闭的消息</f-button>
+    <f-button @click="closeAll">关闭所有</f-button>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { Message } from 'fei-ui-design'
+
+function message() {
+  Message.warning({ message: '消息1', duration: 0 })
+  Message.warning({ message: '消息2', duration: 0 })
+  Message.warning({ message: '消息3', duration: 0 })
+}
+
+function closeAll() {
+  Message.closeAll()
+}
+</script>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## API
 
 vue3中引入Message并进行函数调用，同时Message入参可为`string`类型或者是 `CreateMessageProps`对象类型，同时，为方便调用，也扩展了四种 type 的调用
+
+<template #example>
 
 ```ts
 import { Message } from 'fei-ui-design'
@@ -46,6 +205,10 @@ Message.success(options)
 Message.warning(options)
 Message.error(options)
 ```
+  
+</template>
+
+</card>
 
 ## Options 对象
 

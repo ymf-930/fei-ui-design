@@ -21,20 +21,20 @@
       </f-input>
     </div>
     <p>prepend/append：</p>
-    <div style="margin-top: 6px">
-      <f-input placeholder="Enter text" style="width: auto" clearable>
+    <div>
+      <f-input placeholder="Enter text" style="width: auto; margin-top: 6px" clearable>
         <template #prepend>
           <f-button>prepend</f-button>
         </template>
       </f-input>
       &nbsp;
-      <f-input placeholder="Enter name" style="width: auto" clearable>
+      <f-input placeholder="Enter name" style="width: auto; margin-top: 6px" clearable>
         <template #append>
           <f-button>append</f-button>
         </template>
       </f-input>
       &nbsp;
-      <f-input placeholder="Enter name" style="width: auto" clearable>
+      <f-input placeholder="Enter name" style="width: auto; margin-top: 6px" clearable>
         <template #prepend>
           <f-select v-model="type" clearable style="width: 100px">
             <f-option lable="email" value="email"></f-option>

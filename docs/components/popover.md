@@ -2,35 +2,298 @@
 title: 弹出信息 Popover
 ---
 
+<script setup>
+import Basic from './demo/Popover/Basic.vue'
+import Placement from './demo/Popover/Placement.vue'
+import InnerClose from './demo/Popover/InnerClose.vue'
+import More from './demo/Popover/More.vue'
+import Confirm from './demo/Popover/Confirm.vue'
+</script>
 
+##### 气泡类型的弹窗,用于放置更多信息或询问流程等
 
-# 弹出信息 Popover
-
-气泡类型的弹窗,用于放置更多信息或询问流程等
+<card>
 
 ## 基础用法
 
-<preview path="./demo/Popover/Basic.vue"></preview>
+<template #example>
+
+  <Basic/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div>
+    <f-popover trigger="hover" title="Title" content="这是一段内容这是一段内容这是一段内容">
+      <f-button>Hover</f-button>
+    </f-popover>
+    <f-popover
+      trigger="click"
+      title="Title"
+      content="这是一段内容这是一段内容这是一段内容"
+      :z-index="1000"
+    >
+      <f-button>Click</f-button>
+    </f-popover>
+    <f-popover trigger="focus" title="Title" content="这是一段内容这是一段内容这是一段内容">
+      <f-button>Focus</f-button>
+    </f-popover>
+  </div>
+</template>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 多种悬停位置
 
 使用 `placement` 来设置不同的悬停位置
 
-<preview path="./demo/Popover/Placement.vue"></preview>
+<template #example>
+
+  <Placement/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div class="demo-popover">
+    <div class="top">
+      <f-popover title="Title" content="Top Left text" placement="top-start">
+        <f-button>上左</f-button>
+        &nbsp;&nbsp;
+      </f-popover>
+      <f-popover title="Title" content="Top Center text" placement="top">
+        <f-button>上边</f-button>
+        &nbsp;&nbsp;
+      </f-popover>
+      <f-popover title="Title" content="Top Right text" placement="top-end">
+        <f-button>上右</f-button>
+      </f-popover>
+    </div>
+    <div class="center">
+      <div class="center-left">
+        <f-popover title="Title" content="Left Top text" placement="left-start">
+          <f-button>左上</f-button>
+        </f-popover>
+        <br />
+        <br />
+        <f-popover title="Title" content="Left Center text" placement="left">
+          <f-button>左边</f-button>
+        </f-popover>
+        <br />
+        <br />
+        <f-popover title="Title" content="Left Bottom text" placement="left-end">
+          <f-button>左下</f-button>
+        </f-popover>
+      </div>
+      <div class="center-right">
+        <f-popover title="Title" content="Right Top text" placement="right-start">
+          <f-button>右上</f-button>
+        </f-popover>
+        <br />
+        <br />
+        <f-popover title="Title" content="Right Center text" placement="right">
+          <f-button>右边</f-button>
+        </f-popover>
+        <br />
+        <br />
+        <f-popover title="Title" content="Right Bottom text" placement="right-end">
+          <f-button>右下</f-button>
+        </f-popover>
+      </div>
+    </div>
+    <div class="bottom">
+      <f-popover title="Title" content="Bottom Left text" placement="bottom-start">
+        <f-button>下左</f-button>
+        &nbsp;&nbsp;
+      </f-popover>
+      <f-popover title="Title" content="Bottom Center text" placement="bottom">
+        <f-button>下边</f-button>
+        &nbsp;&nbsp;
+      </f-popover>
+      <f-popover title="Title" content="Bottom Right text" placement="bottom-end">
+        <f-button>下右</f-button>
+      </f-popover>
+    </div>
+  </div>
+</template>
+```
+
+</template>
+
+<template #style>
+
+```html
+<style scoped>
+.demo-popover {
+  .top,
+  .bottom {
+    text-align: center;
+  }
+  .center {
+    width: 300px;
+    margin: 10px auto;
+    overflow: hidden;
+    .center-left {
+      float: left;
+    }
+    .center-right {
+      float: right;
+    }
+  }
+}
+</style>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 浮层内关闭
 
-<preview path="./demo/Popover/InnerClose.vue"></preview>
+<template #example>
+
+  <InnerClose/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <f-popover v-model:visible="visible">
+    <f-button type="text" @click="close">点我打开浮层</f-button>
+    <a style="margin-left: 30px">Click</a>
+    <template #content>
+      <f-button type="text" @click="close">关闭</f-button>
+    </template>
+  </f-popover>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const visible = ref(false)
+function close() {
+  visible.value = false
+}
+</script>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 更多内容
 
-<preview path="./demo/Popover/More.vue"></preview>
+<template #example>
+
+  <More/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div>
+    <f-popover placement="top" width="200px">
+      <f-button>长文本</f-button>
+      <template #content>
+        <div>这是一段很长很长很长很长很长很长很长很长很长很长很长很长很长很长的描述</div>
+      </template>
+    </f-popover>
+    <f-popover placement="right" width="300px">
+      <f-button>更多内容</f-button>
+      <template #content>
+        <div>这是自定义内容~这是自定义内容~这是自定义内容~这是自定义内容~</div>
+        <div>这是自定义内容~这是自定义内容~这是自定义内容~这是自定义内容~</div>
+      </template>
+    </f-popover>
+  </div>
+</template>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 确认气泡框
 
 通过设置属性confirm开启确认框模式。确认框只会以 click 的形式激活，并且只会显示 title 的内容，忽略 content。
 
-<preview path="./demo/Popover/Confirm.vue"></preview>
+<template #example>
+
+  <Confirm/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <f-popover v-model:visible="visible" :width="240">
+    <f-button type="danger" plain>确认气泡框</f-button>
+    <template #content>
+      <p>
+        <f-icon name="question-circle" size="16" color="#ff4757"></f-icon>
+        Are you sure delete this item?
+      </p>
+      <div style="text-align: right; margin-top: 4px">
+        <f-button size="mini" type="text" @click="cancel">取消</f-button>
+        <f-button type="primary" size="mini" @click="ok">确定</f-button>
+      </div>
+    </template>
+  </f-popover>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+import { Message } from 'fei-ui-design'
+
+const visible = ref(false)
+
+function ok() {
+  visible.value = false
+  Message('点击了 [确定]')
+}
+function cancel() {
+  visible.value = false
+  Message('点击了 [取消]')
+}
+</script>
+```
+
+</template>
+
+</card>
 
 ## Props
 

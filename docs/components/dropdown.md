@@ -2,27 +2,235 @@
 title: 下拉菜单 Dropdown
 ---
 
+<script setup>
+import Basic from './demo/Dropdown/Basic.vue'
+import Trigger from './demo/Dropdown/Trigger.vue'
+import Nest from './demo/Dropdown/Nest.vue'
+import Command from './demo/Dropdown/Command.vue'
+</script>
 
+##### 空显示状态，用于给内部无数据情况的展示。十分简单
 
-# 下拉菜单 Dropdown
-
-空显示状态，用于给内部无数据情况的展示。十分简单
+<card>
 
 ## 基础用法
 
-<preview path="./demo/Dropdown/Basic.vue"></preview>
+<template #example>
+
+  <Basic/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div>
+    <f-dropdown>
+      <a href="javascript:void(0)">
+        下拉菜单
+        <f-icon name="down"></f-icon>
+      </a>
+      <template #dropdown>
+        <f-dropdown-menu>
+          <f-dropdown-item selected>驴肉火烧</f-dropdown-item>
+          <f-dropdown-item disabled>炸酱面</f-dropdown-item>
+          <f-dropdown-item>牛肉板面</f-dropdown-item>
+          <f-dropdown-item divided>地锅鸡</f-dropdown-item>
+          <f-dropdown-item>街边烧烤</f-dropdown-item>
+        </f-dropdown-menu>
+      </template>
+    </f-dropdown>
+
+    <f-dropdown style="margin-left: 20px">
+      <f-button type="primary">
+        下拉菜单
+        <f-icon name="down"></f-icon>
+      </f-button>
+      <template #dropdown>
+        <f-dropdown-menu>
+          <f-dropdown-item>驴肉火烧</f-dropdown-item>
+          <f-dropdown-item disabled>炸酱面</f-dropdown-item>
+          <f-dropdown-item>牛肉板面</f-dropdown-item>
+          <f-dropdown-item divided>地锅鸡</f-dropdown-item>
+          <f-dropdown-item>街边烧烤</f-dropdown-item>
+        </f-dropdown-menu>
+      </template>
+    </f-dropdown>
+  </div>
+</template>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 触发方式
 
-<preview path="./demo/Dropdown/Trigger.vue"></preview>
+<template #example>
+
+  <Trigger/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <f-space>
+    <f-dropdown trigger="hover">
+      <f-button type="primary">
+        hover 触发
+        <f-icon name="down"></f-icon>
+      </f-button>
+      <template #dropdown>
+        <f-dropdown-menu>
+          <f-dropdown-item name="驴肉火烧" selected>驴肉火烧</f-dropdown-item>
+          <f-dropdown-item name="炸酱面" disabled>炸酱面</f-dropdown-item>
+          <f-dropdown-item name="牛肉板面">牛肉板面</f-dropdown-item>
+          <f-dropdown-item name="地锅鸡" divided>地锅鸡</f-dropdown-item>
+          <f-dropdown-item name="街边烧烤">街边烧烤</f-dropdown-item>
+        </f-dropdown-menu>
+      </template>
+    </f-dropdown>
+    <f-dropdown>
+      <f-button type="primary">
+        click 触发
+        <f-icon name="down"></f-icon>
+      </f-button>
+      <template #dropdown>
+        <f-dropdown-menu>
+          <f-dropdown-item selected>驴肉火烧</f-dropdown-item>
+          <f-dropdown-item disabled>炸酱面</f-dropdown-item>
+          <f-dropdown-item>牛肉板面</f-dropdown-item>
+          <f-dropdown-item divided>地锅鸡</f-dropdown-item>
+          <f-dropdown-item>街边烧烤</f-dropdown-item>
+        </f-dropdown-menu>
+      </template>
+    </f-dropdown>
+    <f-dropdown trigger="contextmenu">
+      <f-button type="primary">
+        右键 触发
+        <f-icon name="down"></f-icon>
+      </f-button>
+      <template #dropdown>
+        <f-dropdown-menu>
+          <f-dropdown-item>返回</f-dropdown-item>
+          <f-dropdown-item style="color: #ed4014">删除</f-dropdown-item>
+        </f-dropdown-menu>
+      </template>
+    </f-dropdown>
+  </f-space>
+</template>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 嵌套用法
 
-<preview path="./demo/Dropdown/Nest.vue"></preview>
+<template #example>
+
+  <Nest/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div>
+    <f-dropdown placement="right-start">
+      <a href="javascript:void(0)">
+        徐州小吃
+        <f-icon name="down"></f-icon>
+      </a>
+      <template #dropdown>
+        <f-dropdown-menu>
+          <f-dropdown-item>驴肉火烧</f-dropdown-item>
+          <f-dropdown-item>牛肉板面</f-dropdown-item>
+          <f-dropdown placement="right-start">
+            <f-dropdown-item>
+              特色菜系
+              <i class='bx bx-chevron-right'></i>
+            </f-dropdown-item>
+            <template #dropdown>
+              <f-dropdown-menu>
+                <f-dropdown-item>地锅鸡</f-dropdown-item>
+                <f-dropdown-item>狗肉</f-dropdown-item>
+                <f-dropdown-item>把子肉</f-dropdown-item>
+              </f-dropdown-menu>
+            </template>
+          </f-dropdown>
+          <f-dropdown-item>过桥米线</f-dropdown-item>
+        </f-dropdown-menu>
+      </template>
+    </f-dropdown>
+  </div>
+</template>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 指令事件
 
-<preview path="./demo/Dropdown/Command.vue"></preview>
+<template #example>
+
+  <Command/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div>
+    <f-dropdown @command="handleClick">
+      <f-button>
+        下拉菜单
+        <f-icon name="down"></f-icon>
+      </f-button>
+      <template #dropdown>
+        <f-dropdown-menu>
+          <f-dropdown-item name="驴肉火烧" selected>驴肉火烧</f-dropdown-item>
+          <f-dropdown-item name="炸酱面" disabled>炸酱面</f-dropdown-item>
+          <f-dropdown-item name="牛肉板面">牛肉板面</f-dropdown-item>
+          <f-dropdown-item :name="['徐州美食', '地锅鸡']" divided>地锅鸡</f-dropdown-item>
+          <f-dropdown-item :name="{ type: 'info', name: '街边烧烤' }">街边烧烤</f-dropdown-item>
+        </f-dropdown-menu>
+      </template>
+    </f-dropdown>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+  import { Message } from 'fei-ui-design'
+
+  function handleClick(name) {
+    console.log(name)
+    Message('click on item: ' + JSON.stringify(name))
+  }
+</script>
+```
+
+</template>
+
+</card>
 
 ## Dropdown props
 

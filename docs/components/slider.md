@@ -2,25 +2,191 @@
 title: 滑块组件 Slider
 ---
 
-
+<script setup>
+import Basic from './demo/Slider/Basic.vue'
+import Step from './demo/Slider/Step.vue'
+import Input from './demo/Slider/Input.vue'
+import Mark from './demo/Slider/Mark.vue'
+</script>
 
 # 滑块组件 Slider
 
+<card>
+
 ## 基础用法
 
-<preview path="./demo/Slider/Basic.vue"></preview>
+<template #example>
+
+  <Basic/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div>
+    <f-slider v-model="value1"></f-slider>
+    <div class="p10"></div>
+    <f-slider v-model="value2" range></f-slider>
+    <div class="p10"></div>
+    <f-slider v-model="value3" range disabled></f-slider>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const value1 = ref(25)
+const value2 = ref([20, 60])
+const value3 = ref([30, 40])
+</script>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 步长和断点
 
-<preview path="./demo/Slider/Step.vue"></preview>
+<template #example>
+
+  <Step/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div>
+    <f-slider v-model="value4" :step="10"></f-slider>
+    <div class="p10"></div>
+    <f-slider v-model="value5" :step="10" show-stops></f-slider>
+    <div class="p10"></div>
+    <f-slider v-model="value6" :step="10" range></f-slider>
+    <div class="p10"></div>
+    <f-slider v-model="value7" :step="10" range show-stops></f-slider>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const value4 = ref(30)
+const value5 = ref(35)
+const value6 = ref([20, 40])
+const value7 = ref([30, 50])
+</script>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 输入框
 
-<preview path="./demo/Slider/Input.vue"></preview>
+<template #example>
+
+  <Input/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div>
+    <f-slider v-model="value1" show-input></f-slider>
+    <div class="p10"></div>
+    <f-slider v-model="value2" :format-tooltip="format"></f-slider>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const value1 = ref(25)
+const value2 = ref(35)
+
+function format(val) {
+  return '进度: ' + val + '%'
+}
+</script>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 带标记
 
-<preview path="./demo/Slider/Mark.vue"></preview>
+<template #example>
+
+  <Mark/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div>
+    <f-slider v-model="value1" range :marks="marks"></f-slider>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref, h } from 'vue'
+
+const value1 = ref([15, 65])
+const marks = {
+  0: '0°C',
+  12: '12°C',
+  36: '36°C',
+  88: {
+    style: {
+      color: '#ff0000'
+    },
+    label: h('strong', '88°C')
+  }
+}
+</script>
+```
+
+</template>
+
+</card>
 
 ## Props
 

@@ -2,15 +2,40 @@
 title: 布局 Layout
 ---
 
-
+<script setup>
+import Basic from './demo/Layout/Basic.vue'
+</script>
 
 # 布局 Layout
+
+<card>
 
 ## 基础用法
 
 目前暂时为简易左右布局，后续扩展
 
-<preview path="./demo/Layout/Basic.vue"></preview>
+<template #example>
+
+  <Basic/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <f-layout has-sider>
+    <template #sider>
+      <div style="height: 300px">侧边栏</div>
+    </template>
+    <div>右侧容器</div>
+  </f-layout>
+</template>
+```
+
+</template>
+
+</card>
 
 ## Props
 

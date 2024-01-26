@@ -2,21 +2,71 @@
 title: 日历组件 Calendar
 ---
 
-
+<script setup>
+import Basic from './demo/Calendar/Basic.vue'
+import Mini from './demo/Calendar/Mini.vue'
+</script>
 
 # 日历组件 Calendar
+
+<card>
 
 ## 基础用法
 
 简单的日历组件用于装饰页面
 
-<preview path="./demo/Calendar/Basic.vue"></preview>
+<template #example>
+
+  <Basic/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <f-calendar></f-calendar>
+</template>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## mini显示
 
 简单的日历组件用于装饰页面
 
-<preview path="./demo/Calendar/Mini.vue"></preview>
+<template #example>
+
+  <Mini/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div flex>
+    <div style="width: 300px">
+      <f-calendar mini></f-calendar>
+    </div>
+    <div style="width: 300px">
+      <f-calendar
+        mini
+        :body-style="{ border: 'none' }"
+        :day-style="{ border: 'none', borderRadius: '4px' }"
+      ></f-calendar>
+    </div>
+  </div>
+</template>
+```
+
+</template>
+
+</card>
 
 ## Props
 

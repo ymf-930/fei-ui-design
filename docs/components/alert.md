@@ -2,41 +2,187 @@
 title: 警告提示 Alert
 ---
 
+<script setup>
+import Basic from './demo/Alert/Basic.vue'
+import Desc from './demo/Alert/Desc.vue'
+import Icon from './demo/Alert/Icon.vue'
+import Close from './demo/Alert/Close.vue'
+import Banner from './demo/Alert/Banner.vue'
+</script>
 
+##### 静态的展示一些区块，提示或者警告，可以动态的去删除
 
-# 警告提示 Alert
-
-静态的展示一些区块，提示或者警告，可以动态的去删除
+<card>
 
 ## 基础用法
 
 直接用组件默认插槽插入即可
 
-<preview path="./demo/Alert/Basic.vue"></preview>
+<template #example>
+
+  <Basic/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div>
+    <f-alert>info alert</f-alert>
+    <f-alert type="success">success alert</f-alert>
+    <f-alert type="warning">warning alert</f-alert>
+    <f-alert type="error">error alert</f-alert>
+  </div>
+</template>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 包含描述信息
 
 自定义`#desc`插入描述内容。
 
-<preview path="./demo/Alert/Desc.vue"></preview>
+<template #example>
+
+  <Desc/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div>
+    <f-alert>
+      info alert
+      <template #desc>我是描述信息...</template>
+    </f-alert>
+    <f-alert type="success">
+      success alert
+      <template #desc>我是描述信息...</template>
+    </f-alert>
+    <f-alert type="warning">
+      warning alert
+      <template #desc>我是描述信息...</template>
+    </f-alert>
+    <f-alert type="error">
+      error alert
+      <template #desc>我是描述信息...</template>
+    </f-alert>
+  </div>
+</template>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 图标
 
 根据 `type` 属性自动添加不同图标，或者自定义图标 `slot` 。
 
-<preview path="./demo/Alert/Icon.vue"></preview>
+<template #example>
+
+  <Icon/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div>
+    <f-alert show-icon>info alert</f-alert>
+    <f-alert type="success" show-icon>success alert</f-alert>
+    <f-alert type="warning" show-icon>warning alert</f-alert>
+    <f-alert type="error" show-icon>
+      error alert
+      <template #desc>Custom error description copywriting.</template>
+    </f-alert>
+    <f-alert show-icon>
+      自定义icon
+      <template #icon>
+        <f-icon name="smile"></f-icon>
+      </template>
+      <template #desc>自定义icon描述</template>
+    </f-alert>
+  </div>
+</template>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 可以关闭
 
 设置属性 `closable` 可以设置提示可关闭
 
-<preview path="./demo/Alert/Close.vue"></preview>
+<template #example>
+
+  <Close/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div>
+    <f-alert closable>An info prompt</f-alert>
+    <f-alert type="success" show-icon closable>
+      A success prompt
+      <template #desc>
+        Content of prompt. Content of prompt. Content of prompt. Content of prompt.
+      </template>
+    </f-alert>
+    <f-alert type="warning" closable>
+      Custom closing content
+      <template #close>No longer prompt</template>
+    </f-alert>
+  </div>
+</template>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 顶部公告样式
 
 设置属性 `banner` 可以应用顶部公告的样式。
 
-<preview path="./demo/Alert/Banner.vue"></preview>
+<template #example>
+
+  <Banner/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div>
+    <f-alert banner>公告样式...</f-alert>
+    <f-alert banner closable type="warning">公告样式...</f-alert>
+  </div>
+</template>
+```
+
+</template>
+
+</card>
 
 ## Props
 

@@ -2,33 +2,187 @@
 title: 分割面板 Split
 ---
 
+<script setup>
+import Basic from './demo/Split/Basic.vue'
+import Horizontal from './demo/Split/Horizontal.vue'
+import Mixed from './demo/Split/Mixed.vue'
+import Normal from './demo/Split/Normal.vue'
+import HideLine from './demo/Split/HideLine.vue'
+</script>
 
+##### 分割面板可自行拖放宽度/高度
 
-# 分割面板 Split
-
-分割面板可自行拖放宽度/高度
+<card>
 
 ## 基础用法
 
-<preview path="./demo/Split/Basic.vue"></preview>
+<template #example>
+
+  <Basic/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div style="width: 100%; height: 300px; border: 1px solid #ddd">
+    <f-split>
+      <template #left>
+        <div class="left-container">左侧容器</div>
+      </template>
+      <template #right>
+        <div class="right-container">右侧容器</div>
+      </template>
+    </f-split>
+  </div>
+</template>
+
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 水平分割
 
-<preview path="./demo/Split/Horizontal.vue"></preview>
+<template #example>
+
+  <Horizontal/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div style="width: 100%; height: 300px; border: 1px solid #ddd">
+    <f-split split="horizontal" :default="100">
+      <template #left>
+        <div class="left-container">上边容器</div>
+      </template>
+      <template #right>
+        <div class="right-container">下面容器</div>
+      </template>
+    </f-split>
+  </div>
+</template>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 嵌套使用
 
-<preview path="./demo/Split/Mixed.vue"></preview>
+<template #example>
+
+  <Mixed/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div style="width: 100%; height: 300px; border: 1px solid #ddd">
+    <f-split>
+      <template #left>
+        <div class="left-container">左侧容器</div>
+      </template>
+      <template #right>
+        <f-split split="horizontal" :default="100">
+          <template #left>
+            <div class="top-container">上部容器</div>
+          </template>
+          <template #right>
+            <div class="bottom-container">下部容器</div>
+          </template>
+        </f-split>
+      </template>
+    </f-split>
+  </div>
+</template>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 设置默认样式
 
 如设置了默认样式，双击分割线可重置默认设置的大小。
 
-<preview path="./demo/Split/Normal.vue"></preview>
+<template #example>
+
+  <Normal/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div style="width: 100%; height: 300px; border: 1px solid #ddd">
+    <f-split :default-wrap-style="['20%', '80%']">
+      <template #left>
+        <div class="left-container">左侧容器</div>
+      </template>
+      <template #right>
+        <f-split split="horizontal" :default="100" :default-wrap-style="['50%', '50%']">
+          <template #left>
+            <div class="left-container">上边容器</div>
+          </template>
+          <template #right>
+            <div class="right-container">下面容器</div>
+          </template>
+        </f-split>
+      </template>
+    </f-split>
+  </div>
+</template>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 隐藏分割线
 
-<preview path="./demo/Split/HideLine.vue"></preview>
+<template #example>
+
+  <HideLine/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div style="width: 100%; height: 300px; border: 1px solid #ddd">
+    <f-split :default="240" hide-line>
+      <template #left>
+        <div class="left-container">左侧容器</div>
+      </template>
+      <template #right>
+        <div class="right-container">下面容器</div>
+      </template>
+    </f-split>
+  </div>
+</template>
+```
+
+</template>
+
+</card>
 
 ## Props
 

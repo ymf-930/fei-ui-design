@@ -2,9 +2,18 @@
 title: 选择器 Select
 ---
 
+<script setup>
+import Basic from './demo/Select/Basic.vue'
+import Disabled from './demo/Select/Disabled.vue'
+import Status from './demo/Select/Status.vue'
+import Search from './demo/Select/Search.vue'
+import Multiple from './demo/Select/Multiple.vue'
+import Prefix from './demo/Select/Prefix.vue'
+import Add from './demo/Select/Add.vue'
+import Size from './demo/Select/Size.vue'
+</script>
 
-
-# 选择器 Select
+<card>
 
 ## 基础用法
 
@@ -14,49 +23,509 @@ title: 选择器 Select
 
 可以给 Select 添加 style 样式，比如宽度。
 
-<preview path="./demo/Select/Basic.vue"></preview>
+<template #example>
+
+  <Basic/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div>
+    <f-select v-model="select" style="width: 200px" clearable>
+      <f-option
+        v-for="item in cityList"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+      ></f-option>
+    </f-select>
+    <span>{{ select }}</span>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const select = ref('')
+const cityList = [
+  { value: 'beijing', label: '北京' },
+  { value: 'nanjing', label: '南京' },
+  { value: 'shanghai', label: '上海' },
+  { value: 'xuzhou', label: '徐州' },
+  { value: 'guangzhou', label: '广州' },
+  { value: 'shenzhen', label: '深圳' }
+]
+</script>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 禁用选项和禁用状态
 
 可以设置禁用状态和选项禁用
 
-<preview path="./demo/Select/Disabled.vue"></preview>
+<template #example>
+
+  <Disabled/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div>
+    <f-select v-model="select" style="width: 200px" clearable>
+      <f-option
+        v-for="item in cityList"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+        :disabled="item.disabled"
+      ></f-option>
+    </f-select>
+    &nbsp;
+    <f-select v-model="select" style="width: 200px" disabled>
+      <f-option
+        v-for="item in cityList"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+      ></f-option>
+    </f-select>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const select = ref('')
+const cityList = [
+  { value: 'beijing', label: '北京' },
+  { value: 'nanjing', label: '南京' },
+  { value: 'shanghai', label: '上海', disabled: true },
+  { value: 'xuzhou', label: '徐州' },
+  { value: 'guangzhou', label: '广州' },
+  { value: 'shenzhen', label: '深圳' }
+]
+</script>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 其他状态
 
 可以清空、分组或者自定义模板
 
-<preview path="./demo/Select/Status.vue"></preview>
+<template #example>
+
+  <Status/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div>
+    <f-select v-model="select" style="width: 200px" clearable placeholder="可清空">
+      <f-option
+        v-for="item in cityList"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+      ></f-option>
+    </f-select>
+
+    <f-select v-model="select" style="width: 200px; margin-left: 20px" placeholder="分组">
+      <f-option-group label="直辖市">
+        <f-option value="beijing" label="北京"></f-option>
+        <f-option value="shanghai" label="上海"></f-option>
+      </f-option-group>
+      <f-option-group label="热门城市">
+        <f-option value="xuzhou" label="徐州"></f-option>
+        <f-option value="nanjing" label="南京"></f-option>
+        <f-option value="suzhou" label="广州"></f-option>
+        <f-option value="shenzhen" label="深圳"></f-option>
+      </f-option-group>
+    </f-select>
+
+    <f-select v-model="select" style="width: 200px; margin-left: 20px" placeholder="自定义选项">
+      <f-option value="beijing" label="北京">
+        <span>北京</span>
+        <span style="float: right; color: #ccc">beijing</span>
+      </f-option>
+      <f-option value="shanghai" label="上海">
+        <span>上海</span>
+        <span style="float: right; color: #ccc">shanghai</span>
+      </f-option>
+      <f-option value="xuzhou" label="徐州">
+        <span>徐州</span>
+        <span style="float: right; color: #ccc">xuzhou</span>
+      </f-option>
+    </f-select>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const select = ref('')
+const cityList = [
+  { value: 'beijing', label: '北京' },
+  { value: 'nanjing', label: '南京' },
+  { value: 'shanghai', label: '上海' },
+  { value: 'xuzhou', label: '徐州' },
+  { value: 'guangzhou', label: '广州' },
+  { value: 'shenzhen', label: '深圳' }
+]
+</script>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 搜索模式
 
 可以进行搜索查询
 
-<preview path="./demo/Select/Search.vue"></preview>
+<template #example>
+
+  <Search/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div>
+    <f-select v-model="select" style="width: 200px" filterable>
+      <f-option
+        v-for="item in cityList"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+      ></f-option>
+    </f-select>
+    <span>{{ select }}</span>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const select = ref('')
+const cityList = [
+  { value: 'beijing', label: '北京' },
+  { value: 'nanjing', label: '南京' },
+  { value: 'shanghai', label: '上海' },
+  { value: 'xuzhou', label: '徐州' },
+  { value: 'guangzhou', label: '广州' },
+  { value: 'shenzhen', label: '深圳' }
+]
+</script>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 多选和折叠
 
 可以进行多选
 
-<preview path="./demo/Select/Multiple.vue"></preview>
+<template #example>
+
+  <Multiple/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div>
+    <f-select v-model="select" style="width: 300px" multiple>
+      <f-option
+        v-for="item in cityList"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+      ></f-option>
+    </f-select>
+    <f-select v-model="select" style="width: 300px; margin-left: 20px" multiple collapse-tags>
+      <f-option
+        v-for="item in cityList"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+      ></f-option>
+    </f-select>
+    <span>{{ select }}</span>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const select = ref([])
+const cityList = [
+  { value: 'beijing', label: '北京' },
+  { value: 'nanjing', label: '南京' },
+  { value: 'shanghai', label: '上海' },
+  { value: 'xuzhou', label: '徐州' },
+  { value: 'guangzhou', label: '广州' },
+  { value: 'shenzhen', label: '深圳' }
+]
+</script>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 前缀模式
 
 可以设置下拉框前缀
 
-<preview path="./demo/Select/Prefix.vue"></preview>
+<template #example>
+
+  <Prefix/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div style="width: 200px">
+    <f-select v-model="select">
+      <template #prefix>
+        <i class="f-iconfont f-icon-alert"></i>
+      </template>
+      <f-option value="beijing" label="北京"></f-option>
+      <f-option value="shanghai" label="上海"></f-option>
+      <f-option value="xuzhou" label="徐州"></f-option>
+      <f-option value="nanjing" label="南京"></f-option>
+    </f-select>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const select = ref('')
+</script>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 创建新项
 
 可以允许创建列表中不存在的条目，使用allow-create可以输入并创建，此时filterable必需为true，
 
-<preview path="./demo/Select/Add.vue"></preview>
+<template #example>
+
+  <Add/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <f-row :gutter="20">
+    <f-col :span="8">
+      <f-select
+        v-model="selected"
+        multiple
+        filterable
+        allow-create
+        default-first-option
+        placeholder="请选择城市"
+      >
+        <f-option
+          v-for="item in cityList"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        ></f-option>
+      </f-select>
+    </f-col>
+    <f-col :span="16">
+      <div style="height: 32px; line-height: 32px">{{ selected }}</div>
+    </f-col>
+  </f-row>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const selected = ref([])
+const cityList = [
+  { value: 'beijing', label: '北京' },
+  { value: 'nanjing', label: '南京' },
+  { value: 'shanghai', label: '上海' },
+  { value: 'xuzhou', label: '徐州' },
+  { value: 'guangzhou', label: '广州' },
+  { value: 'shenzhen', label: '深圳' }
+]
+</script>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 不同大小
 
 四种默认大小
 
-<preview path="./demo/Select/Size.vue"></preview>
+<template #example>
+
+  <Size/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <f-row :gutter="20">
+    <f-col :span="6">
+      <f-select v-model="select" clearable size="large">
+        <f-option
+          v-for="item in cityList"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        ></f-option>
+      </f-select>
+    </f-col>
+    <f-col :span="6">
+      <f-select v-model="select" clearable>
+        <f-option
+          v-for="item in cityList"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        ></f-option>
+      </f-select>
+    </f-col>
+    <f-col :span="6">
+      <f-select v-model="select" clearable size="small">
+        <f-option
+          v-for="item in cityList"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        ></f-option>
+      </f-select>
+    </f-col>
+    <f-col :span="6">
+      <f-select v-model="select" clearable size="mini">
+        <f-option
+          v-for="item in cityList"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        ></f-option>
+      </f-select>
+    </f-col>
+  </f-row>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const select = ref('')
+const cityList = [
+  { value: 'beijing', label: '北京' },
+  { value: 'nanjing', label: '南京' },
+  { value: 'shanghai', label: '上海' },
+  { value: 'xuzhou', label: '徐州' },
+  { value: 'guangzhou', label: '广州' },
+  { value: 'shenzhen', label: '深圳' }
+]
+</script>
+```
+
+</template>
+
+</card>
 
 ## Select props
 

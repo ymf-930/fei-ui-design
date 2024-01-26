@@ -2,39 +2,522 @@
 title: 级联选择 Cascader
 ---
 
+<script setup>
+import Basic from './demo/Cascader/Basic.vue'
+import Disabled from './demo/Cascader/Disabled.vue'
+import Clear from './demo/Cascader/Clear.vue'
+import Last from './demo/Cascader/Last.vue'
+import Multiple from './demo/Cascader/Multiple.vue'
+import Any from './demo/Cascader/Any.vue'
+import Lazy from './demo/Cascader/Lazy.vue'
+import Search from './demo/Cascader/Search.vue'
+import Custom from './demo/Cascader/Custom.vue'
+import Size from './demo/Cascader/Size.vue'
+import Panel from './demo/Cascader/Panel.vue'
+</script>
 
+##### 通用的级联选择器
 
-# 级联选择 Cascader
-
-通用的级联选择器
+<card>
 
 ## 基础用法
 
-<preview path="./demo/Cascader/Basic.vue"></preview>
+<template #example>
+
+  <Basic/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div flex>
+    <div class="block" style="width: 220px; margin-right: 20px">
+      <span class="demonstration">默认 click 触发子菜单</span>
+      <f-cascader v-model="selected" :options="options" @change="handleChange"></f-cascader>
+    </div>
+    <div class="block" style="width: 220px; margin-right: 20px">
+      <span class="demonstration">hover 触发子菜单</span>
+      <f-cascader
+        v-model="selected"
+        :options="options"
+        :props="{ expandTrigger: 'hover' }"
+        @change="handleChange"
+      ></f-cascader>
+    </div>
+    <div class="block" style="width: 220px; margin-right: 20px">
+      <span class="demonstration">选项值</span>
+      <div class="mt-5">{{ selected }}</div>
+    </div>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const options = [
+  {
+    value: 'nanjing',
+    label: '南京',
+    children: [
+      {
+        value: 'xuanwu',
+        label: '玄武区'
+      },
+      {
+        value: 'gulou',
+        label: '鼓楼区'
+      },
+      {
+        value: 'jianye',
+        label: '建邺区'
+      }
+    ]
+  },
+  {
+    value: 'xuzhou',
+    label: '徐州',
+    children: [
+      {
+        value: 'tongshan',
+        label: '铜山区'
+      },
+      {
+        value: 'gulou',
+        label: '鼓楼区'
+      },
+      {
+        value: 'yunlong',
+        label: '云龙区',
+        children: [
+          { value: 'dalonghu', label: '大龙湖街道' },
+          { value: 'guozhuanglu', label: '郭庄路街道' },
+          { value: 'lvdi', label: '绿地商务城' },
+          { value: 'jinlonghu', label: '金龙湖街道' }
+        ]
+      },
+      {
+        value: 'jiawang',
+        label: '贾汪区'
+      },
+      { value: 'peixian', label: '沛县' },
+      { value: 'fengxian', label: '丰县' },
+      { value: 'pizhou', label: '邳州市' },
+      { value: 'xinyi', label: '新沂市' }
+    ]
+  }
+]
+const selected = ref([])
+
+function handleChange(value) {
+  console.log(value)
+}
+</script>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 禁用状态
 
 设置disabled来控制禁用
 
-<preview path="./demo/Cascader/Disabled.vue"></preview>
+<template #example>
+
+  <Disabled/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div flex>
+    <div class="block" style="width: 220px; margin-right: 20px">
+      <span class="demonstration">禁用项</span>
+      <f-cascader v-model="selected" :options="options" @change="handleChange"></f-cascader>
+    </div>
+    <div class="block" style="width: 220px; margin-right: 20px">
+      <span class="demonstration">全部禁用</span>
+      <f-cascader
+        v-model="selected"
+        :options="options"
+        disabled
+        @change="handleChange"
+      ></f-cascader>
+    </div>
+    <div class="block" style="width: 220px; margin-right: 20px">
+      <span class="demonstration">选项值</span>
+      <div class="mt-5">{{ selected }}</div>
+    </div>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const options = [
+  {
+    value: 'nanjing',
+    label: '南京',
+    disabled: true,
+    children: [
+      {
+        value: 'xuanwu',
+        label: '玄武区'
+      },
+      {
+        value: 'gulou',
+        label: '鼓楼区'
+      },
+      {
+        value: 'jianye',
+        label: '建邺区'
+      }
+    ]
+  },
+  {
+    value: 'xuzhou',
+    label: '徐州',
+    children: [
+      {
+        value: 'tongshan',
+        label: '铜山区'
+      },
+      {
+        value: 'gulou',
+        label: '鼓楼区'
+      },
+      {
+        value: 'yunlong',
+        label: '云龙区',
+        children: [
+          { value: 'dalonghu', label: '大龙湖街道' },
+          { value: 'guozhuanglu', label: '郭庄路街道' },
+          { value: 'lvdi', label: '绿地商务城' },
+          { value: 'jinlonghu', label: '金龙湖街道' }
+        ]
+      },
+      {
+        value: 'jiawang',
+        label: '贾汪区'
+      },
+      { value: 'peixian', label: '沛县' },
+      { value: 'fengxian', label: '丰县' },
+      { value: 'pizhou', label: '邳州市' },
+      { value: 'xinyi', label: '新沂市' }
+    ]
+  }
+]
+const selected = ref([])
+
+function handleChange(value) {
+  console.log(value)
+}
+</script>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 可以清空
 
 可以清空选择
 
-<preview path="./demo/Cascader/Clear.vue"></preview>
+<template #example>
+
+  <Clear/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div flex>
+    <div class="block" style="width: 220px; margin-right: 20px">
+      <f-cascader
+        v-model="selected"
+        :options="options"
+        clearable
+        @change="handleChange"
+      ></f-cascader>
+    </div>
+    <div class="block" style="width: 220px; margin-right: 20px">
+      <div class="mt-5">{{ selected }}</div>
+    </div>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const options = [
+  {
+    value: 'nanjing',
+    label: '南京',
+    children: [
+      {
+        value: 'xuanwu',
+        label: '玄武区'
+      },
+      {
+        value: 'gulou',
+        label: '鼓楼区'
+      },
+      {
+        value: 'jianye',
+        label: '建邺区'
+      }
+    ]
+  },
+  {
+    value: 'xuzhou',
+    label: '徐州',
+    children: [
+      {
+        value: 'tongshan',
+        label: '铜山区'
+      },
+      {
+        value: 'gulou',
+        label: '鼓楼区'
+      },
+      {
+        value: 'yunlong',
+        label: '云龙区',
+        children: [
+          { value: 'dalonghu', label: '大龙湖街道' },
+          { value: 'guozhuanglu', label: '郭庄路街道' },
+          { value: 'lvdi', label: '绿地商务城' },
+          { value: 'jinlonghu', label: '金龙湖街道' }
+        ]
+      },
+      {
+        value: 'jiawang',
+        label: '贾汪区'
+      },
+      { value: 'peixian', label: '沛县' },
+      { value: 'fengxian', label: '丰县' },
+      { value: 'pizhou', label: '邳州市' },
+      { value: 'xinyi', label: '新沂市' }
+    ]
+  }
+]
+const selected = ref([])
+
+function handleChange(value) {
+  console.log(value)
+}
+</script>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 显示最后一级
 
 输入框可设置只显示最后一级标签
 
-<preview path="./demo/Cascader/Last.vue"></preview>
+<template #example>
+
+  <Last/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div flex>
+    <div class="block" style="width: 220px; margin-right: 20px">
+      <f-cascader v-model="selected" :props="props"></f-cascader>
+    </div>
+    <div class="block" style="width: 220px; margin-right: 20px">
+      <div class="mt-5">{{ selected }}</div>
+    </div>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+
+let id = 0
+
+const selected = ref([])
+const props = {
+  lazy: true,
+  lazyLoad(node, resolve) {
+    const { level } = node
+    setTimeout(() => {
+      const nodes = Array.from({ length: level + 1 }).map(() => ({
+        value: ++id,
+        label: `选项${id}`,
+        leaf: level >= 2
+      }))
+      // 通过调用resolve将子节点数据返回，通知组件数据加载完成
+      resolve(nodes)
+    }, 1000)
+  }
+}
+</script>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 多选模式
 
 可以设置props.multiple来开启多选
 
-<preview path="./demo/Cascader/Multiple.vue"></preview>
+<template #example>
+
+  <Multiple/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div flex>
+    <div class="block" style="width: 220px; margin-right: 20px">
+      <span class="demonstration">默认 显示所有tag</span>
+      <f-cascader
+        v-model="selected"
+        :options="options"
+        :props="{ multiple: true }"
+        @change="handleChange"
+      ></f-cascader>
+    </div>
+    <div class="block" style="width: 220px; margin-right: 20px">
+      <span class="demonstration">折叠显示tag</span>
+      <f-cascader
+        v-model="selected"
+        :options="options"
+        :props="{ multiple: true }"
+        collapse-tags
+        @change="handleChange"
+      ></f-cascader>
+    </div>
+    <div class="block" style="width: calc(100% - 500px); margin-right: 20px">
+      <span class="demonstration">选项值</span>
+      <div class="mt-5">{{ selected }}</div>
+    </div>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const options = [
+  {
+    value: 'nanjing',
+    label: '南京',
+    children: [
+      {
+        value: 'xuanwu',
+        label: '玄武区'
+      },
+      {
+        value: 'gulou',
+        label: '鼓楼区'
+      },
+      {
+        value: 'jianye',
+        label: '建邺区'
+      }
+    ]
+  },
+  {
+    value: 'xuzhou',
+    label: '徐州',
+    children: [
+      {
+        value: 'tongshan',
+        label: '铜山区'
+      },
+      {
+        value: 'gulou',
+        label: '鼓楼区'
+      },
+      {
+        value: 'yunlong',
+        label: '云龙区',
+        children: [
+          { value: 'dalonghu', label: '大龙湖街道' },
+          { value: 'guozhuanglu', label: '郭庄路街道' },
+          { value: 'lvdi', label: '绿地商务城' },
+          { value: 'jinlonghu', label: '金龙湖街道' }
+        ]
+      },
+      {
+        value: 'jiawang',
+        label: '贾汪区'
+      },
+      { value: 'peixian', label: '沛县' },
+      { value: 'fengxian', label: '丰县' },
+      { value: 'pizhou', label: '邳州市' },
+      { value: 'xinyi', label: '新沂市' }
+    ]
+  }
+]
+const selected = ref([])
+
+function handleChange(value) {
+  console.log(value)
+}
+</script>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 选择任意一级选项
 
@@ -42,7 +525,116 @@ title: 级联选择 Cascader
 
 可通过 props.checkStrictly = true 来设置父子节点取消选中关联，从而达到选择任意一级选项的目的。
 
-<preview path="./demo/Cascader/Any.vue"></preview>
+<template #example>
+
+  <Any/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div flex>
+    <div class="block" style="width: 220px; margin-right: 20px">
+      <span class="demonstration">单选选择任意一级选项</span>
+      <f-cascader
+        v-model="selected1"
+        :options="options"
+        :props="{ checkStrictly: true }"
+        @change="handleChange"
+      ></f-cascader>
+      <div class="mt-5">{{ selected1 }}</div>
+    </div>
+    <div class="block" style="width: 220px; margin-right: 20px">
+      <span class="demonstration">多选选择任意一级选项</span>
+      <f-cascader
+        v-model="selected2"
+        :options="options"
+        :props="{ multiple: true, checkStrictly: true }"
+        collapse-tags
+        @change="handleChange"
+      ></f-cascader>
+      <div class="mt-5">{{ selected2 }}</div>
+    </div>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const options = [
+  {
+    value: 'nanjing',
+    label: '南京',
+    children: [
+      {
+        value: 'xuanwu',
+        label: '玄武区'
+      },
+      {
+        value: 'gulou',
+        label: '鼓楼区'
+      },
+      {
+        value: 'jianye',
+        label: '建邺区'
+      }
+    ]
+  },
+  {
+    value: 'xuzhou',
+    label: '徐州',
+    children: [
+      {
+        value: 'tongshan',
+        label: '铜山区'
+      },
+      {
+        value: 'gulou',
+        label: '鼓楼区'
+      },
+      {
+        value: 'yunlong',
+        label: '云龙区',
+        children: [
+          { value: 'dalonghu', label: '大龙湖街道' },
+          { value: 'guozhuanglu', label: '郭庄路街道' },
+          { value: 'lvdi', label: '绿地商务城' },
+          { value: 'jinlonghu', label: '金龙湖街道' }
+        ]
+      },
+      {
+        value: 'jiawang',
+        label: '贾汪区'
+      },
+      { value: 'peixian', label: '沛县' },
+      { value: 'fengxian', label: '丰县' },
+      { value: 'pizhou', label: '邳州市' },
+      { value: 'xinyi', label: '新沂市' }
+    ]
+  }
+]
+const selected1 = ref([])
+const selected2 = ref([])
+
+function handleChange(value) {
+  console.log(value)
+}
+</script>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 动态加载
 
@@ -51,7 +643,61 @@ title: 级联选择 Cascader
 lazyload方法有两个参数，第一个参数node为当前点击的节点，第二个resolve为数据加载完成的回调(必须调用)。为了更准确的显示节点的状态，还可以对节点数据添加是否为叶子节点的标志位 (
 默认字段为leaf，可通过props.leaf修改)，否则会简单的以有无子节点来判断是否为叶子节点。
 
-<preview path="./demo/Cascader/Lazy.vue"></preview>
+<template #example>
+
+  <Lazy/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div flex>
+    <div class="block" style="width: 220px; margin-right: 20px">
+      <f-cascader v-model="selected" :props="props"></f-cascader>
+    </div>
+    <div class="block" style="width: 220px; margin-right: 20px">
+      <div class="mt-5">{{ selected }}</div>
+    </div>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+
+let id = 0
+
+const selected = ref([])
+const props = {
+  lazy: true,
+  lazyLoad(node, resolve) {
+    const { level } = node
+    setTimeout(() => {
+      const nodes = Array.from({ length: level + 1 }).map(() => ({
+        value: ++id,
+        label: `选项${id}`,
+        leaf: level >= 2
+      }))
+      // 通过调用resolve将子节点数据返回，通知组件数据加载完成
+      resolve(nodes)
+    }, 1000)
+  }
+}
+</script>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 可搜索
 
@@ -59,23 +705,413 @@ lazyload方法有两个参数，第一个参数node为当前点击的节点，�
 
 你也可以用filter-method自定义搜索逻辑，接受一个函数，第一个参数是节点node，第二个参数是搜索关键词keyword，通过返回布尔值表示是否匹配
 
-<preview path="./demo/Cascader/Search.vue"></preview>
+<template #example>
+
+  <Search/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div flex>
+    <div class="block" style="width: 220px; margin-right: 20px">
+      <span class="demonstration">单选可搜索</span>
+      <f-cascader
+        v-model="selected1"
+        placeholder="试试搜索：鼓楼"
+        :options="options"
+        filterable
+      ></f-cascader>
+      <div class="mt-5">{{ selected1 }}</div>
+    </div>
+    <div class="block" style="width: 220px; margin-right: 20px">
+      <span class="demonstration">多选可搜索</span>
+      <f-cascader
+        v-model="selected2"
+        placeholder="试试搜索：鼓楼"
+        :options="options"
+        :props="{ multiple: true }"
+        collapse-tags
+        filterable
+        :filter-method="filterMethod"
+      ></f-cascader>
+      <div class="mt-5">{{ selected2 }}</div>
+    </div>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const options = [
+  {
+    value: 'nanjing',
+    label: '南京',
+    children: [
+      {
+        value: 'xuanwu',
+        label: '玄武区'
+      },
+      {
+        value: 'gulou',
+        label: '鼓楼区'
+      },
+      {
+        value: 'jianye',
+        label: '建邺区'
+      }
+    ]
+  },
+  {
+    value: 'xuzhou',
+    label: '徐州',
+    children: [
+      {
+        value: 'tongshan',
+        label: '铜山区'
+      },
+      {
+        value: 'gulou',
+        label: '鼓楼区'
+      },
+      {
+        value: 'yunlong',
+        label: '云龙区',
+        children: [
+          { value: 'dalonghu', label: '大龙湖街道' },
+          { value: 'guozhuanglu', label: '郭庄路街道' },
+          { value: 'lvdi', label: '绿地商务城' },
+          { value: 'jinlonghu', label: '金龙湖街道' }
+        ]
+      },
+      {
+        value: 'jiawang',
+        label: '贾汪区'
+      },
+      { value: 'peixian', label: '沛县' },
+      { value: 'fengxian', label: '丰县' },
+      { value: 'pizhou', label: '邳州市' },
+      { value: 'xinyi', label: '新沂市' }
+    ]
+  }
+]
+const selected1 = ref([])
+const selected2 = ref([])
+
+function filterMethod(node, keyword) {
+  return node.label.includes(keyword) && node.parent && node.parent.label === '徐州'
+}
+</script>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 自定义选项
 
 可以自定义选项的内容 , scoped slot会传入两个字段 node 和 data，分别表示当前节点的 Node 对象和数据。
 
-<preview path="./demo/Cascader/Custom.vue"></preview>
+<template #example>
+
+  <Custom/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div flex>
+    <div class="block" style="width: 220px; margin-right: 20px">
+      <f-cascader :options="options">
+        <template #default="{ node, data }">
+          <span>{{ data.label }}</span>
+          <span v-if="!node.isLeaf">({{ data.children.length }})</span>
+        </template>
+      </f-cascader>
+    </div>
+    <div class="block" style="width: 220px; margin-right: 20px">
+      <div class="mt-5">{{ selected }}</div>
+    </div>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const options = [
+  {
+    value: 'nanjing',
+    label: '南京',
+    children: [
+      {
+        value: 'xuanwu',
+        label: '玄武区'
+      },
+      {
+        value: 'gulou',
+        label: '鼓楼区'
+      },
+      {
+        value: 'jianye',
+        label: '建邺区'
+      }
+    ]
+  },
+  {
+    value: 'xuzhou',
+    label: '徐州',
+    children: [
+      {
+        value: 'tongshan',
+        label: '铜山区'
+      },
+      {
+        value: 'gulou',
+        label: '鼓楼区'
+      },
+      {
+        value: 'yunlong',
+        label: '云龙区',
+        children: [
+          { value: 'dalonghu', label: '大龙湖街道' },
+          { value: 'guozhuanglu', label: '郭庄路街道' },
+          { value: 'lvdi', label: '绿地商务城' },
+          { value: 'jinlonghu', label: '金龙湖街道' }
+        ]
+      },
+      {
+        value: 'jiawang',
+        label: '贾汪区'
+      },
+      { value: 'peixian', label: '沛县' },
+      { value: 'fengxian', label: '丰县' },
+      { value: 'pizhou', label: '邳州市' },
+      { value: 'xinyi', label: '新沂市' }
+    ]
+  }
+]
+const selected = ref([])
+
+function handleChange(value) {
+  console.log(value)
+}
+</script>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 不同尺寸
 
-<preview path="./demo/Cascader/Size.vue"></preview>
+<template #example>
+
+  <Size/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div flex>
+    <div class="block" style="width: 220px; margin-right: 20px">
+      <f-cascader :options="options" size="large"></f-cascader>
+    </div>
+    <div class="block" style="width: 220px; margin-right: 20px">
+      <f-cascader :options="options"></f-cascader>
+    </div>
+    <div class="block" style="width: 220px; margin-right: 20px">
+      <f-cascader :options="options" size="small"></f-cascader>
+    </div>
+    <div class="block" style="width: 220px; margin-right: 20px">
+      <f-cascader :options="options" size="mini"></f-cascader>
+    </div>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const options = [
+  {
+    value: 'nanjing',
+    label: '南京',
+    children: [
+      {
+        value: 'xuanwu',
+        label: '玄武区'
+      },
+      {
+        value: 'gulou',
+        label: '鼓楼区'
+      },
+      {
+        value: 'jianye',
+        label: '建邺区'
+      }
+    ]
+  },
+  {
+    value: 'xuzhou',
+    label: '徐州',
+    children: [
+      {
+        value: 'tongshan',
+        label: '铜山区'
+      },
+      {
+        value: 'gulou',
+        label: '鼓楼区'
+      },
+      {
+        value: 'yunlong',
+        label: '云龙区',
+        children: [
+          { value: 'dalonghu', label: '大龙湖街道' },
+          { value: 'guozhuanglu', label: '郭庄路街道' },
+          { value: 'lvdi', label: '绿地商务城' },
+          { value: 'jinlonghu', label: '金龙湖街道' }
+        ]
+      },
+      {
+        value: 'jiawang',
+        label: '贾汪区'
+      },
+      { value: 'peixian', label: '沛县' },
+      { value: 'fengxian', label: '丰县' },
+      { value: 'pizhou', label: '邳州市' },
+      { value: 'xinyi', label: '新沂市' }
+    ]
+  }
+]
+</script>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 级联面板
 
 可以不采用popper弹窗的面板显示。与级联选择器一样使用
 
-<preview path="./demo/Cascader/Panel.vue"></preview>
+<template #example>
+
+  <Panel/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div flex>
+    <div class="block" style="margin-right: 20px">
+      <f-cascader-panel v-model="selected" :options="options"></f-cascader-panel>
+    </div>
+    <div class="block" style="width: 220px; margin-right: 20px">
+      <div class="mt-5">{{ selected }}</div>
+    </div>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const options = [
+  {
+    value: 'nanjing',
+    label: '南京',
+    children: [
+      {
+        value: 'xuanwu',
+        label: '玄武区'
+      },
+      {
+        value: 'gulou',
+        label: '鼓楼区'
+      },
+      {
+        value: 'jianye',
+        label: '建邺区'
+      }
+    ]
+  },
+  {
+    value: 'xuzhou',
+    label: '徐州',
+    children: [
+      {
+        value: 'tongshan',
+        label: '铜山区'
+      },
+      {
+        value: 'gulou',
+        label: '鼓楼区'
+      },
+      {
+        value: 'yunlong',
+        label: '云龙区',
+        children: [
+          { value: 'dalonghu', label: '大龙湖街道' },
+          { value: 'guozhuanglu', label: '郭庄路街道' },
+          { value: 'lvdi', label: '绿地商务城' },
+          { value: 'jinlonghu', label: '金龙湖街道' }
+        ]
+      },
+      {
+        value: 'jiawang',
+        label: '贾汪区'
+      },
+      { value: 'peixian', label: '沛县' },
+      { value: 'fengxian', label: '丰县' },
+      { value: 'pizhou', label: '邳州市' },
+      { value: 'xinyi', label: '新沂市' }
+    ]
+  }
+]
+const selected = ref([])
+</script>
+```
+
+</template>
+
+</card>
 
 ## Cascader Props
 

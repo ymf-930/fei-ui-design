@@ -99,6 +99,8 @@ h5
     height auto
     .center
       justify-content flex-start
+      >div
+        width 100%
 
     &:after
       transition all .25s ease

@@ -2,33 +2,259 @@
 title: 多选框 Checkbox
 ---
 
+<script setup>
+import Basic from './demo/Checkbox/Basic.vue'
+import Group from './demo/Checkbox/Group.vue'
+import Disabled from './demo/Checkbox/Disabled.vue'
+import All from './demo/Checkbox/All.vue'
+import Limit from './demo/Checkbox/Limit.vue'
+</script>
 
+##### 基本组件-多选框。主要用于一组可选项多项选择，或者单独用于标记切换某种状态。
 
-# 多选框 Checkbox
-
-基本组件-多选框。主要用于一组可选项多项选择，或者单独用于标记切换某种状态。
+<card>
 
 ## 基础用法
 
-<preview path="./demo/Checkbox/Basic.vue"></preview>
+<template #example>
+
+  <Basic/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div>
+    <f-checkbox v-model="value">多选框</f-checkbox>
+    &nbsp;&nbsp;
+    <span style="color: #ff4511">{{ value }}</span>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+  import { ref } from 'vue'
+  const value = ref(false)
+</script>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 组合使用
 
-<preview path="./demo/Checkbox/Group.vue"></preview>
+<template #example>
+
+  <Group/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div>
+    <f-checkbox-group v-model="social">
+      <f-checkbox label="twitter">
+        <span>Twitter</span>
+      </f-checkbox>
+      <f-checkbox label="facebook">
+        <span>Facebook</span>
+      </f-checkbox>
+      <f-checkbox label="github">
+        <span>Github</span>
+      </f-checkbox>
+      <f-checkbox label="snapchat">
+        <span>Snapchat</span>
+      </f-checkbox>
+    </f-checkbox-group>
+    <p style="color: #ff4511; margin: 5px 0">{{ social }}</p>
+    <f-checkbox-group v-model="fruit">
+      <f-checkbox label="香蕉"></f-checkbox>
+      <f-checkbox label="苹果"></f-checkbox>
+      <f-checkbox label="西瓜"></f-checkbox>
+    </f-checkbox-group>
+    <p style="color: #ff4511; margin: 5px 0">{{ fruit }}</p>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+  import { ref } from 'vue'
+  const social = ref(['facebook', 'github'])
+  const fruit = ref(['苹果'])
+</script>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 禁用
 
-<preview path="./demo/Checkbox/Disabled.vue"></preview>
+<template #example>
+
+  <Disabled/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div>
+    <f-checkbox v-model="disabledSingle" disabled>Checkbox</f-checkbox>
+    <f-checkbox-group v-model="disabledGroup">
+      <f-checkbox label="香蕉" disabled></f-checkbox>
+      <f-checkbox label="苹果" disabled></f-checkbox>
+      <f-checkbox label="西瓜"></f-checkbox>
+    </f-checkbox-group>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+  import { ref } from 'vue'
+  const disabledSingle = ref(true)
+  const disabledGroup = ref(['苹果'])
+</script>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 全选
 
-<preview path="./demo/Checkbox/All.vue"></preview>
+<template #example>
+
+  <All/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div style="border-bottom: 1px solid #e9e9e9; padding-bottom: 6px; margin-bottom: 6px">
+    <f-checkbox v-model="checkAll" :indeterminate="indeterminate" @change="handleCheckAll">
+      全选
+    </f-checkbox>
+    <span style="color: #ff4511; margin: 5px 0">{{ checkAllGroup }} - {{ checkAll }}</span>
+  </div>
+  <f-checkbox-group v-model="checkAllGroup" @change="checkAllGroupChange">
+    <f-checkbox label="香蕉"></f-checkbox>
+    <f-checkbox label="苹果"></f-checkbox>
+    <f-checkbox label="西瓜"></f-checkbox>
+    <f-checkbox label="草莓"></f-checkbox>
+  </f-checkbox-group>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const all = ['香蕉', '西瓜', '苹果', '草莓']
+
+const indeterminate = ref(false)
+const checkAll = ref(false)
+const checkAllGroup = ref(['香蕉', '西瓜'])
+
+function handleCheckAll(val) {
+  checkAllGroup.value = val ? all : []
+  indeterminate.value = false
+}
+
+function checkAllGroupChange(value) {
+  if (value.length === all.length) {
+    indeterminate.value = false
+    checkAll.value = true
+  } else if (value.length > 0) {
+    indeterminate.value = true
+    checkAll.value = false
+  } else {
+    indeterminate.value = false
+    checkAll.value = false
+  }
+}
+</script>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 限制数量
 
 可以控制被勾选的数量限制
 
-<preview path="./demo/Checkbox/Limit.vue"></preview>
+<template #example>
+
+  <Limit/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div>
+    <f-checkbox-group v-model="checkAllGroup" :min="1" :max="2">
+      <f-checkbox label="香蕉"></f-checkbox>
+      <f-checkbox label="苹果"></f-checkbox>
+      <f-checkbox label="西瓜"></f-checkbox>
+      <f-checkbox label="草莓"></f-checkbox>
+    </f-checkbox-group>
+    <span style="color: #ff4511; margin: 5px 0">{{ checkAllGroup }}</span>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+  import { ref } from 'vue'
+  const checkAllGroup = ref(['香蕉', '西瓜'])
+</script>
+```
+
+</template>
+
+</card>
 
 ## Checkbox props
 

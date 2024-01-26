@@ -2,23 +2,87 @@
 title: 标记 Badge
 ---
 
+<script setup>
+import Basic from './demo/Badge/Basic.vue'
+import Custom from './demo/Badge/Custom.vue'
+</script>
 
+##### 空显示状态，用于给内部无数据情况的展示。十分简单
 
-# 标记 Badge
-
-空显示状态，用于给内部无数据情况的展示。十分简单
+<card>
 
 ## 基础用法
 
 基础的徽标用法
 
-<preview path="./demo/Badge/Basic.vue"></preview>
+<template #example>
+
+  <Basic/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <f-space :size="24">
+    <f-badge :value="12">
+      <f-button>普通按钮</f-button>
+    </f-badge>
+    <f-badge :value="3">
+      <f-button>回复</f-button>
+    </f-badge>
+    <f-badge :value="1" type="primary">
+      <f-button>primary徽标</f-button>
+    </f-badge>
+    <f-badge :value="2" type="warning">
+      <f-button>warning徽标</f-button>
+    </f-badge>
+    <f-badge value="ok" type="success">
+      <f-button>success徽标</f-button>
+    </f-badge>
+    <f-badge :value="200" :max="99">
+      <f-button>最大数值</f-button>
+    </f-badge>
+  </f-space>
+</template>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 自定义提示内容
 
 可以提示非数字的徽标
 
-<preview path="./demo/Badge/Custom.vue"></preview>
+<template #example>
+
+  <Custom/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <f-space :size="24">
+    <f-badge value="hot">
+      <f-button>热点</f-button>
+    </f-badge>
+    <f-badge value="new">
+      <f-button>回复</f-button>
+    </f-badge>
+    <f-badge is-dot>红点模式</f-badge>
+  </f-space>
+</template>
+```
+
+</template>
+
+</card>
 
 ## Props
 

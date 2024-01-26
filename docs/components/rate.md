@@ -2,25 +2,139 @@
 title: 评分 Rate
 ---
 
+<script setup>
+import Basic from './demo/Rate/Basic.vue'
+import Icon from './demo/Rate/Icon.vue'
+import Readonly from './demo/Rate/Readonly.vue'
+</script>
 
+##### 用于显示评分
 
-# 评分 Rate
-
-用于显示评分
+<card>
 
 ## 基础用法
 
 直接用组件默认插槽插入即可
 
-<preview path="./demo/Rate/Basic.vue"></preview>
+<template #example>
+
+  <Basic/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div flex>
+    <div class="block">
+      <span class="demonstration">默认不区分颜色</span>
+      <f-rate v-model="value1" allow-half show-text></f-rate>
+    </div>
+    <div class="block">
+      <span class="demonstration">区分颜色</span>
+      <f-rate v-model="value2" :colors="colors"></f-rate>
+    </div>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+const value1 = ref(null)
+const value2 = ref(null)
+const colors = ['#99A9BF', '#F7BA2A', '#ffba00']
+</script>
+```
+
+</template>
+
+<template #style>
+
+```html
+<style scoped>
+.block {
+  padding: 30px 0;
+  text-align: center;
+  border-right: 1px solid #eff2f6;
+  display: inline-block;
+  width: 49%;
+  box-sizing: border-box;
+}
+</style>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 自定义图标
 
-<preview path="./demo/Rate/Icon.vue"></preview>
+<template #example>
+
+  <Icon/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div flex>
+    <f-rate
+      v-model="value"
+      :icon-classes="iconClasses"
+      void-icon-class="heart"
+      :colors="['#99A9BF', '#F7BA2A', '#ffba00']"
+    ></f-rate>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+const value = ref(null)
+const iconClasses = ['heart-fill', 'heart-fill', 'heart-fill']
+</script>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 只读
 
-<preview path="./demo/Rate/Readonly.vue"></preview>
+<template #example>
+
+  <Readonly/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <f-rate :model-value="3.7" disabled show-score text-color="#ffba00" score-template="3.7"></f-rate>
+</template>
+```
+
+</template>
+
+</card>
 
 ## Attributes
 

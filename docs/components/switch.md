@@ -2,45 +2,328 @@
 title: 开关 Switch
 ---
 
+<script setup>
+import Basic from './demo/Switch/Basic.vue'
+import Size from './demo/Switch/Size.vue'
+import Icon from './demo/Switch/Icon.vue'
+import Disabled from './demo/Switch/Disabled.vue'
+import Loading from './demo/Switch/Loading.vue'
+import Confirm from './demo/Switch/Confirm.vue'
+import Confirm2 from './demo/Switch/Confirm2.vue'
+</script>
 
+##### 在两种状态间切换时用到的开关选择器
 
-# 开关 Switch
-
-在两种状态间切换时用到的开关选择器
+<card>
 
 ## 基础用法
 
 直接用组件默认插槽插入即可
 
-<preview path="./demo/Switch/Basic.vue"></preview>
+<template #example>
+
+  <Basic/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <f-switch v-model="value" @change="change"></f-switch>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const value = ref(false)
+
+function change(val) {
+  console.log(val)
+}
+</script>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 大小及颜色
 
-<preview path="./demo/Switch/Size.vue"></preview>
+<template #example>
+
+  <Size/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div>
+    <f-switch size="large"></f-switch>
+    &nbsp;
+    <f-switch></f-switch>
+    &nbsp;
+    <f-switch size="small"></f-switch>
+    &nbsp;
+    <f-switch active-color="#13ce66" inactive-color="#ff4949"></f-switch>
+  </div>
+</template>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 文字或图标
 
-<preview path="./demo/Switch/Icon.vue"></preview>
+<template #example>
+
+  <Icon/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div>
+    <f-switch>
+      <template #open><span>开</span></template>
+      <template #close><span>关</span></template>
+    </f-switch>
+    &nbsp;
+    <f-switch>
+      <template #open>
+        <f-icon name="check"></f-icon>
+      </template>
+      <template #close>
+        <f-icon name="close"></f-icon>
+      </template>
+    </f-switch>
+    <br />
+    <br />
+    <f-switch size="large">
+      <template #open><span>开启</span></template>
+      <template #close><span>关闭</span></template>
+    </f-switch>
+    &nbsp;
+    <f-switch size="large">
+      <template #open><span>ON</span></template>
+      <template #close><span>OFF</span></template>
+    </f-switch>
+  </div>
+</template>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 禁用
 
-<preview path="./demo/Switch/Disabled.vue"></preview>
+<template #example>
+
+  <Disabled/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div>
+    <f-switch v-model="value1" disabled size="large"></f-switch>
+    &nbsp;
+    <f-switch v-model="value1" disabled></f-switch>
+    &nbsp;
+    <f-switch v-model="value1" disabled size="small"></f-switch>
+    &nbsp;
+    <f-switch v-model="value2" disabled size="large"></f-switch>
+    &nbsp;
+    <f-switch v-model="value2" disabled></f-switch>
+    &nbsp;
+    <f-switch v-model="value2" disabled size="small"></f-switch>
+    &nbsp;
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const value1 = ref(true)
+const value2 = ref(false)
+</script>
+```
+
+</template>
+
+
+</card>
+
+<card>
 
 ## loading
 
-<preview path="./demo/Switch/Loading.vue"></preview>
+<template #example>
+
+  <Loading/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div>
+    <f-switch v-model="value1" loading size="large"></f-switch>
+    &nbsp;
+    <f-switch v-model="value1" loading></f-switch>
+    &nbsp;
+    <f-switch v-model="value1" loading size="small"></f-switch>
+    &nbsp;
+    <f-switch v-model="value2" loading size="large"></f-switch>
+    &nbsp;
+    <f-switch v-model="value2" loading></f-switch>
+    &nbsp;
+    <f-switch v-model="value2" loading size="small"></f-switch>
+    &nbsp;
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const value1 = ref(true)
+const value2 = ref(false)
+</script>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 切换前拦截
 
 可以通过设置`confirm`来设置切换前拦截，并通过`confirm-txt`来自定义切换文字提示。
 
-<preview path="./demo/Switch/Confirm.vue"></preview>
+<template #example>
+
+  <Confirm/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <f-switch confirm></f-switch>
+</template>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 阻止切换
 
 可以配合loading和confirm一级before-change函数props来配合实现阻止切换
 
-<preview path="./demo/Switch/Confirm2.vue"></preview>
+<template #example>
+
+  <Confirm2/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div>
+    <f-switch
+      v-model="value1"
+      confirm
+      :loading="loading1"
+      :before-change="beforeChange1"
+    ></f-switch>
+    &nbsp;
+    <f-switch
+      v-model="value2"
+      confirm
+      :loading="loading2"
+      :before-change="beforeChange2"
+    ></f-switch>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const value1 = ref(false)
+const value2 = ref(false)
+const loading1 = ref(false)
+const loading2 = ref(false)
+
+const beforeChange1 = () => {
+  loading1.value = true
+  return new Promise(resolve => {
+    setTimeout(() => {
+      loading1.value = false
+      return resolve(true)
+    }, 1000)
+  })
+}
+
+const beforeChange2 = () => {
+  loading2.value = true
+  return new Promise((_, reject) => {
+    setTimeout(() => {
+      loading2.value = false
+      return reject(new Error('调用出错！'))
+    }, 1000)
+  })
+}
+</script>
+```
+
+</template>
+
+</card>
 
 ## Props
 

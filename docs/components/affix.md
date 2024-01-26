@@ -2,21 +2,62 @@
 title: 图钉 Affix
 ---
 
+<script setup>
+import Basic from './demo/Affix/Basic.vue'
+import Position from './demo/Affix/Position.vue'
+</script>
 
-
-# 图钉 Affix
+<card>
 
 ## 基础用法
 
 原生滚动相对于window窗口固定，也可以结合scrollbar进行配置
 
-<preview path="./demo/Affix/Basic.vue"></preview>
+<template #example>
+
+  <Basic/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <f-affix :offset="80">
+    <f-button type="primary">固定在顶部80的位置</f-button>
+  </f-affix>
+</template>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 固定位置
 
 可以设置固定距离底部的位置
 
-<preview path="./demo/Affix/Position.vue"></preview>
+<template #example>
+
+  <Position/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <f-affix :offset="20" position="bottom">
+    <f-button type="primary">固定在底部20的位置</f-button>
+  </f-affix>
+</template>
+```
+
+</template>
+
+</card>
 
 ## Props
 

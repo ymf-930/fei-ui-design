@@ -2,63 +2,499 @@
 title: 输入框 Input
 ---
 
+<script setup>
+import Basic from './demo/Input/Basic.vue'
+import Icon from './demo/Input/Icon.vue'
+import Disabled from './demo/Input/Disabled.vue'
+import Group from './demo/Input/Group.vue'
+import Search from './demo/Input/Search.vue'
+import Password from './demo/Input/Password.vue'
+import Size from './demo/Input/Size.vue'
+import Text from './demo/Input/Text.vue'
+import Count from './demo/Input/Count.vue'
+</script>
 
+##### 基本表单组件，支持 input 和 textarea
 
-# 输入框 Input
-
-基本表单组件，支持 input 和 textarea
+<card>
 
 ## 基础用法
 
-<preview path="./demo/Input/Basic.vue"></preview>
+<template #example>
+
+  <Basic/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div>
+    <div style="margin-bottom: 10px">输入的内容：{{ value }}</div>
+    <f-input v-model="value" placeholder="请输入一些文字..." class="input-item"></f-input>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+  import { ref } from 'vue'
+
+  const value = ref('')
+</script>
+```
+
+</template>
+
+<template #style>
+
+```html
+<style scoped>
+.input-item {
+  width: 300px;
+  margin-right: 20px;
+}
+</style>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 图标和清空
 
 设置 `clearable` 可以开启清空按钮,icon设置icon图标名称
 
-<preview path="./demo/Input/Icon.vue"></preview>
+<template #example>
+
+  <Icon/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <f-space>
+    <f-input v-model="value" icon="eye-fill" class="input-item"></f-input>
+    <f-input v-model="value1" clearable class="input-item"></f-input>
+  </f-space>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+  import { ref } from 'vue'
+
+  const value = ref('')
+  const value1 = ref('')
+</script>
+```
+
+</template>
+
+<template #style>
+
+```html
+<style scoped>
+.input-item {
+  width: 300px;
+  margin-right: 20px;
+}
+</style>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 禁用和只读
 
 设置 `disabled` 可以禁用，设置 `readonly` 可以只读
 
-<preview path="./demo/Input/Disabled.vue"></preview>
+<template #example>
+
+  <Disabled/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div>
+    <f-input v-model="value" placeholder="disabled" disabled class="input-item"></f-input>
+    <f-input v-model="value1" placeholder="readonly" readonly class="input-item"></f-input>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+  import { ref } from 'vue'
+
+  const value = ref('禁用的文字')
+  const value1 = ref('只读的输入')
+</script>
+```
+
+</template>
+
+<template #style>
+
+```html
+<style scoped>
+.input-item {
+  width: 300px;
+  margin-right: 20px;
+}
+</style>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 组合使用
 
 提供两种方式来进行插入图标
 
-<preview path="./demo/Input/Group.vue"></preview>
+<template #example>
+
+  <Group/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div>
+    <p>Props：</p>
+    <div>
+      <f-input prefix="bulb-fill" clearable placeholder="Enter name" style="width: auto"></f-input>
+      &nbsp;
+      <f-input suffix="search" clearable placeholder="Enter text" style="width: auto"></f-input>
+    </div>
+    <p>Slots：</p>
+    <div style="margin-top: 6px">
+      <f-input placeholder="Enter name" style="width: auto">
+        <template #prefix>
+          <f-icon name="bulb-fill"></f-icon>
+        </template>
+      </f-input>
+      &nbsp;
+      <f-input placeholder="Enter text" clearable style="width: auto">
+        <template #suffix>
+          <f-icon name="search"></f-icon>
+        </template>
+      </f-input>
+    </div>
+    <p>prepend/append：</p>
+    <div>
+      <f-input placeholder="Enter text" style="width: auto; margin-top: 6px" clearable>
+        <template #prepend>
+          <f-button>prepend</f-button>
+        </template>
+      </f-input>
+      &nbsp;
+      <f-input placeholder="Enter name" style="width: auto; margin-top: 6px" clearable>
+        <template #append>
+          <f-button>append</f-button>
+        </template>
+      </f-input>
+      &nbsp;
+      <f-input placeholder="Enter name" style="width: auto; margin-top: 6px" clearable>
+        <template #prepend>
+          <f-select v-model="type" clearable style="width: 100px">
+            <f-option lable="email" value="email"></f-option>
+            <f-option lable="phone" value="phone"></f-option>
+          </f-select>
+        </template>
+        <template #append>
+          <f-button>append</f-button>
+        </template>
+      </f-input>
+    </div>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+  import { ref } from 'vue'
+  const type = ref('')
+</script>
+```
+
+</template>
+
+<template #style>
+
+```html
+<style scoped>
+.input-item {
+  width: 300px;
+  margin-right: 20px;
+}
+</style>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 设置search
 
 可以设置查询状态
 
-<preview path="./demo/Input/Search.vue"></preview>
+<template #example>
+
+  <Search/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div>
+    <f-input v-model="value" search placeholder="请输入一些文字..." class="input-item"></f-input>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+  import { ref } from 'vue'
+  const value = ref('')
+</script>
+```
+
+</template>
+
+<template #style>
+
+```html
+<style scoped>
+.input-item {
+  width: 300px;
+  margin-right: 20px;
+}
+</style>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 密码框
 
 输入密码的时候默认需要隐藏显示，这里会开启图标提示
 
-<preview path="./demo/Input/Password.vue"></preview>
+<template #example>
+
+  <Password/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div>
+    <f-input v-model="value" show-password-toggle type="password" class="input-item"></f-input>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+  import { ref } from 'vue'
+  const value = ref('')
+</script>
+```
+
+</template>
+
+<template #style>
+
+```html
+<style scoped>
+.input-item {
+  width: 300px;
+  margin-right: 20px;
+}
+</style>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 不同尺寸
 
 提供额外3种尺寸进行配置 `large` `small` 或 `mini`三种尺寸
 
-<preview path="./demo/Input/Size.vue"></preview>
+<template #example>
+
+  <Size/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <f-row :gutter="10">
+    <f-col span="6">
+      <f-input size="large" clearable placeholder="large input"></f-input>
+    </f-col>
+    <f-col span="6">
+      <f-input clearable placeholder="default input"></f-input>
+    </f-col>
+    <f-col span="6">
+      <f-input size="small" clearable placeholder="small input"></f-input>
+    </f-col>
+    <f-col span="6">
+      <f-input size="mini" clearable placeholder="mini input"></f-input>
+    </f-col>
+  </f-row>
+</template>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 设置textarea
 
 可以设置 `type="textarea"`开启文本域模式
 
-<preview path="./demo/Input/Text.vue"></preview>
+<template #example>
+
+  <Text/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div flex="box:mean">
+    <div class="input-item">
+      <f-input
+        type="textarea"
+        :autosize="{ minRows: 2, maxRows: 6 }"
+        placeholder="自动大小，可拖动，最大行数6"
+      ></f-input>
+    </div>
+    <div class="input-item">
+      <f-input type="textarea" :rows="4" placeholder="禁用拖动，默认4行" no-resize></f-input>
+    </div>
+  </div>
+</template>
+```
+
+</template>
+
+<template #style>
+
+```html
+<style scoped>
+.input-item {
+  width: 300px;
+  margin-right: 20px;
+}
+</style>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 字数统计
 
 可以设置 `show-word-count`开启字数统计
 
-<preview path="./demo/Input/Count.vue"></preview>
+<template #example>
+
+  <Count/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div flex="box:mean">
+    <div class="input-item">
+      <f-input :maxlength="10" show-word-count></f-input>
+    </div>
+    <div class="input-item">
+      <f-input type="textarea" :rows="2" no-resize show-word-count></f-input>
+    </div>
+  </div>
+</template>
+```
+
+</template>
+
+<template #style>
+
+```html
+<style scoped>
+.input-item {
+  width: 300px;
+  margin-right: 20px;
+}
+</style>
+```
+
+</template>
+
+</card>
 
 ## Props
 

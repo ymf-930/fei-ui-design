@@ -2,31 +2,105 @@
 title: 滚动组件 Scrollbar
 ---
 
+<script setup>
+import Basic from './demo/Scrollbar/Basic.vue'
+import Always from './demo/Scrollbar/Always.vue'
+import Custom from './demo/Scrollbar/Custom.vue'
+</script>
 
+##### 由于默认浏览器滚动条极为丑陋切不同浏览器之间样式不统一，故封装一个滚动组件用于实现滚动
 
-# 滚动组件 Scrollbar
-
-由于默认浏览器滚动条极为丑陋切不同浏览器之间样式不统一，故封装一个滚动组件用于实现滚动
+<card>
 
 ## 基础用法
 
 使用`f-scrollbar`进行包裹，默认`slot`为内容显示区域,如当前示例所包含的滚动结构如下:
 
-<preview path="./demo/Scrollbar/Basic.vue"></preview>
+<template #example>
+
+  <Basic/>
+  
+</template>
+
+<template #template>
 
 注意：如果内容区域不超过容器高度则不会生成滚动条
+
+```html
+<template>
+  <div style="height: 300px">
+    <f-scrollbar ref="componentScrollBar" style="height: 100%">
+      <p v-for="i in 40" :key="i">我是填充内容....</p>
+    </f-scrollbar>
+  </div>
+</template>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 始终显示
 
 使用`always`可以让滚动条始终显示出来
 
-<preview path="./demo/Scrollbar/Always.vue"></preview>
+<template #example>
+
+  <Always/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div style="height: 300px">
+    <f-scrollbar ref="componentScrollBar" always noresize>
+      <p v-for="i in 40" :key="i">我是填充内容....</p>
+    </f-scrollbar>
+  </div>
+</template>
+```
+
+</template>
+
+</card>
+
+<card>
 
 ## 定制滚动条的样式
 
 可以借助不同的props来定制滚动条的样式，也可以使用css来实现样式修改。
 
-<preview path="./demo/Scrollbar/Custom.vue"></preview>
+<template #example>
+
+  <Custom/>
+  
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div style="height: 300px">
+    <f-scrollbar
+      ref="componentScrollBar"
+      always
+      noresize
+      :bar-style="{ background: 'rgba(110, 23, 122, 0.3)' }"
+      :bar-wrap-style="{ background: 'rgba(0, 0, 0, 0.03)' }"
+    >
+      <p v-for="i in 40" :key="i">我是填充内容....</p>
+    </f-scrollbar>
+  </div>
+</template>
+```
+
+</template>
+
+</card>
 
 ## 注意事项
 

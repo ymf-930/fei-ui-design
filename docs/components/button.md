@@ -287,8 +287,6 @@ import Waves from './demo/Button/Waves.vue'
 
 使用 `button-group` 组件包裹后可显示按钮组
 
-<preview path="./demo/Button/Group.vue"></preview>
-
 <template #example>
 
   <Group/>
