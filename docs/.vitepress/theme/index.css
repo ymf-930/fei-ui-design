@@ -5,10 +5,6 @@ body {
   width: unset;
 }
 
-.vitepress-demo-preview__element-plus__container {
-  background-color: #fff;
-}
-
 .vp-doc {
   color: var(--vs-theme-color);
 
@@ -38,6 +34,11 @@ body {
     font-weight: 500;
   }
 
+  a {
+    color: var(--fei-color-primary);
+  }
+
+  a,
   a:hover {
     text-decoration: none;
   }
@@ -63,6 +64,10 @@ body {
 
   [class*='language-'] pre {
     padding: 0;
+    background: var(--vs-theme-code2);
+    code {
+      padding: 16px 20px;
+    }
   }
 
   /* [class*='language-'] code .highlighted {
@@ -71,8 +76,8 @@ body {
 
   [class*='language-'] > span.lang {
     color: rgba(255, 255, 255, 0.4);
-    top: -0.5em;
-    right: 1em;
+    top: 0.8em;
+    right: 1.2em;
   }
 
   [class*='language-'] > button.copy {
@@ -86,14 +91,43 @@ body {
 
   div[class*='language-'] {
     background-color: transparent;
+    margin: 0;
   }
 
   .header-anchor {
     position: unset;
   }
+
+  .fei-tag.is-dot {
+    color: var(--vs-theme-color) !important;
+  }
+  .fei-radio-group-capsule .fei-radio {
+    color: var(--vs-theme-code);
+  }
+
+  .fei-form-item__label {
+    color: var(--vs-theme-color);
+  }
+
+  .fei-tree-title {
+    color: var(--vs-theme-color);
+    &:hover {
+      color: var(--vs-theme-bg);
+    }
+  }
+  .fei-table-cell {
+    padding: 0;
+  }
+  /* .fei-input{
+    background-color: var(--vs-theme-bg);
+  } */
 }
 
-.vitepress-demo-preview-preview {
+/* .vitepress-demo-preview__element-plus__container {
+  background-color: #fff;
+} */
+
+/* .vitepress-demo-preview-preview {
   th,
   td {
     border: none;
@@ -107,9 +141,9 @@ body {
     margin: 0;
   }
 
-  /*li + li {*/
-  /*  margin: 0;*/
-  /*}*/
+  li + li {
+   margin: 0;
+  }
 
   tr {
     border-top: none;
@@ -118,4 +152,4 @@ body {
   td {
     font-size: 14px;
   }
-}
+} */

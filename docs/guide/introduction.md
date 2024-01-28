@@ -2,7 +2,7 @@
 title: 介绍
 ---
 
-
+<card>
 
 # Fei UI Design
 
@@ -29,3 +29,6 @@ Fei UI Design 是一个 Vue3 的组件库。
 ## 主题样式
 
 使用了Postcss 重构了样式，增加了更多的主题颜色配置。我们提供了一个使用TypeScript构建的类型安全主题系统。您只需要按需进行配置导出一个配置覆盖对象即可。
+
+</card>
+

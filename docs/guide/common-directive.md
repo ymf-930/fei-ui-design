@@ -2,7 +2,7 @@
 title: 组件指令
 ---
 
-
+<card>
 
 # 组件指令
 
@@ -34,7 +34,7 @@ app.mount('#app')
 
 ## 点击动画指令
 
-在标签中追加`v-click-animation`指令增加点击动画指令，波纹颜色根据border或background颜色创建
+在标签中追加 `v-click-animation` 指令增加点击动画指令，波纹颜色根据border或background颜色创建
 
 <div class="demo-button">
   <f-button>Default</f-button>
@@ -50,14 +50,14 @@ app.mount('#app')
 
 ## 水波纹指令
 
-在标签中追加`v-waves`指令增加水波纹指令,指令可以设置波纹颜色和点击方式, 注意，增加水波纹指令会默认覆盖原有的按钮点击效果
+在标签中追加 `v-waves` 指令增加水波纹指令,指令可以设置波纹颜色和点击方式, 注意，增加水波纹指令会默认覆盖原有的按钮点击效果
 
 ```html
 <f-button v-waves>默认指令</f-button>
 <f-button v-waves="'rgba(255,162,211,0.5)'">设置颜色</f-button>
 ```
 
-<div class="demo-button">
+<div class="demo-button mt-10">
   <f-button v-waves>默认指令</f-button>
   <f-button v-waves="'rgba(255,162,211,0.5)'">设置颜色</f-button>
 </div>
@@ -85,3 +85,6 @@ app.mount('#app')
 const repeatClick = ()=> console.log('不断执行点击事件...')
 const clickOutside = ()=> console.log('点击外部...')
 </script>
+
+</card>
+

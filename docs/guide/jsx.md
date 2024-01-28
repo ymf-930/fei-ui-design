@@ -2,7 +2,7 @@
 title: JSX & TSX
 ---
 
-
+<card>
 
 # JSX & TSX
 
@@ -24,3 +24,7 @@ export default defineComponent({
   }
 })
 ```
+
+</card>
+
+

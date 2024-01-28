@@ -2,7 +2,7 @@
 title: 按需引入
 ---
 
-
+<card>
 
 # 按需引入（Tree Shaking）
 
@@ -88,3 +88,5 @@ app.mount('#app')
   </div>
 </template>
 ```
+
+</card>

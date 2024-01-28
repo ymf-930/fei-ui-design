@@ -760,6 +760,12 @@ getVar(var)
   .content__default
     h1
       display none !important
+    a 
+      color var(--fei-color-primary) !important
+      transition all .25s ease
+
+      &:hover
+        color var(--fei-color-primary-active) !important
 
   .content__default
     @extend $wrapper

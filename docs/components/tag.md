@@ -189,8 +189,8 @@ import Custom from './demo/Tag/Custom.vue'
 ```html
 <template>
   <div>
-    <f-tag type="default" dot><span>default</span></f-tag>
-    <f-tag type="primary" dot><span>primary</span></f-tag>
+    <f-tag type="default" dot>default</f-tag>
+    <f-tag type="primary" dot>primary</f-tag>
     <f-tag type="success" dot>success</f-tag>
     <f-tag type="info" dot>info</f-tag>
     <f-tag type="warning" dot>warning</f-tag>

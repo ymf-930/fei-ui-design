@@ -2,7 +2,7 @@
 title: 通用样式
 ---
 
-
+<card>
 
 # 通用样式
 
@@ -185,7 +185,7 @@ hr {
     import 'flex.css/dist/data-flex.css';
   -->
 <!-- flex属性匹配，简单的子元素居中例子： -->
-<div flex="main:center cross:center" style="height: 80px; border:1px solid #1a5cff">
+<div flex="main:center cross:center" style="height: 80px; border:1px solid #1a5cff; margin: 20px 0">
   <div style="background: #fff;padding: 15px;">看看我是不是居中的</div>
 </div>
 
@@ -201,7 +201,7 @@ hr {
     import 'flex.css/dist/data-flex.css';
   -->
 <!-- flex属性匹配，简单的子元素居中例子： -->
-<div flex="main:center cross:center" style="height: 80px; border:1px solid #1a5cff">
+<div flex="main:center cross:center" style="height: 80px; border:1px solid #1a5cff; margin: 20px 0">
   <div style="background: #fff;padding: 15px;">看看我是不是居中的</div>
 </div>
 ```
@@ -582,3 +582,6 @@ flex-box:
   background: var(--fei-scrollbar-color-hover);
 }
 ```
+
+</card>
+

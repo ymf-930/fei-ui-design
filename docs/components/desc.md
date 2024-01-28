@@ -7,9 +7,7 @@ import Basic from './demo/Desc/Basic.vue'
 import Size from './demo/Desc/Size.vue'
 </script>
 
-# 描述 Desc
-
-按照一个区块来展示一些描述详情
+##### 按照一个区块来展示一些描述详情
 
 <card>
 

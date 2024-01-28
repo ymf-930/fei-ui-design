@@ -25,7 +25,7 @@
       </f-popper>
     </div>
 
-    <pre>{{ list }}</pre>
+    <pre style="margin-top: 10px; background-color: transparent;">{{ list }}</pre>
   </div>
 </template>
 

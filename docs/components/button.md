@@ -315,11 +315,8 @@ import Waves from './demo/Button/Waves.vue'
       <f-button type="danger" icon="edit"></f-button>
     </f-button-group>
     <f-button-group vertical>
-      <f-button>Default</f-button>
       <f-button type="primary">Primary</f-button>
       <f-button type="success">Success</f-button>
-      <f-button type="info">Info</f-button>
-      <f-button type="warning">Warning</f-button>
       <f-button type="danger">Danger</f-button>
     </f-button-group>
   </div>

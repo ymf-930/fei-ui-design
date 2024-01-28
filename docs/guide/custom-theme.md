@@ -2,7 +2,11 @@
 title: 调整主题
 ---
 
+<script setup>
+import Basic from './demo/Theme/Basic.vue'
+</script>
 
+<card>
 
 # 调整主题
 
@@ -18,8 +22,15 @@ title: 调整主题
 
 配置的全局主题变量会对后代组件生效的主题变量覆盖。
 
-<preview path="./demo/Theme/Basic.vue"></preview>
+<template #expmple>
+
+<Basic/>
+
+</template>
 
 ## 主题编辑器
 
 正在开发中...
+
+</card>
+

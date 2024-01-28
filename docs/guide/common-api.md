@@ -2,7 +2,7 @@
 title: 帮助函数
 ---
 
-
+<card>
 
 # 帮助函数
 
@@ -638,3 +638,7 @@ export const coerceTruthyValueToArray = arr => {
   // --
 }
 ```
+
+</card>
+
+

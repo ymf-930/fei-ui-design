@@ -2,7 +2,7 @@
 title: 内置动画
 ---
 
-
+<card>
 
 # 内置动画
 
@@ -154,3 +154,6 @@ const activeTab = ref('tab1')
   font-size: 16px;
 }
 </style>
+
+</card>
+

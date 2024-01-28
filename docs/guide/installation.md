@@ -2,7 +2,7 @@
 title: 安装
 ---
 
-
+<card>
 
 # 安装
 
@@ -29,3 +29,7 @@ pnpm add fei-ui-design
 推荐在 SFC 单文件组件风格（SFC - Single File Component）环境中进行使用，可以选择直接引入或全局安装在 Vue App 中。
 
 参考[在 SFC 中使用](/guide/usage-sfc.html)
+
+</card>
+
+

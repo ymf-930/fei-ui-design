@@ -2,7 +2,7 @@
 title: 在 SFC 中使用
 ---
 
-
+<card>
 
 # 在 SFC 中使用
 
@@ -99,7 +99,7 @@ export default defineConfig({
 
 如果你想全局安装但是不想安装全部组件，请参考 [按需引入](/guide/import-on-demand.html)。
 
-```javascript
+```js
 // main.js
 import { createApp } from 'vue'
 import App from './App.vue'
@@ -111,3 +111,7 @@ const app = createApp(App)
 app.use(FeiUI)
 app.mount('#app')
 ```
+
+</card>
+
+
