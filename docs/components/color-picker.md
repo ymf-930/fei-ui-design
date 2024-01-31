@@ -12,8 +12,6 @@ import Size from './demo/ColorPicker/Size.vue'
 
 ##### 用于选择颜色色值
 
-用于选择颜色色值
-
 <card>
 
 ## 基础用法

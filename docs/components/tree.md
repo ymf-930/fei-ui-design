@@ -98,7 +98,7 @@ function handleSelect(selected, node) {
 
 ## 额外参数配置
 
-可以配置额外参数设置，比如附加 id，code 等业务参数，也可以指定 title 显示的字段名称，默认为`title`
+可以配置额外参数设置，比如附加 id，code 等业务参数，也可以指定 title 显示的字段名称，默认为 `title`
 
 <template #example>
 

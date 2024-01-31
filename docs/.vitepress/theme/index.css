@@ -118,6 +118,12 @@ body {
   .fei-table-cell {
     padding: 0;
   }
+  .fei-desc__body table tr{
+    border: 0;
+  }
+  .fei-timeline-item{
+    width: 100%;
+  }
   /* .fei-input{
     background-color: var(--vs-theme-bg);
   } */

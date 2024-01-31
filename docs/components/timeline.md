@@ -103,7 +103,7 @@ import CustomIcon from './demo/Timeline/CustomIcon.vue'
 
 ## 最后一个节点设置
 
-通过添加`pending`属性来标记最后一个为节点
+通过添加 `pending` 属性来标记最后一个为节点
 
 <template #example>
 

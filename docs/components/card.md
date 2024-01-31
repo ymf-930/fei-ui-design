@@ -14,7 +14,7 @@ import Shadow from './demo/Card/Shadow.vue'
 
 ## 基础用法
 
-头部可以 开启高亮提示，如不需要头部则不用插入header 可以开启`head-tip`来高亮header的前头
+头部可以 开启高亮提示，如不需要头部则不用插入header 可以开启 `head-tip` 来高亮header的前头
 
 <template #example>
 

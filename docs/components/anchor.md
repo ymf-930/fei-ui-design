@@ -15,7 +15,7 @@ import Target from './demo/Anchor/Target.vue'
 
 ## 基础用法
 
-默认是window滚动，也可以设置滚动区域的 target，并且可以设置`f-affix`来固定
+默认是window滚动，也可以设置滚动区域的 target，并且可以设置 `f-affix` 来固定
 
 <template #example>
 
@@ -52,7 +52,7 @@ import Target from './demo/Anchor/Target.vue'
 
 ## 自定义图标
 
-可以通过设置`icon`来设置小圆点为自定义图标，推荐使用实心图标以达到最好的显示效果
+可以通过设置 `icon` 来设置小圆点为自定义图标，推荐使用实心图标以达到最好的显示效果
 
 <template #example>
 
@@ -99,7 +99,7 @@ import Target from './demo/Anchor/Target.vue'
 
 ## 自定义颜色
 
-可以通过设置`activeColor`来设置自定义图标的颜色
+可以通过设置 `activeColor` 来设置自定义图标的颜色
 
 <template #example>
 
@@ -146,7 +146,7 @@ import Target from './demo/Anchor/Target.vue'
 
 ## 指定滚动容器
 
-可以通过设置`target`来指定滚动区域的标识，设置的滚动容器需要设置定位
+可以通过设置 `target` 来指定滚动区域的标识，设置的滚动容器需要设置定位
 
 <template #example>
 

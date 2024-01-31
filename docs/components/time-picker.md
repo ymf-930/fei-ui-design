@@ -16,9 +16,9 @@ import Size from './demo/TimePicker/Size.vue'
 
 ## 基础用法
 
-使用 f-time-picker 标签，通过 `disabledHours` `disabledMinutes` 和 `disabledSeconds`限制可选时间范围。
+使用 f-time-picker 标签，通过 `disabledHours` `disabledMinutes` 和 `disabledSeconds` 限制可选时间范围。
 
-提供了两种交互方式：默认情况下通过鼠标滚轮进行选择，打开`arrow-control`属性则通过界面上的箭头进行选择。
+提供了两种交互方式：默认情况下通过鼠标滚轮进行选择，打开 `arrow-control` 属性则通过界面上的箭头进行选择。
 
 <template #example>
 
@@ -102,7 +102,7 @@ function disabledSeconds(hour, minute) {
 
 ## 任意时间范围
 
-添加`is-range`属性即可选择时间范围，同样支持`arrow-control`属性。
+添加 `is-range` 属性即可选择时间范围，同样支持 `arrow-control` 属性。
 
 <template #example>
 
@@ -160,7 +160,7 @@ const value2 = ref([new Date(2016, 9, 10, 8, 40), new Date(2016, 9, 10, 9, 40)])
 
 ## 禁用状态和禁用时间
 
-使用 f-time-picker 标签，通过 `disabledHours` `disabledMinutes` 和 `disabledSeconds`限制可选时间范围。
+使用 f-time-picker 标签，通过 `disabledHours` `disabledMinutes` 和 `disabledSeconds` 限制可选时间范围。
 
 <template #example>
 

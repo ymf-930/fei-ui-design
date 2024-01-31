@@ -6,14 +6,14 @@ title: 加载条 LoadingBar
 import Basic from './demo/LoadingBar/Basic.vue'
 </script>
 
-# 加载条 LoadingBar
-
-全局创建一个显示页面加载、异步请求、文件上传等的加载进度条。
+##### 全局创建一个显示页面加载、异步请求、文件上传等的加载进度条。
 
 ## 说明
 
 LoadingBar 只会在全局创建一个，因此在任何位置调用的方法都会控制这同一个组件。 主要使用场景是路由切换和Ajax，因为这两者都不能拿到精确的进度，LoadingBar 会模拟进度， 当然也可以通过update()
 方法来传入一个精确的进度，比如在文件上传时会很有用，具体见API。
+
+#####
 
 <card>
 

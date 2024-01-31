@@ -72,7 +72,7 @@ app.mount('#app')
 
 ## ClickOutside 外部点击指令
 
-通过添加`v-click-outside="clickOutside"`来添加外部点击事件 常用于popper的外部点击关闭.
+通过添加 `v-click-outside="clickOutside"` 来添加外部点击事件 常用于popper的外部点击关闭.
 
 <div class="demo-button">
   <div v-click-outside="clickOutside" flex="main:center cross:center"

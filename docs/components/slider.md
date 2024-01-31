@@ -9,7 +9,7 @@ import Input from './demo/Slider/Input.vue'
 import Mark from './demo/Slider/Mark.vue'
 </script>
 
-# 滑块组件 Slider
+#####
 
 <card>
 

@@ -312,7 +312,7 @@ import CapsuleType from './demo/Radio/CapsuleType.vue'
 | type     | 是否开启button模式                                | String         | button /capsule       | —      |
 | size     | 按钮模式单选组的尺寸                              | String         | large、small、default | —      |
 
-### RadioGroup events
+## RadioGroup events
 
 | 事件名 | 说明                                                                         | 返回值 |
 | ------ | ---------------------------------------------------------------------------- | ------ |

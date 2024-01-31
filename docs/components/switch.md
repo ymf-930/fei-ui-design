@@ -232,7 +232,7 @@ const value2 = ref(false)
 
 ## 切换前拦截
 
-可以通过设置`confirm`来设置切换前拦截，并通过`confirm-txt`来自定义切换文字提示。
+可以通过设置 `confirm` 来设置切换前拦截，并通过 `confirm-txt` 来自定义切换文字提示。
 
 <template #example>
 

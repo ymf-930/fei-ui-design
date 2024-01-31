@@ -3,52 +3,61 @@
     <div class="init">
       <header class="hero">
         <div class="points-init">
-          <span
-            v-for="span in 16"
-            :key="span"
-          ></span>
+          <span v-for="span in 16" :key="span"></span>
         </div>
         <div class="circle-init"></div>
         <div class="content-hero">
-          <h1 v-if="data.heroText !== null" v-html="data.heroText || 'Hello'" id="main-title"/>
+          <h1 v-if="data.heroText !== null" v-html="data.heroText || 'Hello'" id="main-title" />
 
-          <p v-html="data.tagline || 'Welcome to your VitePress site'" class="description"/>
+          <p v-html="data.tagline || 'Welcome to your VitePress site'" class="description" />
 
           <div class="con-btns">
             <NavLink
               @mouseleave.native="time('fuidesign')"
-              @mouseenter.native="fuidesign = true, expand = true"
+              @mouseenter.native="(fuidesign = true), (expand = true)"
               title="Get Started"
               class="action-button"
               :item="actionLink"
             />
             <a
               @mouseleave="time('gitee')"
-              @mouseenter="gitee = true, expand = true"
-              title="Gitee" class="gitee" target="_blank" href="https://gitee.com/ymf930/fei-ui-design">
-              <i class='bx bxl-discord'></i>
-              Gitee
+              @mouseenter="(gitee = true), (expand = true)"
+              title="Gitee"
+              class="gitee"
+              target="_blank"
+              href="https://gitee.com/ymf930/fei-ui-design"
+            >
+              <!-- <i class='bx bxl-discord'></i> -->
+              <img class="gitee-icon not-darken" src="/home/gitee-fill.png" alt="" />
+              <img class="gitee-icon has-darken" src="/home/gitee.png" alt="" />
+               Gitee
             </a>
 
             <a
               @mouseleave="time('github')"
-              @mouseenter="github = true, expand = true"
-              title="Github" class="github" target="_blank" href="https://github.com/ymf-930/fei-ui-design">
-              <i class='bx bxl-github'></i>
-              <span title="Stargazers" class="badge-star">
+              @mouseenter="(github = true), (expand = true)"
+              title="Github"
+              class="github"
+              target="_blank"
+              href="https://github.com/ymf-930/fei-ui-design"
+            >
+              <i class="bx bxl-github"></i>
+              <!-- <span title="Stargazers" class="badge-star">
                 {{ numberWithCommas }}
-              </span>
+              </span> -->
             </a>
           </div>
         </div>
       </header>
 
-      <components :class="{
-        'github-hover':github,
-        'gitee-hover':gitee,
-        'fuidesign-hover':fuidesign,
-        'btn-hover': expand,
-        }"/>
+      <components
+        :class="{
+          'github-hover': github,
+          'gitee-hover': gitee,
+          'fuidesign-hover': fuidesign,
+          'btn-hover': expand,
+        }"
+      />
     </div>
 
     <!--    <Illustration1 :data="data.homeFeatures[0]"/>-->
@@ -59,8 +68,8 @@
 </template>
 
 <script setup>
-import {useData} from "vitepress"
-import {computed, ref} from 'vue'
+import { useData } from 'vitepress'
+import { computed, ref } from 'vue'
 import NavLink from './NavLink.vue'
 import Footer from './Footer.vue'
 import HomeInit from './homeInit.vue'
@@ -69,14 +78,13 @@ import HomeInit from './homeInit.vue'
 import components from './HomeComponents.vue'
 // import PremiumThemes from './premiumThemes.vue'
 
-
-const star = ref(3020)
+const star = ref(0)
 const github = ref(false)
 const gitee = ref(false)
 const fuidesign = ref(false)
 const expand = ref(false)
 
-const {frontmatter} = useData()
+const { frontmatter } = useData()
 
 const data = computed(() => {
   return frontmatter.value
@@ -85,21 +93,20 @@ const data = computed(() => {
 const actionLink = computed(() => {
   return {
     link: data.value.actionLink,
-    text: data.value.actionText
+    text: data.value.actionText,
   }
 })
 
 const numberWithCommas = computed(() => {
   const x = star.value
-  var parts = x.toString().split(".");
-  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-  return parts.join(".");
+  var parts = x.toString().split('.')
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+  return parts.join('.')
 })
-
 
 function time(name) {
   expand.value = false
-  if (name === 'github'){
+  if (name === 'github') {
     github.value = false
   } else if (name === 'gitee') {
     gitee.value = false
@@ -107,7 +114,6 @@ function time(name) {
     fuidesign.value = false
   }
 }
-
 </script>
 
 <style lang="stylus">
@@ -116,7 +122,8 @@ getColor(colorx, alpha = 1)
 
 getVar(var)
   unquote("var(--vs-" + var + ")")
-
+.has-darken
+    display none
 .darken
   .init
     &:after
@@ -128,7 +135,11 @@ getVar(var)
 
     i
       color #fff !important
+    .not-darken
+      display none
 
+    .has-darken
+      display block
   .badge-star
     background getVar(theme-bg2)
     color #fff
@@ -333,11 +344,16 @@ getVar(var)
       flex-direction column
       padding 40px 60px
 
-    img
-      max-width: 100%
-      max-height 280px
-      display block
-      margin 3rem auto 1.5rem
+    // img
+    //   max-width: 100%
+    //   max-height 280px
+    //   display block
+    //   margin 3rem auto 1.5rem
+ 
+    .gitee-icon
+      width 24px
+      height 24px
+      margin 0
 
     h1
       font-size 2.3rem !important

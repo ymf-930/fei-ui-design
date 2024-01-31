@@ -5,7 +5,7 @@ title: 轮播 Carousel
 <script setup>
 import Basic from './demo/Carousel/Basic.vue'
 import Auto from './demo/Carousel/Auto.vue'
-import Card from './demo/Carousel/Card.vue'
+import CarouselCard from './demo/Carousel/Card.vue'
 import Style from './demo/Carousel/Style.vue'
 import Direction from './demo/Carousel/Direction.vue'
 </script>
@@ -70,7 +70,7 @@ import Direction from './demo/Carousel/Direction.vue'
 
 ## 自动切换和速度
 
-可以设置`autoplay`自动切换，`trigger="hover"`悬停切换
+可以设置 `autoplay` 自动切换，`trigger="hover"` 悬停切换
 
 <template #example>
 
@@ -205,11 +205,11 @@ import Direction from './demo/Carousel/Direction.vue'
 
 ## 卡片风格
 
-可以设置`card`卡片风格
+可以设置 `card` 卡片风格
 
 <template #example>
 
-  <Card/>
+  <CarouselCard/>
   
 </template>
 
@@ -259,7 +259,7 @@ import Direction from './demo/Carousel/Direction.vue'
 
 ## 方向
 
-可以设置`direction`方向为竖直方向
+可以设置 `direction` 方向为竖直方向
 
 <template #example>
 
@@ -324,7 +324,7 @@ import Direction from './demo/Carousel/Direction.vue'
 | direction          | 方向                                            | String          | horizontal、vertical                             | horizontal |
 | type               | 类型                                            | String          | card                                             | —          |
 
-### Events
+## Events
 
 | 事件名 | 说明                                     | 返回值          |
 | ------ | ---------------------------------------- | --------------- |

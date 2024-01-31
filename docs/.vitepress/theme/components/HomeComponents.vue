@@ -1,21 +1,23 @@
 <template>
   <div class="con-components">
     <div class="con-logo vuesax-logo">
-      <img class="not-darken" src="/logos/f-ui-logo.png" alt="">
-      <img class="has-darken" src="/logos/f-ui-logo-white.png" alt="">
+      <img class="not-darken" src="/logos/f-ui-logo.png" alt="" />
+      <img class="has-darken" src="/logos/f-ui-logo-white.png" alt="" />
       <div class="github-logo__1"></div>
       <div class="github-logo__2"></div>
       <div class="github-logo__3"></div>
     </div>
     <div class="con-logo gitee-logo">
-      <i class='bx bxl-discord'></i>
+      <!-- <i class="bx bxl-discord"></i> -->
+      <img class="not-darken" src="/home/gitee-fill.png" alt="" />
+      <img class="has-darken" src="/home/gitee.png" alt="" />
       <div class="github-logo__1"></div>
       <div class="github-logo__2"></div>
       <div class="github-logo__3"></div>
     </div>
     <div class="con-logo github-logo">
-      <i class='bx bxl-github'></i>
-<!--      <f-icon name="github-fill"></f-icon>-->
+      <i class="bx bxl-github"></i>
+      <!--      <f-icon name="github-fill"></f-icon>-->
       <div class="github-logo__1"></div>
       <div class="github-logo__2"></div>
       <div class="github-logo__3"></div>
@@ -23,28 +25,26 @@
     <div class="content-components">
       <div class="component1">
         <div class="avatar">
-          <img class="not-darken" src="/home/foto1.png" alt="">
-          <img class="back not-darken" src="/home/foto1.png" alt="">
-          <img class="has-darken" src="/home/foto12.png" alt="">
-          <img class="back has-darken" src="/home/foto12.png" alt="">
-          <span class="badge">
-            8
-          </span>
+          <img class="not-darken" src="/home/foto1.png" alt="" />
+          <img class="back not-darken" src="/home/foto1.png" alt="" />
+          <img class="has-darken" src="/home/foto12.png" alt="" />
+          <img class="back has-darken" src="/home/foto12.png" alt="" />
+          <span class="badge">8</span>
         </div>
 
         <div class="con-text">
-          <h4>
-            Segoe cute
-          </h4>
-          <p>
-            Do you want to participate in our initiative? We are open.
-          </p>
+          <h4>Segoe cute</h4>
+          <p>Do you want to participate in our initiative? We are open.</p>
 
           <footer>
-            <button class="vs-button vs-button--null vs-button--size-null vs-button--danger vs-button--default">
+            <button
+              class="vs-button vs-button--null vs-button--size-null vs-button--danger vs-button--default"
+            >
               <div class="vs-button__content">Open</div>
             </button>
-            <button class="vs-button vs-button--null vs-button--size-null vs-button--dark vs-button--shadow">
+            <button
+              class="vs-button vs-button--null vs-button--size-null vs-button--dark vs-button--shadow"
+            >
               <div class="vs-button__content">cancel</div>
             </button>
           </footer>
@@ -52,25 +52,19 @@
       </div>
 
       <div class="component2">
-        <img class="not-darken" src="/logos/f-ui-logo.png" alt="">
-        <img class="has-darken" src="/logos/f-ui-logo-white.png" alt="">
+        <img class="not-darken" src="/logos/f-ui-logo.png" alt="" />
+        <img class="has-darken" src="/logos/f-ui-logo-white.png" alt="" />
       </div>
 
       <div class="component3">
-        <div
-            :class="{'active': switch1}"
-            @click="switch1 = !switch1"
-            class="con-switch">
-          <span class="circle"/>
+        <div :class="{ active: switch1 }" @click="switch1 = !switch1" class="con-switch">
+          <span class="circle" />
           <p>
             {{ switch1 ? 'on' : 'off' }}
           </p>
         </div>
-        <div
-            :class="{'active': switch2}"
-            @click="switch2 = !switch2"
-            class="con-switch">
-          <span class="circle"/>
+        <div :class="{ active: switch2 }" @click="switch2 = !switch2" class="con-switch">
+          <span class="circle" />
           <p>
             {{ switch2 ? 'on' : 'off' }}
           </p>
@@ -78,39 +72,33 @@
       </div>
 
       <div class="component4">
-        <img class="not-darken" src="/home/foto3.png" alt="">
-        <img class="has-darken" src="/home/foto10.png" alt="">
+        <img class="not-darken" src="/home/foto3.png" alt="" />
+        <img class="has-darken" src="/home/foto10.png" alt="" />
         <h4>
-          <span class="not-darken">
-            Potted cactus
-          </span>
-          <span class="has-darken">
-            Red Shoes
-          </span>
+          <span class="not-darken">Potted cactus</span>
+          <span class="has-darken">Red Shoes</span>
         </h4>
         <button
-            class="vs-button vs-button--null vs-button--size-null vs-button--block vs-button--primary vs-button--default">
+          class="vs-button vs-button--null vs-button--size-null vs-button--block vs-button--primary vs-button--default"
+        >
           <div class="vs-button__content">Button</div>
         </button>
       </div>
 
       <div class="component5">
-        <i class='bx bxs-star'></i>
+        <i class="bx bxs-star"></i>
         <div class="con-img">
-          <img src="/home/vue-logo.png" alt="">
+          <img src="/home/vue-logo.png" alt="" />
         </div>
-        <h4>
-          Vuejs Components
-        </h4>
+        <h4>Vuejs Components</h4>
 
-        <p>
-          Framework components for VueJS. Create instances quickly with a few lines of code.
-        </p>
+        <p>Framework components for VueJS. Create instances quickly with a few lines of code.</p>
       </div>
 
       <div class="component6">
         <button
-            class="vs-button vs-button--null vs-button--size-null vs-button--icon vs-button--dark vs-button--transparent">
+          class="vs-button vs-button--null vs-button--size-null vs-button--icon vs-button--dark vs-button--transparent"
+        >
           <div class="vs-button__content">
             <i class="bx bx-dots-vertical-rounded"></i>
           </div>
@@ -120,45 +108,43 @@
 
       <div class="component7">
         <div class="con-img">
-          <i class='bx bx-video'></i>
-          <img class="not-darken" src="/home/foto4.png" alt="">
-          <img class="has-darken" src="/home/foto11.png" alt="">
+          <i class="bx bx-video"></i>
+          <img class="not-darken" src="/home/foto4.png" alt="" />
+          <img class="has-darken" src="/home/foto11.png" alt="" />
         </div>
 
         <header>
           <button icon dark shadow>
-            <i class='bx bxs-heart'></i>
+            <i class="bx bxs-heart"></i>
           </button>
           <button dark shadow>
-            <i class='bx bxs-chat'></i> 12
+            <i class="bx bxs-chat"></i>
+            12
           </button>
         </header>
 
         <div class="content-text">
-          <h4>
-            Get Started
-          </h4>
-          <p>
-            FEI-UI-DESIGN is an open source framework and you can help even in simple details
-          </p>
+          <h4>Get Started</h4>
+          <p>FEI-UI-DESIGN is an open source framework and you can help even in simple details</p>
         </div>
 
         <footer>
-          <div class="vs-input-parent vs-input-parent--state-null vs-component--primary" >
-<!--            <div class="vs-input-content">-->
-<!--              <input placeholder="Comment" id="vs-input&#45;&#45;415" class="vs-input">-->
-<!--              <label for="vs-input&#45;&#45;415" class="vs-input__label">Comment</label>-->
-<!--              <div class="vs-input__affects">-->
-<!--                <div class="vs-input__affects__1"></div>-->
-<!--                <div class="vs-input__affects__2"></div>-->
-<!--                <div class="vs-input__affects__3"></div>-->
-<!--                <div class="vs-input__affects__4"></div>-->
-<!--              </div>-->
-<!--            </div>-->
-            <input placeholder="Comment" id="vs-input--415" class="vs-input">
+          <div class="vs-input-parent vs-input-parent--state-null vs-component--primary">
+            <!--            <div class="vs-input-content">-->
+            <!--              <input placeholder="Comment" id="vs-input&#45;&#45;415" class="vs-input">-->
+            <!--              <label for="vs-input&#45;&#45;415" class="vs-input__label">Comment</label>-->
+            <!--              <div class="vs-input__affects">-->
+            <!--                <div class="vs-input__affects__1"></div>-->
+            <!--                <div class="vs-input__affects__2"></div>-->
+            <!--                <div class="vs-input__affects__3"></div>-->
+            <!--                <div class="vs-input__affects__4"></div>-->
+            <!--              </div>-->
+            <!--            </div>-->
+            <input placeholder="Comment" id="vs-input--415" class="vs-input" />
           </div>
           <button
-              class="vs-button vs-button--null vs-button--size-null vs-button--icon vs-button--primary vs-button--flat">
+            class="vs-button vs-button--null vs-button--size-null vs-button--icon vs-button--primary vs-button--flat"
+          >
             <div class="vs-button__content">
               <i class="bx bx-send"></i>
             </div>
@@ -168,117 +154,111 @@
 
       <div class="component8">
         <div class="con-icon">
-          <i class='bx bxs-heart'></i>
+          <i class="bx bxs-heart"></i>
         </div>
 
         <div class="con-img">
-          <img class="not-darken" src="/home/foto2.jpg" alt="">
-          <img class="has-darken" src="/home/foto13.png" alt="">
+          <img class="not-darken" src="/home/foto2.jpg" alt="" />
+          <img class="has-darken" src="/home/foto13.png" alt="" />
 
           <div class="play">
             <!-- <i class='bx bx-play' ></i> -->
-            <i class='bx bxs-right-arrow'></i>
+            <i class="bx bxs-right-arrow"></i>
           </div>
         </div>
 
         <footer>
           <div>
-            <h4>
-              FEI-UI-DESIGN 4.0
-            </h4>
-            <p>
-              Framework
-            </p>
+            <h4>FEI-UI-DESIGN 4.0</h4>
+            <p>Framework</p>
           </div>
 
           <div class="con-avatars">
-            <img src="/home/foto9.png" alt="">
-            <img src="/home/foto8.png" alt="">
-            <img src="/home/foto7.png" alt="">
+            <img src="/home/foto9.png" alt="" />
+            <img src="/home/foto8.png" alt="" />
+            <img src="/home/foto7.png" alt="" />
           </div>
         </footer>
       </div>
 
-      <div :class="{'active': focusSelect}" class="component9">
+      <div :class="{ active: focusSelect }" class="component9">
         <header>
-          <input v-model="selectValue" placeholder="Select" @blur="handleBur" @click="handleClick" readonly type="text"
-                 name="" id="select">
-          <i class='bx bx-chevron-down'></i>
+          <input
+            v-model="selectValue"
+            placeholder="Select"
+            @blur="handleBur"
+            @click="handleClick"
+            readonly
+            type="text"
+            name=""
+            id="select"
+          />
+          <i class="bx bx-chevron-down"></i>
         </header>
 
-        <ul
-            :class="{'active': focusSelect}"
-        >
-          <li @click="handleClickOption('Bruno Hoffman')">
-            Bruno Hoffman
-          </li>
-          <li @click="handleClickOption('Chad kerley')">
-            Chad kerley
-          </li>
-          <li @click="handleClickOption('Summer rose')">
-            Summer rose
-          </li>
+        <ul :class="{ active: focusSelect }">
+          <li @click="handleClickOption('Bruno Hoffman')">Bruno Hoffman</li>
+          <li @click="handleClickOption('Chad kerley')">Chad kerley</li>
+          <li @click="handleClickOption('Summer rose')">Summer rose</li>
         </ul>
       </div>
 
       <div class="component10">
         <button
-            class="vs-button vs-button--null vs-button--size-null vs-button--icon vs-button--danger vs-button--default">
+          class="vs-button vs-button--null vs-button--size-null vs-button--icon vs-button--danger vs-button--default"
+        >
           <div class="vs-button__content">
             <i class="bx bx-play"></i>
           </div>
         </button>
         <button
-            class="vs-button vs-button--null vs-button--size-null vs-button--icon vs-button--warn vs-button--default">
+          class="vs-button vs-button--null vs-button--size-null vs-button--icon vs-button--warn vs-button--default"
+        >
           <div class="vs-button__content">
             <i class="bx bx-git-pull-request"></i>
           </div>
         </button>
         <button
-            class="vs-button vs-button--null vs-button--size-null vs-button--icon vs-button--primary vs-button--default">
+          class="vs-button vs-button--null vs-button--size-null vs-button--icon vs-button--primary vs-button--default"
+        >
           <div class="vs-button__content">
             <i class="bx bxl-github"></i>
           </div>
         </button>
       </div>
 
-      <div :class="{'active': focusDrop}" class="component11">
+      <div :class="{ active: focusDrop }" class="component11">
         <header>
-          <input placeholder="Dropdown" @blur="handleBurDrop" @click="handleClickDrop" readonly type="text" name=""
-                 id="">
-          <i class='bx bx-chevron-down'></i>
+          <input
+            placeholder="Dropdown"
+            @blur="handleBurDrop"
+            @click="handleClickDrop"
+            readonly
+            type="text"
+            name=""
+            id=""
+          />
+          <i class="bx bx-chevron-down"></i>
         </header>
 
-        <div class="liquid">
+        <div class="liquid"></div>
 
-        </div>
-
-        <ul
-            :class="{'active': focusDrop}"
-        >
-          <li>
-            😉
-          </li>
-          <li>
-            😺
-          </li>
-          <li>
-            😽
-          </li>
-          <li>
-            😎
-          </li>
-          <li>
-            😂
-          </li>
+        <ul :class="{ active: focusDrop }">
+          <li>😉</li>
+          <li>😺</li>
+          <li>😽</li>
+          <li>😎</li>
+          <li>😂</li>
         </ul>
       </div>
 
       <div class="component12">
-        <div class="vs-input-parent vs-input-parent--state-null vs-component--primary"
-             placeholder="Search">
+        <div
+          class="vs-input-parent vs-input-parent--state-null vs-component--primary"
+          placeholder="Search"
+        >
           <div class="vs-input-content">
-            <input placeholder="" id="vs-input--424" class="vs-input">
+            <input placeholder="" id="vs-input--424" class="vs-input" />
             <label for="vs-input--424" class="vs-input__label">Search</label>
             <div class="vs-input__affects">
               <div class="vs-input__affects__1"></div>
@@ -289,7 +269,8 @@
           </div>
         </div>
         <button
-            class="vs-button vs-button--null vs-button--size-null vs-button--icon vs-button--primary vs-button--default">
+          class="vs-button vs-button--null vs-button--size-null vs-button--icon vs-button--primary vs-button--default"
+        >
           <div class="vs-button__content">
             <i class="bx bx-search"></i>
           </div>
@@ -298,16 +279,16 @@
 
       <div class="component13">
         <header>
-          <input placeholder="location" type="text" name="" id="location">
+          <input placeholder="location" type="text" name="" id="location" />
           <button>
-            <i class='bx bx-chevron-right'></i>
+            <i class="bx bx-chevron-right"></i>
           </button>
         </header>
         <ul>
           <li>
             <div class="vs-checkbox-content vs-component--primary">
               <div class="vs-checkbox-con">
-                <input type="checkbox" id="435" class="vs-checkbox">
+                <input type="checkbox" id="435" class="vs-checkbox" />
                 <div class="vs-checkbox-mask">
                   <i class="vs-icon-check">
                     <span>
@@ -323,7 +304,7 @@
           <li>
             <div class="vs-checkbox-content vs-component--primary">
               <div class="vs-checkbox-con">
-                <input type="checkbox" id="437" class="vs-checkbox">
+                <input type="checkbox" id="437" class="vs-checkbox" />
                 <div class="vs-checkbox-mask">
                   <i class="vs-icon-check">
                     <span>
@@ -339,7 +320,7 @@
           <li>
             <div class="vs-checkbox-content vs-component--primary">
               <div class="vs-checkbox-con">
-                <input type="checkbox" id="439" class="vs-checkbox">
+                <input type="checkbox" id="439" class="vs-checkbox" />
                 <div class="vs-checkbox-mask">
                   <i class="vs-icon-check">
                     <span>
@@ -355,7 +336,7 @@
           <li>
             <div class="vs-checkbox-content vs-component--primary">
               <div class="vs-checkbox-con">
-                <input type="checkbox" id="441" class="vs-checkbox">
+                <input type="checkbox" id="441" class="vs-checkbox" />
                 <div class="vs-checkbox-mask">
                   <i class="vs-icon-check">
                     <span>
@@ -370,7 +351,9 @@
           </li>
         </ul>
 
-        <button class="vs-button vs-button--null vs-button--size-null vs-button--block vs-button--primary vs-button--default">
+        <button
+          class="vs-button vs-button--null vs-button--size-null vs-button--block vs-button--primary vs-button--default"
+        >
           <div class="vs-button__content">Lets Go!</div>
         </button>
       </div>
@@ -379,7 +362,7 @@
 </template>
 
 <script setup>
-import {ref} from "vue"
+import { ref } from 'vue'
 
 const switch1 = ref(false)
 const switch2 = ref(true)
@@ -389,7 +372,6 @@ const selectValue = ref('')
 const input1 = ref('')
 const input2 = ref('')
 const input3 = ref('')
-
 
 function handleClickOption(val) {
   selectValue.value = val
@@ -402,7 +384,7 @@ function handleClick() {
 function handleBur() {
   setTimeout(() => {
     focusSelect.value = false
-  }, 100);
+  }, 100)
 }
 
 function handleClickDrop() {
@@ -412,7 +394,7 @@ function handleClickDrop() {
 function handleBurDrop() {
   setTimeout(() => {
     focusDrop.value = false
-  }, 100);
+  }, 100)
 }
 </script>
 <style scoped lang="stylus">
@@ -503,14 +485,13 @@ getVar(var)
   &.vuesax-logo
     border-radius 50px
     img
-      width 50%
+      width 70%
       z-index 100
   &.gitee-logo
-    width 180px
-    height 180px
-    border-radius 40px 40px 5px 40px
-    i
-      transform translate(5px)
+    border-radius 50px
+    img
+      width 70%
+      z-index 100
   i
     z-index 30
   &:after
@@ -1408,7 +1389,6 @@ getVar(var)
         .vuesax-logo
           transform scale(1)
           opacity 1
-
       &.gitee-hover
         .gitee-logo
           transform scale(1)

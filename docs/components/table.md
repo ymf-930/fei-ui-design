@@ -103,7 +103,7 @@ const data = ref([
 
 ## 斑马纹
 
-通过设置`stripe`来设置斑马纹显示
+通过设置 `stripe` 来设置斑马纹显示
 
 <template #example>
 
@@ -179,7 +179,7 @@ const data = ref([
 
 ## 边框
 
-通过设置`border`来设置斑马纹显示
+通过设置 `border` 来设置斑马纹显示
 
 <template #example>
 
@@ -255,7 +255,7 @@ const data = ref([
 
 ## 超出隐藏
 
-可以通过给`columns`设置属性`tooltip`来设置超出隐藏并悬停显示, 如仅有一张表格则可以设置`tooltip`皮肤`tooltip-theme`来开启优化样式
+可以通过给 `columns` 设置属性 `tooltip` 来设置超出隐藏并悬停显示, 如仅有一张表格则可以设置 `tooltip` 皮肤 `tooltip-theme` 来开启优化样式
 （注意：因表格单元格存在超出隐藏样式所以必须将tooltip标签插入至body元素，会成多余标签，如有多个表格缓存则会插入过多标签造成性能问题，所以是否开启需要根据需求确定）
 
 <template #example>
@@ -845,7 +845,7 @@ function getAllSelected() {
 
 ## 可展开
 
-通过给`columns` 数据设置一项，指定 `type: 'expand'`，即可开启扩展功能。
+通过给 `columns` 数据设置一项，指定 `type: 'expand'`，即可开启扩展功能。
 
 <template #example>
 
@@ -1037,7 +1037,7 @@ const data = ref([
 
 ## 行列合并
 
-可以设置属性`mergeMethod`制定合并行或者列的算法，方法参数为四个对象`row`，`column`，`rowIndex`，`columnIndex`，
+可以设置属性 `mergeMethod` 制定合并行或者列的算法，方法参数为四个对象 `row`，`column`，`rowIndex`，`columnIndex`，
 该方法返回一个包含两个元素的数组，第一个表示rowspan，第二个为colspan，用于合并单元格 合并表格最好是使用border模式
 
 <template #example>
