@@ -96,6 +96,7 @@
     "docs:check-links": "node build/check-docs-links.cjs",
     "docs:check-demo": "node build/check-docs-demo.cjs",
     "docs:check-style": "node build/check-docs-style.cjs",
+    "docs:check-tags": "node build/check-docs-tags.cjs",
     "docs:check-site": "node build/check-site-links.cjs",
     "docs:check-contrast": "node build/check-docs-contrast.cjs",
     "docs:check": "run-s docs:check-api docs:check-links docs:check-demo docs:check-style",

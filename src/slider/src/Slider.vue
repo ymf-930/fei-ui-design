@@ -93,7 +93,7 @@ import {
 } from 'vue'
 import { UPDATE_MODEL_EVENT, CHANGE_EVENT } from '../../_utils/constants'
 import { off, on } from '../../_utils/dom'
-import throwError from '../../_utils/log'
+import { throwError } from '../../_utils/log'
 import SliderButton from './Btn.vue'
 import SliderMarker from './Marker.vue'
 import { useMarks } from './useMarks'
@@ -120,7 +120,6 @@ const useWatch = (props, initData, minValue, maxValue, emit, formEmit) => {
 
   const setValues = () => {
     if (props.min > props.max) {
-      //@ts-ignore
       throwError('Slider', 'min should not be greater than max.')
       return
     }

@@ -89,7 +89,10 @@ jobs:
       - name: 安装依赖
         run: pnpm install --frozen-lockfile
 
-      - name: 文档一致性校验（API / 死链 / 示例 / 格式）
+      # check-tags 覆盖一个不会报错的失效方式：文档里的 <f-xxx> 若与真实导出名不一致，
+      # 构建照常成功、页面也不缺内容，只是组件静默不渲染（历史案例：<f-pagination>、
+      # 以及 timeline 导出名与组件 name 分裂导致按需自动引入拿到 undefined）。
+      - name: 文档一致性校验（API / 死链 / 示例 / 格式 / 标签）
         run: pnpm run docs:check
 
       - name: 构建文档站点

@@ -155,12 +155,21 @@ function setGlobal() {
 
 ## 国际化
 
-`locale` 用于为子树指定语言包，默认为 `zh-CN`。未设置时继承上层 `FConfigProvider` 的配置。
+> **⚠️ 当前版本尚未实现组件内置文案的国际化。**
+> `locale` 目前只会沿组件树向下传递语言标识，组件库**未内置任何语言包**，
+> 也没有组件读取该值。分页、空数据、日期选择器的月份与星期等内置文案
+> 仍是固定文案，切换 `locale` 不会有任何显示变化。
+
+`locale` 用于为子树指定语言包标识，该配置项为后续内置语言包预留，届时现有写法无需改动。
+
+> **注意（已知缺陷）**：`locale` 声明了默认值 `'zh-CN'`，因此嵌套的 `FConfigProvider`
+> **无法继承上层的 `locale`** —— 继承分支要求 `locale === undefined`，而默认值让它永远不为
+> `undefined`。对照 `theme-name` / `theme` 二者未声明默认值，嵌套继承是正常的。
 
 ```vue
 <template>
   <f-config-provider locale="en-US">
-    <f-pagination :total="100" />
+    <!-- 子树组件 -->
   </f-config-provider>
 </template>
 ```
@@ -175,7 +184,7 @@ function setGlobal() {
 | tag | 非抽象模式下包裹元素的标签名 | `string` | — | `'div'` |
 | theme | 主题变量对象，键名为小驼峰（如 `feiColorPrimary`） | `object` | — | — |
 | theme-name | 主题名称 | `'light' \| 'dark'` | `light` / `dark` | — |
-| locale | 语言包标识 | `string` | — | `'zh-CN'` |
+| locale | 语言包标识（当前无组件消费，且因默认值无法嵌套继承，见「国际化」） | `string` | — | `'zh-CN'` |
 | inline-theme-disabled | 禁用行内 CSS 变量注入（改为写入 `html`） | `boolean` | — | `false` |
 
 ## Slots
