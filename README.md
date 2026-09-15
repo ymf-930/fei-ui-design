@@ -86,15 +86,27 @@ export default defineConfig({
 
 详见[自定义主题](https://ymf-930.gitee.io/fei-ui-design/guide/custom-theme.html)。
 
-## 本地开发
+## 环境要求
 
-> 本项目统一使用 **pnpm**（见 `package.json` 的 `packageManager` 字段）。
-> 未安装时先执行 `corepack enable pnpm`，corepack 会按 `packageManager` 指定的版本自动准备。
+| 项目 | 要求 | 约束来源 |
+|---|---|---|
+| Node.js | **>= 20.0.0** | `package.json` 的 `engines.node`，CI 在 20 / 22 / 24 三档验证 |
+| pnpm | **>= 10.0.0 < 11.0.0** | `packageManager` 精确锁定为 `pnpm@10.34.5`；`engines.pnpm` 由 pnpm 在本地强制校验 |
+
+- 推荐 **Node.js 22**：`.nvmrc` 已固定，`nvm use` 即可切换。Node.js 20 已于 2026-04 EOL，仅用于验证声明的最低版本。
+- pnpm **不要手动 `npm i -g pnpm`**。执行 `corepack enable pnpm` 即可，corepack 会按 `packageManager` 自动准备 10.34.5。
+- 版本选型说明：pnpm 11 要求 Node >= 22.13，与「Node 20 起可用」的声明冲突；pnpm 12 是新重写版本。故锁定 **10.x**（官方要求 Node >= 18.12），它是最后一个同时支持 Node 20 的大版本。
+
+## 本地开发
 
 ```sh
 pnpm install         # 安装依赖
 pnpm dev             # 启动文档站点，本地调试组件
 ```
+
+> pnpm 10 起默认**不执行**依赖的安装脚本。本项目在 `package.json` 的 `pnpm.onlyBuiltDependencies`
+> 中放行了 `esbuild`（缺其 postinstall 会导致 vite 构建失败），并忽略 `es5-ext` 的提示脚本。
+> 新增依赖若需要安装脚本，请显式加入该白名单，不要整体放开。
 
 ## 构建与校验
 

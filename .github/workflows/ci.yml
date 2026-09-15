@@ -17,8 +17,12 @@ jobs:
 
     strategy:
       matrix:
-        # 组件库需保证 Node 18 / 20 下均可安装与构建
-        node-version: [18, 20]
+        # engines.node 声明 >=20，此处把「声明底线 + 仍受安全支持的 LTS 线」都验证一遍：
+        #   20 = 声明的最低版本（已于 2026-04 EOL，仅作兼容性验证）
+        #   22 / 24 = 仍在支持期内的 LTS
+        # 注：js-beautify → nopt / abbrev 声明 engines.node >=22.22.2。
+        # 若 Node 20 这一档出现异常，说明应把 engines.node 提升到 >=22.22.2。
+        node-version: [20, 22, 24]
 
     steps:
       - name: 检出代码
@@ -78,7 +82,8 @@ jobs:
       - name: 安装 Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          # 文档站与发布统一跟随 .nvmrc；兼容性下限由 verify 任务的 20 档覆盖
+          node-version-file: .nvmrc
           cache: pnpm
 
       - name: 安装依赖

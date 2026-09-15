@@ -64,12 +64,21 @@
     "registry": "https://registry.npmjs.org/"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=20.0.0",
+    "pnpm": ">=10.0.0 <11.0.0"
   },
-  "packageManager": "pnpm@9.15.4",
+  "packageManager": "pnpm@10.34.5",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ],
+    "ignoredBuiltDependencies": [
+      "es5-ext"
+    ]
+  },
   "scripts": {
     "dev": "vitepress dev docs",
-    "build:package": "pnpm run clean && pnpm run gen-version && pnpm run build:lib && pnpm run build:style",
+    "build:package": "run-s clean gen-version build:lib build:style",
     "build:site": "vitepress build docs",
     "preview": "vite preview",
     "clean": "rimraf dist es lib",
@@ -87,14 +96,14 @@
     "docs:check-links": "node build/check-docs-links.cjs",
     "docs:check-demo": "node build/check-docs-demo.cjs",
     "docs:check-style": "node build/check-docs-style.cjs",
-    "docs:check": "pnpm run docs:check-api && pnpm run docs:check-links && pnpm run docs:check-demo && pnpm run docs:check-style",
+    "docs:check": "run-s docs:check-api docs:check-links docs:check-demo docs:check-style",
     "verify:dist": "node build/verify-dist.cjs",
     "smoke": "node build/smoke-consumer.cjs",
-    "verify": "pnpm run verify:dist && pnpm run smoke",
+    "verify": "run-s verify:dist smoke",
     "release:patch": "npm version patch && git push --follow-tags",
     "release:minor": "npm version minor && git push --follow-tags",
     "release:major": "npm version major && git push --follow-tags",
-    "prepublishOnly": "pnpm run build:package && pnpm run verify:dist"
+    "prepublishOnly": "run-s build:package verify:dist"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
@@ -112,7 +121,6 @@
   "devDependencies": {
     "@esbuild-kit/cjs-loader": "^2.4.4",
     "@rushstack/eslint-patch": "^1.6.1",
-    "@tsconfig/node18": "^18.2.2",
     "@types/gulp": "^4.0.17",
     "@types/gulp-autoprefixer": "^0.0.37",
     "@types/gulp-postcss": "^8.0.6",

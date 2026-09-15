@@ -39,9 +39,6 @@ importers:
       '@rushstack/eslint-patch':
         specifier: ^1.6.1
         version: 1.16.1
-      '@tsconfig/node18':
-        specifier: ^18.2.2
-        version: 18.2.7
       '@types/gulp':
         specifier: ^4.0.17
         version: 4.0.18
@@ -1187,9 +1184,6 @@ packages:
 
   '@sinclair/typebox@0.27.12':
     resolution: {integrity: sha512-hhyNJ+nbR6ZR7pToHvllEFun9TL0sbL+tk/ON75lo+Xas054uez98qRbsuNt7MBCyZKK4+8Yli/OAGZhmfBZ/g==}
-
-  '@tsconfig/node18@18.2.7':
-    resolution: {integrity: sha512-UyenTORreCUh8MKh2qbLGGHTRrxjBbSwvX0ZoWs6Jx1jrNS62PXEA3+VaLvmb0YDQrgGU3v3h7zB9Xs/BN1ozg==}
 
   '@types/argparse@1.0.38':
     resolution: {integrity: sha512-ebDJ9b0e702Yr7pWgB0jzm+CX4Srzz8RcXtLJDJB+BSccqMa36uyH/zUsSYao5+BD1ytv3k3rPYCq4mAE1hsXA==}
@@ -5800,8 +5794,6 @@ snapshots:
       - '@types/node'
 
   '@sinclair/typebox@0.27.12': {}
-
-  '@tsconfig/node18@18.2.7': {}
 
   '@types/argparse@1.0.38': {}
 
