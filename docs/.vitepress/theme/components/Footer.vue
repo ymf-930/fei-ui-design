@@ -21,7 +21,7 @@
     <!--End mc_embed_signup-->
     <div class="footer__uls">
       <ul
-        v-for="(link, index) in links"
+        v-for="(link, index) in navLinks"
         :key="index"
         >
         <li class="title">
@@ -40,20 +40,34 @@
 
     <div class="copy">
       <span class="span-copy">
-        Copyright © 2023 FEI-UI-DESIGN
+        Copyright © 2023-2026 FEI-UI-DESIGN
       </span>
       <span class="span-lusaxweb">
         <span>
-          Created By
+          Theme based on
         </span>
-        <a target="_blank" href="http://lusaxweb.net">后来@</a>
+        <a target="_blank" href="https://github.com/gumingWu/vitepress-fun">vitepress-fun</a>
       </span>
     </div>
   </footer>
 </template>
 <script>
+import { withBase } from 'vitepress'
+
 export default {
   props: ['data'],
+  computed: {
+    // 站内链接统一补上 base，外部链接保持原样
+    navLinks() {
+      return this.links.map(group => ({
+        ...group,
+        items: group.items.map(item => ({
+          ...item,
+          link: /^https?:/.test(item.link) ? item.link : withBase(item.link)
+        }))
+      }))
+    }
+  },
   data() {
     return {
       links:[

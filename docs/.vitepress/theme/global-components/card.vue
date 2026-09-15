@@ -48,11 +48,12 @@ vsThemeVal.value = { ...vsTheme }
 getVar(var)
     unquote("var(--vs-"+var+")")
 
-h5
-  + .card
-      .text
-        h2
-          padding-top 30px !important
+// 组件文档的导语（frontmatter 之后、第一个 <card> 之前的一段话）
+// 历史上用 `#####` 写成，现已改为普通段落，以保证标题层级为 H1 -> H2；
+// 这里同时保留 h5 选择器以兼容尚未迁移的页面。
+h5 + .card .text h2,
+p + .card .text h2
+  padding-top 30px !important
 .card
   // background rgb(255,255,255)
   border-radius 20px

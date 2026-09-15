@@ -2,10 +2,10 @@
   <header class="navbar fixed">
     <SidebarButton @toggle-sidebar="$emit('toggle-sidebar')"/>
 
-    <a href="/" class="home-link">
+    <a :href="homeLink" class="home-link">
       <div flex="cross:center">
-        <img class="logo-img not-darken" src="/logos/f-ui-logo.png" alt="">
-        <img class="logo-img has-darken" src="/logos/f-ui-logo-white.png" alt="">
+        <img class="logo-img not-darken" src="/logos/f-ui-logo.png" alt="FEI-UI-DESIGN">
+        <img class="logo-img has-darken" src="/logos/f-ui-logo-white.png" alt="FEI-UI-DESIGN">
         <h1 class="logo-title pl-10 pr-16">FEI-UI-DESIGN</h1>
         <f-tag type="success" palin>开发中</f-tag>
       </div>
@@ -35,13 +35,15 @@
 </template>
 
 <script setup>
-import {onMounted, ref, getCurrentInstance} from "vue"
-import {useData} from "vitepress"
+import {onMounted, ref, computed, getCurrentInstance} from "vue"
+import {useData, withBase} from "vitepress"
 import SidebarButton from '../components/SidebarButton.vue'
 import NavLinks from './NavLinks.vue'
 import SearchBox from './SearchBox.vue'
 
 const {frontmatter, theme} = useData()
+// 原生 <a href>，VitePress 不会自动补 base，需要手动处理
+const homeLink = computed(() => withBase('/'))
 const linkRef = ref(null)
 const linksWrapMaxWidth = ref(null)
 const showSuggestions = ref(false)

@@ -68,7 +68,7 @@
 </template>
 
 <script setup>
-import { useData } from 'vitepress'
+import { useData, withBase } from 'vitepress'
 import { computed, ref } from 'vue'
 import NavLink from './NavLink.vue'
 import Footer from './Footer.vue'
@@ -92,7 +92,8 @@ const data = computed(() => {
 
 const actionLink = computed(() => {
   return {
-    link: data.value.actionLink,
+    // frontmatter 中的路径不带 base，这里补上，保证开发/生产环境都可用
+    link: withBase(data.value.actionLink),
     text: data.value.actionText,
   }
 })

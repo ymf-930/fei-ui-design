@@ -1,6 +1,7 @@
 import "./custom.styl"
 import 'boxicons/css/boxicons.min.css'
 import Layout from "./layouts/Layout.vue"
+import NotFound from "./layouts/404.vue"
 import DefaultTheme from "vitepress/theme"
 import { ElementPlusContainer } from "@vitepress-demo-preview/component";
 import FeiUI from "fei-ui-design";
@@ -13,7 +14,7 @@ import '../../../src/_styles/index.css'
 
 export default {
   // ...DefaultTheme,
-  NotFound: () => "404", // <- this is a Vue 3 functional component
+  NotFound, // 使用 layouts/404.vue（原先返回字符串 "404"，整页只剩两字）
   extends: DefaultTheme,
   Layout: Layout,
   enhanceApp({ app, router, siteData }) {
