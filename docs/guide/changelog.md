@@ -2,11 +2,16 @@
 title: 变更日志
 ---
 
+本页只保留重构前（2023 年）的历史发布记录。**当前版本的权威变更记录见仓库根目录的 `CHANGELOG.md`**，
+其格式遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)，版本号遵循[语义化版本](https://semver.org/lang/zh-CN/)。
 
+> 说明：下面 0.0.1 ~ 0.0.4 是组件库重构前的旧版本号；重构后版本号重新从 `0.0.2` 起算
+> （见根目录 `CHANGELOG.md` 与 `package.json`），两者不是同一条版本线，请勿混用。
 
-# CHANGELOG
+## 历史记录（重构前）
+
 <div class="change-log">
-  <h2 id="0.0.4" class="version">0.0.4</h2>
+  <h2 id="v0-0-4" class="version">0.0.4</h2>
   <div class="date">2023-10-08</div>
   <div class="type">Feats</div>
   <p class="log-item"><i>🍀</i>新增全局配置组件</p>
@@ -28,23 +33,23 @@ title: 变更日志
   <p class="log-item"><i>📖</i>新增组件迁移进度统计文档</p>
 </div>
 <div class="change-log">
-  <h2 id="0.0.3" class="version">0.0.3</h2>
-  <div class="date">2023-8-23</div>
+  <h2 id="v0-0-3" class="version">0.0.3</h2>
+  <div class="date">2023-08-23</div>
   <div class="type">Feats</div>
   <p class="log-item"><i>📖</i>完成基础文档搭建</p>
   <p class="log-item"><i>🍀</i>完成组件文档编写，完成button、icon、tooltip、collapse组件以及文档</p>
 </div>
 <div class="change-log">
-  <h2 id="0.0.3" class="version">0.0.2</h2>
-  <div class="date">2023-8-22</div>
+  <h2 id="v0-0-2" class="version">0.0.2</h2>
+  <div class="date">2023-08-22</div>
   <div class="type">Feats</div>
-  <p class="log-item"><i>📖</i>完成组建文档初始化</p>
+  <p class="log-item"><i>📖</i>完成组件文档初始化</p>
   <p class="log-item"><i>🍀</i>完成编译环境</p>
   <p class="log-item"><i>🍀</i>新增按钮组件</p>
 </div>
 <div class="change-log">
-  <h2 id="0.0.1" class="version">0.0.1</h2>
-  <div class="date">2023-8-21</div>
+  <h2 id="v0-0-1" class="version">0.0.1</h2>
+  <div class="date">2023-08-21</div>
   <div class="type">Feats</div>
   <p class="log-item">初始化工程</p>
   <p class="log-item">初始化文档</p>

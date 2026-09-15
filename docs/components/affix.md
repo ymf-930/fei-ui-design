@@ -7,6 +7,8 @@ import Basic from './demo/Affix/Basic.vue'
 import Position from './demo/Affix/Position.vue'
 </script>
 
+固钉用于把元素固定在窗口或指定容器的可视区域内，滚动时保持可见，常用于侧边导航、操作工具栏与返回顶部入口。
+
 <card>
 
 ## 基础用法
@@ -16,7 +18,7 @@ import Position from './demo/Affix/Position.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -42,7 +44,7 @@ import Position from './demo/Affix/Position.vue'
 <template #example>
 
   <Position/>
-  
+
 </template>
 
 <template #template>
@@ -63,6 +65,7 @@ import Position from './demo/Affix/Position.vue'
 
 | 参数     | 说明                 | 类型   | 可选值      | 默认值 |
 | -------- | -------------------- | ------ | ----------- | ------ |
+| target   | 目标容器选择器，指定滚动监听的元素，默认监听 window | String | — | ''     |
 | offset   | 距离窗口位置触发     | Number | —           | 0      |
 | position | 可设置距离顶部或底部 | String | top、bottom | top    |
 | z-index  | 层级                 | Number | —           | 10     |
@@ -74,7 +77,7 @@ import Position from './demo/Affix/Position.vue'
 | change | 在固定状态发生改变时触发                   | true/false |
 | scroll | 滚动响应事件 ,返回对象包含scrollTop, fixed | Object     |
 
-## Slot
+## Slots
 
 | 名称    | 说明         |
 | ------- | ------------ |

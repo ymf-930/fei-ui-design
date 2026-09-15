@@ -181,7 +181,7 @@ function allowDrag(draggingNode) {
   return draggingNode.nodeType === 'attribute'
 }
 
-function renderContent1({ root, node, data }) {
+function renderContent1({ root: _root, node: _node, data }) {
   const iconMap = {
     root: '',
     hierarchy: 'cluster',
@@ -243,19 +243,19 @@ function renderContent1({ root, node, data }) {
   return h('span', { style: { width: '100%', fontSize: '12px' }, flex: 'main:justify' }, inline)
 }
 
-function handleDragStart(node, ev) {
+function handleDragStart(node, _ev) {
   console.log('drag start', node)
 }
-function handleDragEnter(draggingNode, dropNode, ev) {
+function handleDragEnter(draggingNode, dropNode, _ev) {
   console.log('tree drag enter: ', dropNode.title)
 }
-function handleDragLeave(draggingNode, dropNode, ev) {
+function handleDragLeave(draggingNode, dropNode, _ev) {
   console.log('tree drag leave: ', dropNode.title)
 }
-function handleDragEnd(draggingNode, dropNode, dropType, ev) {
+function handleDragEnd(draggingNode, dropNode, dropType, _ev) {
   console.log('tree drag end: ', dropNode && dropNode.title, dropType)
 }
-function handleDrop(draggingNode, dropNode, dropType, ev) {
+function handleDrop(draggingNode, dropNode, dropType, _ev) {
   console.log('tree drop: ', dropNode.title, dropType)
 }
 </script>

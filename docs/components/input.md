@@ -14,7 +14,7 @@ import Text from './demo/Input/Text.vue'
 import Count from './demo/Input/Count.vue'
 </script>
 
-##### 基本表单组件，支持 input 和 textarea
+基本表单组件，支持 input 和 textarea
 
 <card>
 
@@ -23,7 +23,7 @@ import Count from './demo/Input/Count.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -70,12 +70,12 @@ import Count from './demo/Input/Count.vue'
 
 ## 图标和清空
 
-设置 `clearable` 可以开启清空按钮,icon设置icon图标名称
+设置 `clearable` 可以开启清空按钮，icon设置icon图标名称
 
 <template #example>
 
   <Icon/>
-  
+
 </template>
 
 <template #template>
@@ -128,7 +128,7 @@ import Count from './demo/Input/Count.vue'
 <template #example>
 
   <Disabled/>
-  
+
 </template>
 
 <template #template>
@@ -181,7 +181,7 @@ import Count from './demo/Input/Count.vue'
 <template #example>
 
   <Group/>
-  
+
 </template>
 
 <template #template>
@@ -276,7 +276,7 @@ import Count from './demo/Input/Count.vue'
 <template #example>
 
   <Search/>
-  
+
 </template>
 
 <template #template>
@@ -326,7 +326,7 @@ import Count from './demo/Input/Count.vue'
 <template #example>
 
   <Password/>
-  
+
 </template>
 
 <template #template>
@@ -376,7 +376,7 @@ import Count from './demo/Input/Count.vue'
 <template #example>
 
   <Size/>
-  
+
 </template>
 
 <template #template>
@@ -413,7 +413,7 @@ import Count from './demo/Input/Count.vue'
 <template #example>
 
   <Text/>
-  
+
 </template>
 
 <template #template>
@@ -461,7 +461,7 @@ import Count from './demo/Input/Count.vue'
 <template #example>
 
   <Count/>
-  
+
 </template>
 
 <template #template>
@@ -501,19 +501,21 @@ import Count from './demo/Input/Count.vue'
 | 参数            | 说明                                                                                  | 类型                        | 可选值                                                  | 默认值  |
 | --------------- | ------------------------------------------------------------------------------------- | --------------------------- | ------------------------------------------------------- | ------- |
 | type            | 输入框类型                                                                            | string                      | text、password、textarea、url、email、date、number、tel | —       |
-| value           | 绑定的值，可使用 v-model 双向绑定                                                     | String / Number             | —                                                       | —       |
+| model-value     | 绑定的值，可使用 v-model 双向绑定                                                     | String / Number / Boolean   | —                                                       | —       |
 | size            | 输入框尺寸                                                                            | large、small、default、mini | —                                                       | default |
 | placeholder     | 占位文本                                                                              | String                      | —                                                       | —       |
+| name            | 原生 name 属性，同时作为表单字段名                                                    | String                      | —                                                       | —       |
 | clearable       | 是否显示清空按钮                                                                      | Boolean                     | —                                                       | false   |
 | disabled        | 禁用状态                                                                              | Boolean                     | —                                                       | false   |
 | readonly        | 只读模式                                                                              | Boolean                     | —                                                       | false   |
 | maxlength       | 最大输入长度                                                                          | Number                      | —                                                       | —       |
 | icon            | 输入框尾部图标，仅在 text 类型下有效                                                  | String                      | —                                                       | —       |
+| show-password-toggle | 是否展示密码可见性切换按钮（type 为 password 时生效）                           | Boolean                     | —                                                       | false   |
 | prefix          | 输入框头部图标                                                                        | String                      | —                                                       | —       |
 | suffix          | 输入框尾部图标                                                                        | String                      | —                                                       | —       |
 | search          | 是否显示为搜索型输入框                                                                | Boolean                     | —                                                       | false   |
 | rows            | 文本域默认行数，仅在 textarea 类型下有效                                              | Number                      | —                                                       | 2       |
-| autosize        | 自适应内容高度，仅在 textarea 类型下有效，可传入对象，如 \{ minRows: 2, maxRows: 6 \} | Boolean/Object              | —                                                       | false   |
+| autosize        | 自适应内容高度，仅在 textarea 类型下有效，可传入对象，如 \{ minRows: 2, maxRows: 6 \} | Boolean/Object              | —                                                       | \{\}     |
 | number          | 将用户的输入转换为 Number 类型                                                        | Boolean                     | —                                                       | false   |
 | autofocus       | 自动获取焦点                                                                          | Boolean                     | —                                                       | false   |
 | autocomplete    | 原生的自动完成功能，可选值为 off 和 on                                                | String                      | —                                                       | off     |
@@ -523,13 +525,14 @@ import Count from './demo/Input/Count.vue'
 | show-word-count | 显示文本字数统计，仅在 textarea 下生效                                                | Boolean                     | —                                                       | false   |
 | validateEvent   | 是否触发校验，主要为form表单使用，选择框等也使用到input的内部设置为false              | Boolean                     | —                                                       | true    |
 
-## Input events
+## Input Events
 
 | 方法名   | 说明                                           | 返回值 |
 | -------- | ---------------------------------------------- | ------ |
 | enter    | 按下回车键时触发                               | 无     |
 | click    | 设置 icon 属性后，点击图标时触发               | 无     |
 | change   | 数据改变时触发                                 | event  |
+| input    | 输入过程中实时触发                             | value  |
 | focus    | 输入框聚焦时触发                               | 无     |
 | blur     | 输入框失去焦点时触发                           | 无     |
 | keyup    | 原生的 keyup 事件                              | event  |
@@ -538,7 +541,7 @@ import Count from './demo/Input/Count.vue'
 | search   | 开启 search 时可用，点击搜索或按下回车键时触发 | value  |
 | clear    | 开启 clearable 时可用，点击清空按钮时触发      | 无     |
 
-## Input slot
+## Input Slots
 
 | 名称    | 说明                           |
 | ------- | ------------------------------ |
@@ -547,7 +550,7 @@ import Count from './demo/Input/Count.vue'
 | prefix  | 输入框头部图标                 |
 | suffix  | 输入框尾部图标                 |
 
-## Input methods
+## Input Methods
 
 | 方法名 | 说明           | 返回值 |
 | ------ | -------------- | ------ |

@@ -8,18 +8,18 @@ import Always from './demo/Scrollbar/Always.vue'
 import Custom from './demo/Scrollbar/Custom.vue'
 </script>
 
-##### 由于默认浏览器滚动条极为丑陋切不同浏览器之间样式不统一，故封装一个滚动组件用于实现滚动
+由于默认浏览器滚动条极为丑陋切不同浏览器之间样式不统一，故封装一个滚动组件用于实现滚动
 
 <card>
 
 ## 基础用法
 
-使用`f-scrollbar`进行包裹，默认`slot`为内容显示区域,如当前示例所包含的滚动结构如下:
+使用 `f-scrollbar` 进行包裹，默认 `slot` 为内容显示区域，如当前示例所包含的滚动结构如下：
 
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -49,7 +49,7 @@ import Custom from './demo/Scrollbar/Custom.vue'
 <template #example>
 
   <Always/>
-  
+
 </template>
 
 <template #template>
@@ -77,7 +77,7 @@ import Custom from './demo/Scrollbar/Custom.vue'
 <template #example>
 
   <Custom/>
-  
+
 </template>
 
 <template #template>
@@ -106,13 +106,13 @@ import Custom from './demo/Scrollbar/Custom.vue'
 
 - f-scrollbar的父层要有固定高度
 - f-scrollbar的高度要设成100%
-- 如果出现横滚动条，请添加css（.fei-scrollbar\_\_wrap{overflow-x:hidden;}）
+- 如果出现横滚动条，请添加css(.fei-scrollbar\_\_wrap{overflow-x:hidden;})
 
 ## Props
 
 | 参数         | 说明                                                    | 类型    | 可选值 | 默认值 |
 | ------------ | ------------------------------------------------------- | ------- | ------ | ------ |
-| native       | 是否采用原生滚动 (隐藏原生滚动条)                       | Boolean | true   | false  |
+| native       | 是否采用原生滚动 （隐藏原生滚动条）                       | Boolean | true   | false  |
 | always       | 是否一直显示，而非悬停显示                              | Boolean | true   | false  |
 | wrapStyle    | 内联方式 自定义wrap容器的样式                           | Object  | -      | {}     |
 | wrapClass    | 类名方式 自定义wrap容器的样式                           | Object  | -      | {}     |

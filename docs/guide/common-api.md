@@ -4,17 +4,15 @@ title: 帮助函数
 
 <card>
 
-# 帮助函数
-
 部分内部的帮助函数已经暴露给外部，可供外部直接导入使用。
 
 ## 导入
 
 无论是全量引入还是按需引入，扩展工具包只能通过手动引入的方式进行注册。
 
-这里只介绍部分包中的函数.
+这里只介绍部分包中的函数。
 
-(推荐开启一个中间文件用于包裹各种导入函数，这样方便管理和区分)
+（推荐开启一个中间文件用于包裹各种导入函数，这样方便管理和区分）
 
 ```ts
 // util-helper.js 这里是你自己定义的
@@ -189,7 +187,7 @@ export function uuid(hasHyphen) {
 
 ## Utils.resize
 
-resize 借助插件实现容器大小改变的响应实现,实际开发中也偶尔能用到
+resize 借助插件实现容器大小改变的响应实现，实际开发中也偶尔能用到
 
 ```ts
 import ResizeObserver from 'resize-observer-polyfill'
@@ -212,7 +210,7 @@ export const removeResizeListener = function (element: HTMLElement, fn) {
 
 ## Utils.color
 
-依赖colorjs包,封装部分用法函数
+依赖colorjs包，封装部分用法函数
 
 ```ts
 /**
@@ -405,7 +403,7 @@ export const stop = e => e.stopPropagation()
 
 ## Utils.log
 
-log 控制台打印函数,用于各种颜色的打印
+log 控制台打印函数，用于各种颜色的打印
 
 <preview path="./demo/Console/Demo.vue"></preview>
 
@@ -640,5 +638,3 @@ export const coerceTruthyValueToArray = arr => {
 ```
 
 </card>
-
-

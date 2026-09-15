@@ -10,7 +10,7 @@ import Vertical from './demo/Steps/Vertical.vue'
 import Status from './demo/Steps/Status.vue'
 </script>
 
-##### 提示某个任务的步骤
+提示某个任务的步骤
 
 <card>
 
@@ -21,7 +21,7 @@ import Status from './demo/Steps/Status.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -73,7 +73,7 @@ function next() {
 <template #example>
 
   <Small/>
-  
+
 </template>
 
 <template #template>
@@ -125,7 +125,7 @@ function next() {
 <template #example>
 
   <Icon/>
-  
+
 </template>
 
 <template #template>
@@ -176,7 +176,7 @@ function next() {
 <template #example>
 
   <Vertical/>
-  
+
 </template>
 
 <template #template>
@@ -228,7 +228,7 @@ function next() {
 <template #example>
 
   <Status/>
-  
+
 </template>
 
 <template #template>
@@ -265,10 +265,10 @@ function next() {
 | ------- | -------------- | ------ | ------------------------------------- | ------- |
 | title   | 标题           | String | —                                     | —       |
 | status  | 当前步骤的状态 | String | wait、process、finish、error、success | process |
-| content | 详细内容(可选) | String | —                                     | —       |
+| content | 详细内容（可选） | String | —                                     | —       |
 | icon    | 自定义图标     | String | —                                     | —       |
 
-## Step Slot
+## Step Slots
 
 | 事件名  | 说明       |
 | ------- | ---------- |

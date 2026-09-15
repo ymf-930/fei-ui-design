@@ -10,7 +10,7 @@ import Format from './demo/TimePicker/Format.vue'
 import Size from './demo/TimePicker/Size.vue'
 </script>
 
-##### 可以选择时间的picker
+可以选择时间的picker
 
 <card>
 
@@ -23,7 +23,7 @@ import Size from './demo/TimePicker/Size.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -107,7 +107,7 @@ function disabledSeconds(hour, minute) {
 <template #example>
 
   <Range/>
-  
+
 </template>
 
 <template #template>
@@ -165,7 +165,7 @@ const value2 = ref([new Date(2016, 9, 10, 8, 40), new Date(2016, 9, 10, 9, 40)])
 <template #example>
 
   <Disabled/>
-  
+
 </template>
 
 <template #template>
@@ -243,7 +243,7 @@ function disabledSeconds(hour, minute) {
 <template #example>
 
   <Format/>
-  
+
 </template>
 
 <template #template>
@@ -302,7 +302,7 @@ const value2 = ref([new Date(2023, 4, 270, 18, 40), new Date(2023, 4, 30, 11, 40
 <template #example>
 
   <Size/>
-  
+
 </template>
 
 <template #template>
@@ -346,7 +346,7 @@ const value1 = ref(new Date(2016, 9, 10, 18, 40))
 
 | 参数              | 说明                             | 类型                                   | 可选值                                                | 默认值            |
 | ----------------- | -------------------------------- | -------------------------------------- | ----------------------------------------------------- | ----------------- |
-| value / v-model   | 绑定值                           | date                                   | —                                                     | —                 |
+| value / v-model   | 绑定值；推荐使用 `model-value`，配合 `v-model` 使用 | date                                   | —                                                     | —                 |
 | readonly          | 完全只读                         | boolean                                | —                                                     | false             |
 | disabled          | 禁用                             | boolean                                | —                                                     | false             |
 | editable          | 文本框可输入                     | boolean                                | —                                                     | true              |
@@ -357,25 +357,38 @@ const value1 = ref(new Date(2016, 9, 10, 18, 40))
 | end-placeholder   | 范围选择时开始日期的占位内容     | string                                 | —                                                     | —                 |
 | is-range          | 是否为时间范围选择               | boolean                                | —                                                     | false             |
 | arrow-control     | 是否使用箭头进行时间选择         | boolean                                | —                                                     | false             |
-| align             | 对齐方式                         | string                                 | left / center / right                                 | left              |
 | popper-class      | TimePicker 下拉框的类名          | string                                 | —                                                     | —                 |
 | range-separator   | 选择范围时的分隔符               | string                                 | -                                                     | '-'               |
 | format            | 显示在输入框中的格式             | string                                 | -                                                     | HH:mm:ss          |
 | default-value     | 可选，选择器打开时默认显示的时间 | Date(TimePicker) / string(TimeSelect)  | 可被`new Date()`解析(TimePicker) / 可选值(TimeSelect) | —                 |
 | name              | 原生属性                         | string                                 | —                                                     | —                 |
-| prefix-icon       | 自定义头部图标的类名             | string                                 | —                                                     | time-circle       |
+| prefix-icon       | 自定义头部图标的类名             | string                                 | —                                                     | —                 |
 | clear-icon        | 自定义清空图标的类名             | string                                 | —                                                     | close-circle-fill |
-| disabledHours     | 禁止选择部分小时选项             | function                               | —                                                     | -                 |
-| disabledMinutes   | 禁止选择部分分钟选项             | function(selectedHour)                 | —                                                     | -                 |
-| disabledSeconds   | 禁止选择部分秒选项               | function(selectedHour, selectedMinute) | —                                                     | -                 |
+| disabled-hours    | 禁止选择部分小时选项             | function                               | —                                                     | -                 |
+| disabled-minutes  | 禁止选择部分分钟选项             | function(selectedHour)                 | —                                                     | -                 |
+| disabled-seconds  | 禁止选择部分秒选项               | function(selectedHour, selectedMinute) | —                                                     | -                 |
+| model-value       | 绑定值（推荐写法，支持 `v-model`） | Date / array / string                | —                                                     | —                 |
+| type              | 选择器类型，由 `is-range` 派生(`isRange=false` → `time`，`isRange=true` → `timerange`) | string                                 | time / timerange                                      | time              |
+| popper-options    | 自定义 popper 的配置项           | object                                 | —                                                     | {}                |
+| default-time      | 范围选择时选中的当日内具体时刻   | Date / array                           | —                                                     | —                 |
+| disabled-date     | 禁用部分日期，参数为当前日期，返回 Boolean | function                      | —                                                     | —                 |
+| cell-class-name   | 自定义单元格 className 的函数    | function                               | 参数为当前日期                                        | —                 |
+| shortcuts         | 设置快捷选项，需要传入数组对象   | array                                  | —                                                     | []                |
+| validate-event    | 输入时是否触发表单的校验         | boolean                                | —                                                     | true              |
+| unlink-panels     | 在范围选择器里取消两个时间面板之间的联动 | boolean                        | —                                                     | false             |
 
 ## Events
 
-| 事件名 | 说明                    | 参数       |
-| ------ | ----------------------- | ---------- |
-| change | 用户确认选定的值时触发  | 组件绑定值 |
-| blur   | 当 input 失去焦点时触发 | 组件实例   |
-| focus  | 当 input 获得焦点时触发 | 组件实例   |
+| 事件名            | 说明                     | 参数       |
+| ----------------- | ------------------------ | ---------- |
+| change            | 用户确认选定的值时触发   | 组件绑定值 |
+| blur              | 当 input 失去焦点时触发  | 组件实例   |
+| focus             | 当 input 获得焦点时触发  | 组件实例   |
+| update:modelValue | 绑定值变化时触发         | 新的绑定值 |
+| pick              | 面板中选中某项时触发     | 选中项     |
+| select-range      | 范围选择时选中范围变化   | 选中范围   |
+| set-option        | 面板初始化时设置配置项   | 配置项名称、配置值 |
+| set-picker-option | 面板初始化时设置配置项   | 配置项名称、配置值 |
 
 ## Methods
 

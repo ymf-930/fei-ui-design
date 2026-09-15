@@ -10,7 +10,7 @@ import All from './demo/Checkbox/All.vue'
 import Limit from './demo/Checkbox/Limit.vue'
 </script>
 
-##### 基本组件-多选框。主要用于一组可选项多项选择，或者单独用于标记切换某种状态。
+基本组件-多选框。主要用于一组可选项多项选择，或者单独用于标记切换某种状态。
 
 <card>
 
@@ -19,7 +19,7 @@ import Limit from './demo/Checkbox/Limit.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -56,7 +56,7 @@ import Limit from './demo/Checkbox/Limit.vue'
 <template #example>
 
   <Group/>
-  
+
 </template>
 
 <template #template>
@@ -112,7 +112,7 @@ import Limit from './demo/Checkbox/Limit.vue'
 <template #example>
 
   <Disabled/>
-  
+
 </template>
 
 <template #template>
@@ -153,7 +153,7 @@ import Limit from './demo/Checkbox/Limit.vue'
 <template #example>
 
   <All/>
-  
+
 </template>
 
 <template #template>
@@ -222,7 +222,7 @@ function checkAllGroupChange(value) {
 <template #example>
 
   <Limit/>
-  
+
 </template>
 
 <template #template>
@@ -256,33 +256,37 @@ function checkAllGroupChange(value) {
 
 </card>
 
-## Checkbox props
+## Checkbox Props
 
 | 参数          | 说明                                                            | 类型                  | 可选值 | 默认值 |
 | ------------- | --------------------------------------------------------------- | --------------------- | ------ | ------ |
 | modelValue    | 只在单独使用时有效。可以使用 v-model 双向绑定数据               | Boolean               | —      | false  |
 | label         | 组合使用时有效。指定当前选项的 value 值，组合会自动判断是否选中 | String/Number/Boolean | —      | —      |
 | disabled      | 是否禁用当前项                                                  | Boolean               | —      | false  |
+| checked       | 原生 checked 状态，一般无需手动设置                             | Boolean               | —      | false  |
+| name          | 原生 name 属性                                                  | String                | —      | —      |
+| id            | 原生 id 属性                                                    | String                | —      | —      |
+| controls      | 关联控件的 id（配合 aria-controls 使用）                        | String                | —      | —      |
 | true-label    | 选中值                                                          | String、Number        | —      | —      |
 | false-label   | 没选中的值                                                      | String、Number        | —      | —      |
 | indeterminate | 设置 indeterminate 状态，只负责样式控制                         | Boolean               | —      | false  |
 
-## Checkbox events
+## Checkbox Events
 
 | 事件名 | 说明                                                                           | 返回值     |
 | ------ | ------------------------------------------------------------------------------ | ---------- |
 | change | 只在单独使用时有效。在选项状态发生改变时触发，通过修改外部的数据改变时不会触发 | true/false |
 
-## CheckboxGroup props
+## CheckboxGroup Props
 
-| 参数     | 说明                                              | 类型           | 可选值 | 默认值 |
-| -------- | ------------------------------------------------- | -------------- | ------ | ------ |
-| value    | 指定选中项目的集合，可以使用 v-model 双向绑定数据 | String/ Number | —      | ''     |
-| disabled | 是否禁用所有选项                                  | Boolean        | —      | false  |
-| min      | 最小数量                                          | Number         | —      | —      |
-| max      | 最大数量                                          | Number         | —      | —      |
+| 参数      | 说明                                              | 类型            | 可选值 | 默认值 |
+| --------- | ------------------------------------------------- | --------------- | ------ | ------ |
+| model-value / value | 指定选中项目的集合，可以使用 v-model 双向绑定数据 | Array / Object / Boolean | —      | —      |
+| disabled  | 是否禁用所有选项                                  | Boolean         | —      | false  |
+| min       | 最小数量                                          | Number          | —      | —      |
+| max       | 最大数量                                          | Number          | —      | —      |
 
-## CheckboxGroup events
+## CheckboxGroup Events
 
 | 事件名 | 说明                                                                         | 返回值 |
 | ------ | ---------------------------------------------------------------------------- | ------ |

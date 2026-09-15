@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, toRefs } from 'vue'
+import { reactive } from 'vue'
 const data = reactive({
   dynamicTags: ['标签一', '标签二', '标签三'],
   count: 0

@@ -9,7 +9,7 @@ import Color from './demo/Anchor/Color.vue'
 import Target from './demo/Anchor/Target.vue'
 </script>
 
-##### 锚点主要应用于滚动导航
+锚点主要应用于滚动导航
 
 <card>
 
@@ -20,7 +20,7 @@ import Target from './demo/Anchor/Target.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -49,7 +49,6 @@ import Target from './demo/Anchor/Target.vue'
 
 <card>
 
-
 ## 自定义图标
 
 可以通过设置 `icon` 来设置小圆点为自定义图标，推荐使用实心图标以达到最好的显示效果
@@ -57,7 +56,7 @@ import Target from './demo/Anchor/Target.vue'
 <template #example>
 
   <Icon/>
-  
+
 </template>
 
 <template #template>
@@ -104,7 +103,7 @@ import Target from './demo/Anchor/Target.vue'
 <template #example>
 
   <Color/>
-  
+
 </template>
 
 <template #template>
@@ -151,7 +150,7 @@ import Target from './demo/Anchor/Target.vue'
 <template #example>
 
   <Target/>
-  
+
 </template>
 
 <template #template>
@@ -198,7 +197,6 @@ import Target from './demo/Anchor/Target.vue'
 
 </template>
 
-
 <template #script>
 
 ```html
@@ -215,7 +213,6 @@ import Target from './demo/Anchor/Target.vue'
 </template>
 
 </card>
-
 
 ## Props
 

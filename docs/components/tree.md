@@ -16,7 +16,7 @@ import Valid from './demo/Tree/Valid.vue'
 import Big from './demo/Tree/Big.vue'
 </script>
 
-# 树结构 Tree
+树结构用于展示带层级关系的数据，支持勾选、异步加载、筛选、拖拽排序与自定义渲染；配合 TreeSelect 可当作下拉选择器使用。
 
 <card>
 
@@ -27,7 +27,7 @@ import Big from './demo/Tree/Big.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -103,7 +103,7 @@ function handleSelect(selected, node) {
 <template #example>
 
   <Param/>
-  
+
 </template>
 
 <template #template>
@@ -237,7 +237,7 @@ function handleSelect(selected, node) {
 
 <card>
 
-## 其他属性
+## 勾选与默认选中
 
 可以设置 show-checkbox 开启勾选，并可以设置数据格式中的默认选中
 
@@ -246,7 +246,7 @@ expand、selected、checked 和 disabled 可以设置展开，选中，勾选和
 <template #example>
 
   <Other/>
-  
+
 </template>
 
 <template #template>
@@ -341,7 +341,7 @@ function handleChecked(checked, node) {
 <template #example>
 
   <Ctrl/>
-  
+
 </template>
 
 <template #template>
@@ -442,7 +442,7 @@ function setExpand() {
 <template #example>
 
   <Load/>
-  
+
 </template>
 
 <template #template>
@@ -532,7 +532,7 @@ function loadData(item, callback) {
 <template #example>
 
   <Filter/>
-  
+
 </template>
 
 <template #template>
@@ -650,7 +650,7 @@ const filterNode = (value, node) => {
 <template #example>
 
   <Drag/>
-  
+
 </template>
 
 <template #template>
@@ -938,7 +938,7 @@ function handleDrop(draggingNode, dropNode, dropType, ev) {
 <template #example>
 
   <Render/>
-  
+
 </template>
 
 <template #template>
@@ -1120,7 +1120,7 @@ function renderContent1({ root, node, data }) {
 <template #example>
 
   <Select/>
-  
+
 </template>
 
 <template #template>
@@ -1277,6 +1277,39 @@ function clear() {
 
 <card>
 
+## TreeSelect Props
+
+除下列属性外，`f-tree-select` 还接收全部 Tree 属性（如 `data`、`show-checkbox`、`check-strictly`、`load-data` 等）。
+
+| 参数           | 说明                                                 | 类型    | 可选值                          | 默认值             |
+| -------------- | ---------------------------------------------------- | ------- | ------------------------------- | ------------------ |
+| model-value    | 选中项绑定值（配合 `v-model` 使用），一般为选中节点 id | String  | —                               | —                  |
+| value-key      | 作为实际保存值的节点字段名                           | String  | —                               | id                 |
+| checked        | 勾选节点的数组（配合 `v-model:checked` 使用）         | Array   | —                               | []                 |
+| size           | 输入框尺寸                                           | String  | small / large / default / mini  | default            |
+| disabled       | 是否禁用                                             | Boolean | —                               | false              |
+| clearable      | 是否可清空                                           | Boolean | —                               | false              |
+| placeholder    | 输入框占位文本                                       | String  | —                               | 请选择             |
+| append-to-body | 下拉浮层是否插入至 body 元素上                        | Boolean | —                               | true               |
+| clear-icon     | 清空图标名称                                         | String  | —                               | close-circle-fill  |
+| popper-class   | 下拉浮层的自定义类名                                 | String  | —                               | —                  |
+
+## TreeSelect Events
+
+| 事件名         | 说明                              | 回调参数                  |
+| -------------- | --------------------------------- | ------------------------- |
+| update:model-value | 选中值变化时触发              | 选中节点的值              |
+| change         | 选中节点变化时触发                | 选中节点的值、节点数据    |
+| update:checked | 勾选集合变化时触发（浮层收起时）  | 已勾选节点的值组成的数组  |
+| clear          | 点击清空按钮时触发                | —                         |
+| visible-change | 下拉框出现 / 隐藏时触发           | 出现为 true，隐藏为 false |
+| focus          | 获得焦点时触发                    | (event: Event)            |
+| blur           | 失去焦点时触发                    | (event: Event)            |
+
+</card>
+
+<card>
+
 ## 树校验
 
 可以结合form表单进行校验提示。
@@ -1284,7 +1317,7 @@ function clear() {
 <template #example>
 
   <Valid/>
-  
+
 </template>
 
 <template #template>
@@ -1449,7 +1482,7 @@ function resetForm() {
 <template #example>
 
   <Big/>
-  
+
 </template>
 
 <template #template>
@@ -1589,13 +1622,15 @@ function filterNode(value, node) {
 | show-checkbox      | 是否显示多选框                                                                                                                                                                      | Boolean                                | —      | false    |
 | empty-text         | 没有数据时的提示                                                                                                                                                                    | String                                 | —      | 暂无数据 |
 | load-data          | 异步加载数据的方法，见示例                                                                                                                                                          | Function                               | —      | —        |
-| title-key          | 定义 title 键,默认 title                                                                                                                                                            | String                                 | —      | title    |
-| children-key       | 定义子节点键,默认 children 为子节点 key                                                                                                                                             | String                                 | —      | children |
+| title-key          | 定义 title 键，默认 title                                                                                                                                                            | String                                 | —      | title    |
+| children-key       | 定义子节点键，默认 children 为子节点 key                                                                                                                                             | String                                 | —      | children |
 | check-strictly     | 复选框的情况下，是否严格的遵循父子不互相关联的做法                                                                                                                                  | Boolean                                | —      | false    |
 | check-directly     | 开启后，在 show-checkbox 模式下，select 的交互也将转为 check                                                                                                                        | Boolean                                | —      | false    |
 | lock-select        | 锁定树选择，再部分业务中常用，比如开启弹窗后禁用树的选中操作                                                                                                                        | Boolean                                | —      | false    |
 | title-ellipsis     | 是否开启标题超长省略                                                                                                                                                                | Boolean                                | —      | true     |
-| draggable          | 是否开启拖拽节点功能                                                                                                                                                                | Boolean                                | —      | true     |
+| draggable          | 是否开启拖拽节点功能                                                                                                                                                                | Boolean                                | —      | false    |
+| default-expand     | 是否默认展开所有节点                                                                                                                                                                | Boolean                                | —      | false    |
+| render             | 自定义节点内容渲染函数，参数为 `{ node, data }`，返回 VNode                                                                                                                         | Function                               | —      | —        |
 | allow-drag         | 判断节点能否被拖拽 如果返回 false ，节点不能被拖动                                                                                                                                  | Function(node)                         | —      | —        |
 | allow-drop         | 拖拽时判定目标节点能否成为拖动目标位置。 返回false拖动节点不能被拖放到目标节点。type 参数有三种情况：'prev'、'inner'和 'next'，表示放置在目标节点前、插入目标节点和放置在目标节点后 | Function(draggingNode, dropNode, type) | —      | —        |
 | filter-node-method | 筛选过滤树节点函数                                                                                                                                                                  | Function                               | —      | —        |
@@ -1606,17 +1641,18 @@ function filterNode(value, node) {
 
 ## Events
 
-| 事件名          | 说明                   | 返回值                                                                       |
-| --------------- | ---------------------- | ---------------------------------------------------------------------------- |
-| select-change   | 点击树节点时触发       | 当前已选中的节点数组、当前项、flatState                                      |
-| check-change    | 点击复选框时触发       | 当前已勾选节点的数组、当前项、包含半选的节点数组、flatState                  |
-| toggle-expand   | 展开和收起子列表时触发 | 当前节点的数据                                                               |
-| node-drag-start | 拖拽节点开始事件       | 被拖拽节点对应的 Node、event                                                 |
-| node-drag-enter | 拖拽节点进入事件       | 被拖拽节点对应的 Node、当前进入节点对应的 Node、event                        |
-| node-drag-leave | 拖拽节点移除事件       | 被拖拽节点对应的 Node、所离开节点对应的 Node、event                          |
-| node-drag-over  | 拖拽节点 over 事件     | 被拖拽节点对应的 Node、当前进入节点对应的 Node、event                        |
-| node-drag-end   | 拖拽节点结束事件       | 被拖拽节点对应的 Node、当前进入节点对应的 Node、放置节点类型 dropType、event |
-| node-drag       | 拖拽节点结束事件       | 被拖拽节点对应的 Node、当前进入节点对应的 Node、放置节点类型 dropType、event |
+| 事件名          | 说明                                                                                        | 返回值                                                                       |
+| --------------- | ------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| select-change   | 点击树节点时触发                                                                            | 当前已选中的节点数组、当前项、flatState                                      |
+| check-change    | 点击复选框时触发                                                                            | 当前已勾选节点的数组、当前项、包含半选的节点数组、flatState                  |
+| toggle-expand   | 展开和收起子列表时触发                                                                      | 当前节点的数据                                                               |
+| node-drag-start | 拖拽节点开始事件                                                                            | 被拖拽节点对应的 Node、event                                                 |
+| node-drag-enter | 拖拽节点进入事件                                                                            | 被拖拽节点对应的 Node、当前进入节点对应的 Node、event                        |
+| node-drag-leave | 拖拽节点移除事件                                                                            | 被拖拽节点对应的 Node、所离开节点对应的 Node、event                          |
+| node-drag-over  | 拖拽节点 over 事件                                                                          | 被拖拽节点对应的 Node、当前进入节点对应的 Node、event                        |
+| node-drag-end   | 拖拽节点结束事件                                                                            | 被拖拽节点对应的 Node、当前进入节点对应的 Node、放置节点类型 dropType、event |
+| node-drop       | 拖拽节点成功后触发                                                                          | 被拖拽节点对应的 Node、当前进入节点对应的 Node、放置节点类型 dropType、event |
+| update          | 拖拽节点后数据发生变化时触发（`<f-big-tree>` 扩展组件可用）                                  | 更新后的树数据                                                               |
 
 ## Methods
 
@@ -1627,9 +1663,9 @@ function filterNode(value, node) {
 | getSelectedNodes                | 获取被选中的节点                                                                                                 | 无     |
 | getCheckedAndIndeterminateNodes | 获取选中及半选节点                                                                                               | 无     |
 | filter                          | 树节点过滤函数，必须设置 filter-node-method 过滤匹配函数                                                         | 无     |
-| setChecked                      | 设置 node 勾选 ，参数为 keys：nodeKey 数组, flag：勾选状态，默认 true                                            | 无     |
-| setSelected                     | 设置 node 单选 ，参数为 keys：nodeKey 数组, flag：勾选状态，默认 true，expandParent：是否展开祖先节点，默认 true | 无     |
-| setExpand                       | 设置 node 展开 ，参数为 keys：nodeKey 数组, flag：勾选状态，默认 true                                            | 无     |
+| setChecked                      | 设置 node 勾选 ，参数为 keys：nodeKey 数组， flag：勾选状态，默认 true                                            | 无     |
+| setSelected                     | 设置 node 单选 ，参数为 keys：nodeKey 数组， flag：勾选状态，默认 true，expandParent：是否展开祖先节点，默认 true | 无     |
+| setExpand                       | 设置 node 展开 ，参数为 keys：nodeKey 数组， flag：勾选状态，默认 true                                            | 无     |
 | expandAll                       | 展开所有                                                                                                         | 无     |
 | collapseAll                     | 收起所有                                                                                                         | 无     |
 | checkAll                        | 勾选所有                                                                                                         | 无     |
@@ -1646,8 +1682,8 @@ function filterNode(value, node) {
 | disabled        | 禁用                                                         | Boolean | false  |
 | disableCheckbox | 禁用单选框                                                   | Boolean | false  |
 | selected        | 是否选中子节点                                               | Boolean | false  |
-| checked         | 是否勾选(如果勾选，子节点也会全部勾选)                       | Boolean | false  |
-| visible         | 是否显示节点(可通过操作节点 visible 属性隐藏节点)            | Boolean | false  |
+| checked         | 是否勾选（如果勾选，子节点也会全部勾选）                       | Boolean | false  |
+| visible         | 是否显示节点（可通过操作节点 visible 属性隐藏节点）            | Boolean | false  |
 | children        | 子节点属性数组，可以设置 tree 组件 children-key 属性来自定义 | Array   | —      |
 | loading         | 可设置为异步加载节点，需配合 loadData 设置加载函数           | Boolean | —      |
 | isLeaf          | 是否为叶子节点，可控制是否显示箭头，可配合异步加载实现       | Boolean | —      |

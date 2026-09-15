@@ -7,7 +7,7 @@ import Basic from './demo/Calendar/Basic.vue'
 import Mini from './demo/Calendar/Mini.vue'
 </script>
 
-##### 日历组件 Calendar
+日历组件 Calendar
 
 <card>
 
@@ -18,7 +18,7 @@ import Mini from './demo/Calendar/Mini.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -42,7 +42,7 @@ import Mini from './demo/Calendar/Mini.vue'
 <template #example>
 
   <Mini/>
-  
+
 </template>
 
 <template #template>
@@ -80,9 +80,24 @@ import Mini from './demo/Calendar/Mini.vue'
 
 ## Events
 
-| 事件名   | 说明           | 返回值 |
-| -------- | -------------- | ------ |
-| prev     | 上个月按钮事件 | —      |
-| next     | 下个月按钮事件 | —      |
-| today    | 今天按钮事件   | —      |
-| selected | 选中某一天事件 | day    |
+| 事件名     | 说明               | 返回值             |
+| ---------- | ------------------ | ------------------ |
+| prev       | 上个月按钮事件     | —                  |
+| next       | 下个月按钮事件     | —                  |
+| today      | 今天按钮事件       | —                  |
+| selected   | 选中某一天事件     | day                |
+| select-day | 点击某一天时触发   | 该天的日期对象     |
+
+## Day 日期对象
+
+`select-day`、`selected` 以及 `day-style` 等回调中携带的日期对象结构如下：
+
+| 参数           | 说明                 | 类型    | 默认值 |
+| -------------- | -------------------- | ------- | ------ |
+| date           | 该天的 Date 对象     | Date    | —      |
+| year           | 年份                 | Number  | —      |
+| month          | 月份                 | Number  | —      |
+| day            | 日期                 | Number  | —      |
+| month-flag     | 所属月份的标记       | String  | —      |
+| is-current-day | 是否为今天           | Boolean | —      |
+| selected       | 是否被选中           | Boolean | —      |

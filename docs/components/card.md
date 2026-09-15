@@ -9,7 +9,7 @@ import BorderRadius from './demo/Card/BorderRadius.vue'
 import Shadow from './demo/Card/Shadow.vue'
 </script>
 
-##### 按照一个区块来展示
+按照一个区块来展示
 <card>
 
 ## 基础用法
@@ -19,7 +19,7 @@ import Shadow from './demo/Card/Shadow.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -46,12 +46,12 @@ import Shadow from './demo/Card/Shadow.vue'
 
 ## 默认标题和分割线
 
-直接传入header可以生成默认标题,配置divider="no"可以消除默认标题和内容的分割线
+直接传入header可以生成默认标题，配置divider="no"可以消除默认标题和内容的分割线
 
 <template #example>
 
   <TitleDivider/>
-  
+
 </template>
 
 <template #template>
@@ -92,7 +92,7 @@ import Shadow from './demo/Card/Shadow.vue'
 <template #example>
 
   <BorderRadius/>
-  
+
 </template>
 
 <template #template>
@@ -127,7 +127,7 @@ import Shadow from './demo/Card/Shadow.vue'
 <template #example>
 
   <Shadow/>
-  
+
 </template>
 
 <template #template>

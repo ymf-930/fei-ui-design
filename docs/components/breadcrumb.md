@@ -7,7 +7,7 @@ import Basic from './demo/Breadcrumb/Basic.vue'
 import Separator from './demo/Breadcrumb/Separator.vue'
 </script>
 
-##### 显示当前页面的路径，快速返回之前的任意页面或者跳转链接
+显示当前页面的路径，快速返回之前的任意页面或者跳转链接
 
 <card>
 
@@ -18,7 +18,7 @@ import Separator from './demo/Breadcrumb/Separator.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -67,7 +67,7 @@ import Separator from './demo/Breadcrumb/Separator.vue'
 <template #example>
 
   <Separator/>
-  
+
 </template>
 
 <template #template>

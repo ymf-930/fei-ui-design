@@ -9,7 +9,7 @@ import Input from './demo/Slider/Input.vue'
 import Mark from './demo/Slider/Mark.vue'
 </script>
 
-#####
+滑块用于在给定数值区间内拖动取值，适合精度要求不高、但需要直观感受数值位置的场景，可与输入框联动精确输入。
 
 <card>
 
@@ -18,7 +18,7 @@ import Mark from './demo/Slider/Mark.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -60,7 +60,7 @@ const value3 = ref([30, 40])
 <template #example>
 
   <Step/>
-  
+
 </template>
 
 <template #template>
@@ -105,7 +105,7 @@ const value7 = ref([30, 50])
 <template #example>
 
   <Input/>
-  
+
 </template>
 
 <template #template>
@@ -148,7 +148,7 @@ function format(val) {
 <template #example>
 
   <Mark/>
-  
+
 </template>
 
 <template #template>
@@ -192,7 +192,7 @@ const marks = {
 
 | 参数                | 说明                                                                                    | 类型            | 可选值                         | 默认值 |
 | ------------------- | --------------------------------------------------------------------------------------- | --------------- | ------------------------------ | ------ |
-| value / v-model     | 绑定值                                                                                  | number          | —                              | 0      |
+| model-value / v-model | 绑定值                                                                                  | number          | —                              | 0      |
 | min                 | 最小值                                                                                  | number          | —                              | 0      |
 | max                 | 最大值                                                                                  | number          | —                              | 100    |
 | disabled            | 是否禁用                                                                                | boolean         | —                              | false  |

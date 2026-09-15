@@ -13,7 +13,7 @@
     │   ├── _hooks                 // 公共hooks
     │   ├── _internal              // 内部组件，也会导出
     │   ├── _styles                // 样式文件，全局样式编写
-    │   ├── _uitls                 // 工具包
+    │   ├── _utils                // 工具包
     │   ├── components             // 别名，通常是组件名称小写，如button
     │       ├── src                // 组件源码，以及types.js 声明文件
     │       ├── styles             // 组件样式代码，组件内部需要引入，用于实现按需加载

@@ -4,15 +4,13 @@ title: 在 SFC 中使用
 
 <card>
 
-# 在 SFC 中使用
+如果你想使用单文件组件风格(SFC - Single File Component)，可以选择直接引入或全局安装在 Vue App 中。
 
-如果你想使用单文件组件风格（SFC - Single File Component），可以选择直接引入或全局安装在 Vue App 中。
-
-## 直接引入 （推荐）
+## 直接引入（推荐）
 
 你可以直接导入组件并进行使用这种情况下，只有导入的组件才会被打包。
 
-如果你想知道如何按需引入主题和语言包，请参考 [按需引入](/guide/import-on-demand.html)。
+如果你想知道如何按需引入主题和语言包，请参考 [按需引入](/guide/import-on-demand)。
 
 ```vue
 <template>
@@ -57,7 +55,7 @@ import 'fei-ui-design/dist/styles/icon.css'
 
 首先需要安装插件
 
-```sh
+```bash
 pnpm add unplugin-vue-components -D
 ```
 
@@ -93,11 +91,11 @@ export default defineConfig({
 </template>
 ```
 
-## 全量引入 （不推荐）
+## 全量引入（不推荐）
 
 安装全局组件，会失去 tree-shaking 的能力，打包有冗余代码。
 
-如果你想全局安装但是不想安装全部组件，请参考 [按需引入](/guide/import-on-demand.html)。
+如果你想全局安装但是不想安装全部组件，请参考 [按需引入](/guide/import-on-demand)。
 
 ```js
 // main.js
@@ -113,5 +111,3 @@ app.mount('#app')
 ```
 
 </card>
-
-

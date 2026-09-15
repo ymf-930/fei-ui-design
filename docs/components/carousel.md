@@ -10,7 +10,7 @@ import Style from './demo/Carousel/Style.vue'
 import Direction from './demo/Carousel/Direction.vue'
 </script>
 
-##### 轮播组件，用于滚动显示图片等
+轮播组件，用于滚动显示图片等
 
 <card>
 
@@ -21,7 +21,7 @@ import Direction from './demo/Carousel/Direction.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -75,7 +75,7 @@ import Direction from './demo/Carousel/Direction.vue'
 <template #example>
 
   <Auto/>
-  
+
 </template>
 
 <template #template>
@@ -135,11 +135,10 @@ import Direction from './demo/Carousel/Direction.vue'
 
 ## 指示器样式和位置
 
-
 <template #example>
 
   <Style/>
-  
+
 </template>
 
 <template #template>
@@ -210,7 +209,7 @@ import Direction from './demo/Carousel/Direction.vue'
 <template #example>
 
   <CarouselCard/>
-  
+
 </template>
 
 <template #template>
@@ -264,7 +263,7 @@ import Direction from './demo/Carousel/Direction.vue'
 <template #example>
 
   <Direction/>
-  
+
 </template>
 
 <template #template>
@@ -314,12 +313,13 @@ import Direction from './demo/Carousel/Direction.vue'
 | 参数               | 说明                                            | 类型            | 可选值                                           | 默认值     |
 | ------------------ | ----------------------------------------------- | --------------- | ------------------------------------------------ | ---------- |
 | initial-index      | 轮播的索引，从 0 开始，                         | Number          | —                                                | 0          |
-| height             | 走马灯的高度，可填 auto 或具体高度数值，单位 px | String / Number | —                                                | 200px      |
+| height             | 走马灯的高度，可填 auto 或具体高度数值，单位 px | String / Number | —                                                | —          |
 | loop               | 是否开启循环                                    | Boolean         | —                                                | false      |
 | autoplay           | 是否自动切换                                    | Boolean         | —                                                | false      |
 | interval           | 自动切换的时间间隔，单位为毫秒                  | Number          | —                                                | 3000       |
-| indicator-position | 指示器的位置                                    | String          | inside （内部），outside（外部），none（不显示） | inside     |
-| trigger            | 触发方式                                        | String          | click，hover                                     | click      |
+| indicator          | 是否显示指示器                                  | Boolean         | —                                                | true       |
+| indicator-position | 指示器的位置                                    | String          | inside （内部），outside（外部），none（不显示） | —          |
+| trigger            | 触发方式                                        | String          | click，hover                                     | hover      |
 | arrow              | 切换箭头的显示时机                              | String          | hover，always，never                             | hover      |
 | direction          | 方向                                            | String          | horizontal、vertical                             | horizontal |
 | type               | 类型                                            | String          | card                                             | —          |
@@ -329,3 +329,12 @@ import Direction from './demo/Carousel/Direction.vue'
 | 事件名 | 说明                                     | 返回值          |
 | ------ | ---------------------------------------- | --------------- |
 | change | 轮播切换时触发，目前激活的索引，原的索引 | oldValue, value |
+
+## CarouselItem Props
+
+`f-carousel-item` 为轮播的每一项。
+
+| 参数  | 说明                                     | 类型            | 可选值 | 默认值 |
+| ----- | ---------------------------------------- | --------------- | ------ | ------ |
+| name  | 该项的标识（对应 `initial-index` 的取值） | String          | —      | ''     |
+| label | 该项的标题，`indicator-position` 为 outside 时显示 | String / Number | — | '' |

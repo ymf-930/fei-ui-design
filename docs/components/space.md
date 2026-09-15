@@ -12,8 +12,7 @@ import Split from './demo/Space/Split.vue'
 import Align from './demo/Space/Align.vue'
 </script>
 
-
-##### 可以设置组件和不同dom之间的间距，用于设置相同间隔，方便使用
+可以设置组件和不同dom之间的间距，用于设置相同间隔，方便使用
 
 <card>
 
@@ -22,7 +21,7 @@ import Align from './demo/Space/Align.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -49,7 +48,7 @@ import Align from './demo/Space/Align.vue'
 <template #example>
 
   <Vertical/>
-  
+
 </template>
 
 <template #template>
@@ -82,7 +81,7 @@ import Align from './demo/Space/Align.vue'
 <template #example>
 
   <Size/>
-  
+
 </template>
 
 <template #template>
@@ -129,7 +128,7 @@ const size = ref('default')
 <template #example>
 
   <Number/>
-  
+
 </template>
 
 <template #template>
@@ -184,7 +183,7 @@ const size = ref(16)
 <template #example>
 
   <Wrap/>
-  
+
 </template>
 
 <template #template>
@@ -210,7 +209,7 @@ const size = ref(16)
 <template #example>
 
   <Split/>
-  
+
 </template>
 
 <template #template>
@@ -253,12 +252,12 @@ const spacer = h('span', { style: { color: '#999' } }, '>-<')
 
 ## 对齐方式
 
-设置该值可以调整所有子节点在容器内的对齐方式, 可设置的值与 [align-items](https://developer.mozilla.org/zh-CN/docs/Web/CSS/align-items) 一致
+设置该值可以调整所有子节点在容器内的对齐方式， 可设置的值与 [align-items](https://developer.mozilla.org/zh-CN/docs/Web/CSS/align-items) 一致
 
 <template #example>
 
   <Align/>
-  
+
 </template>
 
 <template #template>
@@ -317,7 +316,7 @@ const spacer = h('span', { style: { color: '#999' } }, '>-<')
 | size      | 间隔大小                  | String / Number / [Number, Number]        | -                   | 'small'    |
 | wrap      | 设置是否自动折行          | Boolean                                   | true / false        | false      |
 
-## Space Slot
+## Space Slots
 
 | name    | 说明               |
 | ------- | ------------------ |

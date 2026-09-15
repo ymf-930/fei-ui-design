@@ -11,7 +11,7 @@ import Qiantao from './demo/Drawer/Qiantao.vue'
 import Dragable from './demo/Drawer/Dragable.vue'
 </script>
 
-##### 简易的抽屉用于展示或者快速弹出,可以根据是信息展示还是创建动态插入
+简易的抽屉用于展示或者快速弹出，可以根据是信息展示还是创建动态插入
 
 <card>
 
@@ -22,7 +22,7 @@ import Dragable from './demo/Drawer/Dragable.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -62,7 +62,7 @@ import Dragable from './demo/Drawer/Dragable.vue'
 <template #example>
 
   <Left/>
-  
+
 </template>
 
 <template #template>
@@ -102,7 +102,7 @@ import Dragable from './demo/Drawer/Dragable.vue'
 <template #example>
 
   <Inner/>
-  
+
 </template>
 
 <template #template>
@@ -142,7 +142,7 @@ import Dragable from './demo/Drawer/Dragable.vue'
 <template #example>
 
   <Preview/>
-  
+
 </template>
 
 <template #template>
@@ -231,7 +231,7 @@ import Dragable from './demo/Drawer/Dragable.vue'
 <template #example>
 
   <Qiantao/>
-  
+
 </template>
 
 <template #template>
@@ -273,7 +273,7 @@ import Dragable from './demo/Drawer/Dragable.vue'
 <template #example>
 
   <Dragable/>
-  
+
 </template>
 
 <template #template>
@@ -320,17 +320,20 @@ import Dragable from './demo/Drawer/Dragable.vue'
 | styles         | 抽屉中间层的样式                                                         | Object   | —          | —      |
 | inner          | 是否设置抽屉在某个元素内打开，开启此属性时，应当关闭 append-to-body 属性 | Boolean  | —          | false  |
 | draggable      | 是否开启拖拽调整宽度                                                     | Boolean  | —          | false  |
-| before-close   | 关闭前事件,返回 Promise 可以阻止关闭                                     | Function |
+| before-close   | 关闭前事件，返回 Promise 可以阻止关闭                                     | Function |
+| class-name     | 抽屉的自定义类名                                                         | String   | —          | —      |
+| z-index        | 层级，默认自增                                                           | Number   | —          | 0      |
 | lock-scroll    | 是否锁定滚动                                                             | Boolean  | —          | true   |
 
 ## Events
 
-| 事件名       | 说明         | 返回值 |
-| ------------ | ------------ | ------ |
-| close        | 关闭抽屉触发 | 无     |
-| resize-width | 调整宽度     | 无     |
+| 事件名            | 说明                        | 返回值           |
+| ----------------- | --------------------------- | ---------------- |
+| update:modelValue | `v-model` 绑定的值变化时触发 | 是否显示 `visible` |
+| close             | 关闭抽屉触发                | 无               |
+| resize-width      | 调整宽度                    | 无               |
 
-## Slot
+## Slots
 
 | 名称    | 说明         |
 | ------- | ------------ |

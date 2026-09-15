@@ -8,7 +8,7 @@ import Side from './demo/Menu/Side.vue'
 import Collapse from './demo/Menu/Collapse.vue'
 </script>
 
-##### 为网站提供导航功能的菜单。
+为网站提供导航功能的菜单。
 
 <card>
 
@@ -20,7 +20,7 @@ import Collapse from './demo/Menu/Collapse.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -116,7 +116,7 @@ import Collapse from './demo/Menu/Collapse.vue'
 <template #example>
 
   <Side/>
-  
+
 </template>
 
 <template #template>
@@ -251,34 +251,96 @@ import Collapse from './demo/Menu/Collapse.vue'
 <template #example>
 
   <Collapse/>
-  
+
 </template>
 
 <template #template>
 
-```html
+```vue
 <template>
-  <div class="demo-loading">
-    <f-loading></f-loading>
+  <div>
+    <f-button-group v-model="isCollapse" style="margin-bottom: 20px">
+      <f-button :type="isCollapse ? 'default' : 'primary'" @click="isCollapse = false">
+        展开
+      </f-button>
+      <f-button :type="isCollapse ? 'primary' : 'default'" @click="isCollapse = true">
+        收起
+      </f-button>
+    </f-button-group>
+
+    <f-menu
+      style="width: 240px"
+      default-active="1-4-1"
+      :collapse="isCollapse"
+      background-color="#232324"
+      text-color="#fff"
+      active-text-color="#ffd04b"
+      class="f-menu-vertical-demo border"
+      @open="handleOpen"
+      @close="handleClose"
+    >
+      <f-submenu index="1">
+        <template #title>
+          <f-icon name="location-fill"></f-icon>
+          <span>导航一</span>
+        </template>
+        <f-menu-item-group>
+          <template #title>分组一</template>
+          <f-menu-item index="1-1">选项1</f-menu-item>
+          <f-menu-item index="1-2">选项2</f-menu-item>
+        </f-menu-item-group>
+        <f-menu-item-group title="分组2">
+          <f-menu-item index="1-3">选项3</f-menu-item>
+        </f-menu-item-group>
+        <f-submenu index="1-4">
+          <template #title>选项4</template>
+          <f-menu-item index="1-4-1">选项1</f-menu-item>
+        </f-submenu>
+      </f-submenu>
+      <f-menu-item index="2">
+        <f-icon name="appstore-fill"></f-icon>
+        <template #title>导航二</template>
+      </f-menu-item>
+      <f-menu-item index="3" disabled>
+        <f-icon name="file-text"></f-icon>
+        <template #title>导航三</template>
+      </f-menu-item>
+      <f-menu-item index="4">
+        <f-icon name="setting-fill"></f-icon>
+        <template #title>导航四</template>
+      </f-menu-item>
+    </f-menu>
   </div>
 </template>
 ```
 
 </template>
 
+<template #script>
+
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+const isCollapse = ref(false)
+
+function handleOpen(key, keyPath) {
+  console.log(key, keyPath)
+}
+function handleClose(key, keyPath) {
+  console.log(key, keyPath)
+}
+</script>
+```
+
+</template>
+
 <template #style>
 
-```html
+```vue
 <style scoped>
-.demo-loading {
-  position: relative;
-  overflow: hidden;
-  display: inline-block;
-  margin-right: 5px;
-  width: 200px;
-  height: 100px;
-  border-radius: 4px;
-  border: 1px solid #cecece;
+.f-menu-vertical-demo {
+  width: 240px;
+  border-right: 1px solid #f0f0f0;
 }
 </style>
 ```
@@ -293,13 +355,13 @@ import Collapse from './demo/Menu/Collapse.vue'
 | ----------------- | ----------------------------------------------------------------------------------- | ------- | --------------------- | --------------- |
 | mode              | 模式                                                                                | string  | horizontal / vertical | vertical        |
 | collapse          | 是否水平折叠收起菜单（仅在 mode 为 vertical 时可用）                                | boolean | —                     | false           |
-| background-color  | 菜单的背景色（仅支持 hex 格式）                                                     | string  | —                     | #ffffff         |
-| text-color        | 菜单的文字颜色（仅支持 hex 格式）                                                   | string  | —                     | rgba(0,0,0,.65) |
-| active-text-color | 当前激活菜单的文字颜色（仅支持 hex 格式）                                           | string  | —                     | #1a5cff         |
+| background-color  | 菜单的背景色（仅支持 hex 格式），留空则使用主题默认值                              | string  | —                     | —               |
+| text-color        | 菜单的文字颜色（仅支持 hex 格式），留空则使用主题默认值                             | string  | —                     | —               |
+| active-text-color | 当前激活菜单的文字颜色（仅支持 hex 格式），留空则使用主题默认值                     | string  | —                     | —               |
 | default-active    | 当前激活菜单的 index                                                                | string  | —                     | —               |
 | default-openeds   | 当前打开的 sub-menu 的 index 的数组                                                 | Array   | —                     | —               |
 | unique-opened     | 是否只保持一个子菜单的展开                                                          | boolean | —                     | false           |
-| menu-trigger      | 子菜单打开的触发方式(只在 mode 为 horizontal 时有效)                                | string  | hover / click         | hover           |
+| menu-trigger      | 子菜单打开的触发方式（只在 mode 为 horizontal 时有效）                                | string  | hover / click         | hover           |
 | router            | 是否使用 vue-router 的模式，启用该模式会在激活导航时以 index 作为 path 进行路由跳转 | boolean | —                     | false           |
 
 ## Menu Methods
@@ -322,13 +384,12 @@ import Collapse from './demo/Menu/Collapse.vue'
 | 参数                  | 说明                                                                     | 类型        | 可选值 | 默认值                                 |
 | --------------------- | ------------------------------------------------------------------------ | ----------- | ------ | -------------------------------------- |
 | index                 | 唯一标志                                                                 | string/null | —      | null                                   |
-| popper-class          | 弹出菜单的自定义类名                                                     | string      | —      | —                                      |
 | show-timeout          | 展开 sub-menu 的延时                                                     | number      | —      | 300                                    |
 | hide-timeout          | 收起 sub-menu 的延时                                                     | number      | —      | 300                                    |
 | disabled              | 是否禁用                                                                 | boolean     | —      | false                                  |
 | popper-append-to-body | 是否将弹出菜单插入至 body 元素。在菜单的定位出现问题时，可尝试修改该属性 | boolean     | —      | 一级子菜单：true / 非一级子菜单：false |
 
-## Menu-Item Props
+## MenuItem Props
 
 | 参数     | 说明                | 类型    | 可选值 | 默认值 |
 | -------- | ------------------- | ------- | ------ | ------ |
@@ -336,7 +397,7 @@ import Collapse from './demo/Menu/Collapse.vue'
 | route    | Vue Router 路径对象 | Object  | —      | —      |
 | disabled | 是否禁用            | boolean | —      | false  |
 
-## Menu-Group Props
+## MenuGroup Props
 
 | 参数  | 说明     | 类型   | 可选值 | 默认值 |
 | ----- | -------- | ------ | ------ | ------ |

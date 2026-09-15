@@ -23,7 +23,7 @@ import Size from './demo/Table/Size.vue'
 import NoData from './demo/Table/NoData.vue'
 </script>
 
-##### 基础的表格组件，用于显示列表数据
+基础的表格组件，用于显示列表数据
 
 <card>
 
@@ -32,7 +32,7 @@ import NoData from './demo/Table/NoData.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -108,7 +108,7 @@ const data = ref([
 <template #example>
 
   <Stripe/>
-  
+
 </template>
 
 <template #template>
@@ -184,7 +184,7 @@ const data = ref([
 <template #example>
 
   <Border/>
-  
+
 </template>
 
 <template #template>
@@ -255,13 +255,13 @@ const data = ref([
 
 ## 超出隐藏
 
-可以通过给 `columns` 设置属性 `tooltip` 来设置超出隐藏并悬停显示, 如仅有一张表格则可以设置 `tooltip` 皮肤 `tooltip-theme` 来开启优化样式
+可以通过给 `columns` 设置属性 `tooltip` 来设置超出隐藏并悬停显示， 如仅有一张表格则可以设置 `tooltip` 皮肤 `tooltip-theme` 来开启优化样式
 （注意：因表格单元格存在超出隐藏样式所以必须将tooltip标签插入至body元素，会成多余标签，如有多个表格缓存则会插入过多标签造成性能问题，所以是否开启需要根据需求确定）
 
 <template #example>
 
   <Tooltip/>
-  
+
 </template>
 
 <template #template>
@@ -349,7 +349,7 @@ height 和 maxHeight 可以设置固定表头
 <template #example>
 
   <FixedHeader/>
-  
+
 </template>
 
 <template #template>
@@ -421,7 +421,7 @@ const data = ref([
 <template #example>
 
   <FixedColumn/>
-  
+
 </template>
 
 <template #template>
@@ -520,7 +520,7 @@ const data = ref([
 <template #example>
 
   <AutoHeight/>
-  
+
 </template>
 
 <template #template>
@@ -594,7 +594,7 @@ function removeRow(index) {
 <template #example>
 
   <Select/>
-  
+
 </template>
 
 <template #template>
@@ -766,7 +766,7 @@ function removeRow(index) {
 <template #example>
 
   <MultiplySelect/>
-  
+
 </template>
 
 <template #template>
@@ -850,7 +850,7 @@ function getAllSelected() {
 <template #example>
 
   <Expand/>
-  
+
 </template>
 
 <template #template>
@@ -925,12 +925,12 @@ const data = ref([
 
 ## 表头分组
 
-columns内容可以设置children来分组渲染表头,合并表头和行列时推荐使用border模式
+columns内容可以设置children来分组渲染表头，合并表头和行列时推荐使用border模式
 
 <template #example>
 
   <GroupHeader/>
-  
+
 </template>
 
 <template #template>
@@ -1043,7 +1043,7 @@ const data = ref([
 <template #example>
 
   <Merge/>
-  
+
 </template>
 
 <template #template>
@@ -1134,7 +1134,7 @@ function handleSpan({ row, column, rowIndex, columnIndex }) {
 <template #example>
 
   <Sort/>
-  
+
 </template>
 
 <template #template>
@@ -1206,7 +1206,7 @@ const data = ref([
 <template #example>
 
   <Edit/>
-  
+
 </template>
 
 <template #template>
@@ -1369,12 +1369,12 @@ function handleSave(index) {
 
 注意，设置拖拽排序后，且鼠标拖拽也覆盖了鼠标选中文字，此时可以额外设置也可以设置handle来指定拖拽某一个元素实现
 
-如需要更新数据，则需使用v-model:data来更新,或配合@drag-drop函数来处理更新数据都可以
+如需要更新数据，则需使用v-model:data来更新，或配合@drag-drop函数来处理更新数据都可以
 
 <template #example>
 
   <Drag/>
-  
+
 </template>
 
 <template #template>
@@ -1548,7 +1548,7 @@ function removeRow(index) {
 <template #example>
 
   <Loading/>
-  
+
 </template>
 
 <template #template>
@@ -1625,7 +1625,7 @@ const loading = ref(false)
 <template #example>
 
   <Size/>
-  
+
 </template>
 
 <template #template>
@@ -1707,7 +1707,7 @@ noDataText可以设置无数据状态
 <template #example>
 
   <NoData/>
-  
+
 </template>
 
 <template #template>
@@ -1739,7 +1739,7 @@ const data = ref([])
 
 </card>
 
-## Table props
+## Table Props
 
 | 参数           | 说明                                                                                                          | 类型          | 可选值        | 默认值   |
 | -------------- | ------------------------------------------------------------------------------------------------------------- | ------------- | ------------- | -------- |
@@ -1747,7 +1747,7 @@ const data = ref([])
 | columns        | 表格列的配置描述，具体项见后文                                                                                | Array         | —             | []       |
 | stripe         | 间隔斑马纹                                                                                                    | Boolean       | false/true    | false    |
 | border         | 纵向边框                                                                                                      | Boolean       | false/true    | false    |
-| show-header    | 是否显示表头                                                                                                  | Boolean       | false/true    | false    |
+| show-header    | 是否显示表头                                                                                                  | Boolean       | false/true    | true     |
 | width          | 表格宽度，单位 px                                                                                             | Number/String | —             | auto     |
 | height         | 表格高度，单位 px，设置后，如果表格内容大于此值，会固定表头                                                   | Number/String | —             | —        |
 | max-height     | 最大表格高度                                                                                                  | Number/String | —             | —        |
@@ -1760,25 +1760,29 @@ const data = ref([])
 | draggable      | 开启拖拽调整行顺序，同步元数据需要使用v-model:data使用或需配合 @drag-drop 事件更新data都可以                  | Boolean       | —             | false    |
 | drag-handle    | 拖拽的handle图标                                                                                              | String        | —             | —        |
 | row-key        | 是否强制使用内置row-key刷新                                                                                   | Boolean       | —             | false    |
-| merge-method   | 表格合并行列的方法函数                                                                                        | Function      | —             | false    |
+| merge-method   | 表格合并行列的方法函数                                                                                        | Function      | —             | —        |
+| row-class-name | 行元素的 className，函数返回值为对应的类名                                                                    | Function      | —             | —        |
+| context        | 开启右键菜单时可用，传递给行数据的上下文对象                                                                  | Object        | —             | —        |
+| tooltip-theme  | tooltip 主题                                                                                                  | String        | dark / light  | dark     |
 
-## Table events
+## Table Events
 
 | 事件名            | 说明                                                        | 返回值                                                         |
 | ----------------- | ----------------------------------------------------------- | -------------------------------------------------------------- |
 | current-change    | 开启 highlight-row 后有效，当表格的当前行发生变化的时候会触 | currentRow, oldCurrentRow,index                                |
-| select            | 在多选模式下有效，选中某一项时触发                          | 已选项, 刚选择                                                 |
-| select-cancel     | 在多选模式下有效，取消选中某一项时触发                      | 已选项, 取消选择                                               |
+| select            | 在多选模式下有效，选中某一项时触发                          | 已选项， 刚选择                                                 |
+| select-cancel     | 在多选模式下有效，取消选中某一项时触发                      | 已选项， 取消选择                                               |
 | select-all        | 全选时触发                                                  | 已选项                                                         |
 | select-all-cancel | 取消全选时触发                                              | 已选项                                                         |
 | selection-change  | 选中项发生变化时就会触发                                    | 已选项                                                         |
-| sort-change       | 排序时有效，当点击排序时触发                                | column：当前列数据 key：排序依据的指标 order(值为 asc 或 desc) |
-| row-click         | 单击某一行时触发                                            | 当前行的数据,index                                             |
-| row-dblclick      | 双击某一行时触发                                            | 当前行的数据,index                                             |
-| expand            | 展开或收起某一行时触                                        | row：当前行的数据,status：当前的状态                           |
+| sort-change       | 排序时有效，当点击排序时触发                                | column：当前列数据 key：排序依据的指标 order（值为 asc 或 desc） |
+| row-click         | 单击某一行时触发                                            | 当前行的数据，index                                             |
+| row-dblclick      | 双击某一行时触发                                            | 当前行的数据，index                                             |
+| expand            | 展开或收起某一行时触                                        | row：当前行的数据，status：当前的状态                           |
 | drag-drop         | 拖拽排序松开时触发                                          | 置换的两行数据索引和更新后的数据 newData, newIndex, oldIndex   |
+| update:data       | 拖拽排序后同步元数据时触发（配合 `v-model:data`）           | 更新后的数据 newData                                           |
 
-## Table slot
+## Table Slots
 
 | 名称    | 说明               |
 | ------- | ------------------ |
@@ -1786,7 +1790,7 @@ const data = ref([])
 | footer  | 页脚               |
 | loading | 警告提加载中示内容 |
 
-## Table methods
+## Table Methods
 
 | 方法名          | 说明                 | 参数  |
 | --------------- | -------------------- | ----- |
@@ -1809,9 +1813,9 @@ const data = ref([])
 | className   | 列的样式名称                                                      | String            | -                                     | -      |
 | fixed       | 列是否固定在左侧或者右侧                                          | String            | left,right                            | -      |
 | ellipsis    | 开启后，文本将不换行                                              | Boolean           | -                                     | false  |
-| tooltip     | 开启后，文本将不换行,并用 Tooltip 组件显示完整内容                | Boolean           | -                                     | false  |
+| tooltip     | 开启后，文本将不换行，并用 Tooltip 组件显示完整内容                | Boolean           | -                                     | false  |
 | render      | 自定义渲染列 ,第一个是 h，第二个为对象，包含 row、column 和 index | Function          | -                                     | -      |
 | indexMethod | type 为 index 时可用，自定义序号 ,参数 row 为当前行内容           | Function          | -                                     | -      |
 | sortable    | 对应列是否可以排序                                                | Boolean ,'custom' | -                                     | false  |
-| sortMethod  | 自定义排序使用的方法,三个参数 a 、 b 和 type                      | Function          | -                                     | -      |
+| sortMethod  | 自定义排序使用的方法，三个参数 a 、 b 和 type                      | Function          | -                                     | -      |
 | sortType    | 设置初始化排序。值为 asc 和 desc                                  | String            | -                                     | -      |

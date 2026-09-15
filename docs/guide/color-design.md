@@ -4,9 +4,7 @@ title: 色彩设计
 
 <card>
 
-# 色彩设计
-
-##### F-UI-Design 默认具有一套较为美观的配色方案，在开发中也推荐使用一下色板来达到视觉统一效果
+FEI-UI-DESIGN 默认提供一套较为美观的配色方案，开发中也推荐使用以下色板来达到视觉统一的效果。
 
 ## 设计原则
 
@@ -71,7 +69,6 @@ const getColorPane = color => Utils.color.getPalette(color)
 
 const copyColor = color => Utils.util.copy(color)
 </script>
-  
 
 ## 主色
 

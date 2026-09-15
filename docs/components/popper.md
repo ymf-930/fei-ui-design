@@ -7,7 +7,7 @@ import Basic from './demo/Popper/Basic.vue'
 import ColumnSelect from './demo/Popper/ColumnSelect.vue'
 </script>
 
-##### popper借助了第三方插件<a href="https://popper.js.org/" target="_blank">popper.js</a>，可参考文档进行配置，组件内部弹层都借助此基础组件实现，你也可以自行编写扩展。
+popper借助了第三方插件<a href="https://popper.js.org/" target="_blank">popper.js</a>，可参考文档进行配置，组件内部弹层都借助此基础组件实现，你也可以自行编写扩展。
 
 <card>
 
@@ -16,7 +16,7 @@ import ColumnSelect from './demo/Popper/ColumnSelect.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -56,7 +56,7 @@ const visible = ref(false)
 <template #example>
 
   <ColumnSelect/>
-  
+
 </template>
 
 <template #template>
@@ -129,7 +129,7 @@ const list = ref([
 | gpu-acceleration        | gpu加速，默认动画，                                      | Boolean                                                                        | —                                                                                                         | true           |
 | stop-popper-mouse-event | 是否阻止popper的mouse事件                                | Boolean                                                                        | —                                                                                                         | true           |
 | show-arrow              | 是否显示箭头                                             | Boolean                                                                        | —                                                                                                         | true           |
-| manual-mode             | 是否是手动控制，手动控制后需要设置:visible               | Boolean                                                                        | —                                                                                                         | true           |
+| manual-mode             | 是否是手动控制，手动控制后需要设置 `:visible`             | Boolean                                                                        | —                                                                                                         | true           |
 | theme                   | 主题                                                     | string                                                                         | dark 或 light                                                                                             | dark           |
 | show-after              | 延迟出现，单位毫秒                                       | number                                                                         | —                                                                                                         | 0              |
 | close-delay             | 延迟消失，单位毫秒                                       | number                                                                         | —                                                                                                         | 0              |
@@ -141,7 +141,7 @@ const list = ref([
 | z-index                 | 层级                                                     | Number，默认为2000，弹窗会自增，如设置了此值，则会追加当前值后进行自增进行自增 | —                                                                                                         | 0              |
 | style                   | 弹层的style                                              | Object                                                                         | —                                                                                                         | —              |
 
-## Slot
+## Slots
 
 | 名称    | 说明                                                                     |
 | ------- | ------------------------------------------------------------------------ |

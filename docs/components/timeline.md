@@ -9,7 +9,7 @@ import Pending from './demo/Timeline/Pending.vue'
 import CustomIcon from './demo/Timeline/CustomIcon.vue'
 </script>
 
-##### 时间线组件
+时间线组件
 
 <card>
 
@@ -20,7 +20,7 @@ import CustomIcon from './demo/Timeline/CustomIcon.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -79,7 +79,7 @@ import CustomIcon from './demo/Timeline/CustomIcon.vue'
 <template #example>
 
   <Color/>
-  
+
 </template>
 
 <template #template>
@@ -108,7 +108,7 @@ import CustomIcon from './demo/Timeline/CustomIcon.vue'
 <template #example>
 
   <Pending/>
-  
+
 </template>
 
 <template #template>
@@ -137,7 +137,7 @@ import CustomIcon from './demo/Timeline/CustomIcon.vue'
 <template #example>
 
   <CustomIcon/>
-  
+
 </template>
 
 <template #template>
@@ -175,7 +175,7 @@ import CustomIcon from './demo/Timeline/CustomIcon.vue'
 | color   | 圆圈颜色    | String | primary,success,info,warning,danger,或者自定义颜色值 | primary |
 | dot-top | dot顶部偏移 | String | 自定义dot距离顶部的偏移量                            | —       |
 
-## TimelineItem Slot
+## TimelineItem Slots
 
 | 名称    | 说明               |
 | ------- | ------------------ |

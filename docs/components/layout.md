@@ -6,7 +6,7 @@ title: 布局 Layout
 import Basic from './demo/Layout/Basic.vue'
 </script>
 
-# 布局 Layout
+布局提供轻量的页面骨架，用于快速搭建左右分栏的界面结构。
 
 <card>
 
@@ -17,7 +17,7 @@ import Basic from './demo/Layout/Basic.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -43,7 +43,7 @@ import Basic from './demo/Layout/Basic.vue'
 | -------------------- | -------------------------- | ------- | ------ | ------ |
 | hasSider             | 是否又侧边栏（目前为左侧） | Boolean | —      | —      |
 | siderWidth           | 侧边栏宽度                 | Number  | —      | 240    |
-| collapsedWidth       | 侧边栏折叠后宽度           | Number  | —      | 40     |
+| collapsedWidth       | 侧边栏折叠后宽度           | Number  | —      | 32     |
 | showToggle           | 是否显示折叠按钮           | Boolean | —      | true   |
 | showCollapsedContent | 是否显示折叠后的内部区域   | Boolean | —      | false  |
 | contentStyle         | 右侧容器样式               | Object  | —      | {}     |

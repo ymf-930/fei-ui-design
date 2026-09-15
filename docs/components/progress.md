@@ -9,7 +9,7 @@ import Style from './demo/Progress/Style.vue'
 import Progress from './demo/Progress/Progress.vue'
 </script>
 
-##### 展示操作或任务的当前进度，比如上传文件。
+展示操作或任务的当前进度，比如上传文件。
 
 <card>
 
@@ -20,7 +20,7 @@ Progress 组件设置 `percent` 属性即可，表示进度条对应的百分比
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -57,7 +57,7 @@ Progress 组件设置 `percent` 属性即可，表示进度条对应的百分比
 <template #example>
 
   <Inside/>
-  
+
 </template>
 
 <template #template>
@@ -102,7 +102,7 @@ Progress 组件设置 `percent` 属性即可，表示进度条对应的百分比
 <template #example>
 
   <Style/>
-  
+
 </template>
 
 <template #template>
@@ -142,7 +142,7 @@ Progress 组件设置 `percent` 属性即可，表示进度条对应的百分比
 <template #example>
 
   <Progress/>
-  
+
 </template>
 
 <template #template>

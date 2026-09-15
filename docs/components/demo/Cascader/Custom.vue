@@ -1,7 +1,7 @@
 <template>
   <div flex>
     <div class="block" style="width: 220px; margin-right: 20px">
-      <f-cascader :options="options">
+      <f-cascader v-model="selected" :options="options" @change="handleChange">
         <template #default="{ node, data }">
           <span>{{ data.label }}</span>
           <span v-if="!node.isLeaf">({{ data.children.length }})</span>

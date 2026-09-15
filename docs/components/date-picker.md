@@ -16,7 +16,7 @@ import TimeRange from './demo/DatePicker/TimeRange.vue'
 import DefaultTime from './demo/DatePicker/DefaultTime.vue'
 </script>
 
-##### 可以选择日期的picker
+可以选择日期的picker
 
 <card>
 
@@ -29,7 +29,7 @@ import DefaultTime from './demo/DatePicker/DefaultTime.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -104,7 +104,7 @@ import DefaultTime from './demo/DatePicker/DefaultTime.vue'
 <template #example>
 
   <Value/>
-  
+
 </template>
 
 <template #template>
@@ -165,7 +165,7 @@ import DefaultTime from './demo/DatePicker/DefaultTime.vue'
 <template #example>
 
   <Range/>
-  
+
 </template>
 
 <template #template>
@@ -254,7 +254,7 @@ import DefaultTime from './demo/DatePicker/DefaultTime.vue'
 <template #example>
 
   <Range2/>
-  
+
 </template>
 
 <template #template>
@@ -337,7 +337,7 @@ import DefaultTime from './demo/DatePicker/DefaultTime.vue'
 <template #example>
 
   <Default/>
-  
+
 </template>
 
 <template #template>
@@ -392,7 +392,7 @@ import DefaultTime from './demo/DatePicker/DefaultTime.vue'
 <template #example>
 
   <Disabled/>
-  
+
 </template>
 
 <template #template>
@@ -451,7 +451,7 @@ import DefaultTime from './demo/DatePicker/DefaultTime.vue'
 <template #example>
 
   <Format/>
-  
+
 </template>
 
 <template #template>
@@ -497,7 +497,7 @@ import DefaultTime from './demo/DatePicker/DefaultTime.vue'
 <template #example>
 
   <Size/>
-  
+
 </template>
 
 <template #template>
@@ -561,7 +561,7 @@ import DefaultTime from './demo/DatePicker/DefaultTime.vue'
 <template #example>
 
   <Time/>
-  
+
 </template>
 
 <template #template>
@@ -644,7 +644,7 @@ import DefaultTime from './demo/DatePicker/DefaultTime.vue'
 <template #example>
 
   <TimeRange/>
-  
+
 </template>
 
 <template #template>
@@ -732,7 +732,7 @@ import DefaultTime from './demo/DatePicker/DefaultTime.vue'
 <template #example>
 
   <DefaultTime/>
-  
+
 </template>
 
 <template #template>
@@ -787,7 +787,7 @@ import DefaultTime from './demo/DatePicker/DefaultTime.vue'
 
 | 参数              | 说明                                           | 类型                                      | 可选值                                                                                          | 默认值     |
 | ----------------- | ---------------------------------------------- | ----------------------------------------- | ----------------------------------------------------------------------------------------------- | ---------- |
-| value / v-model   | 绑定值                                         | date(DatePicker) / array(DateRangePicker) | —                                                                                               | —          |
+| value / v-model   | 绑定值；推荐使用 `model-value`，配合 `v-model` 使用                                                                  | date(DatePicker) / array(DateRangePicker) | —                                                                                               | —          |
 | readonly          | 完全只读                                       | boolean                                   | —                                                                                               | false      |
 | disabled          | 禁用                                           | boolean                                   | —                                                                                               | false      |
 | editable          | 文本框可输入                                   | boolean                                   | —                                                                                               | true       |
@@ -797,7 +797,7 @@ import DefaultTime from './demo/DatePicker/DefaultTime.vue'
 | start-placeholder | 范围选择时开始日期的占位内容                   | string                                    | —                                                                                               | —          |
 | end-placeholder   | 范围选择时结束日期的占位内容                   | string                                    | —                                                                                               | —          |
 | type              | 显示类型                                       | string                                    | year/month/date/dates/ week/datetime/datetimerange/ daterange/monthrange                        | date       |
-| format            | 显示在输入框中的格式                           | string                                    | YYYY MM DD hh mm ss                                                                             | YYYY-MM-DD |
+| format            | 显示在输入框中的格式                           | string                                    | YYYY MM DD hh mm ss                                                                             | 随 type 变化（如 date 为 `YYYY-MM-DD`） |
 | popper-class      | DatePicker 下拉框的类名                        | string                                    | —                                                                                               | —          |
 | range-separator   | 选择范围时的分隔符                             | string                                    | —                                                                                               | '-'        |
 | default-value     | 可选，选择器打开时默认显示的时间               | Date                                      | 可被`new Date()`解析                                                                            | —          |
@@ -807,15 +807,29 @@ import DefaultTime from './demo/DatePicker/DefaultTime.vue'
 | clear-icon        | 自定义清空图标的类名                           | string                                    | —                                                                                               | —          |
 | validate-event    | 输入时是否触发表单的校验                       | boolean                                   | -                                                                                               | true       |
 | shortcuts         | 设置快捷选项，需要传入数组对象                 | object[{ text: string, value: Date }]     | —                                                                                               | —          |
-| disabledDate      | 设置禁用状态，参数为当前日期，要求返回 Boolean | Function                                  | —                                                                                               | —          |
+| disabled-date     | 设置禁用状态，参数为当前日期，要求返回 Boolean | Function                                  | —                                                                                               | —          |
+| model-value       | 绑定值（推荐写法，支持 `v-model`）             | Date / array                              | —                                                                                               | —          |
+| is-range          | 是否为范围选择                                 | boolean                                   | —                                                                                               | false      |
+| name              | 原生 input 的 name 属性                        | array / string                            | —                                                                                               | —          |
+| popper-options    | 自定义 popper 的配置项                         | object                                    | —                                                                                               | {}         |
+| cell-class-name   | 自定义单元格 className 的函数                  | Function                                  | 参数为当前日期                                                                                  | —          |
+| arrow-control     | 是否使用箭头进行时间选择                       | boolean                                   | —                                                                                               | false      |
+| disabled-hours    | 禁用部分小时，参数为当前小时，返回 Boolean     | Function                                  | —                                                                                               | —          |
+| disabled-minutes  | 禁用部分分钟，参数为当前分钟，返回 Boolean     | Function                                  | —                                                                                               | —          |
+| disabled-seconds  | 禁用部分秒，参数为当前秒，返回 Boolean         | Function                                  | —                                                                                               | —          |
 
 ## Events
 
-| 事件名称 | 说明                    | 回调参数   |
-| -------- | ----------------------- | ---------- |
-| change   | 用户确认选定的值时触发  | 组件绑定值 |
-| blur     | 当 input 失去焦点时触发 | 组件实例   |
-| focus    | 当 input 获得焦点时触发 | 组件实例   |
+| 事件名称        | 说明                          | 回调参数                |
+| --------------- | ----------------------------- | ----------------------- |
+| change          | 用户确认选定的值时触发        | 组件绑定值              |
+| blur            | 当 input 失去焦点时触发       | 组件实例                |
+| focus           | 当 input 获得焦点时触发       | 组件实例                |
+| update:modelValue | 绑定值变化时触发            | 新的绑定值              |
+| pick            | 面板中选中某个日期时触发      | 选中项、是否选中        |
+| select          | 面板中选中单元格时触发        | 选中项、是否选中        |
+| set-picker-option | 面板初始化时设置配置项      | 配置项名称、配置值      |
+| changerange     | 范围选择时起止值变化事件      | 变更项、变更值          |
 
 ## Methods
 

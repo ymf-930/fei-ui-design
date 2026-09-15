@@ -10,7 +10,7 @@ import Slot from './demo/Tooltip/Slot.vue'
 import More from './demo/Tooltip/More.vue'
 </script>
 
-##### 文字提示气泡框，在鼠标悬停时显示，代替了系统的title提示。tooltip的default slot应该保证是一个dom或者一个component
+文字提示气泡框，在鼠标悬停时显示，代替了系统的title提示。tooltip的default slot应该保证是一个dom或者一个component
 
 <card>
 
@@ -21,7 +21,7 @@ import More from './demo/Tooltip/More.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -47,7 +47,7 @@ import More from './demo/Tooltip/More.vue'
 <template #example>
 
   <Placement/>
-  
+
 </template>
 
 <template #template>
@@ -156,7 +156,7 @@ import More from './demo/Tooltip/More.vue'
 <template #example>
 
   <Theme/>
-  
+
 </template>
 
 <template #template>
@@ -185,7 +185,7 @@ import More from './demo/Tooltip/More.vue'
 <template #example>
 
   <Slot/>
-  
+
 </template>
 
 <template #template>
@@ -221,7 +221,7 @@ import More from './demo/Tooltip/More.vue'
 <template #example>
 
   <More/>
-  
+
 </template>
 
 <template #template>
@@ -257,16 +257,50 @@ const disabled = ref(false)
 
 ## Props
 
+除下列属性外，Tooltip 还继承全部 Popper 公共属性（见下方「Popper 公共属性」）。
+
 | 参数            | 说明                     | 类型    | 可选值                                                                                                    | 默认值         |
 | --------------- | ------------------------ | ------- | --------------------------------------------------------------------------------------------------------- | -------------- |
 | v-model:visible | 状态是否可见             | Boolean | —                                                                                                         | false          |
 | content         | 显示的内容               | String  | —                                                                                                         | —              |
-| placement       | 提示框出现的位置         | String  | top/top-start/top-end/bottom/bottom-start/bottom-end/left/left-start/left-end/right/right-start/right-end | —              |
+| placement       | 提示框出现的位置         | String  | top/top-start/top-end/bottom/bottom-start/bottom-end/left/left-start/left-end/right/right-start/right-end | top            |
 | disabled        | 是否禁用提示框           | Boolean | —                                                                                                         | false          |
 | transition      | 自定义渐变动画           | String  | —                                                                                                         | fade-in-linear |
 | show-arrow      | 是否显示箭头             | Boolean | —                                                                                                         | true           |
 | theme           | 主题                     | String  | dark 或 light                                                                                             | dark           |
+| trigger         | 触发方式                 | String  | hover / click / contextmenu / manual                                                                      | hover          |
 | open-delay      | 延迟出现，单位毫秒       | Number  | —                                                                                                         | 0              |
-| hide-delay      | 延迟消失，单位毫秒       | Number  | —                                                                                                         | 0              |
+| close-delay     | 延迟消失，单位毫秒       | Number  | —                                                                                                         | 200            |
 | offset          | 出现位置的偏移量         | Number  | —                                                                                                         | 12             |
-| appendToBody    | 是否将弹层放置于 body 内 | Boolean | —                                                                                                         | true           |
+| append-to-body  | 是否将弹层放置于 body 内 | Boolean | —                                                                                                         | true           |
+
+## Popper Props
+
+以下属性由 `_internal/popper` 提供，Popover / Tooltip / Dropdown 等浮层组件共用。
+
+| 参数                    | 说明                                        | 类型    | 可选值                            | 默认值  |
+| ----------------------- | ------------------------------------------- | ------- | --------------------------------- | ------- |
+| placement               | 提示框出现的位置                            | string  | top/top-start/top-end/bottom/bottom-start/bottom-end/left/left-start/left-end/right/right-start/right-end | top     |
+| theme                   | 主题                                        | string  | dark / light                      | dark    |
+| trigger                 | 触发方式                                    | string  | hover / click / contextmenu / manual | hover |
+| offset                  | 出现位置的偏移量                            | number  | —                                 | 12      |
+| arrow-offset            | 箭头的偏移量                                | number  | —                                 | 4       |
+| show-arrow              | 是否显示箭头                                | boolean | —                                 | true    |
+| append-to-body          | 是否将弹层放置于 body 内                    | boolean | —                                 | true    |
+| disabled                | 是否禁用                                    | boolean | —                                 | false   |
+| manual-mode             | 手动控制模式，为 true 时鼠标进入 / 移出事件不生效 | boolean | —                              | false   |
+| open-delay              | 延迟出现，单位毫秒                          | number  | —                                 | 0       |
+| close-delay             | 延迟消失，单位毫秒                          | number  | —                                 | 200     |
+| show-after              | 显示后的延时，单位毫秒                      | number  | —                                 | 0       |
+| hide-after              | 隐藏后的延时，单位毫秒                      | number  | —                                 | 0       |
+| popper-class            | 自定义浮层类名                              | string  | —                                 | ''      |
+| popper-options          | popper.js 参数，具体参考 popper.js 文档     | object  | —                                 | null    |
+| boundaries-padding      | 边界内边距                                  | number  | —                                 | 0       |
+| gpu-acceleration        | 是否开启 GPU 加速                           | boolean | —                                 | true    |
+| stop-popper-mouse-event | 是否阻止浮层上的鼠标事件                    | boolean | —                                 | true    |
+| strategy                | 定位策略                                    | string  | fixed / absolute                  | fixed   |
+| style                   | 浮层的行内样式                              | object  | —                                 | —       |
+| cutoff                  | 浮层内容超出可视区域时是否裁剪              | boolean | —                                 | false   |
+| pure                    | 是否开启纯净模式（去掉默认样式）            | boolean | —                                 | false   |
+| z-index                 | 层级                                        | number  | —                                 | 0       |
+| visible                 | 状态是否可见                                | boolean | —                                 | —       |

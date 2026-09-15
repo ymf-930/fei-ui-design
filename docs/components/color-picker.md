@@ -10,7 +10,7 @@ import Disabled from './demo/ColorPicker/Disabled.vue'
 import Size from './demo/ColorPicker/Size.vue'
 </script>
 
-##### 用于选择颜色色值
+用于选择颜色色值
 
 <card>
 
@@ -19,7 +19,7 @@ import Size from './demo/ColorPicker/Size.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -73,7 +73,7 @@ import Size from './demo/ColorPicker/Size.vue'
 <template #example>
 
   <Alpha/>
-  
+
 </template>
 
 <template #template>
@@ -114,7 +114,7 @@ import Size from './demo/ColorPicker/Size.vue'
 <template #example>
 
   <Colors/>
-  
+
 </template>
 
 <template #template>
@@ -197,7 +197,7 @@ import Size from './demo/ColorPicker/Size.vue'
 <template #example>
 
   <Disabled/>
-  
+
 </template>
 
 <template #template>
@@ -238,7 +238,7 @@ import Size from './demo/ColorPicker/Size.vue'
 <template #example>
 
   <Size/>
-  
+
 </template>
 
 <template #template>
@@ -298,11 +298,12 @@ import Size from './demo/ColorPicker/Size.vue'
 
 | 参数            | 说明                      | 类型    | 可选值                | 默认值                                                |
 | --------------- | ------------------------- | ------- | --------------------- | ----------------------------------------------------- |
-| value / v-model | 绑定值                    | string  | —                     | —                                                     |
+| model-value / v-model | 绑定值                    | string  | —                     | —                                                     |
 | disabled        | 是否禁用                  | boolean | —                     | false                                                 |
 | size            | 尺寸                      | string  | —                     | medium / small / mini                                 |
 | show-alpha      | 是否支持透明度选择        | boolean | —                     | false                                                 |
-| color-format    | 写入 v-model 的颜色的格式 | string  | hsl / hsv / hex / rgb | hex（show-alpha 为 false）/ rgb（show-alpha 为 true） |
+| show-label      | 是否显示颜色值标签        | boolean | —                     | true                                                  |
+| color-format    | 写入 v-model 的颜色的格式 | string  | hsl / hsv / hex / rgb | hex                                                   |
 | popper-class    | ColorPicker 下拉框的类名  | string  | —                     | —                                                     |
 | colors          | 预定义颜色                | array   | —                     | —                                                     |
 

@@ -9,7 +9,7 @@ import Position from './demo/Notice/Position.vue'
 import Other from './demo/Notice/Other.vue'
 </script>
 
-##### 组件提供通知功能
+组件提供通知功能
 
 <card>
 
@@ -18,7 +18,7 @@ import Other from './demo/Notice/Other.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -78,7 +78,7 @@ function time() {
 <template #example>
 
   <TypeIcon/>
-  
+
 </template>
 
 <template #template>
@@ -148,7 +148,7 @@ function error(message) {
 <template #example>
 
   <Position/>
-  
+
 </template>
 
 <template #template>
@@ -198,14 +198,14 @@ function open(options) {
 
 <card>
 
-## 其他参数
+## 位置与显示配置
 
 可以设置其他参数控制notice位置和显示
 
 <template #example>
 
   <Other/>
-  
+
 </template>
 
 <template #template>
@@ -264,7 +264,7 @@ Notice.success(options)
 Notice.warning(options)
 Notice.error(options)
 ```
-  
+
 </template>
 
 </card>

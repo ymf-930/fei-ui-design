@@ -9,7 +9,7 @@ import Custom from './demo/Loading/Custom.vue'
 import Ctrl from './demo/Loading/Ctrl.vue'
 </script>
 
-##### 获取数据或加载中时显示，提示用户正在等待中。
+获取数据或加载中时显示，提示用户正在等待中。
 
 <card>
 
@@ -20,7 +20,7 @@ import Ctrl from './demo/Loading/Ctrl.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -65,7 +65,7 @@ import Ctrl from './demo/Loading/Ctrl.vue'
 <template #example>
 
   <Center/>
-  
+
 </template>
 
 <template #template>
@@ -111,7 +111,7 @@ import Ctrl from './demo/Loading/Ctrl.vue'
 <template #example>
 
   <Custom/>
-  
+
 </template>
 
 <template #template>
@@ -164,7 +164,7 @@ import Ctrl from './demo/Loading/Ctrl.vue'
 <template #example>
 
   <Ctrl/>
-  
+
 </template>
 
 <template #template>

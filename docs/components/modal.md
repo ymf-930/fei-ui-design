@@ -12,7 +12,7 @@ import Fullscreen from './demo/Modal/Fullscreen.vue'
 import Draggable from './demo/Modal/Draggable.vue'
 </script>
 
-##### 对话框/弹窗，在浮层中显示，引导用户进行相关操作。
+对话框/弹窗，在浮层中显示，引导用户进行相关操作。
 
 <card>
 
@@ -21,7 +21,7 @@ import Draggable from './demo/Modal/Draggable.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -96,7 +96,7 @@ Modal 组件提供了灵活的自定义样式 API 和 Slot，可以自由控制�
 <template #example>
 
   <Custom/>
-  
+
 </template>
 
 <template #template>
@@ -179,7 +179,7 @@ const modal5 = ref(false)
 <template #example>
 
   <Animation/>
-  
+
 </template>
 
 <template #template>
@@ -244,7 +244,7 @@ const transitionName = ref('dialog-fade')
 <template #example>
 
   <DisableClose/>
-  
+
 </template>
 
 <template #template>
@@ -290,7 +290,7 @@ const modal2 = ref(false)
 <template #example>
 
   <Qiantao/>
-  
+
 </template>
 
 <template #template>
@@ -341,7 +341,7 @@ const modal2 = ref(false)
 <template #example>
 
   <Fullscreen/>
-  
+
 </template>
 
 <template #template>
@@ -397,7 +397,7 @@ const fullscreen = ref(false)
 <template #example>
 
   <Draggable/>
-  
+
 </template>
 
 <template #template>
@@ -438,13 +438,17 @@ const modal2 = ref(false)
 
 | 参数             | 说明                                            | 类型                                                                     | 可选值 | 默认值        |
 | ---------------- | ----------------------------------------------- | ------------------------------------------------------------------------ | ------ | ------------- |
-| v-model          | 是否显示                                        | Boolean                                                                  | —      | false         |
+| model-value      | 是否显示，可使用 v-model 双向绑定               | Boolean                                                                  | —      | false         |
 | title            | 标题，如果使用 slot 自定义了页头，则 title 无效 | String                                                                   | —      | —             |
 | width            | 对话框宽度                                      | String                                                                   | —      | 520px         |
 | top              | 对话框距离顶部高度                              | String                                                                   | —      | 100px         |
 | show-close       | 右上角的关闭按钮                                | Boolean                                                                  | —      | true          |
 | mask-closable    | 是否允许点击遮罩层关闭                          | Boolean                                                                  | —      | true          |
+| mask-class       | 遮罩层的自定义类名                              | String / Array / Object                                                  | —      | —             |
 | esc-closable     | 是否允许esc键盘关闭                             | Boolean                                                                  | —      | true          |
+| destroy-on-close | 关闭时是否销毁内部元素                          | Boolean                                                                  | —      | false         |
+| before-close     | 关闭前的回调，可用于阻止关闭                    | Function                                                                 | —      | —             |
+| close-delay      | 关闭延时（毫秒）                                | Number                                                                   | —      | 0             |
 | fullscreen       | 是否全屏显示                                    | Boolean                                                                  | —      | false         |
 | draggable        | 是否可以拖拽移动                                | Boolean                                                                  | —      | false         |
 | mask             | 是否显示遮罩层                                  | Boolean                                                                  | —      | true          |
@@ -468,7 +472,7 @@ const modal2 = ref(false)
 | close  | modal关闭回调    | 无     |
 | closed | 关闭动画结束回调 | 无     |
 
-## Slot
+## Slots
 
 | 名称   | 说明               |
 | ------ | ------------------ |

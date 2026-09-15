@@ -21,7 +21,7 @@ const data = ref([
   {
     title: 'parent 1',
     expand: true,
-    render: ({ root, node, data }) => {
+    render: ({ root: _root, node: _node, data }) => {
       return h(
         'span',
         {
@@ -106,7 +106,7 @@ function renderContent({ root, node, data }) {
   )
 }
 
-function renderContent1({ root, node, data }) {
+function renderContent1({ root: _root, node: _node, data }) {
   const inline = [
     h(
       'span',

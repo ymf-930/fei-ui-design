@@ -10,7 +10,7 @@ import Custom from './demo/Skeleton/Custom.vue'
 import Loading from './demo/Skeleton/Loading.vue'
 </script>
 
-##### 在需要等待加载内容的位置设置一个骨架屏，某些场景下比 Loading 的视觉效果更好。
+在需要等待加载内容的位置设置一个骨架屏，某些场景下比 Loading 的视觉效果更好。
 
 <card>
 
@@ -21,7 +21,7 @@ import Loading from './demo/Skeleton/Loading.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -38,14 +38,14 @@ import Loading from './demo/Skeleton/Loading.vue'
 
 <card>
 
-## 更多参数
+## 段落数量
 
 可以配置骨架屏段落数量，以便更接近真实渲染效果。显示的数量会比传入的数量多 1，首行会被渲染一个长度 33% 的段首。
 
 <template #example>
 
   <Rows/>
-  
+
 </template>
 
 <template #template>
@@ -69,7 +69,7 @@ import Loading from './demo/Skeleton/Loading.vue'
 <template #example>
 
   <Animation/>
-  
+
 </template>
 
 <template #template>
@@ -93,19 +93,25 @@ import Loading from './demo/Skeleton/Loading.vue'
 <template #example>
 
   <Custom/>
-  
+
 </template>
 
 <template #template>
 
-```html
+```vue
 <template>
-  <f-layout has-sider>
-    <template #sider>
-      <div style="height: 300px">侧边栏</div>
+  <f-skeleton style="width: 240px" animation>
+    <template #template>
+      <f-skeleton-item variant="image" style="width: 240px; height: 240px" />
+      <div style="padding: 14px">
+        <f-skeleton-item variant="p" style="width: 50%" />
+        <div flex="main:justify cross:center">
+          <f-skeleton-item variant="text" style="margin-right: 16px" />
+          <f-skeleton-item variant="text" style="width: 30%" />
+        </div>
+      </div>
     </template>
-    <div>右侧容器</div>
-  </f-layout>
+  </f-skeleton>
 </template>
 ```
 
@@ -122,7 +128,7 @@ loading结束后加载真实的ui，通过slot设置之后的ui
 <template #example>
 
   <Loading/>
-  
+
 </template>
 
 <template #template>
@@ -188,25 +194,25 @@ function show() {
 
 </card>
 
-# Skeleton Props
+## Skeleton Props
 
-| 参数     | 说明                                        | 类型    | 可选值       | 默认值 |
-| -------- | ------------------------------------------- | ------- | ------------ | ------ |
-| animated | 是否使用动画                                | boolean | true / false | false  |
-| count    | 渲染多少个 template, 建议使用尽可能小的数字 | number  | integer      | 1      |
-| loading  | 是否显示真实的 DOM 结构                     | boolean | true / false | false  |
-| rows     | 骨架屏段落数量                              | number  | 正整数       | 3      |
-| throttle | 延迟占位 DOM 渲染的时间, 单位是毫秒         | number  | 正整数       | 0      |
+| 参数 | 说明 | 类型 | 可选值 | 默认值 |
+| --- | --- | --- | --- | --- |
+| animation | 是否开启骨架屏动画 | `boolean` | — | `false` |
+| count | 渲染多少个 template，建议使用尽可能小的数字 | `number` | — | `1` |
+| loading | 是否显示真实的 DOM 结构 | `boolean` | — | `true` |
+| rows | 骨架屏段落数量 | `number` | — | `3` |
+| throttle | 延迟占位 DOM 渲染的时间，单位毫秒 | `number` | — | `0` |
 
-## Skeleton Item Attributes
+## SkeletonItem Props
 
-| 参数    | 说明                     | 类型         | 可选值                                                                    | 默认值 |
-| ------- | ------------------------ | ------------ | ------------------------------------------------------------------------- | ------ |
-| variant | 当前显示的占位元素的样式 | Enum(string) | p / text / h1 / h2 / h5 / text / caption / button / image / circle / rect | text   |
+| 参数 | 说明 | 类型 | 可选值 | 默认值 |
+| --- | --- | --- | --- | --- |
+| variant | 当前显示的占位元素的样式 | `string` | `p` / `text` / `h1` / `h2` / `h5` / `caption` / `button` / `image` / `circle` / `rect` | `text` |
 
 ## Skeleton Slots
 
-| name     | description          |
-| -------- | -------------------- |
-| default  | 用来展示真实 UI      |
+| 插槽名 | 说明 |
+| --- | --- |
+| default | 用来展示真实 UI |
 | template | 用来展示自定义占位符 |

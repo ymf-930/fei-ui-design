@@ -8,7 +8,7 @@ import Confirm from './demo/MessageBox/Confirm.vue'
 import Custom from './demo/MessageBox/Custom.vue'
 </script>
 
-##### 空显示状态，用于给内部无数据情况的展示。十分简单
+弹框提示用于需要用户确认或输入的交互场景，在页面中央弹出模态浮层，阻断背景操作直到用户作出响应。
 
 <card>
 
@@ -19,7 +19,7 @@ import Custom from './demo/MessageBox/Custom.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -91,7 +91,7 @@ function showAlert() {
 <template #example>
 
   <Confirm/>
-  
+
 </template>
 
 <template #template>
@@ -142,7 +142,7 @@ function open() {
 <template #example>
 
   <Custom/>
-  
+
 </template>
 
 <template #template>
@@ -222,7 +222,7 @@ MessageBox(options)
 Message.alert(options)
 Message.confirm(options)
 ```
-  
+
 </template>
 
 </card>
@@ -233,7 +233,7 @@ Message.confirm(options)
 | ----------------- | -------------------------------------------------------------------------------------- | ---------------------- | -------------------- |
 | title             | 标题                                                                                   | String                 | —                    |
 | message           | 内容                                                                                   | String /Element String | —                    |
-| type              | 类别，用于显示图标,info,success,warning,error                                          | String                 | —                    |
+| type              | 类别，用于显示图标，info,success,warning,error                                          | String                 | —                    |
 | useHTML           | 是否使用html插入                                                                       | Boolean                | false                |
 | iconClass         | 替换图表名称（不带前缀）                                                               | String                 | —                    |
 | callback          | 回调函数，不实用promise，可以用参数指定，参数为action，值为'confirm','cancel'          | Function               | —                    |
@@ -243,5 +243,12 @@ Message.confirm(options)
 | showConfirmButton | 是否显示确定按钮                                                                       | Boolean                | true                 |
 | cancelText        | 取消按钮文字                                                                           | String                 | 取消                 |
 | confirmText       | 确定按钮文字                                                                           | String                 | 确定                 |
+
+## Events
+
+| 事件名 | 说明                                             | 回调参数                                                                  |
+| ------ | ------------------------------------------------ | ------------------------------------------------------------------------- |
+| action | 用户点击按钮关闭弹窗时触发                       | action：`'confirm'` / `'cancel'` / `'close'`                              |
+| vanish | 弹窗关闭动画结束时触发                           | —                                                                         |
 | maskClosable      | 是否可以点击遮罩关闭                                                                   | Boolean                | true ,alert时为false |
 | escClosable       | esc按钮关闭                                                                            | Boolean                | true ,alert时为false |

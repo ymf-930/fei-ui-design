@@ -4,8 +4,6 @@ title: 通用样式
 
 <card>
 
-# 通用样式
-
 组件内部导入了部分通用样式，如内外边距，flex等。默认全局样式引入的时候会默认导入，如进行按需加载，部分内容可按需进行导入
 
 ```ts
@@ -181,7 +179,7 @@ hr {
   如果使用了webpack打包，npm安装后，并且配置了ES6编译器的话，
   flex 属性匹配可以直接使用：
     import 'flex.css';
-  data-flex 属性匹配可以直接使用(react使用)
+  data-flex 属性匹配可以直接使用（react使用）
     import 'flex.css/dist/data-flex.css';
   -->
 <!-- flex属性匹配，简单的子元素居中例子： -->
@@ -208,7 +206,7 @@ hr {
 
 flex 属性
 
-```
+```text
 dir：主轴方向
     top：从上到下
     right：从右到左
@@ -584,4 +582,3 @@ flex-box:
 ```
 
 </card>
-

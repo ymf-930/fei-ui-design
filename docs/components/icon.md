@@ -2,8 +2,6 @@
 title: 图标 Icon
 ---
 
-# 图标 Icon
-
 图标这里使用了阿里[iconfont](https://www.iconfont.cn/)图标库生成了图标，图标来源于开源项目 ionicons，结合整理添加了一些其他的图标。
 
 i 标签可以直接设置样式类名为 `f-iconfont f-icon-xxx` 来使用即可。icon 组件可以只设置 name 来实用。 设置 `icon-is-rotating` 可以开启旋转
@@ -22,6 +20,8 @@ i 标签可以直接设置样式类名为 `f-iconfont f-icon-xxx` 来使用即�
 </div>
 
 ## 所有图标
+
+<card>
 
 <script lang="ts" setup>
 import builtInIcons from '../.vitepress/utils/iconfont.json'
@@ -66,6 +66,10 @@ const copyComp = name => {
   </li>
 </ul>
 
+</card>
+
+<card>
+
 ## Props
 
 | 参数  | 说明                       | 类型            | 可选值   | 默认值 |
@@ -74,6 +78,78 @@ const copyComp = name => {
 | size  | 尺寸                       | Number / String | 数字像素 | —      |
 | type  | 设置为button时可以悬停点击 | String          | button   | —      |
 | color | 图标颜色值                 | String          | —        | —      |
+
+</card>
+
+<card>
+
+## IconSelect 图标选择器
+
+`f-icon-select` 提供一个带搜索的图标选择下拉框，选中值通过 `v-model` 双向绑定为图标名称。
+
+<template #example>
+
+  <div style="width: 220px">
+    <f-icon-select v-model="icon"></f-icon-select>
+    <div class="pt-8">当前选中：{{ icon || '未选择' }}</div>
+  </div>
+
+</template>
+
+<template #template>
+
+```html
+<template>
+  <div style="width: 220px">
+    <f-icon-select v-model="icon"></f-icon-select>
+    <div>当前选中：{{ icon }}</div>
+  </div>
+</template>
+```
+
+</template>
+
+<template #script>
+
+```html
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const icon = ref('')
+</script>
+```
+
+</template>
+
+</card>
+
+<card>
+
+## IconSelect Props
+
+| 参数           | 说明                           | 类型    | 可选值                         | 默认值             |
+| -------------- | ------------------------------ | ------- | ------------------------------ | ------------------ |
+| model-value    | 选中图标名称（配合 `v-model`） | String  | —                              | ''                 |
+| size           | 输入框尺寸                     | String  | small / large / default / mini | default            |
+| disabled       | 是否禁用                       | Boolean | —                              | false              |
+| clearable      | 是否可清空                     | Boolean | —                              | false              |
+| placeholder    | 输入框占位文本                 | String  | —                              | 选择图标           |
+| append-to-body | 下拉浮层是否插入至 body 元素上 | Boolean | —                              | true               |
+| clear-icon     | 清空图标名称                   | String  | —                              | close-circle-fill  |
+| popper-class   | 下拉浮层的自定义类名           | String  | —                              | ''                 |
+
+## IconSelect Events
+
+| 事件名             | 说明                    | 回调参数                  |
+| ------------------ | ----------------------- | ------------------------- |
+| update:model-value | 选中值变化时触发        | 选中图标的名称            |
+| change             | 选中图标变化时触发      | 选中图标的名称            |
+| clear              | 点击清空按钮时触发      | —                         |
+| visible-change     | 下拉框出现 / 隐藏时触发 | 出现为 true，隐藏为 false |
+| focus              | 获得焦点时触发          | (event: Event)            |
+| blur               | 失去焦点时触发          | (event: Event)            |
+
+</card>
 
 <style scoped>
 .demo-icon {

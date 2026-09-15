@@ -10,7 +10,7 @@ import Normal from './demo/Split/Normal.vue'
 import HideLine from './demo/Split/HideLine.vue'
 </script>
 
-##### 分割面板可自行拖放宽度/高度
+分割面板可自行拖放宽度/高度
 
 <card>
 
@@ -19,7 +19,7 @@ import HideLine from './demo/Split/HideLine.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -51,7 +51,7 @@ import HideLine from './demo/Split/HideLine.vue'
 <template #example>
 
   <Horizontal/>
-  
+
 </template>
 
 <template #template>
@@ -82,7 +82,7 @@ import HideLine from './demo/Split/HideLine.vue'
 <template #example>
 
   <Mixed/>
-  
+
 </template>
 
 <template #template>
@@ -122,7 +122,7 @@ import HideLine from './demo/Split/HideLine.vue'
 <template #example>
 
   <Normal/>
-  
+
 </template>
 
 <template #template>
@@ -160,7 +160,7 @@ import HideLine from './demo/Split/HideLine.vue'
 <template #example>
 
   <HideLine/>
-  
+
 </template>
 
 <template #template>
@@ -202,7 +202,7 @@ import HideLine from './demo/Split/HideLine.vue'
 | ------ | -------- | ------- |
 | resize | 重置大小 | percent |
 
-## Slot
+## Slots
 
 | 名称  | 说明                                                 |
 | ----- | ---------------------------------------------------- |

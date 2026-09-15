@@ -19,7 +19,7 @@
         @drag-drop="handleDragDrop"
         @current-change="currentRowChange"
       >
-        <template #handle="{ row }">
+        <template #handle>
           <span class="drag-handle" style="cursor: grab"><f-icon name="drag" size="20" /></span>
         </template>
         <template #ctrl="{ row, index }">
@@ -128,10 +128,10 @@ const data2 = ref([
 const currentRow = ref({})
 const currentRowTable = ref(null)
 
-function currentRowChange(row, oldRow, index) {
+function currentRowChange(row, _oldRow, _index) {
   currentRow.value = row
 }
-function handleDragDrop(newList, newIndex, oldIndex) {
+function handleDragDrop(newList, newIndex, _oldIndex) {
   data2.value = [...newList]
   nextTick(() => {
     currentRowTable.value.clickCurrentRow(newIndex)

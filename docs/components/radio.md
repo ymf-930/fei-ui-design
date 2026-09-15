@@ -10,7 +10,7 @@ import ButtonType from './demo/Radio/ButtonType.vue'
 import CapsuleType from './demo/Radio/CapsuleType.vue'
 </script>
 
-##### 单选框。主要用于一组可选项单项选择，或者单独用于切换到选中状态。
+单选框。主要用于一组可选项单项选择，或者单独用于切换到选中状态。
 
 <card>
 
@@ -19,7 +19,7 @@ import CapsuleType from './demo/Radio/CapsuleType.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -53,7 +53,7 @@ import CapsuleType from './demo/Radio/CapsuleType.vue'
 <template #example>
 
   <Group/>
-  
+
 </template>
 
 <template #template>
@@ -102,7 +102,6 @@ import CapsuleType from './demo/Radio/CapsuleType.vue'
 
 </card>
 
-
 <card>
 
 ## 禁用状态
@@ -112,7 +111,7 @@ import CapsuleType from './demo/Radio/CapsuleType.vue'
 <template #example>
 
   <Disabled/>
-  
+
 </template>
 
 <template #template>
@@ -155,7 +154,7 @@ import CapsuleType from './demo/Radio/CapsuleType.vue'
 <template #example>
 
   <ButtonType/>
-  
+
 </template>
 
 <template #template>
@@ -214,7 +213,6 @@ import CapsuleType from './demo/Radio/CapsuleType.vue'
 
 </card>
 
-
 <card>
 
 ## 胶囊类型
@@ -224,7 +222,7 @@ import CapsuleType from './demo/Radio/CapsuleType.vue'
 <template #example>
 
   <CapsuleType/>
-  
+
 </template>
 
 <template #template>
@@ -291,28 +289,29 @@ import CapsuleType from './demo/Radio/CapsuleType.vue'
 
 ## Props
 
-| 参数     | 说明                                                            | 类型                  | 可选值 | 默认值 |
-| -------- | --------------------------------------------------------------- | --------------------- | ------ | ------ |
-| value    | 只在单独使用时有效。可以使用 v-model 双向绑定数据               | Boolean               | —      | false  |
-| label    | 组合使用时有效。指定当前选项的 value 值，组合会自动判断是否选中 | String/Number/Boolean | —      | —      |
-| disabled | 是否禁用当前项                                                  | Boolean               | —      | false  |
+| 参数        | 说明                                                            | 类型                  | 可选值 | 默认值 |
+| ----------- | --------------------------------------------------------------- | --------------------- | ------ | ------ |
+| model-value | 只在单独使用时有效。可以使用 v-model 双向绑定数据               | Boolean               | —      | false  |
+| label       | 组合使用时有效。指定当前选项的 value 值，组合会自动判断是否选中 | String/Number/Boolean | —      | —      |
+| name        | 原生 name 属性                                                  | String                | —      | —      |
+| disabled    | 是否禁用当前项                                                  | Boolean               | —      | false  |
 
-## Radio events
+## Radio Events
 
 | 事件名 | 说明                                                                     | 返回值 |
 | ------ | ------------------------------------------------------------------------ | ------ |
 | change | 在选项状态发生改变时触发，返回当前状态。通过修改外部的数据改变时不会触发 | ...    |
 
-## RadioGroup props
+## RadioGroup Props
 
-| 参数     | 说明                                              | 类型           | 可选值                | 默认值 |
-| -------- | ------------------------------------------------- | -------------- | --------------------- | ------ |
-| value    | 指定选中项目的集合，可以使用 v-model 双向绑定数据 | String/ Number | —                     | ''     |
-| disabled | 是否禁用所有选项                                  | Boolean        | —                     | false  |
-| type     | 是否开启button模式                                | String         | button /capsule       | —      |
-| size     | 按钮模式单选组的尺寸                              | String         | large、small、default | —      |
+| 参数        | 说明                                              | 类型           | 可选值                | 默认值 |
+| ----------- | ------------------------------------------------- | -------------- | --------------------- | ------ |
+| model-value | 指定选中项目的集合，可以使用 v-model 双向绑定数据 | String/ Number | —                     | ''     |
+| disabled    | 是否禁用所有选项                                  | Boolean        | —                     | false  |
+| type        | 是否开启button模式                                | String         | button /capsule       | —      |
+| size        | 按钮模式单选组的尺寸                              | String         | large、small、default | —      |
 
-## RadioGroup events
+## RadioGroup Events
 
 | 事件名 | 说明                                                                         | 返回值 |
 | ------ | ---------------------------------------------------------------------------- | ------ |

@@ -12,7 +12,49 @@ import Flex from './demo/Grid/Flex.vue'
 import Auto from './demo/Grid/Auto.vue'
 </script>
 
-##### 采用了24栅格系统，将区域进行24等分
+采用了24栅格系统，将区域进行24等分
+
+<card>
+
+## 基础用法
+
+通过 `span` 指定栅格占位格数，一行共 24 格。不设置 `span` 时，栅格会自动均分剩余宽度。
+
+<template #example>
+
+  <Basic/>
+
+</template>
+
+<template #template>
+
+```vue
+<template>
+  <div class="demo-grid">
+    <f-row>
+      <f-col span="12">col-12</f-col>
+      <f-col span="12">col-12</f-col>
+    </f-row>
+    <br />
+    <f-row>
+      <f-col span="8">col-8</f-col>
+      <f-col span="8">col-8</f-col>
+      <f-col span="8">col-8</f-col>
+    </f-row>
+    <br />
+    <f-row>
+      <f-col span="6">col-6</f-col>
+      <f-col span="6">col-6</f-col>
+      <f-col span="6">col-6</f-col>
+      <f-col span="6">col-6</f-col>
+    </f-row>
+  </div>
+</template>
+```
+
+</template>
+
+</card>
 
 <card>
 
@@ -21,7 +63,7 @@ import Auto from './demo/Grid/Auto.vue'
 <template #example>
 
   <Gutter/>
-  
+
 </template>
 
 <template #template>
@@ -78,7 +120,7 @@ import Auto from './demo/Grid/Auto.vue'
 <template #example>
 
   <Order/>
-  
+
 </template>
 
 <template #template>
@@ -109,7 +151,7 @@ import Auto from './demo/Grid/Auto.vue'
 <template #example>
 
   <Pull/>
-  
+
 </template>
 
 <template #template>
@@ -138,7 +180,7 @@ offset 可以设置偏移量
 <template #example>
 
   <Offset/>
-  
+
 </template>
 
 <template #template>
@@ -174,7 +216,7 @@ offset 可以设置偏移量
 <template #example>
 
   <Flex/>
-  
+
 </template>
 
 <template #template>
@@ -270,7 +312,7 @@ offset 可以设置偏移量
 <template #example>
 
   <Auto/>
-  
+
 </template>
 
 <template #template>
@@ -290,7 +332,6 @@ offset 可以设置偏移量
 </template>
 
 </card>
-
 
 ## Row Props
 

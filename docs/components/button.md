@@ -17,6 +17,8 @@ import Loading from './demo/Button/Loading.vue'
 import Waves from './demo/Button/Waves.vue'
 </script>
 
+按钮用于触发一项即时操作，是页面中最基础的操作控件。按操作的重要程度选择不同类型与状态，同一区域避免堆叠过多高强调按钮。
+
 <card>
 
 ## 基础用法
@@ -26,7 +28,7 @@ import Waves from './demo/Button/Waves.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -57,7 +59,7 @@ import Waves from './demo/Button/Waves.vue'
 <template #example>
 
   <Plain/>
-  
+
 </template>
 
 <template #template>
@@ -79,7 +81,6 @@ import Waves from './demo/Button/Waves.vue'
 
 </card>
 
-
 <card>
 
 ## 圆角按钮
@@ -89,7 +90,7 @@ import Waves from './demo/Button/Waves.vue'
 <template #example>
 
   <Round/>
-  
+
 </template>
 
 <template #template>
@@ -120,7 +121,7 @@ import Waves from './demo/Button/Waves.vue'
 <template #example>
 
   <Dashed/>
-  
+
 </template>
 
 <template #template>
@@ -151,7 +152,7 @@ import Waves from './demo/Button/Waves.vue'
 <template #example>
 
   <Ghost/>
-  
+
 </template>
 
 <template #template>
@@ -181,7 +182,7 @@ import Waves from './demo/Button/Waves.vue'
 <template #example>
 
   <Icon/>
-  
+
 </template>
 
 <template #template>
@@ -201,7 +202,6 @@ import Waves from './demo/Button/Waves.vue'
 
 </card>
 
-
 <card>
 
 ## 禁用状态
@@ -211,7 +211,7 @@ import Waves from './demo/Button/Waves.vue'
 <template #example>
 
   <Disabled/>
-  
+
 </template>
 
 <template #template>
@@ -244,7 +244,7 @@ import Waves from './demo/Button/Waves.vue'
 <template #example>
 
   <Text/>
-  
+
 </template>
 
 <template #template>
@@ -280,7 +280,6 @@ import Waves from './demo/Button/Waves.vue'
 
 </card>
 
-
 <card>
 
 ## 按钮组
@@ -290,7 +289,7 @@ import Waves from './demo/Button/Waves.vue'
 <template #example>
 
   <Group/>
-  
+
 </template>
 
 <template #template>
@@ -327,7 +326,6 @@ import Waves from './demo/Button/Waves.vue'
 
 </card>
 
-
 <card>
 
 ## 不同尺寸
@@ -337,7 +335,7 @@ import Waves from './demo/Button/Waves.vue'
 <template #example>
 
   <Size/>
-  
+
 </template>
 
 <template #template>
@@ -366,7 +364,7 @@ import Waves from './demo/Button/Waves.vue'
 <template #example>
 
   <Loading/>
-  
+
 </template>
 
 <template #template>
@@ -406,7 +404,7 @@ import Waves from './demo/Button/Waves.vue'
 <template #example>
 
   <Waves/>
-  
+
 </template>
 
 <template #template>
@@ -434,8 +432,11 @@ import Waves from './demo/Button/Waves.vue'
 | type        | 类型                         | String  | primary / success / warning / danger / info / text              | —      |
 | plain       | 简单按钮                     | Boolean | —                                                               | false  |
 | round       | 圆角按钮                     | Boolean | —                                                               | false  |
+| circle      | 圆形按钮                     | Boolean | —                                                               | false  |
+| dashed      | 虚线边框按钮                 | Boolean | —                                                               | false  |
 | transparent | 透明按钮                     | Boolean | —                                                               | false  |
 | loading     | 加载中                       | Boolean | —                                                               | false  |
+| loading-icon| 自定义加载图标名称           | String  | —                                                               | —      |
 | disabled    | 禁用状态                     | Boolean | —                                                               | false  |
 | background  | 拟物背景（仅供默认按钮使用） | Boolean | —                                                               | false  |
 | icon        | 图标                         | String  | —                                                               | —      |

@@ -7,7 +7,7 @@ import Basic from './demo/Empty/Basic.vue'
 import Directive from './demo/Empty/Directive.vue'
 </script>
 
-##### 空显示状态，用于给内部无数据情况的展示。十分简单
+空显示状态，用于给内部无数据情况的展示。十分简单
 
 <card>
 
@@ -18,7 +18,7 @@ import Directive from './demo/Empty/Directive.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -52,7 +52,7 @@ import Directive from './demo/Empty/Directive.vue'
 <template #example>
 
   <Directive/>
-  
+
 </template>
 
 <template #template>
@@ -86,7 +86,7 @@ import Directive from './demo/Empty/Directive.vue'
 | ----- | -------- | ------ | ------ | -------- |
 | title | 显示文字 | String | —      | 暂无数据 |
 
-## Slot
+## Slots
 
 | 名称    | 说明                         |
 | ------- | ---------------------------- |

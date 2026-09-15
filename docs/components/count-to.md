@@ -7,7 +7,7 @@ import Basic from './demo/CountTo/Basic.vue'
 import Options from './demo/CountTo/Options.vue'
 </script>
 
-##### 数字动画为常用组件，因此收录至组件库便于使用，整体源码参考vue-count-to实现，props参数也一样，由于纯数字显示，因此所有样式都可以自定义
+数字动画为常用组件，因此收录至组件库便于使用，整体源码参考vue-count-to实现，props参数也一样，由于纯数字显示，因此所有样式都可以自定义
 
 <card>
 
@@ -16,7 +16,7 @@ import Options from './demo/CountTo/Options.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -58,14 +58,14 @@ import Options from './demo/CountTo/Options.vue'
 
 <card>
 
-## 自定义参数
+## 自定义显示
 
 可以设置不同参数来定义时长、前缀、后缀、连接符等来定义显示
 
 <template #example>
 
   <Options/>
-  
+
 </template>
 
 <template #template>
@@ -157,6 +157,8 @@ import Options from './demo/CountTo/Options.vue'
 | separator | 数字分割                 | String  | —      | ，     |
 | prefix    | 前缀，用于显示之前的字符 | String  | —      | —      |
 | suffix    | 后缀，用于显示之后的字符 | String  | —      | —      |
+| use-easing | 是否使用缓动函数        | Boolean | —      | true   |
+| easing-fn | 自定义缓动函数，签名 `(t, b, c, d) => number` | Function | — | 见下 |
 
 ## Events
 

@@ -4,7 +4,7 @@ title: JSX & TSX
 
 <card>
 
-# JSX & TSX
+FEI-UI-DESIGN 的全部组件都可以用 JSX / TSX 编写，在渲染函数中直接使用即可，无需额外的适配层。
 
 ## 启用 JSX & TSX
 
@@ -26,5 +26,3 @@ export default defineComponent({
 ```
 
 </card>
-
-

@@ -12,7 +12,7 @@ import Confirm from './demo/Switch/Confirm.vue'
 import Confirm2 from './demo/Switch/Confirm2.vue'
 </script>
 
-##### 在两种状态间切换时用到的开关选择器
+在两种状态间切换时用到的开关选择器
 
 <card>
 
@@ -23,7 +23,7 @@ import Confirm2 from './demo/Switch/Confirm2.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -61,7 +61,7 @@ function change(val) {
 <template #example>
 
   <Size/>
-  
+
 </template>
 
 <template #template>
@@ -91,7 +91,7 @@ function change(val) {
 <template #example>
 
   <Icon/>
-  
+
 </template>
 
 <template #template>
@@ -138,7 +138,7 @@ function change(val) {
 <template #example>
 
   <Disabled/>
-  
+
 </template>
 
 <template #template>
@@ -177,7 +177,6 @@ const value2 = ref(false)
 
 </template>
 
-
 </card>
 
 <card>
@@ -187,7 +186,7 @@ const value2 = ref(false)
 <template #example>
 
   <Loading/>
-  
+
 </template>
 
 <template #template>
@@ -237,7 +236,7 @@ const value2 = ref(false)
 <template #example>
 
   <Confirm/>
-  
+
 </template>
 
 <template #template>
@@ -261,7 +260,7 @@ const value2 = ref(false)
 <template #example>
 
   <Confirm2/>
-  
+
 </template>
 
 <template #template>
@@ -339,15 +338,17 @@ const beforeChange2 = () => {
 | confirm        | 开启切换前拦截功能                                         | Boolean                 | —                     | false   |
 | confirm-txt    | 切换拦截文字                                               | string                  | —                     | —       |
 | loading        | 加载中状态                                                 | Boolean                 | —                     | —       |
+| name           | 原生 name 属性，同时作为表单字段名                          | String                  | —                     | —       |
 | beforeChange   | 改变状态前拦截函数，return type Promise or boolean         | Function                | —                     | —       |
 
 ## Events
 
-| 事件名 | 说明                           | 返回值      |
-| ------ | ------------------------------ | ----------- |
-| change | 开关变化时触发，返回当前的状态 | true、false |
+| 事件名            | 说明                           | 返回值      |
+| ----------------- | ------------------------------ | ----------- |
+| update:modelValue | `v-model` 绑定的值变化时触发   | true、false |
+| change            | 开关变化时触发，返回当前的状态 | true、false |
 
-## Slot
+## Slots
 
 | 事件名 | 说明                   |
 | ------ | ---------------------- |

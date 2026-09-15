@@ -9,7 +9,7 @@ import Style from './demo/Circle/Style.vue'
 import Dashboard from './demo/Circle/Dashboard.vue'
 </script>
 
-##### 显示环形图，可以显示任务百分比或者是统计某些数据的占比情况
+显示环形图，可以显示任务百分比或者是统计某些数据的占比情况
 
 <card>
 
@@ -20,7 +20,7 @@ import Dashboard from './demo/Circle/Dashboard.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -56,7 +56,7 @@ import Dashboard from './demo/Circle/Dashboard.vue'
 <template #example>
 
   <Progress/>
-  
+
 </template>
 
 <template #template>
@@ -119,7 +119,7 @@ import Dashboard from './demo/Circle/Dashboard.vue'
 <template #example>
 
   <Style/>
-  
+
 </template>
 
 <template #template>
@@ -159,7 +159,7 @@ import Dashboard from './demo/Circle/Dashboard.vue'
 <template #example>
 
   <Dashboard/>
-  
+
 </template>
 
 <template #template>
@@ -184,7 +184,7 @@ import Dashboard from './demo/Circle/Dashboard.vue'
 | size           | 图表的宽度和高度，单位 px | Number  | —                        | 120     |
 | stroke-linecap | 进度环顶端的形状          | String  | square（方）/round（圆） | round   |
 | stroke-width   | 进度环的线宽，单位 px     | Number  | —                        | 6       |
-| stroke-color   | 进度环的颜色              | String  | —                        | #2db7f5 |
+| stroke-color   | 进度环的颜色              | String  | —                        | #1a5cff |
 | trail-width    | 进度环背景的线宽，单位 px | Number  | —                        | 5       |
 | trail-color    | 进度环背景的颜色          | String  | —                        | #eaeef2 |
 | dashboard      | 是否显示为仪表盘          | Boolean | —                        | false   |

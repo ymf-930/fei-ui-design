@@ -9,7 +9,7 @@ import Options from './demo/Message/Options.vue'
 import Close from './demo/Message/Close.vue'
 </script>
 
-##### 轻量级的信息反馈组件，在顶部居中显示，并自动消失。有多种不同的提示状态可选择。
+轻量级的信息反馈组件，在顶部居中显示，并自动消失。有多种不同的提示状态可选择。
 
 <card>
 
@@ -20,7 +20,7 @@ import Close from './demo/Message/Close.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -68,7 +68,7 @@ function message2() {
 <template #example>
 
   <Types/>
-  
+
 </template>
 
 <template #template>
@@ -113,27 +113,46 @@ function message4() {
 
 <card>
 
-## 其他参数
+## 自定义配置
 
 可以设置配置参数来渲染
 
 <template #example>
 
   <Options/>
-  
+
 </template>
 
 <template #template>
 
-```html
+```vue
 <template>
-  <f-layout has-sider>
-    <template #sider>
-      <div style="height: 300px">侧边栏</div>
-    </template>
-    <div>右侧容器</div>
-  </f-layout>
+  <div>
+    <f-button @click="message1">我10秒消失</f-button>
+    <f-button @click="message2">可关闭的</f-button>
+    <f-button @click="message3">不会关闭</f-button>
+  </div>
 </template>
+```
+
+</template>
+
+<template #script>
+
+```vue
+<script setup lang="ts">
+import { Message } from 'fei-ui-design'
+
+function message1() {
+  Message.info({ message: '我10秒消失', duration: 10 })
+}
+function message2() {
+  Message.success({ message: '我是可关闭的的提示', duration: 5, showClose: true })
+}
+function message3() {
+  Message.warning({ message: '我永远不会关闭除非手动', duration: 0, showClose: true, zIndex: 3000 })
+}
+</script>
 ```
 
 </template>
@@ -149,7 +168,7 @@ function message4() {
 <template #example>
 
   <Close/>
-  
+
 </template>
 
 <template #template>
@@ -205,7 +224,7 @@ Message.success(options)
 Message.warning(options)
 Message.error(options)
 ```
-  
+
 </template>
 
 </card>

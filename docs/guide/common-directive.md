@@ -4,11 +4,9 @@ title: 组件指令
 
 <card>
 
-# 组件指令
+组件提供了四个指令用于完成组件功能，如果组件是全局引入则会自动注册。如采用自动引入或者按需加载，则需要手动进行引入和注册。
 
-组件提供了四个指令用于完成组件功能,如果组件是全局引入则会自动注册.如采用自动引入或者按需加载,则需要手动进行引入和注册.
-
-```typescript
+```ts
 // main.js
 import { createApp } from 'vue'
 import {
@@ -50,7 +48,7 @@ app.mount('#app')
 
 ## 水波纹指令
 
-在标签中追加 `v-waves` 指令增加水波纹指令,指令可以设置波纹颜色和点击方式, 注意，增加水波纹指令会默认覆盖原有的按钮点击效果
+在标签中追加 `v-waves` 指令增加水波纹指令，指令可以设置波纹颜色和点击方式， 注意，增加水波纹指令会默认覆盖原有的按钮点击效果
 
 ```html
 <f-button v-waves>默认指令</f-button>
@@ -64,7 +62,7 @@ app.mount('#app')
 
 ## 重复点击指令
 
-可以按住进行重复点击,组件中在数字输入框使用到.按住增加
+可以按住进行重复点击，组件中在数字输入框使用到。按住增加
 
 <div class="demo-button">
   <f-button v-repeat-click="repeatClick">按住查看控制台</f-button>
@@ -72,7 +70,7 @@ app.mount('#app')
 
 ## ClickOutside 外部点击指令
 
-通过添加 `v-click-outside="clickOutside"` 来添加外部点击事件 常用于popper的外部点击关闭.
+通过添加 `v-click-outside="clickOutside"` 来添加外部点击事件 常用于popper的外部点击关闭。
 
 <div class="demo-button">
   <div v-click-outside="clickOutside" flex="main:center cross:center"
@@ -87,4 +85,3 @@ const clickOutside = ()=> console.log('点击外部...')
 </script>
 
 </card>
-

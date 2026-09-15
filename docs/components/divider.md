@@ -8,9 +8,6 @@ import Vertical from './demo/Divider/Vertical.vue'
 import Align from './demo/Divider/Align.vue'
 </script>
 
-
-# 分割线 Divider
-
 区隔内容的分割线。可以对对不同文本段落进行分割。可以对行内文字/链接进行分割。
 
 <card>
@@ -22,7 +19,7 @@ import Align from './demo/Divider/Align.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -52,7 +49,7 @@ import Align from './demo/Divider/Align.vue'
 <template #example>
 
   <Vertical/>
-  
+
 </template>
 
 <template #template>
@@ -82,7 +79,7 @@ align属性可以设置标题位置 使用 align="left" 设置为行内的垂直
 <template #example>
 
   <Align/>
-  
+
 </template>
 
 <template #template>

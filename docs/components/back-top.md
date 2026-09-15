@@ -1,14 +1,13 @@
 ---
-title: 返回顶部 Backtop
+title: 返回顶部 BackTop
 ---
 
 <script setup>
-import Basic from './demo/Backtop/Basic.vue'
-import Scrollbar from './demo/Backtop/Scrollbar.vue'
+import Basic from './demo/BackTop/Basic.vue'
+import Scrollbar from './demo/BackTop/Scrollbar.vue'
 </script>
 
-##### 当页面内容比较长滚动后需要快捷返回顶部时使用，一般放置在页面右下角位置。如果指定 `target` 使用则是针对某个容器的滚动
-
+当页面内容比较长滚动后需要快捷返回顶部时使用，一般放置在页面右下角位置。如果指定 `target` 使用则是针对某个容器的滚动
 
 <card>
 
@@ -19,7 +18,7 @@ import Scrollbar from './demo/Backtop/Scrollbar.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -52,7 +51,7 @@ import Scrollbar from './demo/Backtop/Scrollbar.vue'
 <template #example>
 
   <Scrollbar/>
-  
+
 </template>
 
 <template #template>
@@ -78,16 +77,22 @@ import Scrollbar from './demo/Backtop/Scrollbar.vue'
 
 ## Props
 
-| 参数           | 说明                                                        | 类型   | 可选值 | 默认值 |
-| -------------- | ----------------------------------------------------------- | ------ | ------ | ------ |
-| visible-height | 页面滚动高度达到该值时才显示BackTop                         | Number | —      | 400    |
-| target         | 目标容器标识，可设置目标的class、id标识来制定滚动监听的内容 | String | —      | —      |
-| bottom         | 组件距离底部的距离                                          | Number | —      | 50     |
-| right          | 组件距离右部的距离                                          | Number | —      | 50     |
-| duration       | 滚动动画持续时间，单位 毫秒                                 | Number | —      | 1000   |
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| visible-height | 页面滚动高度达到该值时才显示 BackTop | `number` | `400` |
+| target | 目标容器选择器(class / id)，设置后改为监听该容器的滚动 | `string` | — |
+| bottom | 组件距离底部的距离 | `number` | `40` |
+| right | 组件距离右侧的距离 | `number` | `40` |
+| duration | 滚动动画持续时间，单位毫秒 | `number` | `1000` |
 
 ## Events
 
-| 事件名 | 说明           | 返回值 |
-| ------ | -------------- | ------ |
-| click  | 点击按钮时触发 | 无     |
+| 事件名 | 说明 | 回调参数 |
+| --- | --- | --- |
+| click | 点击按钮时触发 | `event: MouseEvent` |
+
+## Slots
+
+| 插槽名 | 说明 |
+| --- | --- |
+| default | 自定义显示内容，默认为向上箭头图标 |

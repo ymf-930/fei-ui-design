@@ -7,7 +7,7 @@ import Basic from './demo/Badge/Basic.vue'
 import Custom from './demo/Badge/Custom.vue'
 </script>
 
-##### 空显示状态，用于给内部无数据情况的展示。十分简单
+标记用于在元素右上角展示数量或状态，常用于未读消息数、待办数量等场景。数值超出范围时可通过 `max` 折叠为 `99+`。
 
 <card>
 
@@ -18,7 +18,7 @@ import Custom from './demo/Badge/Custom.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -61,7 +61,7 @@ import Custom from './demo/Badge/Custom.vue'
 <template #example>
 
   <Custom/>
-  
+
 </template>
 
 <template #template>

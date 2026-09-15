@@ -10,8 +10,7 @@ import ContextMenu from './demo/Tabs/ContextMenu.vue'
 import TagType from './demo/Tabs/TagType.vue'
 </script>
 
-
-##### 显示标签,由于标签内容定制化比较多，这里就预留给后续内容判定，这里只做标签的切换功能。内容可根据实际需求自行实现。
+显示标签，由于标签内容定制化比较多，这里就预留给后续内容判定，这里只做标签的切换功能。内容可根据实际需求自行实现。
 
 <card>
 
@@ -22,7 +21,7 @@ import TagType from './demo/Tabs/TagType.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -74,7 +73,7 @@ const activeTab = ref('tab2')
 <template #example>
 
   <Card/>
-  
+
 </template>
 
 <template #template>
@@ -120,14 +119,14 @@ const activeTab = ref('tab2')
 
 ## 增加和移除
 
-可以关闭，同时可以通过自定义事件来增加标签页，关闭按钮只能在card和tag模式下使用,默认超出宽度，可以滚动移动
+可以关闭，同时可以通过自定义事件来增加标签页，关闭按钮只能在card和tag模式下使用，默认超出宽度，可以滚动移动
 
 `tabs`中的项设置noClose可以排除关闭按钮，主要是为了部分可固定标签设置使用
 
 <template #example>
 
   <Add/>
-  
+
 </template>
 
 <template #template>
@@ -202,7 +201,7 @@ const handleTabClose = tab => {
 <template #example>
 
   <ContextMenu/>
-  
+
 </template>
 
 <template #template>
@@ -316,7 +315,7 @@ function closeAll() {
 <template #example>
 
   <TagType/>
-  
+
 </template>
 
 <template #template>
@@ -423,16 +422,19 @@ function closeAll() {
 
 ## Props
 
-| 参数     | 说明                                                                                                        | 类型    | 可选值                 | 默认值  |
-| -------- | ----------------------------------------------------------------------------------------------------------- | ------- | ---------------------- | ------- |
-| data     | tabs数组结构,必传，切结构遵循{key:'',title:''} key为唯一标识，title为标签生成名称，切可以设置icon来扩展图标 | Array   | —                      | []      |
-| closable | 是否可关闭                                                                                                  | boolean | —                      | false   |
-| type     | tab类型                                                                                                     | string  | 'default','card','tag' | default |
+| 参数         | 说明                                                                                                        | 类型    | 可选值                 | 默认值  |
+| ------------ | ----------------------------------------------------------------------------------------------------------- | ------- | ---------------------- | ------- |
+| model-value  | 当前激活的 tab 的 key，支持 `v-model`                                                                       | string  | —                      | —       |
+| data         | tabs数组结构，必传，切结构遵循{key:'',title:''} key为唯一标识，title为标签生成名称，切可以设置icon来扩展图标 | Array   | —                      | []      |
+| closable     | 是否可关闭                                                                                                  | boolean | —                      | false   |
+| context-menu | 是否开启右键菜单                                                                                            | boolean | —                      | false   |
+| type         | tab类型                                                                                                     | string  | 'default','card','tag' | default |
 
 ## Events
 
-| 事件名     | 说明                                            | 返回值        |
-| ---------- | ----------------------------------------------- | ------------- |
-| change     | 绑定事件改变事件                                | 当前选中的tab |
-| tab-close  | 关闭一个tab事件                                 | 当前关闭的tab |
-| tab-select | 右键选中事件回调，用于配合右键系统缓存点击的tag | 右键选中的tab |
+| 事件名           | 说明                                            | 返回值        |
+| ---------------- | ----------------------------------------------- | ------------- |
+| update:modelValue | 当前激活的 tab 发生变化时触发                  | 当前激活的 key |
+| change           | 绑定事件改变事件                                | 当前选中的tab |
+| tab-close        | 关闭一个tab事件                                 | 当前关闭的tab |
+| tab-select       | 右键选中事件回调，用于配合右键系统缓存点击的tag | 右键选中的tab |

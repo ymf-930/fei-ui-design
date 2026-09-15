@@ -43,7 +43,7 @@ const data = ref([
   }
 ])
 
-function handleSpan({ row, column, rowIndex, columnIndex }) {
+function handleSpan({ row: _row, column: _column, rowIndex, columnIndex }) {
   // 获取相同姓名的行是，0，1
   if (rowIndex === 0 && columnIndex === 0) {
     return {

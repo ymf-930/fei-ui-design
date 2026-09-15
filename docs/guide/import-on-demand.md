@@ -4,11 +4,9 @@ title: 按需引入
 
 <card>
 
-# 按需引入（Tree Shaking）
+FEI-UI-DESIGN 支持 tree shaking，组件、语言包与主题样式均可按需引入。
 
-F-UI-Design 支持 tree shaking，组件、语言、主题均可 tree-shaking。
-
-了解更多关于主题设定的信息，参见 [调整主题](/docs/custom-theme.html)。
+了解更多关于主题设定的信息，参见 [调整主题](/guide/custom-theme)。
 
 ## 手动引入
 

@@ -11,7 +11,7 @@ import Size from './demo/InputNumber/Size.vue'
 import Status from './demo/InputNumber/Status.vue'
 </script>
 
-##### 用于输入数字
+用于输入数字
 
 <card>
 
@@ -20,7 +20,7 @@ import Status from './demo/InputNumber/Status.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -69,7 +69,7 @@ import Status from './demo/InputNumber/Status.vue'
 <template #example>
 
   <Init/>
-  
+
 </template>
 
 <template #template>
@@ -118,7 +118,7 @@ import Status from './demo/InputNumber/Status.vue'
 <template #example>
 
   <Number/>
-  
+
 </template>
 
 <template #template>
@@ -162,7 +162,7 @@ import Status from './demo/InputNumber/Status.vue'
 <template #example>
 
   <Format/>
-  
+
 </template>
 
 <template #template>
@@ -216,7 +216,7 @@ import Status from './demo/InputNumber/Status.vue'
 <template #example>
 
   <Size/>
-  
+
 </template>
 
 <template #template>
@@ -262,9 +262,9 @@ import Status from './demo/InputNumber/Status.vue'
 禁用，只读和不可编辑三种状态
 
 <template #example>
-  
+
   <Status/>
-  
+
 </template>
 
 <template #template>
@@ -323,26 +323,31 @@ import Status from './demo/InputNumber/Status.vue'
 | 参数            | 说明                                                       | 类型     | 可选值                        | 默认值   |
 | --------------- | ---------------------------------------------------------- | -------- | ----------------------------- | -------- |
 | max             | 最大值                                                     | Number   | -                             | Infinity |
-| min             | 最小值                                                     | Number   | -                             | Infinity |
-| modelValue      | 当前值，可以使用 v-model 双向绑定数据                      | Number   | -                             | 1        |
+| min             | 最小值                                                     | Number   | -                             | -Infinity |
+| modelValue      | 当前值，可以使用 v-model 双向绑定数据                      | Number / String | -                      | -        |
 | step            | 每次改变的步伐，可以是小数                                 | Number   | -                             | 1        |
 | size            | 输入框尺寸                                                 | String   | large、small、default或者不填 | -        |
 | disabled        | 设置禁用状态                                               | Boolean  | -                             | false    |
+| autofocus       | 自动获取焦点                                               | Boolean  | -                             | false    |
+| name            | 原生 name 属性，同时作为表单字段名                         | String   | -                             | -        |
+| element-id      | 给表单元素设置 id，详见 Form 用法。                        | String   | -                             | -        |
 | placeholder     | 占位文本                                                   | String   | -                             | -        |
 | formatter       | 指定输入框展示值的格式                                     | Function | -                             | -        |
 | parser          | 指定从 formatter 里转换回数字的方式，和 formatter 搭配使用 | Function | -                             | -        |
 | readonly        | 是否设置为只读                                             | Boolean  | -                             | false    |
 | editable        | 是否可编辑                                                 | Boolean  |                               | true     |
 | precision       | 数值精度                                                   | Number   |                               | -        |
-| active-change   | 是否实时响应数据                                           | Boolean  |                               | true     |
+| active-change   | 是否实时响应数据                                           | Boolean  |                               | false    |
 | arrow-up-icon   | 普通模式下箭头图标                                         | String   |                               | up       |
 | arrow-down-icon | 普通模式下箭头图标                                         | String   |                               | down     |
 | always          | 是否始终显示控制器                                         | Boolean  | true                          | -        |
 
 ## Events
 
-| 事件名 | 说明             | 返回值            |
-| ------ | ---------------- | ----------------- |
-| change | 数值改变时的回调 | 返回当前值 当前值 |
-| focus  | 聚焦时触发       | event             |
-| blur   | 失焦时触发       | -                 |
+| 事件名            | 说明                   | 返回值            |
+| ----------------- | ---------------------- | ----------------- |
+| update:modelValue | `v-model` 绑定的值变化时触发 | 当前值      |
+| change            | 数值改变时的回调       | 返回当前值 当前值 |
+| input             | 输入框内容变化时触发   | 当前值            |
+| focus             | 聚焦时触发             | event             |
+| blur              | 失焦时触发             | -                 |

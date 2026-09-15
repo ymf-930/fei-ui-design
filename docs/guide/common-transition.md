@@ -4,9 +4,7 @@ title: 内置动画
 
 <card>
 
-# 内置动画
-
-组件提供了如下内置动画,只需要引入base.css 即可包含.
+组件提供了如下内置动画，只需要引入base.css 即可包含。
 
 <script lang="ts" setup>
 import { ref } from 'vue'
@@ -156,4 +154,3 @@ const activeTab = ref('tab1')
 </style>
 
 </card>
-

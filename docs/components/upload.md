@@ -9,7 +9,7 @@ import Handle from './demo/Upload/Handle.vue'
 import Drag from './demo/Upload/Drag.vue'
 </script>
 
-##### 文件选择上传按钮，实现简单的上传封装
+文件选择上传按钮，实现简单的上传封装
 
 <card>
 
@@ -20,7 +20,7 @@ import Drag from './demo/Upload/Drag.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -46,7 +46,7 @@ import Drag from './demo/Upload/Drag.vue'
 <template #example>
 
   <Multiple/>
-  
+
 </template>
 
 <template #template>
@@ -76,7 +76,7 @@ import Drag from './demo/Upload/Drag.vue'
 <template #example>
 
   <Handle/>
-  
+
 </template>
 
 <template #template>
@@ -139,7 +139,7 @@ function upload() {
 <template #example>
 
   <Drag/>
-  
+
 </template>
 
 <template #template>
@@ -166,7 +166,7 @@ function upload() {
 
 </card>
 
-## Attributes
+## Props
 
 | 参数              | 说明                                                                                                                                           | 类型     | 可选值                           | 默认值 |
 | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | -------- | -------------------------------- | ------ |
@@ -180,10 +180,10 @@ function upload() {
 | with-credentials  | 支持发送 cookie 凭证信息                                                                                                                       | Boolean  | —                                | false  |
 | show-upload-list  | 是否显示已上传文件列表                                                                                                                         | Boolean  | —                                | true   |
 | type              | 上传控件的类型                                                                                                                                 | String   | select（选择），drag（支持拖拽） | select |
-| accept            | 接受上传的文件类型,input 标签原生的 accept 属性，会在选择文件时过滤                                                                            | String   | —                                | —      |
-| format            | 支持的文件类型，与 accept 不同的是，format 是识别文件的后缀名                                                                                  | String   | —                                | —      |
+| accept            | 接受上传的文件类型，input 标签原生的 accept 属性，会在选择文件时过滤                                                                            | String   | —                                | —      |
+| format            | 支持的文件类型，与 accept 不同的是，format 是识别文件的后缀名                                                                                  | Array    | —                                | []     |
 | max-size          | 文件大小限制，单位 kb                                                                                                                          | Number   | —                                | —      |
-| before-upload     | 上传文件之前的钩子，参数为上传的文件,若返回 false 或者 Promise 则停止上传                                                                      | Function | —                                | —      |
+| before-upload     | 上传文件之前的钩子，参数为上传的文件，若返回 false 或者 Promise 则停止上传                                                                      | Function | —                                | —      |
 | on-progress       | 文件上传时的钩子，返回字段为 event, file, fileList                                                                                             | Function | —                                | —      |
 | on-success        | 文件上传成功时的钩子，返回字段为 response, file, fileList                                                                                      | Function | —                                | —      |
 | on-error          | 文件上传失败时的钩子，返回字段为 error, file, fileList                                                                                         | Function | —                                | —      |
@@ -193,13 +193,21 @@ function upload() {
 | on-exceeded-size  | 文件超出指定大小限制时的钩子，返回字段为 file, fileList                                                                                        | Function | —                                | —      |
 | default-file-list | 默认已上传的文件列表，例如：[{name: 'img1.jpg',url: 'http://www.xxx.com/img1.jpg' }, { name: 'img2.jpg', url: 'http://www.xxx.com/img2.jpg' }] | Array    | —                                | []     |
 
+## Events
+
+| 事件名       | 说明                     | 回调参数       |
+| ------------ | ------------------------ | -------------- |
+| file-click   | 点击文件列表项时触发     | file           |
+| file-preview | 点击文件名预览时触发     | file           |
+| file-remove  | 点击文件列表删除按钮时触发 | file         |
+
 ## Methods
 
 | 方法名     | 说明             | 参数 |
 | ---------- | ---------------- | ---- |
 | clearFiles | 清空已上传的列表 | 无   |
 
-## Slot
+## Slots
 
 | 名称    | 说明                                   |
 | ------- | -------------------------------------- |

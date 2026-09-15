@@ -10,7 +10,7 @@ import Close from './demo/Alert/Close.vue'
 import Banner from './demo/Alert/Banner.vue'
 </script>
 
-##### 静态的展示一些区块，提示或者警告，可以动态的去删除
+静态的展示一些区块，提示或者警告，可以动态的去删除
 
 <card>
 
@@ -21,7 +21,7 @@ import Banner from './demo/Alert/Banner.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -50,7 +50,7 @@ import Banner from './demo/Alert/Banner.vue'
 <template #example>
 
   <Desc/>
-  
+
 </template>
 
 <template #template>
@@ -91,7 +91,7 @@ import Banner from './demo/Alert/Banner.vue'
 <template #example>
 
   <Icon/>
-  
+
 </template>
 
 <template #template>
@@ -130,7 +130,7 @@ import Banner from './demo/Alert/Banner.vue'
 <template #example>
 
   <Close/>
-  
+
 </template>
 
 <template #template>
@@ -166,7 +166,7 @@ import Banner from './demo/Alert/Banner.vue'
 <template #example>
 
   <Banner/>
-  
+
 </template>
 
 <template #template>
@@ -191,6 +191,7 @@ import Banner from './demo/Alert/Banner.vue'
 | type      | 警告提示样式 | String  | info、success、warning、error | info   |
 | closable  | 是否可关闭   | Boolean | —                             | false  |
 | show-icon | 是否显示图标 | Boolean | —                             | false  |
+| banner    | 是否以横幅形式展示 | Boolean | —                        | false  |
 
 ## Events
 
@@ -198,7 +199,7 @@ import Banner from './demo/Alert/Banner.vue'
 | ------ | ---------- | ------ |
 | close  | 关闭时触发 | event  |
 
-## Slot
+## Slots
 
 | 名称    | 说明                   |
 | ------- | ---------------------- |

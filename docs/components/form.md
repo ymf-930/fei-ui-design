@@ -12,7 +12,7 @@ import CustomValidator from './demo/Form/CustomValidator.vue'
 import Add from './demo/Form/Add.vue'
 </script>
 
-##### 由输入框、选择器、单选框、多选框等控件组成，用以收集、校验、提交数据
+由输入框、选择器、单选框、多选框等控件组成，用以收集、校验、提交数据
 
 <card>
 
@@ -23,7 +23,7 @@ import Add from './demo/Form/Add.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -111,7 +111,7 @@ import Add from './demo/Form/Add.vue'
 <template #example>
 
   <Inline/>
-  
+
 </template>
 
 <template #template>
@@ -164,12 +164,12 @@ import Add from './demo/Form/Add.vue'
 
 ## 对齐和尺寸
 
-可以有三种不同的标签对齐方式,纯文字需要包裹label标签
+可以有三种不同的标签对齐方式，纯文字需要包裹label标签
 
 <template #example>
 
   <Aline/>
-  
+
 </template>
 
 <template #template>
@@ -284,7 +284,7 @@ import Add from './demo/Form/Add.vue'
 <template #example>
 
   <NoLabel/>
-  
+
 </template>
 
 <template #template>
@@ -335,7 +335,7 @@ import Add from './demo/Form/Add.vue'
 <template #example>
 
   <Validator/>
-  
+
 </template>
 
 <template #template>
@@ -469,7 +469,7 @@ import Add from './demo/Form/Add.vue'
 <template #example>
 
   <CustomValidator/>
-  
+
 </template>
 
 <template #template>
@@ -590,7 +590,7 @@ import Add from './demo/Form/Add.vue'
 <template #example>
 
   <Add/>
-  
+
 </template>
 
 <template #template>
@@ -686,7 +686,7 @@ import Add from './demo/Form/Add.vue'
 | label-suffix            | 表单域标签的后缀                                                                        | string         | —                        | —      |
 | hide-required-asterisk  | 是否隐藏必填字段的标签旁边的红色\*                                                      | boolean        | —                        | false  |
 | show-message            | 是否显示校验错误信息                                                                    | boolean        | —                        | true   |
-| inline-message          | 是否以行内形式展示校验信息,此时右侧需要留出校验信息的显示宽度才可以正常使用             | boolean        | —                        | false  |
+| inline-message          | 是否以行内形式展示校验信息，此时右侧需要留出校验信息的显示宽度才可以正常使用             | boolean        | —                        | false  |
 | status-icon             | 是否在输入框中显示校验结果反馈图标                                                      | boolean        | —                        | false  |
 | validate-on-rule-change | 是否在 rules 属性改变后立即触发一次验证                                                 | boolean        | —                        | true   |
 | size                    | 用于控制该表单内组件的尺寸                                                              | string         | large,default,small,mini | —      |
@@ -714,21 +714,23 @@ import Add from './demo/Form/Add.vue'
 | prop           | 表单域 model 字段，在使用 validate、resetFields 方法的情况下，该属性是必填的 | string  | 传入 Form 组件的 model 中的字段 | —      |
 | label          | 标签文本                                                                     | string  | —                               | —      |
 | label-width    | 表单域标签的的宽度，例如 '80px'。支持 auto。                                 | string  | —                               | —      |
-| required       | 是否必填，如不设置，则会根据校验规则自动生成                                 | boolean | —                               | false  |
+| required       | 是否必填，如不设置，则会根据校验规则自动生成                                 | boolean | —                               | —      |
 | rules          | 表单验证规则                                                                 | object  | —                               | —      |
-| error          | 表单域验证错误信息, 设置该值会使表单验证状态变为error，并显示该错误信息      | string  | —                               | —      |
+| error          | 表单域验证错误信息， 设置该值会使表单验证状态变为error，并显示该错误信息      | string  | —                               | —      |
 | show-message   | 是否显示校验错误信息                                                         | boolean | —                               | true   |
-| inline-message | 以行内形式展示校验信息                                                       | boolean | —                               | false  |
+| inline-message | 以行内形式展示校验信息                                                       | boolean | —                               | —      |
+| validate-status | 表单域当前的校验状态                                                        | string  | success / error / validating / — | —      |
+| for            | 等同于原生 label 的 for 属性，用于关联表单控件                               | string  | —                               | —      |
 | size           | 用于控制该表单域下组件的尺寸                                                 | string  | large,default,small,mini        | —      |
 
-## FormItem Slot
+## FormItem Slots
 
 | 名称    | 说明           |
 | ------- | -------------- |
 | default | 默认内容       |
 | label   | 标签文本的内容 |
 
-## FormItem Scoped Slot
+## FormItem Scoped Slots
 
 | 名称  | 说明                                           |
 | ----- | ---------------------------------------------- |

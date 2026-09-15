@@ -9,7 +9,7 @@ import Simple from './demo/Collapse/Simple.vue'
 import Wrap from './demo/Collapse/Wrap.vue'
 </script>
 
-##### 需要进行分段显示时使用折叠面板
+需要进行分段显示时使用折叠面板
 
 <card>
 
@@ -20,7 +20,7 @@ import Wrap from './demo/Collapse/Wrap.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -67,7 +67,7 @@ import Wrap from './demo/Collapse/Wrap.vue'
 <template #example>
 
   <Accordion/>
-  
+
 </template>
 
 <template #template>
@@ -114,7 +114,7 @@ import Wrap from './demo/Collapse/Wrap.vue'
 <template #example>
 
   <Simple/>
-  
+
 </template>
 
 <template #template>
@@ -165,7 +165,7 @@ import Wrap from './demo/Collapse/Wrap.vue'
 <template #example>
 
   <Wrap/>
-  
+
 </template>
 
 <template #template>
@@ -229,6 +229,7 @@ import Wrap from './demo/Collapse/Wrap.vue'
 | modelValue | 当前激活的面板的 name，可以使用 v-model 双向绑定 | Array/String | —      | —      |
 | accordion  | 是否开启手风琴模式，开启后每次至多展开一个面板   | Boolean      | —      | false  |
 | simple     | 是否开启简洁模式                                 | Boolean      | —      | false  |
+| arrow-icon | 自定义面板箭头的图标名称                         | String       | —      | down   |
 
 ## Events
 
@@ -236,22 +237,40 @@ import Wrap from './demo/Collapse/Wrap.vue'
 | ------ | ------------------------------------------------------ | ------- |
 | change | 切换面板时触发，返回当前已展开的面板的 key，格式为数组 | array[] |
 
-## Slot
+## Slots
 
 | 名称  | 说明       |
 | ----- | ---------- |
 | title | 面板头内容 |
 
+## CollapsePanel Props
+
+| 参数       | 说明                     | 类型    | 可选值 | 默认值 |
+| ---------- | ------------------------ | ------- | ------ | ------ |
+| name       | 面板的唯一标识，对应父级 Collapse 的 modelValue | String / Number | — | — |
+| title      | 面板标题                 | String  | —      | —      |
+| hide-arrow | 是否隐藏面板头的箭头     | Boolean | —      | false  |
+| disabled   | 是否禁用该面板           | Boolean | —      | false  |
+
+## CollapsePanel Slots
+
+| 名称    | 说明             |
+| ------- | ---------------- |
+| default | 面板内容         |
+| title   | 面板头内容       |
+| arrow   | 自定义箭头图标   |
+
 ## CollapseWrap Props
 
-| 参数     | 说明                               | 类型    | 可选值            | 默认值 |
-| -------- | ---------------------------------- | ------- | ----------------- | ------ |
-| value    | 是否展开                           | boolean | —                 | true   |
-| title    | 标题                               | string  | —                 | —      |
-| collapse | 是否可以展开收起                   | boolean | —                 | false  |
-| shadow   | shadow，设置为none可以开启简单模式 | string  | none/自定义shadow | —      |
+| 参数       | 说明                               | 类型    | 可选值            | 默认值 |
+| ---------- | ---------------------------------- | ------- | ----------------- | ------ |
+| model-value | 是否展开（配合 `v-model` 使用）    | boolean | —                 | true   |
+| title      | 标题                               | string  | —                 | —      |
+| collapse   | 是否可以展开收起                   | boolean | —                 | false  |
+| shadow     | shadow，设置为none可以开启简单模式 | string  | none/自定义shadow | —      |
+| arrow-icon | 展开箭头的图标名称                 | string  | —                 | down   |
 
-## CollapseWrap Slot
+## CollapseWrap Slots
 
 | 名称  | 说明             |
 | ----- | ---------------- |

@@ -10,7 +10,7 @@ import More from './demo/Popover/More.vue'
 import Confirm from './demo/Popover/Confirm.vue'
 </script>
 
-##### 气泡类型的弹窗,用于放置更多信息或询问流程等
+气泡类型的弹窗，用于放置更多信息或询问流程等
 
 <card>
 
@@ -19,7 +19,7 @@ import Confirm from './demo/Popover/Confirm.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -58,7 +58,7 @@ import Confirm from './demo/Popover/Confirm.vue'
 <template #example>
 
   <Placement/>
-  
+
 </template>
 
 <template #template>
@@ -165,7 +165,7 @@ import Confirm from './demo/Popover/Confirm.vue'
 <template #example>
 
   <InnerClose/>
-  
+
 </template>
 
 <template #template>
@@ -208,7 +208,7 @@ function close() {
 <template #example>
 
   <More/>
-  
+
 </template>
 
 <template #template>
@@ -246,7 +246,7 @@ function close() {
 <template #example>
 
   <Confirm/>
-  
+
 </template>
 
 <template #template>
@@ -297,29 +297,47 @@ function cancel() {
 
 ## Props
 
-| 参数            | 说明                                             | 类型                                                                           | 可选值                                                                                                    | 默认值         |
-| --------------- | ------------------------------------------------ | ------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------- | -------------- |
-| trigger         | 触发方式                                         | string                                                                         | hover（悬停）click（点击）focus（聚焦）                                                                   | click          |
-| title           | 标题                                             | string                                                                         | —                                                                                                         | —              |
-| content         | 显示的内容                                       | string                                                                         | —                                                                                                         | —              |
-| width           | 宽度                                             | string/number                                                                  | —                                                                                                         | —              |
-| placement       | 提示框出现的位置                                 | string                                                                         | top/top-start/top-end/bottom/bottom-start/bottom-end/left/left-start/left-end/right/right-start/right-end | —              |
-| disabled        | 是否禁用提示框                                   | Boolean                                                                        | —                                                                                                         | false          |
-| v-model:visible | 状态是否可见                                     | Boolean                                                                        | —                                                                                                         | false          |
-| placement       | 提示框出现的位置                                 | string                                                                         | top/top-start/top-end/bottom/bottom-start/bottom-end/left/left-start/left-end/right/right-start/right-end | —              |
-| transition      | 自定义渐变动画                                   | string                                                                         | —                                                                                                         | fade-in-linear |
-| show-arrow      | 是否显示箭头                                     | Boolean                                                                        | —                                                                                                         | true           |
-| popper-options  | popper.js 参数                                   | Object                                                                         | —                                                                                                         |                |
-| show-after      | 延迟出现，单位毫秒                               | number                                                                         | —                                                                                                         | 0              |
-| hide-after      | 延迟消失，单位毫秒                               | number                                                                         | —                                                                                                         | 0              |
-| auto-close      | tooltip出现后自动隐藏演示，单位毫秒，为0时不隐藏 | number                                                                         | —                                                                                                         | 0              |
-| manual          | 手动控制模式，true时鼠标进入移出事件不生效       | Boolean                                                                        | —                                                                                                         | false          |
-| offset          | 出现位置的偏移量                                 | Number                                                                         | —                                                                                                         | 0              |
-| appendToBody    | 是否将弹层放置于 body 内                         | Boolean                                                                        | —                                                                                                         | true           |
-| options         | 自定义 popper.js 的配置项具体参考popper.js       | Object                                                                         | —                                                                                                         | —              |
-| z-index         | 层级                                             | Number，默认为2000，弹窗会自增，如设置了此值，则会追加当前值后进行自增进行自增 | —                                                                                                         | 0              |
+除下列属性外，Popover 还继承全部 Popper 公共属性（见下方「Popper 公共属性」）。
 
-## Slot
+| 参数            | 说明                                       | 类型          | 可选值 | 默认值         |
+| --------------- | ------------------------------------------ | ------------- | ------ | -------------- |
+| trigger         | 触发方式                                   | string        | hover（悬停）/ click（点击）/ contextmenu（右键）/ manual（手动） | click          |
+| title           | 标题                                       | string        | —      | —              |
+| content         | 显示的内容                                 | string        | —      | —              |
+| width           | 宽度                                       | string/number | —      | 150            |
+| transition      | 自定义渐变动画                             | string        | —      | fade-in-linear |
+| z-index         | 层级，弹窗会自增，如设置了此值则在其基础上自增 | number        | —      | 0              |
+| visible         | 状态是否可见（配合 `v-model:visible` 使用） | boolean       | —      | —              |
+
+## Popper Props
+
+以下属性由 `_internal/popper` 提供，Popover / Tooltip / Dropdown 等浮层组件共用。
+
+| 参数                  | 说明                                        | 类型    | 可选值                            | 默认值         |
+| --------------------- | ------------------------------------------- | ------- | --------------------------------- | -------------- |
+| placement             | 提示框出现的位置                            | string  | top/top-start/top-end/bottom/bottom-start/bottom-end/left/left-start/left-end/right/right-start/right-end | top            |
+| theme                 | 主题                                        | string  | dark / light                      | dark           |
+| offset                | 出现位置的偏移量                            | number  | —                                 | 12             |
+| arrow-offset          | 箭头的偏移量                                | number  | —                                 | 4              |
+| show-arrow            | 是否显示箭头                                | boolean | —                                 | true           |
+| append-to-body        | 是否将弹层放置于 body 内                    | boolean | —                                 | true           |
+| disabled              | 是否禁用                                    | boolean | —                                 | false          |
+| manual-mode           | 手动控制模式，为 true 时鼠标进入 / 移出事件不生效 | boolean | —                              | false          |
+| open-delay            | 延迟出现，单位毫秒                          | number  | —                                 | 0              |
+| close-delay           | 延迟消失，单位毫秒                          | number  | —                                 | 200            |
+| show-after            | 显示后的延时，单位毫秒                      | number  | —                                 | 0              |
+| hide-after            | 隐藏后的延时，单位毫秒                      | number  | —                                 | 0              |
+| popper-class          | 自定义浮层类名                              | string  | —                                 | ''             |
+| popper-options        | popper.js 参数，具体参考 popper.js 文档     | object  | —                                 | null           |
+| boundaries-padding    | 边界内边距                                  | number  | —                                 | 0              |
+| gpu-acceleration      | 是否开启 GPU 加速                           | boolean | —                                 | true           |
+| stop-popper-mouse-event | 是否阻止浮层上的鼠标事件                  | boolean | —                                 | true           |
+| strategy              | 定位策略                                    | string  | fixed / absolute                  | fixed          |
+| style                 | 浮层的行内样式                              | object  | —                                 | —              |
+| cutoff                | 浮层内容超出可视区域时是否裁剪              | boolean | —                                 | false          |
+| pure                  | 是否开启纯净模式（去掉默认样式）            | boolean | —                                 | false          |
+
+## Slots
 
 | 名称    | 说明                                                 |
 | ------- | ---------------------------------------------------- |

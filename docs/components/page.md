@@ -12,7 +12,7 @@ import Text from './demo/Page/Text.vue'
 import Simple from './demo/Page/Simple.vue'
 </script>
 
-##### 空显示状态，用于给内部无数据情况的展示。十分简单
+分页器用于在数据量较大时按页展示，支持页码、每页条数切换、快速跳页与简洁模式等多种形态。
 
 <card>
 
@@ -23,7 +23,7 @@ import Simple from './demo/Page/Simple.vue'
 <template #example>
 
   <Basic/>
-  
+
 </template>
 
 <template #template>
@@ -57,7 +57,7 @@ const current = ref(2)
 <template #example>
 
   <Number/>
-  
+
 </template>
 
 <template #template>
@@ -91,7 +91,7 @@ const current = ref(2)
 <template #example>
 
   <Elevator/>
-  
+
 </template>
 
 <template #template>
@@ -125,7 +125,7 @@ const current = ref(2)
 <template #example>
 
   <Total/>
-  
+
 </template>
 
 <template #template>
@@ -159,7 +159,7 @@ const current = ref(2)
 <template #example>
 
   <Mini/>
-  
+
 </template>
 
 <template #template>
@@ -200,7 +200,7 @@ const current = ref(2)
 <template #example>
 
   <Text/>
-  
+
 </template>
 
 <template #template>
@@ -234,7 +234,7 @@ const current = ref(2)
 <template #example>
 
   <Simple/>
-  
+
 </template>
 
 <template #template>
@@ -275,6 +275,10 @@ const current = ref(2)
 | show-total     | 显示总数                              | Boolean | —             | false            |
 | show-elevator  | 显示电梯，可以快速切换到某一页        | Boolean | —             | false            |
 | show-sizer     | 显示分页，用来改变page-size           | Boolean | —             | false            |
+| current-to     | 页码跳转的目标页                      | Number  | —             | —                |
+| all-pages      | 总页数（由 total / page-size 计算得出） | Number | —            | —                |
+| is-small       | 是否使用迷你尺寸                      | Boolean | —             | false            |
+| append-to-body | 条数切换浮层是否插入至 body 元素上    | Boolean | —             | true             |
 | class-name     | 自定义 class 名称                     | String  | —             | —                |
 | styles         | 自定义 style 样式                     | Object  | —             | —                |
 | prev-text      | 替代图标显示的上一页文字              | String  | —             | —                |
@@ -282,12 +286,15 @@ const current = ref(2)
 
 ## Events
 
-| 事件名      | 说明                                       | 返回值    |
-| ----------- | ------------------------------------------ | --------- |
-| change      | 页码改变的回调，返回改变后的页码           | 页码      |
-| size-change | 切换每页条数时的回调，返回切换后的每页条数 | page-size |
+| 事件名         | 说明                                       | 返回值    |
+| -------------- | ------------------------------------------ | --------- |
+| change         | 页码改变的回调，返回改变后的页码           | 页码      |
+| size-change    | 切换每页条数时的回调，返回切换后的每页条数 | page-size |
+| page           | 页码改变时触发                             | 页码      |
+| size           | 每页条数改变时触发                         | page-size |
+| update:current | 当前页码变化时触发，配合 `v-model:current` | 新的页码  |
 
-## Slot
+## Slots
 
 | 名称    | 说明                 |
 | ------- | -------------------- |
