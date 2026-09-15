@@ -11,16 +11,18 @@
     "jsxFragmentFactory": "Fragment",
     "noImplicitAny": true,
     "noUnusedLocals": false,
-    "module": "ES6",
+    "module": "ESNext",
     "moduleResolution": "Node",
     "declaration": true,
+    "allowJs": true,
     "forceConsistentCasingInFileNames": true,
-    "composite": true,
     "resolveJsonModule": true,
-    "target": "ES6",
+    "target": "ES2020",
     "esModuleInterop": true,
-    "lib": ["ESNext", "DOM"]
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "lib": ["ESNext", "DOM", "DOM.Iterable"]
   },
-  "include": ["src/**/*.vue", "src/**/*.ts", "src/**/*.tsx", "src/**/*.d.ts"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["src/**/*.vue", "src/**/*.ts", "src/**/*.tsx", "src/**/*.d.ts", "env.d.ts"],
+  "exclude": ["node_modules", "dist", "es", "lib", "site"]
 }

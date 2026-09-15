@@ -1,0 +1,63 @@
+name: Release
+
+# 打 tag（如 v0.0.3）即自动构建、校验并发布到 npm
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    name: 构建并发布 npm 包
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 安装 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          registry-url: https://registry.npmjs.org
+
+      - name: 安装依赖
+        run: npm ci
+
+      - name: 校验 tag 与 package.json 版本一致
+        run: |
+          set -e
+          TAG="${GITHUB_REF_NAME#v}"
+          PKG="$(node -p "require('./package.json').version")"
+          echo "tag=$TAG  package.json=$PKG"
+          if [ "$TAG" != "$PKG" ]; then
+            echo "::error::tag ($TAG) 与 package.json version ($PKG) 不一致，请先执行 npm version"
+            exit 1
+          fi
+
+      - name: 代码风格检查
+        run: npm run lint:check
+
+      - name: 单元测试
+        run: npm run test
+
+      - name: 构建组件库与样式
+        run: npm run build:package
+
+      - name: 校验产物完整性
+        run: npm run verify
+
+      # 需在仓库 Settings → Secrets 配置 NPM_TOKEN（npm Automation Token）
+      - name: 发布到 npm
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: 创建 GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true

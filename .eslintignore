@@ -1,11 +1,26 @@
+# 依赖与构建产物
 node_modules/
-public/
+dist/
 es/
 lib/
-dist/
-package.json
+coverage/
+
+# 文档站点（构建产物与缓存，不需要 lint）
+site/
+docs/.vitepress/dist/
+docs/.vitepress/cache/
+
+# 其他生成物 / 模板
+public/
 src/assets/
 plop-templates/
 handlebars/
 website/
 build/
+
+# vite / vitest 运行时临时文件（每次运行都会重新生成）
+*.timestamp-*.mjs
+
+# 配置文件本身无需 lint
+package.json
+package-lock.json

@@ -1,0 +1,81 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+    branches: [main, master, develop]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: 校验与构建 (Node ${{ matrix.node-version }})
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        # 组件库需保证 Node 18 / 20 下均可安装与构建
+        node-version: [18, 20]
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 安装 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+
+      - name: 安装依赖
+        run: npm ci
+
+      - name: 代码风格检查
+        run: npm run lint:check
+
+      # TODO(type-debt): 严格模式类型检查目前仍有历史遗留错误，
+      # 详见 docs/.internal/refactor-plan.md 的「类型安全」章节（阶段五）。
+      # 暂时不阻断流水线，待存量错误清零后移除 continue-on-error。
+      - name: 类型检查（暂不阻断）
+        continue-on-error: true
+        run: npm run type-check
+
+      - name: 单元测试
+        run: npm run test
+
+      - name: 构建组件库与样式
+        run: npm run build:package
+
+      - name: 校验产物完整性
+        run: npm run verify:dist
+
+      - name: 消费方冒烟测试（真实 vite 构建 + SSR）
+        run: npm run smoke
+
+      - name: 校验 npm 包内容
+        run: |
+          npm pack --pack-destination /tmp
+          tar -tzf /tmp/fei-ui-design-*.tgz | head -30
+
+  docs:
+    name: 文档站点构建
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 安装 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: 安装依赖
+        run: npm ci
+
+      - name: 构建文档站点
+        run: npm run build:site
