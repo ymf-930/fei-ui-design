@@ -7,6 +7,9 @@
 
 本文档是**唯一的改造计划来源**（已合并原 `docs/CODE_AUDIT_AND_PLAN.md`，避免两份计划数据互相矛盾）。
 
+> **第二轮全量审计（2026-09-15）见 §八** —— 记录第一轮修复之后**当前仍存在**的问题，
+> 按 P0/P1/P2/P3 分级并附证据、成因、影响与整改顺序。§一 / §五 / §七 中的过时事实已就地更正。
+
 ---
 
 ## 一、项目现状盘点
@@ -22,7 +25,7 @@
 | 测试 | Vitest 1 + `@vue/test-utils` |
 | 类型检查 | `vue-tsc` 1.8（**存量 1832 处错误，见 §3.3**） |
 | 代码规范 | ESLint 8（`.eslintrc.cjs`）+ Prettier，**当前 0 问题** |
-| 包管理 | npm（`package-lock.json`，lockfileVersion 3） |
+| 包管理 | pnpm（`pnpm-lock.yaml`，lockfileVersion 9.0），`packageManager` 锁定 `pnpm@10.34.5` |
 
 ### 1.2 规模统计
 
@@ -31,7 +34,7 @@
 | `src/` 文件总数 | 419 |
 | 公共组件目录 | 56 |
 | 内部组件（`src/_internal`） | `empty` `popper` `scrollbar` `collapse-transition` `move-transition` |
-| 组件文档 | 59（公共 56 + 内部 3），覆盖率 100% |
+| 组件文档 | 60（公共 56 + 内部 3 + 索引 1），覆盖率 100% |
 | 单元测试文件 | **2**（`button` 4 例 + `collapse` 1 例，共 5 例通过） |
 | 类型错误（严格模式） | **1832 处 / 156 个文件** |
 | ESLint 问题 | **0**（635 个文件） |
@@ -409,13 +412,22 @@ git push --follow-tags
 
 > 需在仓库 `Settings → Secrets` 配置 `NPM_TOKEN`（npm Automation Token）。
 
-### 5.7 包管理器统一说明
+### 5.7 包管理器统一说明（2026-09-15 更正）
 
-原仓库同时存在 `pnpm-lock.yaml`，但执行环境中 pnpm / corepack 均不可用，
-脚本却引用 `pnpm run`，存在实际执行风险。现已统一为 **npm**：
+本节原结论「执行环境中 pnpm / corepack 均不可用，故统一为 npm」**经复核有误**：
+corepack 0.34.6 一直可用，当时是判断失误。项目已切回 **pnpm**：
 
-- 删除 `pnpm-lock.yaml`，生成并提交 `package-lock.json`（lockfileVersion 3）
-- 所有脚本、CI、Release 流程改用 `npm` / `npm ci`
+- 已删除 `package-lock.json`，恢复并提交 `pnpm-lock.yaml`（lockfileVersion 9.0）
+- `packageManager: pnpm@10.34.5` 为版本的唯一事实来源，`engines.pnpm = ">=10.0.0 <11.0.0"`
+- 所有脚本、CI、Release 改用 `pnpm` / `pnpm install --frozen-lockfile`
+- 执行方式：`corepack enable pnpm`，由 corepack 按 `packageManager` 自动准备版本
+
+选择 pnpm 10.x 的原因：pnpm 11 要求 Node >= 22.13，与「Node 20 起可用」的声明冲突；
+10.x 是最后一个同时支持 Node 20 的大版本。详见 README「环境要求」。
+
+> 注意：聚合脚本（`build:package` / `docs:check` / `verify` / `prepublishOnly`）
+> 已改用 `run-s`（`npm-run-all`）而非嵌套 `pnpm run` —— 嵌套写法按 PATH 解析 pnpm，
+> 会被 `engines.pnpm` 校验拦下（本机曾存在全局 pnpm 9.15.9）。
 
 ---
 
@@ -457,9 +469,311 @@ git push --follow-tags
 4. **a11y 与 i18n**——对标 antd 的必备项。
 5. **接入 `changesets`**——管理版本与 CHANGELOG 自动生成，替代手工维护。
 6. **声明 `browserslist`**——让 `autoprefixer` / esbuild 的降级目标明确可控。
-7. **不要把构建产物提交进仓库**——`docs/.vitepress/config.js` 把 VitePress 的
-   `outDir` 设为 `../site`，而 `site/` 被提交进了仓库（359 个文件）。这带来两个问题：
-   - 每次改文档都会让 `site/assets/*` 的 hash 文件名整体变动，产生数万行无意义 diff；
-   - 该目录曾被 ESLint 扫描，制造出数千条假问题（见 §3.1 #13）。
-   建议将 `site/` 移出版本控制（加入 `.gitignore`），改为在 CI 中构建并发布产物；
-   若 Gitee Pages 必须直接读取该目录，则应同时在 CI 中加一步「重新生成 `site/` 并校验无差异」。
+7. ~~**不要把构建产物提交进仓库**~~ —— **已于 2026-09-15 解决**。
+   原问题是 `site/`（VitePress 输出目录）被提交进仓库（359 个文件），
+   导致每次改文档都产生数万行 `site/assets/*` 的 hash 变动 diff，
+   且该目录曾被 ESLint 扫描制造出数千条假问题（见 §3.1 #13）。
+   现 `/site/`、`es/`、`lib/`、`dist/` 均已加入 `.gitignore`，
+   实测被 git 跟踪的产物文件数为 **0**，改为在 CI 中构建与发布。
+
+---
+
+## 八、第二轮全量审计（2026-09-15）
+
+> 审计范围：`src/`（56 个公共组件 + 内部模块）、`build/`、`docs/`、根级配置、**已构建产物**
+> 审计方式：4 个自定义静态扫描脚本 + `vue-tsc` + 产物解析 + 质量门禁全量重跑
+> 与 §三 的关系：§三 是**第一轮（2026-09-13）**的问题清单及修复状态；本节是**当前仍存在的问题**。
+> §一 / §五 / §七 中已过时的事实已在本节审计前就地更正（见 8.4 P3-2）。
+
+### 8.0 当前质量门禁基线（实测）
+
+| 门禁 | 结果 |
+| --- | --- |
+| `pnpm run lint:check` | exit=0 |
+| `pnpm run test` | 2 个文件 / 5 条用例通过（25.2s） |
+| `pnpm run verify`（`verify:dist` + `smoke`） | exit=0 |
+| `pnpm run docs:check`（api / 死链 / 示例 / 格式） | exit=0 |
+| `pnpm run type-check` | **exit=2，1832 处错误 / 157 个文件**，CI 中 `continue-on-error: true` |
+
+**关键判断：门禁全绿不等于没有问题。** 类型检查是当前唯一能发现「接口错用」的静态手段，
+可它既不阻断流水线，又被 731 处 `@ts-ignore` 大量压制 —— 8.1 的 P0-1 就是被压制的真实运行期缺陷。
+
+### 8.1 P0 — 会导致运行期故障，或使用者无法按文档接入
+
+#### P0-1 `f-slider`：`throwError` 默认导入错误，调用即抛 `TypeError`，且被 `//@ts-ignore` 掩盖
+
+- **位置**：`src/slider/src/Slider.vue:96`（导入）、`:124`（调用）
+- **证据链**：
+  1. `src/_utils/log.ts` 的导出形态是 `export default log`（一个**对象**）+ `export const throwError`（具名函数）
+  2. Slider 写的是 `import throwError from '../../_utils/log'` → 绑定到 **log 对象**
+  3. 产物 `es/_utils/log.js` 结尾为 `export { log as default, throwError, typeColor }`，印证默认导出是对象
+  4. 复现脚本（`.workbuddy/tmp/proof-slider-throwerror.mjs`）：默认导出 `typeof === 'object'`，
+     具名 `throwError` `typeof === 'function'`；按默认导入的方式调用 → `TypeError: logDefault is not a function`
+- **触发路径**：`min > max` 时进入该分支。`setValues()` 由 `runtime` 侧 4 个 watcher 调用
+  （`initData.dragging` / `props.modelValue` / `[props.min, props.max]`），
+  因此**运行期把 `min` 调过 `max` 或在挂载后修改这两个 prop，就会在 watcher 回调里抛错**；
+  紧随其后的 `return` 兜底逻辑永远不可达。
+- **成因**：调用行上方写了 `//@ts-ignore`，把 TS2349（此表达式不可调用）压掉了。
+  这是「用 `@ts-ignore` 换取安静」的典型代价 —— 连真实缺陷一起被静音。
+- **影响**：使用者的一个配置笔误会让组件运行期抛错，且拿不到本应给出的提示信息；
+  同时说明当前类型门禁不具备发现此类问题的能力。
+- **建议**：改为 `import { throwError } from '../../_utils/log'`；删除该处 `//@ts-ignore`；
+  并把 `log.ts` 的默认导出收敛掉（只保留具名导出），从根上杜绝同类错用。
+
+#### P0-2 `ConfigProvider` 的国际化是空壳，且文档示例用了不存在的组件
+
+- **现象一：`locale` 只被透传，从不被消费**
+  - `src/config-provider/src/types.ts`：`locale: { type: String, default: 'zh-CN' }`
+  - `ConfigProvider.ts:40-44` 只把它 provide 成 `mergedLocaleRef`
+  - 全库检索：**没有任何语言包文件**（`src/**/*locale*` / `*lang*` 均无命中）；
+    除 `config-provider` 自身外，**没有任何组件读取 `locale`**
+- **现象二：唯一演示 locale 的文档示例无法运行**
+  - `docs/components/config-provider.md:163` 写的是 `<f-pagination :total="100" />`
+  - 库中**并无 `FPagination`**；分页组件是 `Page`（`export { default as FPage }`，
+    标签 `<f-page>`，见 `docs/components/index.md:56`）
+  - 系统比对（`.workbuddy/tmp/audit-tag-exports.cjs`）：文档中 82 个 kebab 标签里只有 3 个
+    无法对应到真实导出，`<f-pagination>` 是其中之一
+- **成因**：i18n 属「先立接口、后补实现」，接口立完就写进了文档，但实现与校验都没跟上。
+  `docs:check` 的四件套只校验 API 表、死链、示例存在性与格式，**不校验示例中用到的组件是否真实存在**。
+- **影响**：`locale` 让使用者误以为已支持多语言；照抄这个示例会直接渲染失败。
+- **建议**：二选一 —— 补齐 locale 语言包并让组件统一走 `useLocale`；或明确标注为「预留、尚未生效」，
+  同时把示例替换为真实存在的组件。
+
+#### P0-3 `timeline`：导出名与组件名分裂，使文档推荐的按需自动引入失效
+
+- **证据**：
+  - `src/timeline/index.ts`：`export { default as FTimeLine }` / `FTimeLineItem`
+  - `src/timeline/src/TimeLine.vue:15`：`name: 'FTimeline'`；`TimeLineItem.vue:19`：`name: 'FTimelineItem'`
+  - 文档使用 `<f-timeline>` / `<f-timeline-item>`（`docs/components/timeline.md:30`）
+- **两条路径后果不同**：
+  - 全局注册（`app.use`）→ 按 `name` 注册 → `<f-timeline>` 可用 ✅
+  - 文档推荐的自动引入配方（`docs/guide/import-on-demand.md:44`：
+    `componentName => ({ name: componentName, from: 'fei-ui-design' })`）
+    → unplugin 传入的 `componentName` 是标签的 PascalCase 形式即 `FTimeline`，
+    它会去找 `import { FTimeline }`，而**该导出不存在** → 组件解析失败 ❌
+- **附带**：`src/timeline/index.ts:7/10` 仍在导出 `@deprecated` 的
+  `BTimelineProps` / `BTimelineItemProps`（§3.2 #24 声称已统一为 `F*`，实际只统一了一部分）。
+- **影响**：timeline 是本库文档中**唯一**「照着文档做自动引入会失败」的公共组件。
+- **建议**：统一为 `FTimeline` / `FTimelineItem`（改 `index.ts` 导出名，或改组件 `name`，二选一），
+  并借机清理 `B*` 遗留类型。
+
+### 8.2 P1 — 影响交付质量与长期可维护性
+
+#### P1-1 类型债务的真实规模被 `@ts-ignore` 掩盖
+
+| 指标 | 实测 |
+| --- | --- |
+| `type-check` 错误 | **1832 处 / 157 个文件** |
+| 含 `@ts-ignore` / `@ts-expect-error` 的文件 | **53 个** |
+| `@ts-ignore` / `@ts-expect-error` 总数 | **731 处** |
+| CI 门禁 | `continue-on-error: true`（不阻断） |
+| 显式 `any`（不含 disable 行） | 31 处 |
+| `eslint-disable` | 79 处 |
+| 错误码分布 | TS7006 972 / TS2339 323 / TS7053 91 / TS18046 75 / TS2322 69 / TS7005 51 |
+
+- **成因**：由 JS 迁移到 TS 时按「先压后修」推进。`@ts-ignore` 会屏蔽**下一行的全部**类型错误，
+  因此 1832 是「已被压掉一部分之后」的剩余量，实际未处理问题 **≥ 2563 处**。
+- **影响**：已在 P0-1 得到实证 —— 被屏蔽的错误里存在**真实运行期缺陷**。
+  这也说明整改顺序很重要：没有测试兜底就批量改类型，风险不可控。
+- **密集区**（与 `@ts-ignore` 分布高度重合）：
+  `tree` 147、`table` 129、`date-picker` 114、`cascader` 56、`form` 54、`color-picker` 51 ——
+  恰好也是**最复杂、最缺测试**的组件。
+
+#### P1-2 测试体系严重不足（2 / 56）
+
+- 实测：`src/**/*.test.*` 共 **2 个文件 / 5 条用例**（`button` 4 条 + `collapse` 1 条），
+  覆盖 56 个公共组件中的 2 个，约 **3.6%**。
+- 结构性缺口：无 a11y 断言、无 SSR 渲染断言（仅 `smoke` 覆盖一条路径）、无快照、无 e2e / 视觉回归。
+- 结构审计（`.workbuddy/tmp/audit-structure.cjs`）显示各组件目录已具备 `test/` 位置约定，
+  但 **54 个组件的 `test/` 为空** → 属「约定已立、实践未铺」。
+- **影响**：P0/P1 的类型整改、暗色主题补齐、a11y 改造都缺少回归网，任何批量改动都可能静默破坏现有行为。
+
+#### P1-3 暗色主题只实现了 2 / 56 个组件，但文档承诺「内置提供」
+
+- **实测**：全库仅 `src/button/styles/dark.css` 与 `src/icon/styles/dark.css` 两个文件
+  含 `theme-name='dark'` 选择器（各自由 `styles/index.css` 通过 `@import './dark.css'` 引入）。
+- **文档承诺**（`docs/components/config-provider.md:140/150`）：`theme-name` 支持 `light|dark`，
+  「暗色主题的样式变量由组件库内置提供，无需额外引入 CSS」。
+- **成因**：暗色主题按组件零散实现，未作为一次系统性变更覆盖全组件；
+  `_styles/base/vars.css` 中也只有 3 处与 dark 相关的变量。
+- **影响**：使用者按文档开 `<f-config-provider theme-name="dark">` 后，
+  54 个组件仍是亮色 → 观感上是「主题坏了」，比不提供更容易招致信任损失。
+
+#### P1-4 无障碍（a11y）基本空白
+
+| 组件 | aria-* | role | 键盘处理 |
+| --- | --- | --- | --- |
+| select | 0 | 0 | 13 |
+| drawer | 0 | 0 | 0 |
+| tooltip | 0 | 0 | 0 |
+| table | 0 | 0 | 0 |
+| tabs | 0 | 0 | 0 |
+| form | 0 | 0 | 0 |
+| upload | 0 | 0 | 0 |
+| popover | 0 | 0 | 0 |
+
+全库合计仅 **45 处 `aria-*` / 28 处 `role`**，分布在 56 个组件中。
+- **影响**：`select` / `drawer` / `tabs` / `table` 这类交互组件在屏幕阅读器与纯键盘环境下不可用。
+  README 定位为「企业级中后台」，政企 / 金融场景常有无障碍合规要求。
+- **建议**：先给 8 个核心交互组件补 `role` + `aria-*` + 键盘导航，再引入 `vitest-axe` 做回归
+  （否则补完会再次退化）。
+
+#### P1-5 诊断信息品牌错乱
+
+| 前缀 | 数量 |
+| --- | --- |
+| `[Element Warn]…`（Element Plus 文案残留） | **7** |
+| `[FPopover]` / `[FTooltip]`（项目自有） | **3** |
+| 无前缀的裸 `console.warn/error` | 11 |
+
+- 分布：`form` 4、`carousel` 2、`slider` 1（`[Element*]`）；全库 `console.warn/error` 共 21 处。
+- **影响**：使用者在自己的控制台里看到 `[Element Warn]` 会误判依赖来源；
+  同一库内并存三套风格也增加排查成本。
+
+### 8.3 P2 — 性能、体积与配置债务
+
+#### P2-1 发布包体积（实测 9.1 MB 未压缩）
+
+| 目录 | 体积 |
+| --- | --- |
+| `es/` | 3.8 MB |
+| `lib/` | 3.9 MB |
+| `dist/` | 1.4 MB |
+
+- `dist/styles/fonts/` 合计约 **770 KB**，其中 `iconfont.svg` **410 KB** + `iconfont.eot` **147 KB**
+  是 **IE 时代格式**，在现代浏览器矩阵下是纯死重。
+- `src/icon/src/iconfont.json`（**100 KB**）被 `IconSelect.vue` 以
+  `import icon from './iconfont.json'` 静态引入 → 产物 `es/icon/src/iconfont.json.js` 达 **81 KB**，
+  使用 `<f-icon-select>` 的使用者会把这 81 KB 全部打进自己的 bundle。
+- **成因**：`minify: false`（有明确理由，见 `vite.config.ts` 注释）+ 字体与图标数据未按
+  目标浏览器、使用方式做裁剪。
+- **建议**：`iconfont.json` 改为动态 `import()` 或提供独立子入口；字体只保留 `woff2` / `woff`；
+  若坚持发布未压缩 `es/`，可评估对 `lib/` 单独压缩的收益。
+
+#### P2-2 未声明 `browserslist`
+
+- `package.json` 与 `.browserslistrc` 均无该字段。
+- **影响**：`autoprefixer` 走默认目标（`> 0.5%, last 2 versions, Firefox ESR, not dead`），
+  降级范围不可控，也无法解释「产物里为什么还有这些前缀」；与 P2-1 的 legacy 字体问题同源。
+
+#### P2-3 无虚拟滚动能力
+
+- 全库检索 `virtualScroll` / `虚拟滚动` / `VirtualList`：**0 命中**。
+- **影响**：`table` / `tree` / `select` / `cascader` 在万级行 / 节点下全量渲染 DOM，
+  中后台真实场景下会出现明显卡顿；`table` 也没有「拖拽排序 + 大数据量」的组合方案。
+
+#### P2-4 `resize-observer-polyfill` 是无人维护的依赖
+
+- 声明 `^1.5.1`，实际安装 `1.5.1`（该包最后一次发布在 2018 年），
+  仅被 `src/_utils/resize-event.ts` 使用。
+- 现代浏览器矩阵下原生 `ResizeObserver` 已全覆盖，属可移除的历史包袱
+  （替代品为 `@juggle/resize-observer`，或直接用原生 + 少量降级）。
+
+#### P2-5 运行时依赖中「用一处、带整包」的项
+
+| 依赖 | 被引用源文件数 | 说明 |
+| --- | --- | --- |
+| `lodash` | 1 | 只用 `lodash/union`（`time-picker`），为一行并集引入整包依赖声明 |
+| `async-validator` | 1 | 仅 `form` 使用，体量不小 |
+| `dayjs` | 11 | 日期类组件的合理依赖 |
+| `sortablejs` | 2 | `table` 拖拽 |
+| `@popperjs/core` | 3 | 合理 |
+| `mitt` | 6 | 合理 |
+
+- **影响**：`lodash` 为单个函数引入整包，是明显的可裁剪项（5 行实现即可替代），
+  并会让使用者的依赖审计多出一条 `lodash`。
+
+#### P2-6 `src/version.ts` / `src/info.ts` 是生成物却入库
+
+- 两者由 `build/gen-version.cjs` 生成（当前 `version.ts` 内容为 `export default '0.0.2'`），
+  但**被 git 跟踪**。
+- **影响**：版本号存在「`package.json` 与 `src/version.ts` 两个事实源」；
+  `release:*` 走 `npm version` 后若未重跑 `gen-version`，产物中的版本号会静默过期。
+
+#### P2-7 内部组件的契约边界名存实亡
+
+- `src/components.ts` 通过 `export *` 把 `_internal/{empty,popper,scrollbar,collapse-transition,move-transition}`
+  全部对外导出（实测公开导出名合计 **107 个**）。
+- `docs/components/` 为 `empty`、`popper`、`scrollbar` 都建了正式文档页，
+  `docs/components/index.md` 也把它们计入「59 个组件」。
+- `Utils`（`src/index.ts:22`）把 `_utils/{util,helper,resize,color,dom,log}` 整体暴露，
+  且 `docs/guide/common-api.md` 已将其写成公开能力。
+- **影响**：`_internal` / `_utils` 前缀在语义上表示「API 不承诺稳定」，但实际已是文档化的公开面
+  → 后续任何重构都会被使用者依赖，失去改动自由度。反过来，
+  8.2 P1-1 里错误最密集的 `_utils/dom.ts`(47) / `_utils/util.ts`(37)
+  恰好落在这个「已公开但零类型保障」的区间。
+
+### 8.4 P3 — 规范与文档一致性
+
+#### P3-1 文档中的事实性错误
+
+| 位置 | 问题 |
+| --- | --- |
+| `docs/guide/common-api.md` | 示例写 `Utils.util.throttl`、`Utils.util.debounc`；源码导出是 `throttle` / `debounce`，照抄得到 `undefined`。系统比对（`.workbuddy/tmp/audit-utils-docs.cjs`）：文档 13 条 `Utils.*` 引用中有 **2 条不存在** |
+| `README.md:6/18`、`docs/components/index.md:7` | 均称「59 个组件」，实际公共组件目录 **56** 个（59 = 56 + 3 个 `_internal` 组件） |
+| `docs/components/config-provider.md:163` | 国际化示例使用不存在的 `<f-pagination>`（见 P0-2） |
+
+#### P3-2 本文档 §一 / §五 / §七 的过时事实（已在本次审计前就地更正）
+
+| 位置 | 原文 | 实际 |
+| --- | --- | --- |
+| §1.1 技术栈 | 包管理 npm / `package-lock.json` | 已统一为 **pnpm 10.34.5** + `pnpm-lock.yaml` |
+| §5.7 | 「执行环境中 pnpm / corepack 均不可用…统一为 npm」 | 该结论**有误**：corepack 一直可用，已切回 pnpm（本节已重写） |
+| §7 建议 7 | 「`site/` 被提交进仓库（359 个文件）」 | 已加入 `.gitignore`，实测被跟踪产物文件数 **0** |
+| §1.2 | 组件文档 59 篇 | 实为 **60** 篇（含索引页） |
+
+#### P3-3 其余观察项（低危）
+
+- `v-for` 缺 `:key` **2 处**：`src/table/src/table-body.vue:24` 与 `:59`（均为 `<template v-for>`）；
+  全库 44 个 `v-for` 元素中其余 42 个都带了 key。
+- 仅有 2 处 `TODO`，且都属「实现待重构」性质（`basic-date-table.vue:123`、`basic-time-spinner.vue:335`）。
+  也就是说**未实现的功能没有被显式登记在代码里** —— 这正是 i18n、暗色主题这类缺口
+  必须靠外部审计才能发现的原因。建议新增能力时同步写入本节与 CHANGELOG。
+- `es/` 与 `lib/` 下各有 **108 个 `*2.vue.js`** 文件（es 285 KB / lib 307 KB）。
+  经核对**不是死代码**：是 `<script setup>` 与 `<template>` 在 `preserveModules` 下被拆成两个模块
+  （如 `es/table/src/Table.vue.js` 从 `Table2.vue.js` 引入 `_sfc_main`），两者都被引用。
+  属正常编译切分，仅作产物形态记录。
+- `docs/.internal/docs-style-guide.md` 被 `build/check-docs-demo.cjs` 与 `check-docs-style.cjs` 引用，
+  是活文档，非孤儿。
+- 仍缺 `unplugin-vue-components` 官方 resolver（文档要求使用者手写配方，而该配方在 timeline 上失效，
+  见 P0-3）；仍缺 `changesets`，CHANGELOG 手工维护。
+
+### 8.5 声明的 Vue 下限未经验证（非缺陷，属风险）
+
+- 声明：`peerDependencies.vue = "^3.2.0"`。
+- **核查结论：未发现运行期层面的 3.3+ 依赖。**
+  - `defineOptions`（52 处）与 `defineSlots`（4 处）都是编译宏，已被库自身构建消除 ——
+    实测 `es/` 中二者命中数均为 **0**
+  - 产物从 Vue 导入的符号集合全部是 3.0 / 3.2 时代 API（`ref` / `onMounted` / `createApp` …）
+  - 唯一疑似的 `useModel` 是 `src/checkbox/src/useCheckbox.ts:19` 里的**本地函数**，非 Vue API
+- **但下限从未被任何自动化验证**：`files` 白名单不含 `src/`（使用者只拿到已编译产物，
+  这既是下限成立的原因），而 `devDependencies` 与 CI 只安装 **Vue 3.5.42**，没有版本矩阵。
+- **风险**：一旦将来有人在源码里引入真实的新 API（如 `useId` / `useTemplateRef`），
+  类型检查与构建都不会报错，但使用者的 3.2 环境会运行期失败。
+- **建议**：CI 增加 Vue 版本矩阵（最低档 3.2 + 当前档），或把下限上调到团队真实验证过的版本。
+
+### 8.6 整改优先级建议
+
+| 顺序 | 事项 | 理由 |
+| --- | --- | --- |
+| 1 | **P0-1** Slider 导入错误 + 删除该处 `//@ts-ignore` | 唯一已实证的运行期故障，改动局部、收益立刻 |
+| 2 | **P0-2 / P0-3** i18n 取舍（标注或补齐）、timeline 命名统一、`<f-pagination>` 示例修正 | 直接决定「使用者能否照文档接入」，成本低 |
+| 3 | **P1-2 + P1-1** 先补测试、再去 `@ts-ignore`、逐组件闭环 | 没有回归网就动 731 处 ignore，风险不可控。建议按「补该组件测试 → 删除该文件的 ignore → 修真实错误」推进 |
+| 4 | **P1-3 / P1-4** 暗色主题、a11y | 都是「文档已承诺 / 行业已要求」的能力缺口，体量最大但边界清晰 |
+| 5 | **P2** 体积与配置（`browserslist`、字体裁剪、`iconfont.json` 动态化、移除 `lodash`、虚拟滚动） | 优化项，不阻塞发布 |
+| 6 | **P3** 文档一致性，并把本文档纳入校验范围 | 防止权威文档再次漂移（本次已发现 4 处过时事实） |
+
+### 8.7 建议新增的自动化护栏
+
+| 护栏 | 检查内容 | 对应问题 |
+| --- | --- | --- |
+| `check-doc-snippets` | 文档示例中出现的 `<f-xxx>` 标签是否都能对应到真实导出 | P0-2、P0-3 |
+| `check-doc-utils` | 文档中 `Utils.<group>.<fn>` 是否都存在于源码导出 | P3-1 |
+| `check-ts-ignore` | `@ts-ignore` 数量基线，新增即失败（冻结存量、只减不增） | P1-1 |
+| `check-diag-prefix` | 源码 `console.*` 文案必须以项目自有前缀开头，禁止 `[Element` | P1-5 |
+| Vue 版本矩阵 | CI 增加最低支持版本的打包 + 渲染冒烟 | §8.5 |
+| `check-plan-facts` | 校验本文档中的组件数、文档数、包管理器等关键事实与仓库一致 | P3-2 |
+
+> 本节所用的 4 个扫描脚本位于 `.workbuddy/tmp/`（`audit-structure.cjs`、`audit-tag-exports.cjs`、
+> `audit-utils-docs.cjs`、`audit-vfor-key.cjs`）及其输出 `audit-*.txt`；
+> `.workbuddy/` 不入版本控制，如需长期保留建议移入 `build/`。
