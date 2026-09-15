@@ -774,8 +774,8 @@ docs/components/space.md:16   ##### 可以设置组件和不同dom之间的间�
 为避免上述问题回潮，建议补充三项检查到 CI：
 
 1. **死链检查**：移除 `config.js` 的 `ignoreDeadLinks: true`，让 `vitepress build` 直接失败于死链。
-2. **API 一致性检查**：把本次审查使用的「文档 Props 表 ↔ 源码 props」比对脚本固化为 `npm run docs:check-api`，在 PR 阶段拦截默认值/属性名不一致。
-3. **示例一致性检查**：把「`#template` 代码块 ↔ `demo/*.vue`」比对脚本固化为 `npm run docs:check-demo`，在 PR 阶段拦截整段粘贴错误。
+2. **API 一致性检查**：把本次审查使用的「文档 Props 表 ↔ 源码 props」比对脚本固化为 `pnpm run docs:check-api`，在 PR 阶段拦截默认值/属性名不一致。
+3. **示例一致性检查**：把「`#template` 代码块 ↔ `demo/*.vue`」比对脚本固化为 `pnpm run docs:check-demo`，在 PR 阶段拦截整段粘贴错误。
 
 > 报告结束。全部条目均已定位到具体文件与行号，并附修改建议。
 
@@ -812,11 +812,11 @@ docs/components/space.md:16   ##### 可以设置组件和不同dom之间的间�
 | 原建议 | 落地形态 | 当前状态 |
 |---|---|---|
 | 死链检查 | `docs:check-links` + `ignoreDeadLinks:false` | ✅ 78 条内部链接，死链 0 |
-| API 一致性检查 | `npm run docs:check-api` | ✅ 0 项残留 |
-| 示例一致性检查 | `npm run docs:check-demo` | ✅ 缺失引用 0 / 孤儿 demo 0 / 未使用 import 0 |
-| （新增）格式规范检查 | `npm run docs:check-style` | ✅ 0 项待修复 |
+| API 一致性检查 | `pnpm run docs:check-api` | ✅ 0 项残留 |
+| 示例一致性检查 | `pnpm run docs:check-demo` | ✅ 缺失引用 0 / 孤儿 demo 0 / 未使用 import 0 |
+| （新增）格式规范检查 | `pnpm run docs:check-style` | ✅ 0 项待修复 |
 
-**聚合入口**：`npm run docs:check`（依次执行 api → links → demo → style）。
+**聚合入口**：`pnpm run docs:check`（依次执行 api → links → demo → style）。
 **规范依据**：`docs/.internal/docs-style-guide.md`。
 
 ### 8.5 遗留发现（待用户决策，非阻断）

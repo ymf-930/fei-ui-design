@@ -11,7 +11,7 @@ title: 指南总览
 | 文档 | 说明 |
 |---|---|
 | [介绍](/guide/introduction) | 组件库定位、组件规模与设计理念 |
-| [安装](/guide/installation) | npm / yarn 安装方式与 Vue 版本要求 |
+| [安装](/guide/installation) | pnpm / npm / yarn 安装方式与 Vue 版本要求 |
 | [在 SFC 中使用](/guide/usage-sfc) | 全局引入与按需引入组件的写法 |
 | [按需引入](/guide/import-on-demand) | 配合 Vite 自动导入组件与样式 |
 

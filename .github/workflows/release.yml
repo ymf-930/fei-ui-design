@@ -18,15 +18,19 @@ jobs:
       - name: 检出代码
         uses: actions/checkout@v4
 
+      # 版本以 package.json 的 packageManager 字段为准，不在此处另行指定
+      - name: 安装 pnpm
+        uses: pnpm/action-setup@v4
+
       - name: 安装 Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
+          cache: pnpm
           registry-url: https://registry.npmjs.org
 
       - name: 安装依赖
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: 校验 tag 与 package.json 版本一致
         run: |
@@ -35,25 +39,26 @@ jobs:
           PKG="$(node -p "require('./package.json').version")"
           echo "tag=$TAG  package.json=$PKG"
           if [ "$TAG" != "$PKG" ]; then
-            echo "::error::tag ($TAG) 与 package.json version ($PKG) 不一致，请先执行 npm version"
+            echo "::error::tag ($TAG) 与 package.json version ($PKG) 不一致，请先执行 pnpm run release:<patch|minor|major>"
             exit 1
           fi
 
       - name: 代码风格检查
-        run: npm run lint:check
+        run: pnpm run lint:check
 
       - name: 单元测试
-        run: npm run test
+        run: pnpm run test
 
       - name: 构建组件库与样式
-        run: npm run build:package
+        run: pnpm run build:package
 
       - name: 校验产物完整性
-        run: npm run verify
+        run: pnpm run verify
 
       # 需在仓库 Settings → Secrets 配置 NPM_TOKEN（npm Automation Token）
+      # --no-git-checks：CI 处于 tag 上的 detached HEAD，跳过 pnpm 的 git 状态校验
       - name: 发布到 npm
-        run: npm publish --access public
+        run: pnpm publish --access public --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 

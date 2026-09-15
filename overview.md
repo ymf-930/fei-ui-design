@@ -36,7 +36,7 @@
 ## 建议的后续动作
 
 1. 先修 P0 的 8 项（报告末尾附清单）。
-2. 把本次的 3 个比对脚本固化为 `npm run docs:check-api` / `docs:check-demo`，并在 CI 中移除 `ignoreDeadLinks: true`，形成护栏。
+2. 把本次的 3 个比对脚本固化为 `pnpm run docs:check-api` / `docs:check-demo`，并在 CI 中移除 `ignoreDeadLinks: true`，形成护栏。
 3. 新建《文档编写规范》，固化 API 章节顺序、类型列写法、产品名与标点规则——当前 59 个页面的 API 章节有 6 种写法、产品名有 6 种写法。
 
 ## 说明

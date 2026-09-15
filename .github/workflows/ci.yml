@@ -24,40 +24,44 @@ jobs:
       - name: 检出代码
         uses: actions/checkout@v4
 
+      # 版本以 package.json 的 packageManager 字段为准，不在此处另行指定
+      - name: 安装 pnpm
+        uses: pnpm/action-setup@v4
+
       - name: 安装 Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: npm
+          cache: pnpm
 
       - name: 安装依赖
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: 代码风格检查
-        run: npm run lint:check
+        run: pnpm run lint:check
 
       # TODO(type-debt): 严格模式类型检查目前仍有历史遗留错误，
       # 详见 docs/.internal/refactor-plan.md 的「类型安全」章节（阶段五）。
       # 暂时不阻断流水线，待存量错误清零后移除 continue-on-error。
       - name: 类型检查（暂不阻断）
         continue-on-error: true
-        run: npm run type-check
+        run: pnpm run type-check
 
       - name: 单元测试
-        run: npm run test
+        run: pnpm run test
 
       - name: 构建组件库与样式
-        run: npm run build:package
+        run: pnpm run build:package
 
       - name: 校验产物完整性
-        run: npm run verify:dist
+        run: pnpm run verify:dist
 
       - name: 消费方冒烟测试（真实 vite 构建 + SSR）
-        run: npm run smoke
+        run: pnpm run smoke
 
-      - name: 校验 npm 包内容
+      - name: 校验发布包内容
         run: |
-          npm pack --pack-destination /tmp
+          pnpm pack --pack-destination /tmp
           tar -tzf /tmp/fei-ui-design-*.tgz | head -30
 
   docs:
@@ -68,14 +72,20 @@ jobs:
       - name: 检出代码
         uses: actions/checkout@v4
 
+      - name: 安装 pnpm
+        uses: pnpm/action-setup@v4
+
       - name: 安装 Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
+          cache: pnpm
 
       - name: 安装依赖
-        run: npm ci
+        run: pnpm install --frozen-lockfile
+
+      - name: 文档一致性校验（API / 死链 / 示例 / 格式）
+        run: pnpm run docs:check
 
       - name: 构建文档站点
-        run: npm run build:site
+        run: pnpm run build:site

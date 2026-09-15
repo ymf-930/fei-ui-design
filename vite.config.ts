@@ -72,7 +72,7 @@ export default defineConfig({
     // 3) 避免压缩在 lib + preserveModules 模式下造成构建内存溢出。
     minify: false,
     sourcemap: false,
-    // 产物目录由下方 output[].dir 指定，清理由 `npm run clean` 负责
+    // 产物目录由下方 output[].dir 指定，清理由 `pnpm run clean` 负责
     emptyOutDir: false,
     rollupOptions: {
       external: isExternal,

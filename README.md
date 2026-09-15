@@ -20,9 +20,9 @@
 ## 安装
 
 ```sh
-npm i fei-ui-design
-# 或
 pnpm add fei-ui-design
+# 或
+npm i fei-ui-design
 # 或
 yarn add fei-ui-design
 ```
@@ -88,23 +88,27 @@ export default defineConfig({
 
 ## 本地开发
 
+> 本项目统一使用 **pnpm**（见 `package.json` 的 `packageManager` 字段）。
+> 未安装时先执行 `corepack enable pnpm`，corepack 会按 `packageManager` 指定的版本自动准备。
+
 ```sh
-npm install          # 安装依赖
-npm run dev          # 启动文档站点，本地调试组件
+pnpm install         # 安装依赖
+pnpm dev             # 启动文档站点，本地调试组件
 ```
 
 ## 构建与校验
 
 ```sh
-npm run build:package   # 完整构建：clean → 版本号 → JS 产物 → 模块标记 → 样式产物
-npm run build:site      # 构建文档站点
+pnpm build:package   # 完整构建：clean → 版本号 → JS 产物 → 模块标记 → 样式产物
+pnpm build:site      # 构建文档站点
 
-npm run lint:check      # 代码风格检查
-npm run type-check      # 类型检查
-npm run test            # 单元测试
-npm run verify:dist     # 产物完整性校验（入口一致性 / 按需产物 / 发布内容）
-npm run smoke           # 消费方冒烟测试（真实 vite 构建 + SSR）
-npm run verify          # verify:dist + smoke
+pnpm lint:check      # 代码风格检查
+pnpm type-check      # 类型检查
+pnpm test            # 单元测试
+pnpm docs:check      # 文档一致性校验（API / 死链 / 示例 / 格式）
+pnpm verify:dist     # 产物完整性校验（入口一致性 / 按需产物 / 发布内容）
+pnpm smoke           # 消费方冒烟测试（真实 vite 构建 + SSR）
+pnpm verify          # verify:dist + smoke
 ```
 
 产物结构：
@@ -118,10 +122,12 @@ dist/     样式产物：styles/index.css（全量）、base.css、components.cs
 ## 发布
 
 ```sh
-npm run release:patch   # 或 release:minor / release:major
+pnpm release:patch      # 或 release:minor / release:major
 # 会自动 commit + 打 tag，push 后由 GitHub Actions 发布到 npm
 git push --follow-tags
 ```
+
+> `release:*` 内部走 `npm version` —— pnpm 未实现 `version` 子命令，属官方已知限制。
 
 发布流水线会在 `publish` 前依次执行 版本号一致性校验 → lint → test → build →
 产物校验 → 消费方冒烟测试，任一环节失败即中止发布。

@@ -11,7 +11,7 @@
  * 因此本脚本模拟一个真实消费者项目：把仓库自身挂到 `node_modules` 下，
  * 再用真实的 vite 走一遍「客户端构建 + SSR 渲染」。
  *
- * 用法：node build/smoke-consumer.cjs （需先执行 npm run build:package）
+ * 用法：node build/smoke-consumer.cjs （需先执行 pnpm run build:package）
  */
 const fs = require('fs')
 const path = require('path')
@@ -104,7 +104,7 @@ async function main() {
   console.log('\n消费方冒烟测试（真实 vite 构建 + SSR）')
 
   if (!fs.existsSync(path.join(root, 'es', 'index.js'))) {
-    console.error('  未找到构建产物，请先执行 npm run build:package')
+    console.error('  未找到构建产物，请先执行 pnpm run build:package')
     process.exit(1)
   }
 

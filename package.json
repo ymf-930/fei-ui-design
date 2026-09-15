@@ -66,9 +66,10 @@
   "engines": {
     "node": ">=18.0.0"
   },
+  "packageManager": "pnpm@9.15.4",
   "scripts": {
     "dev": "vitepress dev docs",
-    "build:package": "npm run clean && npm run gen-version && npm run build:lib && npm run build:style",
+    "build:package": "pnpm run clean && pnpm run gen-version && pnpm run build:lib && pnpm run build:style",
     "build:site": "vitepress build docs",
     "preview": "vite preview",
     "clean": "rimraf dist es lib",
@@ -86,14 +87,14 @@
     "docs:check-links": "node build/check-docs-links.cjs",
     "docs:check-demo": "node build/check-docs-demo.cjs",
     "docs:check-style": "node build/check-docs-style.cjs",
-    "docs:check": "npm run docs:check-api && npm run docs:check-links && npm run docs:check-demo && npm run docs:check-style",
+    "docs:check": "pnpm run docs:check-api && pnpm run docs:check-links && pnpm run docs:check-demo && pnpm run docs:check-style",
     "verify:dist": "node build/verify-dist.cjs",
     "smoke": "node build/smoke-consumer.cjs",
-    "verify": "npm run verify:dist && npm run smoke",
+    "verify": "pnpm run verify:dist && pnpm run smoke",
     "release:patch": "npm version patch && git push --follow-tags",
     "release:minor": "npm version minor && git push --follow-tags",
     "release:major": "npm version major && git push --follow-tags",
-    "prepublishOnly": "npm run build:package && npm run verify:dist"
+    "prepublishOnly": "pnpm run build:package && pnpm run verify:dist"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",

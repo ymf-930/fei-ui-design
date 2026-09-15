@@ -10,16 +10,16 @@ title: 安装
 
 [![NPM version](https://img.shields.io/npm/v/fei-ui-design.svg)](https://www.npmjs.com/package/fei-ui-design)
 
-## npm
+## 安装依赖
 
 推荐使用 pnpm 进行安装，它能更好地和打包工具配合使用。而且可以更好的和 typescript 配合使用。并且支持按需引入
 
 ```bash
+pnpm add fei-ui-design
+# or
 npm i fei-ui-design
 # or
 yarn add fei-ui-design
-# or
-pnpm add fei-ui-design
 ```
 
 ## 在 SFC 中使用
