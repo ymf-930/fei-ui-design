@@ -41,6 +41,6 @@ docs/.vitepress/.temp
 # vite/vitest 运行时临时文件
 *.timestamp-*.mjs
 
-# 本地校验脚本的临时产物
-.workbuddy/tmp/
+# 本地工作区数据（记忆、临时校验脚本等），不入版本控制
+.workbuddy/
 coverage/
