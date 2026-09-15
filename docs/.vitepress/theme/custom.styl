@@ -101,6 +101,12 @@
   --vs-theme-color: #2c3e50
   --vs-theme-layout: #fff
   --vs-theme-bg2: #eef2f5
+  // 注意：--vs-theme-code / --vs-theme-code2 名字相近但用途相反，别混用。
+  //   --vs-theme-code  → 深色【文字色】。表格正文、胶囊单选、.darken 消息内容在用。
+  //                      改成浅色会让这些文字在浅底上消失。
+  //   --vs-theme-code2 → 代码块【底色】。见 theme/index.css 的
+  //                      [class*='language-'] pre { background: var(--vs-theme-code2) }。
+  //                      语法着色主题必须与它配套，见 .vitepress/config.js 的 markdown.theme。
   --vs-theme-code: #3f3d56
   --vs-theme-code2: #363449
 

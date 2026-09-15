@@ -79,9 +79,30 @@ export default defineConfig({
     searchPlaceholder: '搜索文档'
   },
   markdown: {
+    /**
+     * 语法着色主题。**两侧都必须给，且都必须是深色主题**，原因：
+     *
+     * 1) 本主题的代码块底色是深色（`--vs-theme-code2` = #363449，见
+     *    theme/custom.styl 与 theme/index.css）。站点没有暗色开关，
+     *    VitePress 的 `.dark` 永不生效，实际命中只有它自带的那条
+     *    `html:not(.dark) .vp-code span { color: var(--shiki-light) }`
+     *    —— 也就是说**只有 `light` 这一侧的颜色会被用到**。
+     * 2) 若 light 给浅色主题（曾用 github-light），token 是 `#24292E` / `#032F62`
+     *    这类按白底设计的深色，压在 #363449 上正文对比度只有 1.22:1，代码几乎不可读。
+     * 3) 只给一个字符串主题会让产物退化成 `style="color:…"`、丢掉 `--shiki-light/-dark`
+     *    变量，进而被主题 CSS 的 `color: #fff` 兜底，语法着色整体消失。
+     *
+     * 因此两侧统一为 github-dark-dimmed：产物仍带 `--shiki-light` / `--shiki-dark`
+     * 两个变量（互相等价），无论将来是否引入暗色开关都正确。
+     *
+     * 为什么是 `-dimmed` 而不是 `github-dark`：后者的注释色 #6A737D 在 #363449 上
+     * 只有 2.50:1（github-dark 的注释色与 github-light 恰好同值，换主题并未改善它）。
+     * `-dimmed` 同族、观感一致，但注释色为 #768390，实测 3.11:1，全站 token 均达标。
+     * 该配色与 #363449 底色的实测对比度由 build/check-docs-contrast.cjs 在 CI 中把关。
+     */
     theme: {
-      light: 'github-light',
-      dark: 'github-dark'
+      light: 'github-dark-dimmed',
+      dark: 'github-dark-dimmed'
     },
     config(md) {
       md.use(containerPreview)

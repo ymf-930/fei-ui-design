@@ -101,3 +101,9 @@ jobs:
       # 以及主题组件里手写的 <a href> 不在 markdown 死链检查范围内。
       - name: 校验站点产物链接
         run: pnpm run docs:check-site
+
+      # 覆盖另一个产物盲区：代码块底色与语法着色主题是两处独立配置，
+      # 不配套时会出现「深字压深底」—— 构建成功、页面也不缺内容，
+      # 但代码几乎不可读。docs:check 四件套都不看颜色，只能靠产物度量。
+      - name: 校验代码块对比度
+        run: pnpm run docs:check-contrast
