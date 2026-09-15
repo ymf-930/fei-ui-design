@@ -14,7 +14,7 @@
         v-show="file.status === 'finished'"
         class="f-iconfont f-icon-close"
         :class="[prefixCls + '-list-remove']"
-        @click.native="handleRemove(file)"
+        @click="handleRemove(file)"
       ></i>
       <transition name="fade">
         <f-progress

@@ -17,6 +17,11 @@
   ],
   "private": false,
   "type": "module",
+  "sideEffects": [
+    "**/*.css",
+    "**/*.scss",
+    "**/*.styl"
+  ],
   "homepage": "https://ymf-930.gitee.io/fei-ui-design/",
   "main": "./lib/src/index.js",
   "module": "./es/src/index.mjs",
@@ -33,9 +38,11 @@
     "clean": "rimraf dist es lib",
     "build:lib": "vite build",
     "build:style": "gulp --require @esbuild-kit/cjs-loader -f build/build-style.ts",
-    "test": "vitest",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "type-check": "vue-tsc --noEmit",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",
+    "lint:check": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts",
     "format": "prettier --write src/",
     "gen-version": "node build/gen-version.cjs"
   },
@@ -59,6 +66,7 @@
     "@types/gulp-autoprefixer": "^0.0.37",
     "@types/gulp-postcss": "^8.0.6",
     "@types/node": "^20.10.6",
+    "@types/sortablejs": "^1.15.9",
     "@vitejs/plugin-vue": "^5.0.2",
     "@vitejs/plugin-vue-jsx": "^3.1.0",
     "@vitepress-demo-preview/component": "^2.3.2",

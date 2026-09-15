@@ -1,4 +1,8 @@
-const START_EVENT_NAME_MAP = {
+type EventNameMap = Record<string, Record<string, string | undefined>>
+
+type TransitionEventListener = (evt: Event) => void
+
+const START_EVENT_NAME_MAP: EventNameMap = {
   transitionstart: {
     transition: 'transitionstart',
     WebkitTransition: 'webkitTransitionStart',
@@ -15,7 +19,7 @@ const START_EVENT_NAME_MAP = {
   }
 }
 
-const END_EVENT_NAME_MAP = {
+const END_EVENT_NAME_MAP: EventNameMap = {
   transitionend: {
     transition: 'transitionend',
     WebkitTransition: 'webkitTransitionEnd',
@@ -32,8 +36,8 @@ const END_EVENT_NAME_MAP = {
   }
 }
 
-const startEvents = []
-const endEvents = []
+const startEvents: string[] = []
+const endEvents: string[] = []
 
 function detectEvents() {
   const testEl = document.createElement('div')
@@ -49,14 +53,17 @@ function detectEvents() {
     delete END_EVENT_NAME_MAP.transitionend.transition
   }
 
-  function process(EVENT_NAME_MAP, events) {
+  function process(EVENT_NAME_MAP: EventNameMap, events: string[]) {
     for (const baseEventName in EVENT_NAME_MAP) {
       // eslint-disable-next-line no-prototype-builtins
       if (EVENT_NAME_MAP.hasOwnProperty(baseEventName)) {
         const baseEvents = EVENT_NAME_MAP[baseEventName]
         for (const styleName in baseEvents) {
           if (styleName in style) {
-            events.push(baseEvents[styleName])
+            const eventName = baseEvents[styleName]
+            if (eventName) {
+              events.push(eventName)
+            }
             break
           }
         }
@@ -72,11 +79,15 @@ if (typeof window !== 'undefined' && typeof document !== 'undefined') {
   detectEvents()
 }
 
-function addEventListener(node, eventName, eventListener) {
+function addEventListener(node: Node, eventName: string, eventListener: TransitionEventListener) {
   node.addEventListener(eventName, eventListener, false)
 }
 
-function removeEventListener(node, eventName, eventListener) {
+function removeEventListener(
+  node: Node,
+  eventName: string,
+  eventListener: TransitionEventListener
+) {
   node.removeEventListener(eventName, eventListener, false)
 }
 
@@ -84,7 +95,7 @@ const TransitionEvents = {
   // Start events
   startEvents,
 
-  addStartEventListener(node, eventListener: () => void) {
+  addStartEventListener(node: Node, eventListener: TransitionEventListener) {
     if (startEvents.length === 0) {
       window.setTimeout(eventListener, 0)
       return
@@ -94,7 +105,7 @@ const TransitionEvents = {
     })
   },
 
-  removeStartEventListener(node, eventListener) {
+  removeStartEventListener(node: Node, eventListener: TransitionEventListener) {
     if (startEvents.length === 0) {
       return
     }
@@ -106,7 +117,7 @@ const TransitionEvents = {
   // End events
   endEvents,
 
-  addEndEventListener(node, eventListener: () => void) {
+  addEndEventListener(node: Node, eventListener: TransitionEventListener) {
     if (endEvents.length === 0) {
       window.setTimeout(eventListener, 0)
       return
@@ -116,7 +127,7 @@ const TransitionEvents = {
     })
   },
 
-  removeEndEventListener(node, eventListener) {
+  removeEndEventListener(node: Node, eventListener: TransitionEventListener) {
     if (endEvents.length === 0) {
       return
     }

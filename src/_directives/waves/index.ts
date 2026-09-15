@@ -1,7 +1,8 @@
+import type { DirectiveBinding } from 'vue'
 import TransitionEvents from '../../_utils/transition-events'
 
 // 重置效果
-function resetEffect(node: HTMLElement) {
+function resetEffect(node: Node | null) {
   if (!node) {
     return
   }
@@ -9,18 +10,18 @@ function resetEffect(node: HTMLElement) {
   TransitionEvents.removeEndEventListener(node, onTransitionEnd)
 }
 
-function onTransitionEnd(e: Animation) {
-  if (!e || e.animationName !== 'fadeEffect') {
+function onTransitionEnd(e: Event) {
+  if (!e || (e as AnimationEvent).animationName !== 'fadeEffect') {
     return
   }
-  resetEffect(e.target)
+  resetEffect(e.target as Node)
 }
 
 export default {
-  beforeMount(el: HTMLElement, binding) {
+  beforeMount(el: HTMLElement, binding: DirectiveBinding) {
     el.addEventListener(
       'click',
-      e => {
+      (e: MouseEvent) => {
         const wavesColor = binding.value || 'rgba(0, 0, 0, 0.15)'
         const node = el
         if (node) {

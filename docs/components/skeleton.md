@@ -190,19 +190,19 @@ function show() {
 
 # Skeleton Props
 
-| 参数     | 说明                                        | 类型    | 可选值       | 默认值 |
-| -------- | ------------------------------------------- | ------- | ------------ | ------ |
-| animated | 是否使用动画                                | boolean | true / false | false  |
-| count    | 渲染多少个 template, 建议使用尽可能小的数字 | number  | integer      | 1      |
-| loading  | 是否显示真实的 DOM 结构                     | boolean | true / false | false  |
-| rows     | 骨架屏段落数量                              | number  | 正整数       | 3      |
-| throttle | 延迟占位 DOM 渲染的时间, 单位是毫秒         | number  | 正整数       | 0      |
+| 参数      | 说明                                        | 类型    | 可选值       | 默认值 |
+| --------- | ------------------------------------------- | ------- | ------------ | ------ |
+| animation | 是否使用动画                                | boolean | true / false | false  |
+| count     | 渲染多少个 template, 建议使用尽可能小的数字 | number  | integer      | 1      |
+| loading   | 为 true 时显示骨架占位，为 false 时渲染默认插槽的真实内容 | boolean | true / false | true   |
+| rows      | 骨架屏段落数量                              | number  | 正整数       | 3      |
+| throttle  | 延迟占位 DOM 渲染的时间, 单位是毫秒         | number  | 正整数       | 0      |
 
 ## Skeleton Item Attributes
 
-| 参数    | 说明                     | 类型         | 可选值                                                                    | 默认值 |
-| ------- | ------------------------ | ------------ | ------------------------------------------------------------------------- | ------ |
-| variant | 当前显示的占位元素的样式 | Enum(string) | p / text / h1 / h2 / h5 / text / caption / button / image / circle / rect | text   |
+| 参数    | 说明                     | 类型         | 可选值                                                                             | 默认值 |
+| ------- | ------------------------ | ------------ | ---------------------------------------------------------------------------------- | ------ |
+| variant | 当前显示的占位元素的样式 | Enum(string) | p / text / h1 / h2 / h3 / h4 / h5 / h6 / caption / button / image / circle / rect  | text   |
 
 ## Skeleton Slots
 

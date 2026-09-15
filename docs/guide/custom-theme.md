@@ -14,7 +14,7 @@ import Basic from './demo/Theme/Basic.vue'
 
 默认情况下所有组件均为亮色主题，无需任何配置。
 
-了解更多关于f-config-provider 的信息，参见 全局化配置 [TODO]
+了解更多关于 f-config-provider 的信息，参见 [全局化配置](/components/config-provider.html)。
 
 ## 调整主题变量
 

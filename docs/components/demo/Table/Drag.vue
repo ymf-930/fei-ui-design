@@ -19,7 +19,7 @@
         @drag-drop="handleDragDrop"
         @current-change="currentRowChange"
       >
-        <template #handle="{ row }">
+        <template #handle>
           <span class="drag-handle" style="cursor: grab"><f-icon name="drag" size="20" /></span>
         </template>
         <template #ctrl="{ row, index }">

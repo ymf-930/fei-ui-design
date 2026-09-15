@@ -3,9 +3,13 @@ public/
 es/
 lib/
 dist/
+site/
 package.json
 src/assets/
 plop-templates/
 handlebars/
 website/
 build/
+.vitepress/
+docs/.vitepress/
+*.tsbuildinfo

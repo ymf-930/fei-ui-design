@@ -7,16 +7,12 @@ import { fileURLToPath, URL } from 'node:url'
 const baseUrl = process.env.NODE_ENV === 'production' ? '/fei-ui-design/' : '/'
 
 export default defineConfig({
+  // 目前只提供中文文档（docs/ 下不存在 es/ 目录）。
+  // 如需英文文档，请先创建 docs/es/ 目录，再恢复 '/es/' 语言配置。
   locales: {
     '/': {
-      // lang: '中文',
       lang: 'zh-CN',
-      text: '中文',
-    },
-    '/es/': {
-      // lang: 'English',
-      lang: 'en-US',
-      text: 'English',
+      text: '中文'
     }
   },
   lang: 'zh-CN',
@@ -34,15 +30,14 @@ export default defineConfig({
     ['meta', { property: 'og:title', content: 'FEI-UI-DESIGN - Framework for Vuejs'}],
     ['meta', { name: 'twitter:card', content: 'summary_large_image'}],
   ],
-  localePath: '/',
   themeConfig: {
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/gumingWu/vitepress-fun' }
+      { icon: 'github', link: 'https://github.com/ymf-930/fei-ui-design' }
     ],
     repo: 'ymf-930/fei-ui-design',
     docsDir: '/docs',
     nav: [
-      { text: '首页', link: '/' },
+      { text: '首页', link: baseUrl },
       { text: '文档', link: `${baseUrl}guide/introduction` },
       { text: '组件', link: `${baseUrl}components/button` }
     ],
@@ -54,10 +49,6 @@ export default defineConfig({
       '/': {
         ...getNavbar(),
         ...getSidebar()
-      },
-      '/es/': {
-        ...getNavbar('/es/'),
-        ...getSidebar('/es/')
       }
     },
     lastUpdated: true,
@@ -92,48 +83,47 @@ export default defineConfig({
 
 function getNavbar (lang = '/') {
 
+  const isZh = lang === '/'
+
   return {
     nav: [
       {
-        text: lang !== '/'? `首页` : `Home`,
-        link: `${baseUrl}`,
+        text: isZh ? `首页` : `Home`,
+        link: `${baseUrl}`
       },
       {
-        text: lang !== '/'? `文档` : `Document`,
-        link: `${baseUrl}/guide/`,
+        text: isZh ? `文档` : `Document`,
+        link: `${baseUrl}guide/introduction`,
         items: [
-          { text: lang !== '/'? `介绍` : `Introduction`, link: `${baseUrl}/guide/` },
-          { text: lang !== '/'? `快速开始` : `Getting Started`, link: `${baseUrl}/guide/gettingStarted` },
+          { text: isZh ? `介绍` : `Introduction`, link: `${baseUrl}guide/introduction` },
+          { text: isZh ? `安装` : `Installation`, link: `${baseUrl}guide/installation` }
         ]
       },
       {
-        text: lang !== '/'? `组件` : `Components`,
-        link: `${baseUrl}/components`,
+        text: isZh ? `组件` : `Components`,
+        link: `${baseUrl}components/button`,
         items: [
           {
-            text: lang !== '/'? `组件` : `Components`,
+            text: isZh ? `组件` : `Components`,
             items: [
-              { text: `Button`, link: `${baseUrl}/components/` },
-              { text: `Alert`, link: `${baseUrl}/components/Alert` },
-              { text: `Loading`, link: `${baseUrl}/components/Loading` },
-              { text: `Input`, link: `${baseUrl}/components/Input` },
-							{ text: 'Checkbox', link: `${baseUrl}/components/Checkbox` },
-							{ text: 'Switch', link: `${baseUrl}/components/Switch` },
-							{ text: 'Select', link: `${baseUrl}/components/Select` },
-							{ text: 'Avatar', link: `${baseUrl}/components/Avatar` },
-							{ text: 'Notification', link: `${baseUrl}/components/Notification` },
-							{ text: 'Radio', link: `${baseUrl}/components/Radio` },
-							{ text: 'Tooltip', link: `${baseUrl}/components/Tooltip` },
-							{ text: 'Dialog', link: `${baseUrl}/components/Dialog` },
-							{ text: 'Pagination', link: `${baseUrl}/components/Pagination` },
-							{ text: 'Table', link: `${baseUrl}/components/Table` },
-							{ text: 'Navbar', link: `${baseUrl}/components/Navbar` },
-							{ text: 'Sidebar', link: `${baseUrl}/components/Sidebar` },
-							{ text: 'Card', link: `${baseUrl}/components/Card` },
+              { text: 'Button', link: `${baseUrl}components/button` },
+              { text: 'Alert', link: `${baseUrl}components/alert` },
+              { text: 'Loading', link: `${baseUrl}components/loading` },
+              { text: 'Input', link: `${baseUrl}components/input` },
+              { text: 'Checkbox', link: `${baseUrl}components/checkbox` },
+              { text: 'Switch', link: `${baseUrl}components/switch` },
+              { text: 'Select', link: `${baseUrl}components/select` },
+              { text: 'Radio', link: `${baseUrl}components/radio` },
+              { text: 'Tooltip', link: `${baseUrl}components/tooltip` },
+              { text: 'Modal', link: `${baseUrl}components/modal` },
+              { text: 'Page', link: `${baseUrl}components/page` },
+              { text: 'Table', link: `${baseUrl}components/table` },
+              { text: 'Menu', link: `${baseUrl}components/menu` },
+              { text: 'Card', link: `${baseUrl}components/card` }
             ]
           }
         ]
-      },
+      }
     ]
   }
 }
@@ -286,7 +276,7 @@ function getSidebar (lang = '/') {
         collapsable: false,
         navType:'components',
         children: [
-        {title: '全局配置', link: `${lang}components/config-provider`, icon: 'setting', alias: 'ConfigProvider'}
+        {title: '全局配置', link: `${baseUrl}components/config-provider`, icon: 'setting', alias: 'ConfigProvider'}
         ]
         },
       ],
