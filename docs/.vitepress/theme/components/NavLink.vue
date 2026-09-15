@@ -20,7 +20,7 @@
 
 <script setup>
 import {computed} from "vue";
-import {isExternal, isMailto, isTel, ensureExt} from '../util'
+import {isExternal, isMailto, isTel, siteHref} from '../util'
 import {useData, useRoute} from "vitepress"
 
 const route = useRoute()
@@ -32,8 +32,9 @@ const props = defineProps({
   arrow: {}
 })
 
+// 与侧边栏/页脚/翻页同一个出口：补 base + 补 `.html`
 const link = computed(() => {
-  return ensureExt(props.item.link)
+  return siteHref(props.item.link, site.value.base)
 })
 const isActive = computed(() => {
   return props.item.text !== '首页'

@@ -24,13 +24,19 @@
 <script setup>
 import DropdownLink from '../components/DropdownLink.vue'
 import NavLink from '../components/NavLink.vue'
+import {resolveNavLinkItem} from '../util'
 import {useData} from "vitepress"
 import {computed} from "vue"
 
 const {site, theme} = useData()
 const {themeConfig} = site.value
+// 必须先经过 resolveNavLinkItem()：它会给「带 items 的项」打上 type: 'links'，
+// 而 DropdownLink 是靠 `item.type === 'links'` 才会渲染的。
+// 旧代码直接返回 themeConfig.nav，item.type 恒为 undefined，
+// 于是「指南」的下拉容器从未出现，5 个子项（安装 / SFC / 按需引入 / 变更日志…）都点不到。
+// 这里传 {...item} 是为了不改动 siteData 本身（原函数会就地 Object.assign）。
 const userLinks = computed(() => {
-  return themeConfig.nav || []
+  return (themeConfig.nav || []).map(item => resolveNavLinkItem({...item}))
 })
 const repoLink = computed(() => {
   const {repo} = site.value.themeConfig

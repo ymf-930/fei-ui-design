@@ -96,6 +96,7 @@
     "docs:check-links": "node build/check-docs-links.cjs",
     "docs:check-demo": "node build/check-docs-demo.cjs",
     "docs:check-style": "node build/check-docs-style.cjs",
+    "docs:check-site": "node build/check-site-links.cjs",
     "docs:check": "run-s docs:check-api docs:check-links docs:check-demo docs:check-style",
     "verify:dist": "node build/verify-dist.cjs",
     "smoke": "node build/smoke-consumer.cjs",

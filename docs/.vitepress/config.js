@@ -5,18 +5,24 @@ import { fileURLToPath, URL } from 'node:url'
 /**
  * 站点部署根路径。开发环境为 '/'，生产环境为 '/fei-ui-design/'（以斜杠结尾）。
  *
- * 注意：本主题的导航与侧边栏使用原生 <a href>（见 theme/components/NavLink.vue、
- * SidebarLink.vue），VitePress 不会自动拼接 base，因此 themeConfig 中的链接必须
- * 通过下面的 link() 手动拼接。
+ * base 只在上面这一行声明，并且**只在渲染层拼接**：本主题的导航与侧边栏用原生
+ * <a href>（见 theme/components/NavLink.vue、SidebarLink.vue），VitePress 不会替它
+ * 补 base，因此渲染层统一调用 theme/util 的 siteHref(raw, base)完成
+ * 「拼 base + 补 .html」两件事。themeConfig 里只写站点根相对路径。
+ *
+ * 历史坑：曾经 link() 拼 base、NavLink 再补 .html、SidebarLink 什么都不补，
+ * 三套约定并存 —— 侧边栏 59 条链接缺 .html、全站 74 个「下一页」按钮缺 base，
+ * 在静态托管上全部 404（VitePress preview 的 sirv 会自动补 .html，恰好掩盖了问题）。
  */
 const SITE_BASE = process.env.NODE_ENV === 'production' ? '/fei-ui-design/' : '/'
 
 /**
- * 拼接站点内链接，保证得到 `<base><path>` 且不会出现双斜杠。
- * 例：link('guide/introduction') → '/fei-ui-design/guide/introduction'
+ * 声明一个站内页面路径：站点根相对，**不带 base**，带不带前导斜杠都可以。
+ * base 与 .html 由渲染层的 siteHref() 统一补齐，此处不要重复拼。
+ * 例：link('guide/introduction') → '/guide/introduction'
  */
 function link(path = '') {
-  return SITE_BASE + String(path).replace(/^\/+/, '')
+  return '/' + String(path).replace(/^\/+/, '')
 }
 
 export default defineConfig({
@@ -45,8 +51,13 @@ export default defineConfig({
       { icon: 'github', link: 'https://github.com/ymf-930/fei-ui-design' }
     ],
     docsDir: 'docs',
+    // 文档所在分支，供「编辑此页」按钮拼 <repo>/edit/<branch>/<docsDir>/<page>.md
+    docsBranch: 'master',
+    // 打开「编辑此页」按钮。Page.vue 的 editLink 计算属性依赖它，
+    // 缺了这行按钮会渲染成没有 href 的空 <a>（点了没反应）。
+    editLinks: true,
     nav: [
-      { text: '首页', link: SITE_BASE },
+      { text: '首页', link: link('') },
       {
         text: '指南',
         link: link('guide/introduction'),
@@ -92,8 +103,8 @@ export default defineConfig({
 })
 
 /**
- * 侧边栏。注意所有 link 均使用 link() 拼接 base，且必须指向真实存在的页面
- * （ignoreDeadLinks 已关闭，写错会在构建期报错）。
+ * 侧边栏。所有 link 都用 link() 声明为站点根相对路径（不拼 base，见文件头说明），
+ * 且必须指向真实存在的页面（ignoreDeadLinks 已关闭，写错会在构建期报错）。
  */
 function getSidebar () {
   return [

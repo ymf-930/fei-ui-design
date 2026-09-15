@@ -1,5 +1,5 @@
 <template>
-  <a :href="item.link" title=""
+  <a :href="href" title=""
      :class="['sidebar-link', {'active': item.link === route.path.slice(0,-5)}]">
     <f-icon v-if="item.icon" :name="item.icon"></f-icon>
     {{ item.title }}
@@ -8,9 +8,11 @@
 </template>
 
 <script setup>
-import {isActive, hashRE, groupHeaders} from '../util'
+import {computed} from 'vue'
+import {isActive, hashRE, groupHeaders, siteHref} from '../util'
 import {useData, useRoute} from "vitepress";
 const route = useRoute()
+const {site} = useData()
 const props = defineProps({
   item: {
     type: Object,
@@ -21,6 +23,10 @@ const props = defineProps({
     default: 0
   },
 })
+
+// 侧边栏链接同样走统一出口：补 base + 补 `.html`
+// （config.js 的 link() 只补了 base，裸输出会缺少 `.html` 而在静态托管上 404）
+const href = computed(() => siteHref(props.item.link, site.value.base))
 
 function renderLink(h, to, text, active, NEW = false, UPDATE = false) {
   var title = ''

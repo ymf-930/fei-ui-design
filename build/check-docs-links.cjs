@@ -50,9 +50,12 @@ for (const file of mdFiles) {
     const line = lines[i]
     if (/^\s*```/.test(line)) { inFence = !inFence; continue }
     if (inFence) continue
+    // 行内代码里的链接语法是「示例」，VitePress 会原样当文字渲染，不是真链接。
+    // 用等长空白遮蔽后匹配，保持列号不变。
+    const scanLine = line.replace(/`[^`]*`/g, (s) => ' '.repeat(s.length))
     const re = /\[([^\]]*)\]\(([^)\s]+)(?:\s+"[^"]*")?\)/g
     let m
-    while ((m = re.exec(line))) {
+    while ((m = re.exec(scanLine))) {
       const href = m[2]
       if (/^(https?:|mailto:|tel:|#)/.test(href)) continue
       totalInternal++

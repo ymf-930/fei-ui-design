@@ -52,18 +52,27 @@
   </footer>
 </template>
 <script>
-import { withBase } from 'vitepress'
+import { useData } from 'vitepress'
+import { siteHref } from '../util'
 
 export default {
   props: ['data'],
+  setup() {
+    const { site } = useData()
+    return {
+      // 站内链接统一走 util.siteHref：补 base + 补 `.html`
+      // 旧写法只调了 withBase()，缺 `.html`，在静态托管上会 404
+      toHref: (link) => siteHref(link, site.value.base)
+    }
+  },
   computed: {
-    // 站内链接统一补上 base，外部链接保持原样
+    // 站内链接统一补上 base 与扩展名，外部链接保持原样
     navLinks() {
       return this.links.map(group => ({
         ...group,
         items: group.items.map(item => ({
           ...item,
-          link: /^https?:/.test(item.link) ? item.link : withBase(item.link)
+          link: /^https?:/.test(item.link) ? item.link : this.toHref(item.link)
         }))
       }))
     }

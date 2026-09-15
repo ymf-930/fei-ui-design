@@ -68,8 +68,9 @@
 </template>
 
 <script setup>
-import { useData, withBase } from 'vitepress'
+import { useData } from 'vitepress'
 import { computed, ref } from 'vue'
+import { siteHref } from '../util'
 import NavLink from './NavLink.vue'
 import Footer from './Footer.vue'
 import HomeInit from './homeInit.vue'
@@ -84,7 +85,7 @@ const gitee = ref(false)
 const fuidesign = ref(false)
 const expand = ref(false)
 
-const { frontmatter } = useData()
+const { frontmatter, site } = useData()
 
 const data = computed(() => {
   return frontmatter.value
@@ -92,8 +93,10 @@ const data = computed(() => {
 
 const actionLink = computed(() => {
   return {
-    // frontmatter 中的路径不带 base，这里补上，保证开发/生产环境都可用
-    link: withBase(data.value.actionLink),
+    // frontmatter 里的 actionLink 是站点根相对路径（如 /guide/introduction），
+    // 统一走 util.siteHref 补 base + 补 `.html`（原先只调了 withBase，靠 NavLink
+    // 再补一次扩展名，两套约定叠加）
+    link: siteHref(data.value.actionLink, site.value.base),
     text: data.value.actionText,
   }
 })

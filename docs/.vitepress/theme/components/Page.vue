@@ -159,7 +159,7 @@
 </template>
 
 <script setup>
-import {endingSlashRE, normalize, outboundRE, resolvePage} from '../util'
+import {endingSlashRE, normalize, outboundRE, siteHref} from '../util'
 import Footer from './Footer.vue'
 import {computed, nextTick, onMounted, ref, watch} from "vue";
 import {useData, useRoute, useRouter} from "vitepress"
@@ -206,26 +206,27 @@ const prev = computed(() => {
   if (prev === false) {
     return
   } else if (prev) {
-    return resolvePage(site.value.pages, prev, route.path)
+    return { path: toHref(prev), title: prev }
   } else {
-    return resolvePrev(site.value.pages, props.sidebarItems)
+    return resolvePrev(props.sidebarItems)
   }
 })
 
 const next = computed(() => {
   const next = frontmatter.value.next
-  const obj = {
-    path: '/guide/introduction',
-    title: 'introduction'
-  }
   if (next === false) {
-    return obj
+    return
   } else if (next) {
-    return resolvePage(site.value.pages, next, route.path) || obj
+    return { path: toHref(next), title: next }
   } else {
-    return resolveNext(site.value.pages, props.sidebarItems) || obj
+    return resolveNext(props.sidebarItems)
   }
 })
+
+// 站内链接统一出口：补 base + 补 `.html`（扩展名由 util.siteHref 负责）
+function toHref (link) {
+  return siteHref(link, site.value.base)
+}
 
 const editLink = computed(() => {
   const {
@@ -236,15 +237,18 @@ const editLink = computed(() => {
     docsRepo = repo
   } = site.value.themeConfig
 
-  let path = normalize(page.value.path)
-  if (endingSlashRE.test(path)) {
-    path += 'README.md'
-  } else {
-    path += '.md'
+  // 「编辑此页」指向 <repo>/edit/<docsBranch>/<docsDir>/<relativePath>
+  //
+  // 这里必须用 page.relativePath（形如 `guide/introduction.md`，相对 docs 根）。
+  // 旧实现读的是 page.path —— VitePress 的 page 就是 route.data，**没有 path 字段**，
+  // 于是 normalize(undefined) 得到字符串 "undefined"，生成出
+  // `.../edit/master/docsundefined.md` 这种必然 404 的地址；
+  // 再叠加 config 里缺 editLinks，editLink 恒为 undefined，按钮渲染成无 href 的空 <a>。
+  const relativePath = page.value.relativePath
+  if (!docsRepo || !editLinks || !relativePath) {
+    return
   }
-  if (docsRepo && editLinks) {
-    return createEditLink(repo, docsRepo, docsDir, docsBranch, path)
-  }
+  return createEditLink(repo, docsRepo, docsDir, docsBranch, '/' + relativePath)
 })
 
 onMounted(() => {
@@ -350,21 +354,36 @@ function createEditLink(repo, docsRepo, docsDir, docsBranch, path) {
   )
 }
 
-function resolvePrev(page, items) {
-  return find(page, items, -1)
+function resolvePrev(items) {
+  return find(items, -1)
 }
 
-function resolveNext(page, items) {
-  return find(page, items, 1)
+function resolveNext(items) {
+  return find(items, 1)
 }
 
-function find(page, items, offset) {
+/**
+ * 在当前侧边栏列表中定位相邻页。
+ *
+ * 注意：侧边栏项来自 themeConfig，`resolveItem()` 是原样透传 children 的，
+ * 因此每项只有 `{title, link, icon, alias}`，**没有** `type` / `path` 字段。
+ * 旧实现用 `cur.type === 'page' && cur.path === ...` 判断，条件永远不成立，
+ * 于是 prev/next 恒为 undefined，next 一路落到硬编码的 `/guide/introduction`
+ * （缺 base）—— 这正是全站 74 个页面「下一页」按钮 404 的根因。
+ */
+function find(items, offset) {
   const res = []
   flatten(items, res)
+  const here = normalize(decodeURIComponent(route.path))
   for (let i = 0; i < res.length; i++) {
     const cur = res[i]
-    if (cur.type === 'page' && cur.path === decodeURIComponent(page.path)) {
-      return res[i + offset]
+    const raw = cur.link || cur.path
+    if (!raw) continue
+    if (normalize(raw) === here) {
+      const target = res[i + offset]
+      if (!target) return
+      const link = target.link || target.path
+      return { ...target, path: toHref(link) }
     }
   }
 }

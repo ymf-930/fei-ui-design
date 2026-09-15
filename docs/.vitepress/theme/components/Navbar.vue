@@ -36,14 +36,15 @@
 
 <script setup>
 import {onMounted, ref, computed, getCurrentInstance} from "vue"
-import {useData, withBase} from "vitepress"
+import {useData} from "vitepress"
+import {siteHref} from '../util'
 import SidebarButton from '../components/SidebarButton.vue'
 import NavLinks from './NavLinks.vue'
 import SearchBox from './SearchBox.vue'
 
-const {frontmatter, theme} = useData()
-// 原生 <a href>，VitePress 不会自动补 base，需要手动处理
-const homeLink = computed(() => withBase('/'))
+const {frontmatter, theme, site} = useData()
+// 原生 <a href>，VitePress 不会自动补 base，统一走 util.siteHref
+const homeLink = computed(() => siteHref('/', site.value.base))
 const linkRef = ref(null)
 const linksWrapMaxWidth = ref(null)
 const showSuggestions = ref(false)

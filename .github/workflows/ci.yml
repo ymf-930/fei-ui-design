@@ -94,3 +94,10 @@ jobs:
 
       - name: 构建文档站点
         run: pnpm run build:site
+
+      # 校验产物：页面是否齐全、站内链接在纯静态托管上能否命中。
+      # 必须在 build:site 之后运行（依赖 site/ 产物）。
+      # 这一步专门覆盖 docs:check 的盲区：themeConfig.nav / sidebar
+      # 以及主题组件里手写的 <a href> 不在 markdown 死链检查范围内。
+      - name: 校验站点产物链接
+        run: pnpm run docs:check-site

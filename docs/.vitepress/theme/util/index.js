@@ -51,6 +51,33 @@ export function ensureExt (path) {
   return normalized + '.html' + hash
 }
 
+/**
+ * 生成可直接放进 `href` 的站内地址：base 前缀 + `.html` 扩展名。
+ *
+ * 为什么需要它：
+ * - 本项目 `cleanUrls: false`（VitePress 默认），页面真实产物是 `<route>.html`，
+ *   目录页（`index.md`）则是 `<dir>/`。所以站内页面链接必须带 `.html`。
+ * - 本主题用原生 `<a href>` 渲染导航与侧边栏，VitePress 不会替它拼接 base，
+ *   而 `withBase()` 又**不幂等**（对已带 base 的路径会重复拼接），
+ *   因此把「拼 base」和「补扩展名」收敛到这一个函数里，避免各处自行拼错。
+ *
+ * @param {string} raw 站内路径。站点根相对即可（如 '/guide/introduction'）：
+ *                     本函数会先判断是否已带 base 再决定拼不拼，所以
+ *                     「已带 base」和「裸路径」都能得到正确结果 ——
+ *                     这一点是必须的，因为 `withBase()` **不幂等**，
+ *                     对已带 base 的路径再调会得到 `/base/base/xxx`。
+ *                     注意它**不是**用来补 base 的，base 由 config.js 的 SITE_BASE
+ *                     单点声明、渲染层单点拼接。
+ * @param {string} base 站点 base，取自 `useData().site.value.base`
+ */
+export function siteHref (raw, base = '/') {
+  if (!raw) return raw
+  if (isExternal(raw)) return raw
+  const prefix = String(base || '/').replace(/\/$/, '')
+  const path = prefix && !raw.startsWith(prefix) ? prefix + raw : raw
+  return ensureExt(path)
+}
+
 export function isActive (route, path) {
   const routeHash = route.hash
   const linkHash = getHash(path)

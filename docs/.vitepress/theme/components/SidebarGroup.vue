@@ -15,7 +15,7 @@
         open,
         'active': isActive(route, item.link)
       }"
-       :href="item.link"
+       :href="href"
        @click.native="$emit('toggle')"
     >
       <span>{{ item.title }}</span>
@@ -55,11 +55,13 @@ export default defineComponent({
 })
 </script>
 <script setup>
-import {isActive} from '../util'
+import {isActive, siteHref} from '../util'
 import DropdownTransition from './DropdownTransition.vue'
 import SidebarLinks from "./SidebarLinks.vue"
-import {useRoute} from "vitepress";
+import {useData, useRoute} from "vitepress";
+import {computed} from "vue";
 const route = useRoute()
+const {site} = useData()
 const props = defineProps({
   item: {
     type: Object,
@@ -83,6 +85,9 @@ const props = defineProps({
     default: false
   }
 })
+
+// 与 SidebarLink / NavLink / Footer / 翻页按钮同一个出口：补 base + 补 `.html`
+const href = computed(() => siteHref(props.item.link, site.value.base))
 </script>
 
 <style lang="stylus">
