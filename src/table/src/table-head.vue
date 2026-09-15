@@ -77,7 +77,7 @@ import { useMixin } from './main/mixin'
 import { FCheckbox } from '../../checkbox'
 
 export default defineComponent({
-  name: 'TableHead',
+  name: 'FTableHead',
   components: { FCheckbox, renderHeader },
   props: {
     // eslint-disable-next-line vue/require-default-prop

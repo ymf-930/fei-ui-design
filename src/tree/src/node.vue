@@ -69,7 +69,7 @@ import { FCheckbox } from '../../checkbox'
 const prefixCls = 'fei-tree'
 
 export default defineComponent({
-  name: 'TreeNode',
+  name: 'FTreeNode',
   components: { FCollapseTransition, Render, FCheckbox },
   props: {
     data: {
@@ -104,6 +104,14 @@ export default defineComponent({
     const handleExpand = () => {
       const item = props.data
 
+      /*
+       * 关于 vue/no-mutating-props：
+       * Tree 的节点数据（props.data）并非只读入参，而是由 Tree store 统一持有、
+       * 跨节点共享的可变状态对象——loading / expand / children 的写入是
+       * 树组件「数据源即状态」这一设计的必要组成部分（Element Plus 等实现同理）。
+       * 因此此处显式豁免该规则，其余位置仍保持开启。
+       */
+      /* eslint-disable vue/no-mutating-props */
       // async loading
       if (item[props.childrenKey].length === 0) {
         const tree = TreeInstance
@@ -132,6 +140,7 @@ export default defineComponent({
         //@ts-ignore
         TreeInstance.handleToggle(props.data)
       }
+      /* eslint-enable vue/no-mutating-props */
     }
     const handleSelect = () => {
       if (props.data.disabled) return

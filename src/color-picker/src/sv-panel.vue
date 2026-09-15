@@ -23,7 +23,7 @@
 import { ref, computed, watch, getCurrentInstance, onMounted, defineComponent } from 'vue'
 import draggable from './draggable'
 export default defineComponent({
-  name: 'BSlPanel',
+  name: 'FColorSvPanel',
   props: {
     color: {
       type: Object,

@@ -122,8 +122,7 @@ export default defineComponent({
     const inputSize = computed(() => props.size || FForm.size)
     const { FForm, formEmit } = useForm()
 
-    // eslint-disable-next-line no-unused-vars
-    function handleSelect(selected, node, flatState) {
+    function handleSelect(selected, node, _flatState) {
       // node.selected = true
       visible.value = false
       changeValue(node)

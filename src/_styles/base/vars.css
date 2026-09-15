@@ -34,6 +34,12 @@
   --fei-white-color-light: rgba(255, 255, 255, 0.65);
   --fei-white-color-light2: rgba(255, 255, 255, 0.35);
   --fei-dark-bg: #000;
+  /* 深色主题下的反色文字（button/icon 的 dark.css 依赖此变量） */
+  --fei-color-text-white: #fff;
+  /* 输入框/表单聚焦外发光：默认取主色 20% 透明度，可由 setObjectPropsCSSVariables 运行时覆盖 */
+  --fei-color-input-shadow: rgba(26, 92, 255, 0.2);
+  /* 输入框校验错误外发光：默认取危险色 20% 透明度 */
+  --fei-color-input-error-shadow: rgba(255, 71, 87, 0.2);
   /* text-color */
   --fei-color-text-primary: var(--fei-text-color-1);
   --fei-color-text-default: var(--fei-text-color-2);
@@ -51,8 +57,6 @@
   --fei-border-color-light-2: rgba(255, 255, 255, 0.24);
   --fei-border-base: 1px solid var(--fei-border-color-base);
   --fei-border-base-light: 1px solid var(--fei-border-color-light);
-  --fei-border-table-color: #efeff5;
-  --fei-border-table: 1px solid var(--fei-border-table-color);
   --fei-border-popper-color: #ebeef5;
   /* radius */
   --fei-border-radius-none: 0;

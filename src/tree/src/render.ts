@@ -1,5 +1,5 @@
 export default {
-  name: 'RenderCell',
+  name: 'FTreeRenderCell',
   functional: true,
   props: {
     render: Function,

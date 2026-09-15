@@ -1,7 +1,7 @@
 import { inject } from 'vue'
 
 export default {
-  name: 'TableSlot',
+  name: 'FTableSlot',
   functional: true,
   props: {
     row: Object,

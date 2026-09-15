@@ -141,7 +141,7 @@ const TypeMap = {
 }
 
 export default defineComponent({
-  name: 'BMessageBox',
+  name: 'FMessageBox',
   components: {
     FMask,
     FButton

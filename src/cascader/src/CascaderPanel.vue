@@ -283,8 +283,7 @@ export default defineComponent({
 
     watch(
       [config, () => props.options],
-      // eslint-disable-next-line no-unused-vars
-      ([newConfig, newOptions], [oldConfig, oldOptions]) => {
+      ([, newOptions], [, oldOptions]) => {
         if (isEqual(newOptions, oldOptions)) return
 
         initStore()

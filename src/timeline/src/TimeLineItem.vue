@@ -11,15 +11,15 @@
 </template>
 
 <script setup lang="ts">
-import type { BTimelineItemProps } from './types'
+import type { FTimelineItemProps } from './types'
 import { computed, onMounted, ref } from 'vue'
 
 const prefixCls = 'fei-timeline'
 defineOptions({
-  name: 'BTimelineItem'
+  name: 'FTimelineItem'
 })
 
-const props = withDefaults(defineProps<BTimelineItemProps>(), {
+const props = withDefaults(defineProps<FTimelineItemProps>(), {
   color: 'primary'
 })
 

@@ -26,7 +26,7 @@ import { computed, onMounted, reactive, ref } from 'vue'
 const padding = 16 // tag's padding
 
 defineOptions({
-  name: 'ScrollPane'
+  name: 'FTabsScrollPane'
 })
 defineProps({
   hideArrow: Boolean

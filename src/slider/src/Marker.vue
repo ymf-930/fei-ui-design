@@ -2,7 +2,7 @@
 import { computed, h } from 'vue'
 
 export default {
-  name: 'BMarker',
+  name: 'FSliderMarker',
   props: {
     mark: {
       type: [String, Object],

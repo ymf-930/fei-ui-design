@@ -161,8 +161,7 @@ import YearTable from './basic-year-table.vue'
 import { computed, defineComponent, inject, ref, watch } from 'vue'
 
 // todo
-// eslint-disable-next-line no-unused-vars
-const timeWithinRange = (date, selectableRange, format) => true
+const timeWithinRange = (_date, _selectableRange, _format) => true
 
 export default defineComponent({
   components: { DateTable, FInput, FButton, TimePickPanel, MonthTable, YearTable },

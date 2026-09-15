@@ -24,7 +24,7 @@ import { watch, ref, onMounted, getCurrentInstance, defineComponent } from 'vue'
 import draggable from './draggable'
 
 export default defineComponent({
-  name: 'BColorAlphaSlider',
+  name: 'FColorAlphaSlider',
   props: {
     color: {
       type: Object,

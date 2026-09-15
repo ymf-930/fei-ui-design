@@ -55,13 +55,11 @@ describe('Button.vue', () => {
       slots: {
         default: 'icon'
       }
-      // global: {
-      //   stubs: ['FIcon']
-      // }
     })
-    console.log(wrapper.html())
-    // const iconEle = wrapper.findComponent(Icon)
-    // expect(iconEle.exists()).toBeTruthy()
+    // 图标容器与图标类名均应正确渲染
+    const iconWrap = wrapper.get('.fei-button__icon')
+    expect(iconWrap.exists()).toBe(true)
+    expect(iconWrap.find('i.f-icon-arrow-up').exists()).toBe(true)
   })
 
   test('loading', () => {

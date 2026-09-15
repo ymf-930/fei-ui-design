@@ -40,7 +40,7 @@ const TypeMap = {
   error: 'close-circle-fill'
 }
 defineOptions({
-  name: 'BNotice'
+  name: 'FNotice'
 })
 
 const props = withDefaults(defineProps<NoticeProps>(), {

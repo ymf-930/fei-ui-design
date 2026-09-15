@@ -155,7 +155,7 @@ const valueEquals = function (a, b) {
 }
 
 export default defineComponent({
-  name: 'Picker',
+  name: 'FTimePickerPanel',
   components: { FInput, FPopper },
   directives: { ClickOutside },
   props: defaultProps,

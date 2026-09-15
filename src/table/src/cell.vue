@@ -61,7 +61,7 @@ import { defineComponent, inject, ref } from 'vue'
 import { FTooltip } from '../../tooltip'
 
 export default defineComponent({
-  name: 'TableCell',
+  name: 'FTableCell',
   components: { FTooltip, FCheckbox, TableExpand, TableSlot },
   props: {
     // eslint-disable-next-line vue/require-default-prop

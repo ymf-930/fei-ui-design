@@ -36,15 +36,15 @@
 <script lang="ts">
 import { defineComponent, ref, watch } from 'vue'
 import { optionsProps } from './types'
-import { FSelect, BOption } from '../../select'
+import { FSelect, FOption } from '../../select'
 
 function isValueNumber(value) {
   return /^[1-9][0-9]*$/.test(value + '')
 }
 
 export default defineComponent({
-  name: 'PageOption',
-  components: { FSelect, BOption },
+  name: 'FPageOption',
+  components: { FSelect, FOption },
   props: optionsProps,
   emits: ['page', 'size'],
   setup(props, ctx) {

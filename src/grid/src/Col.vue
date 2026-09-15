@@ -11,7 +11,7 @@ import type { RowProps, ColProps } from './types'
 const prefixCls = 'fei-col'
 
 defineOptions({
-  name: 'BCol'
+  name: 'FCol'
 })
 const props = defineProps<ColProps>()
 

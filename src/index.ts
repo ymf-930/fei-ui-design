@@ -9,13 +9,15 @@ export { setConfig } from './_utils/config'
 
 export { default, LoadingBar, Message, MessageBox, Notice } from './preset'
 
-export { default as create } from './create'
+export { default as create, isRegisterableComponent, resolveGlobalName } from './create'
+export type { ComponentType, FUiCreateOptions, FUiInstallOptions, FUiInstance } from './create'
 
 export * from './components'
 
 export * from './_directives'
 
 export { default as version } from './version'
+export { default as info } from './info'
 
 export const Utils = {
   util,

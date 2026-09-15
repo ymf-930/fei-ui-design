@@ -234,11 +234,8 @@ export function throttle(func, wait, immediate = false) {
   let timeoutID
   let lastExec = 0
 
-  function wrapper() {
-    const self = this
+  function wrapper(...args) {
     const elapsed = Number(new Date()) - lastExec
-    // eslint-disable-next-line prefer-rest-params
-    const args = arguments
 
     function clearExistingTimeout() {
       if (timeoutID) {
@@ -250,9 +247,11 @@ export function throttle(func, wait, immediate = false) {
       timeoutID = undefined
     }
 
-    function exec() {
+    // 使用箭头函数以继承 wrapper 的 this，
+    // 避免 `const self = this` 这类 this 别名写法
+    const exec = () => {
       lastExec = Number(new Date())
-      func.apply(self, args)
+      func.apply(this, args)
     }
 
     if (immediate && !timeoutID) {

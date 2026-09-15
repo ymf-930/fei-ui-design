@@ -6,16 +6,16 @@
 
 <script setup lang="ts">
 import '../styles/index.css'
-import type { BTimelineProps } from './types'
+import type { FTimelineProps } from './types'
 import { computed } from 'vue'
 
 const prefixCls = 'fei-timeline'
 
 defineOptions({
-  name: 'BTimeline'
+  name: 'FTimeline'
 })
 
-const props = defineProps<BTimelineProps>()
+const props = defineProps<FTimelineProps>()
 
 const cpClasses = computed(() => [`${prefixCls}`, { [`${prefixCls}-pending`]: props.pending }])
 </script>

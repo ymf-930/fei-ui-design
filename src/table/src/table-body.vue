@@ -100,12 +100,12 @@
 <script lang="ts">
 import TableTr from './table-tr.vue'
 import TableCell from './cell.vue'
-import Expand from './main/expand.js'
+import Expand from './main/expand'
 import { useMixin } from './main/mixin'
 import { computed, defineComponent, inject } from 'vue'
 
 export default defineComponent({
-  name: 'TableBody',
+  name: 'FTableBody',
   components: { TableCell, Expand, TableTr },
   props: {
     // eslint-disable-next-line vue/require-default-prop

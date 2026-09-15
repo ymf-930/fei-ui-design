@@ -52,7 +52,7 @@ export const formItemProps = {
     default: true
   },
   size: {
-    types: String,
+    type: String,
     validator: validSize
   }
 }

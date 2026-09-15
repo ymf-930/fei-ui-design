@@ -22,7 +22,7 @@ const getAllColumns = (cols, forTableHead = false) => {
   columns.forEach(column => {
     if (column.children) {
       if (forTableHead) result.push(column)
-      result.push.apply(result, getAllColumns(column.children, forTableHead))
+      result.push(...getAllColumns(column.children, forTableHead))
     } else {
       result.push(column)
     }

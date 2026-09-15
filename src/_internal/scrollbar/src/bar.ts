@@ -3,7 +3,7 @@ import { on, off } from '../../../_utils/dom'
 import { renderThumbStyle, BAR_MAP } from './utils'
 
 export default defineComponent({
-  name: 'Bar',
+  name: 'FScrollbarBar',
   props: {
     vertical: {
       type: Boolean,

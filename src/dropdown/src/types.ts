@@ -38,12 +38,4 @@ export interface DropdownContext {
   trigger: ComputedRef<'click' | 'hover' | 'contextmenu'>
 }
 
-export interface CollapseWrapProps {
-  modelValue?: boolean
-  title?: string
-  collapse?: boolean
-  shadow?: string
-  arrowIcon?: string
-}
-
 export const dropdownContextKey: InjectionKey<DropdownContext> = Symbol('FDropdown')

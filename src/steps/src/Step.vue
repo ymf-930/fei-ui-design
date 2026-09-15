@@ -30,7 +30,7 @@ import { stepProps } from './types'
 const prefixCls = 'fei-steps'
 
 export default defineComponent({
-  name: 'BStep',
+  name: 'FStep',
   props: stepProps,
   setup(props) {
     const stepsParent = inject('Steps')

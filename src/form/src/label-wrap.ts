@@ -13,7 +13,7 @@ import { FormKey, FormItemKey } from './token'
 import { addResizeListener, removeResizeListener } from '../../_utils/resize-event'
 
 export default {
-  name: 'BLabelWrap',
+  name: 'FLabelWrap',
   props: {
     isAutoWidth: Boolean,
     updateAll: Boolean

@@ -1,7 +1,7 @@
 import { h } from 'vue'
 
 export default {
-  name: 'TableRenderHeader',
+  name: 'FTableRenderHeader',
   functional: true,
   props: {
     render: Function,

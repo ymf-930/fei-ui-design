@@ -8,7 +8,7 @@
 import type { SpaceItemProps } from './types'
 
 defineOptions({
-  name: 'FSpace'
+  name: 'FSpaceItem'
 })
 withDefaults(defineProps<SpaceItemProps>(), {
   prefixCls: 'fei-space'

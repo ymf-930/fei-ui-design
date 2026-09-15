@@ -13,7 +13,7 @@ export default function useTheme() {
 
   return {
     themeConfig: mergedThemeRef,
-    local: mergedLocaleRef,
+    locale: mergedLocaleRef,
     themeName: mergedThemeNameRef
   }
 }

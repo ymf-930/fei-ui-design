@@ -1,5 +1,5 @@
 export default {
-  name: 'TableExpand',
+  name: 'FTableExpand',
   functional: true,
   props: {
     row: Object,

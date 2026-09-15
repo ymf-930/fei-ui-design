@@ -17,7 +17,7 @@ import { ref, computed, watch, onMounted, getCurrentInstance, defineComponent } 
 import draggable from './draggable'
 
 export default defineComponent({
-  name: 'BColorHueSlider',
+  name: 'FColorHueSlider',
   props: {
     color: {
       type: Object,

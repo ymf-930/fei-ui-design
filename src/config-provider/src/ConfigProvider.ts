@@ -81,7 +81,7 @@ export default defineComponent({
       ? h(
           this.tag,
           {
-            class: 'b-config-provider',
+            class: 'fei-config-provider',
             'theme-name': this.mergedThemeName,
             style: this.inlineThemeDisabled
               ? {}

@@ -22,8 +22,8 @@ import { useOption } from './useOption'
 import { optionProps } from './types'
 
 export default {
-  name: 'BOption',
-  componentName: 'BOption',
+  name: 'FOption',
+  componentName: 'FOption',
   props: optionProps,
   setup(props) {
     const states = reactive({

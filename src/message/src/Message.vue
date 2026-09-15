@@ -35,7 +35,7 @@ import { EVENT_CODE } from '../../_utils/aria'
 import { on, off } from '../../_utils/dom'
 
 defineOptions({
-  name: 'BMessage'
+  name: 'FMessage'
 })
 
 const props = withDefaults(defineProps<MessageProps>(), {

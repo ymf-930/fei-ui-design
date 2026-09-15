@@ -1,6 +1,11 @@
 <template>
   <Transition name="fade-in-linear">
-    <div :class="classes">
+    <!--
+      v-show 由组件内部状态驱动（服务式调用可通过 hide() 触发淡出）。
+      此前 <Transition> 包着一层无 v-if/v-show 的静态节点，
+      过渡效果实际从未生效。
+    -->
+    <div v-show="visible" :class="classes">
       <div class="fei-loading-inner">
         <slot>
           <div v-if="!showIcon">
@@ -45,6 +50,16 @@ const props = withDefaults(defineProps<LoadingProps>(), {
 })
 
 const text = ref(props.showText)
+/** 可见性：由服务式调用 / 指令控制，驱动 <Transition> 的淡入淡出 */
+const visible = ref(true)
+
+function show() {
+  visible.value = true
+}
+
+function hide() {
+  visible.value = false
+}
 
 const classes = computed(() => [
   `${prefixCls}`,
@@ -61,5 +76,5 @@ function setTitle(title: string) {
   text.value = title
 }
 
-defineExpose({ setTitle })
+defineExpose({ setTitle, show, hide, visible })
 </script>

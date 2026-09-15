@@ -56,8 +56,9 @@
               </f-tag>
             </span>
 
-            <transition v-if="!collapseTags" @after-leave="resetInputHeight">
+            <transition @after-leave="resetInputHeight">
               <span
+                v-if="!collapseTags"
                 :style="{ marginLeft: prefixWidth && selected.length ? `${prefixWidth}px` : null }"
               >
                 <f-tag
@@ -198,7 +199,7 @@ import {
   defineComponent
 } from 'vue'
 import { FInput } from '../../input'
-import BOption from './Option.vue'
+import FOption from './Option.vue'
 import FSelectMenu from './select-dropdown.vue'
 import { addResizeListener, removeResizeListener } from '../../_utils/resize-event'
 import { FTag } from '../../tag'
@@ -217,7 +218,7 @@ export default defineComponent({
   components: {
     FInput,
     FSelectMenu,
-    BOption,
+    FOption,
     FTag,
     FScrollbar,
     FPopper

@@ -502,8 +502,7 @@ export default defineComponent({
     }
 
     //@ts-ignore
-    // eslint-disable-next-line no-unused-vars
-    function handleTreeNodeDragEnd({ e, treeNode }) {
+    function handleTreeNodeDragEnd({ e }) {
       const { draggingNode, dropType, dropNode } = dragState.value
       e.preventDefault()
       e.dataTransfer.dropEffect = 'move'

@@ -14,8 +14,8 @@ import { provide, inject, ref, reactive, toRefs, defineComponent } from 'vue'
 import { selectGroupKey, selectKey, selectEvents } from './token'
 
 export default defineComponent({
-  name: 'BOptionGroup',
-  componentName: 'BOptionGroup',
+  name: 'FOptionGroup',
+  componentName: 'FOptionGroup',
   props: {
     label: {
       type: String,
