@@ -1,6 +1,9 @@
 @import './styles/grid.css';
 @import './styles/code.styl';
 @import './styles/doc-typography.styl';
+/* 明暗主题切换的 view-transition 伪元素样式 —— 必须是全局样式，
+   写在任何组件的 scoped style 里都不生效，原因见该文件头部注释。 */
+@import './styles/view-transition.styl';
 
 body {
   width: unset;

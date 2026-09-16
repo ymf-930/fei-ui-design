@@ -226,26 +226,15 @@ function onTouchEnd(e) {
 </script>
 
 <style lang="stylus" scoped>
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation: none;
-  mix-blend-mode: normal;
-}
+/*
+ * 明暗主题切换的 ::view-transition-* 规则**不在这里**。
+ *
+ * 这里的 `<style scoped>` 会把选择器编译成 `[data-v-xxx]::view-transition-old(root)`，
+ * 而 view-transition 伪元素只挂在文档根元素（<html>）上、<html> 不带组件 scope 属性，
+ * 因此写成 scoped 会静默失效（实测：切换中伪元素计算样式仍是 blend=plus-lighter、z=auto）。
+ * 现已统一收到 theme/styles/view-transition.styl —— 那里是全局样式，改之前先读它的头部注释。
+ */
 
-/* 进入dark模式和退出dark模式时，两个图像的位置顺序正好相反 */
-.darken::view-transition-old(root) {
-  z-index: 1;
-}
-.darken::view-transition-new(root) {
-  z-index: 9999999;
-}
-
-::view-transition-old(root) {
-  z-index: 9999999;
-}
-::view-transition-new(root) {
-  z-index: 1;
-}
 .fade-code-enter-active, .fade-code-leave-active
   transition: opacity .5s;
 

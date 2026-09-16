@@ -1,0 +1,48 @@
+// ============================================================================
+// 明暗主题切换的视图过渡（View Transitions API）—— 唯一权威来源
+// ----------------------------------------------------------------------------
+// ⚠️ 本文件的选择器全部作用于**文档根元素上的 view-transition 伪元素**，
+//    所以必须放在非 scoped 的全局样式里。
+//
+// 原实现写在 layouts/Layout.vue 的 `<style lang="stylus" scoped>` 中，
+// 被编译成：
+//   [data-v-1b2f3e07]::view-transition-old(root) { ... }
+// 这要求宿主元素既带组件 scope 属性、又能承载 view-transition 伪元素 ——
+// 两个条件都不成立：伪元素只挂在文档根元素（<html>）上，而 <html> 不带
+// 任何组件 scope 属性。于是那一整块规则是**静默失效**的（构建不报错）。
+//
+// 失效的实测后果（CDP 采样，2026-09-16，见 .workbuddy/tmp/probe-before）：
+//   切换过程中 ::view-transition-old/new(root) 的计算样式仍是
+//   `blend=plus-lighter` / `z=auto` —— 即 `animation: none`、
+//   `mix-blend-mode: normal`、z-index 换序一条都没生效。
+//   结果 UA 默认的 250ms 线性交叉淡入淡出一直在跑，与 Config.vue 里
+//   500ms 的圆形 clip-path 叠加，两套动画的时长与缓动都不同。
+// ============================================================================
+
+// 关掉 UA 默认的交叉淡入淡出与 plus-lighter 混合，把整段过渡只交给
+// Config.vue 里那一条 clip-path 动画。
+//
+// `mix-blend-mode: normal` 不是可选优化：UA 默认在 old/new 上挂的是
+// plus-lighter，一旦两层都变成不透明（animation: none 之后就是这样），
+// 就会发生加色叠加，画面整体发白。
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+// 固定层级：新图层在上、旧图层在下。
+// Config.vue 现在**两个方向都只动 ::view-transition-new(root)**（新主题从
+// 点击处扩散），因此不再需要按明暗方向做 z-index 换序 —— 原先那套
+// `.darken::view-transition-old/new` 换序，正是「两个方向观感不一样」的来源。
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 2;
+}
+
+// 说明：UA 在 ::view-transition-group(root) 上还会跑一条
+// `-ua-view-transition-group-anim-root`（250ms），用于对齐新旧快照的几何。
+// root 的快照恒等于视口，这条动画不产生可见位移，故保留、不额外覆盖。

@@ -138,14 +138,13 @@ function reloadConfig() {
 
   vsThemeVal.value.openCode = false
 
-  localStorage.theme = 'dark'
-  const returnTheme = setTheme()
-  vsThemeVal.value.themeDarken = returnTheme === 'dark'
-  if (returnTheme === 'dark') {
-    document.body.classList.add('darken')
-  } else {
-    document.body.classList.remove('darken')
-  }
+  // 主题重置交给 setTheme()：它内部已负责 vs-theme 属性、.darken、themeDarken
+  // 与 localStorage，不需要在这里再重复一遍。
+  //
+  // 注：此处原本还有一行 `localStorage.theme = 'dark'` —— 该 key 全站没有任何
+  // 读取点（真正被读的是 localStorage.vsTheme），所以「重置为暗色」的意图
+  // 实际从未生效。是否要真的重置成暗色属于产品语义，未擅自改动，先记录在此。
+  setTheme()
 }
 
 function ChangeSidebar() {
@@ -245,28 +244,44 @@ function ChangeOpenCode() {
   localStorage.openCode = vsThemeVal.value.openCode
 }
 
-const setTheme = forceTheme => {
-  document.body.classList.add('vs-remove-transition')
-  const media = window.matchMedia('(prefers-color-scheme: dark)')
+// ── 明暗主题 ────────────────────────────────────────────────────────────────
+// 圆形擦除的时长/缓动只在这里声明一次：下面「何时放开元素级 transition」直接
+// 等视图过渡结束（transition.finished），不再靠定时器去猜这个值。
+const THEME_WIPE_DURATION = 500
+// 全站交互动效统一是 ease / ease-out，旧实现这里是唯一一处 ease-in。
+// 揭示式动画「越接近结束越快」观感突兀，故对齐为对称的 ease-in-out。
+const THEME_WIPE_EASING = 'ease-in-out'
 
-  let isThemeDark = media.matches
-
+// 当前是否暗色：本地偏好优先，其次跟随系统
+function currentThemeIsDark() {
   if (localStorage.vsTheme) {
-    isThemeDark = localStorage.vsTheme === 'dark'
+    return localStorage.vsTheme === 'dark'
   }
+  return window.matchMedia('(prefers-color-scheme: dark)').matches
+}
 
-  if (isThemeDark) {
+// 把明暗状态写到 DOM 上。所有影响外观的写入都集中在这里，
+// 保证视图过渡的「新」快照拿到的是一份完整的目标状态。
+function applyTheme(isDark) {
+  if (isDark) {
     document.body.setAttribute('vs-theme', 'dark')
+    document.body.classList.add('darken')
   } else {
     document.body.removeAttribute('vs-theme')
+    document.body.classList.remove('darken')
   }
-
-  if (forceTheme === 'dark') {
-    document.body.setAttribute('vs-theme', 'dark')
-  } else if (forceTheme === 'light') {
-    document.body.removeAttribute('vs-theme')
+  if (vsThemeVal.value) {
+    vsThemeVal.value.themeDarken = isDark
   }
+}
 
+// 读取并应用主题。传 forceTheme 可强制指定（当前无调用点），不传则跟随偏好/系统。
+const setTheme = forceTheme => {
+  document.body.classList.add('vs-remove-transition')
+  const isThemeDark =
+    forceTheme === 'dark' ? true : forceTheme === 'light' ? false : currentThemeIsDark()
+
+  applyTheme(isThemeDark)
   localStorage.vsTheme = isThemeDark ? 'dark' : 'light'
 
   setTimeout(() => {
@@ -277,52 +292,54 @@ const setTheme = forceTheme => {
 }
 
 function ChangeTheme(event) {
-  const media = window.matchMedia('(prefers-color-scheme: dark)')
-  let isThemeDark = media.matches
+  const nextIsDark = !currentThemeIsDark()
+  const nextTheme = nextIsDark ? 'dark' : 'light'
 
-  if (localStorage.vsTheme) {
-    isThemeDark = localStorage.vsTheme === 'dark'
+  // 视图过渡的「新」快照在属性写入后立刻拍摄：此时若还有 250ms 的颜色过渡在跑，
+  // 快照会拍到过渡的起始值（旧色）。所以要先禁掉元素级 transition。
+  document.body.classList.add('vs-remove-transition')
+  const releaseTransition = () => document.body.classList.remove('vs-remove-transition')
+
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  // 不支持 View Transitions 或用户要求减弱动效：直接切换，不做圆形擦除。
+  // 旧实现无条件调用 document.startViewTransition，在不支持的浏览器里会抛错，
+  // 表现为「点了开关但主题没变」。
+  if (typeof document.startViewTransition !== 'function' || prefersReduced) {
+    applyTheme(nextIsDark)
+    localStorage.vsTheme = nextTheme
+    setTimeout(releaseTransition, 100)
+    return
   }
 
-  localStorage.vsTheme = !isThemeDark ? 'dark' : 'light'
-  const returnTheme = !isThemeDark ? 'dark' : 'light'
-
-  document.body.classList.add('vs-remove-transition')
-  vsThemeVal.value.themeDarken = returnTheme === 'dark'
-
-  const x = event.clientX
-  const y = event.clientY
+  const x = event?.clientX ?? Math.round(innerWidth / 2)
+  const y = event?.clientY ?? Math.round(innerHeight / 2)
   const endRadius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y))
 
-  const transition = document.startViewTransition(async () => {
-    if (returnTheme === 'dark') {
-      document.body.setAttribute('vs-theme', 'dark')
-      document.body.classList.add('darken')
-    } else {
-      document.body.removeAttribute('vs-theme')
-      document.body.classList.remove('darken')
-    }
+  const transition = document.startViewTransition(() => {
+    applyTheme(nextIsDark)
+    localStorage.vsTheme = nextTheme
   })
 
-  transition.ready.then(() => {
-    const clipPath = [`circle(0px at ${x}px ${y}px)`, `circle(${endRadius}px at ${x}px ${y}px)`]
-    document.documentElement.animate(
-      {
-        clipPath: !vsThemeVal.value.themeDarken ? [...clipPath].reverse() : clipPath,
-      },
-      {
-        duration: 500,
-        easing: 'ease-in',
-        pseudoElement: !vsThemeVal.value.themeDarken
-          ? '::view-transition-old(root)'
-          : '::view-transition-new(root)',
-      },
-    )
-  })
+  // 两个方向都只动 ::view-transition-new(root)（新主题从点击处扩散），不再按方向反转。
+  // 旧实现「去程动 new、回程动 old」，而默认层级是 new 在上 —— 回程那条动画被压在下层
+  // 完全看不见，于是同一个开关两个方向观感不同。
+  transition.ready
+    .then(() => {
+      document.documentElement.animate(
+        {
+          clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${endRadius}px at ${x}px ${y}px)`],
+        },
+        {
+          duration: THEME_WIPE_DURATION,
+          easing: THEME_WIPE_EASING,
+          pseudoElement: '::view-transition-new(root)',
+        },
+      )
+    })
+    .catch(() => {})
 
-  setTimeout(() => {
-    document.body.classList.remove('vs-remove-transition')
-  }, 500)
+  // 等视图过渡真正结束再放开，避免固定 500ms 与动画时长对不齐
+  transition.finished.finally(releaseTransition)
 }
 
 // Vue.prototype.$mobile = { active: (localStorage.mobile != 'true') || false }
@@ -345,13 +362,8 @@ onMounted(() => {
     vsThemeVal.value.sidebarCollapseOpen = savedCollapseOpen === 'true'
   }
 
-  const returnTheme = setTheme()
-  vsThemeVal.value.themeDarken = returnTheme == 'dark'
-  if (returnTheme === 'dark') {
-    document.body.classList.add('darken')
-  } else {
-    document.body.classList.remove('darken')
-  }
+  // setTheme() 内部已经写好 vs-theme 属性、.darken、themeDarken，无需再重复
+  setTheme()
 })
 </script>
 <style lang="stylus">

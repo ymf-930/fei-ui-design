@@ -672,7 +672,8 @@ corepack 0.34.6 一直可用，当时是判断失误。项目已切回 **pnpm**�
   - 配色：`docs/.vitepress/config.js` 的 `markdown.theme.light = 'github-light'`
     （一套**按白底设计**的深色 token 色板）
 
-  更隐蔽的一层：站点没有暗色开关，VitePress 自带的
+  更隐蔽的一层：**站点有暗色开关**，但它走自研的 `body[vs-theme="dark"]` + `body.darken`
+  （`theme/components/Config.vue`），并非 VitePress 的 `html.dark`。因此 VitePress 自带的
   `html:not(.dark) .vp-code span { color: var(--shiki-light) }` 是唯一命中的规则，
   于是 `--shiki-light` 一侧（深色 token）必然压在深色底上，`--shiki-dark` 一侧永远不会被用到。
   主题里那句 `pre code { color: #fff }` 也救不了 —— 着色在 `span` 上，`code` 只是父节点。
@@ -1504,5 +1505,101 @@ VuePress 0.x 的整套 Stylus 变量（`$borderColor`、`$textColor`、`$accentC
    但当前 §9.4 尚有 49 处存量，直接做成阻断项会红 —— 需要先清理，或按文件建基线。
 3. **P2·`api.vue` 是死组件**（无引用、无 md 使用 `con-api`），可整体删除，
    与 §8.10 的占位清理同批处理。
+
+
+## 十、明暗主题切换动画不一致（2026-09-16）
+
+### 10.1 现象
+
+同一个开关：**切到暗色有「从点击处扩散的圆形擦除」，切回浅色却什么都没有**（只剩一次整体
+淡出）；并且无论哪个方向，观感上都不是「一条动画」。用户反馈原话：
+**「切换明暗主题效果感觉动画不一致」**。
+
+### 10.2 根因：一段 scoped 样式让整套 view-transition 规则静默失效
+
+站点明暗切换是自研的（`theme/components/Config.vue`）：
+
+- 状态落在 `document.body` 的 `vs-theme="dark"` 属性与 `.darken` 类上
+  （**不是** VitePress 的 `html.dark`）
+- 切换时 `document.startViewTransition()`，在 `transition.ready` 里对某个
+  `::view-transition-*(root)` 伪元素跑一条 `clipPath` 的 `circle()` 动画
+
+而「关掉 UA 默认交叉淡入淡出、固定图层顺序」的那套规则，原先写在
+`layouts/Layout.vue` 的 **`<style lang="stylus" scoped>`** 里。产物证据：
+
+```css
+[data-v-1b2f3e07]::view-transition-old(root){z-index:9999999}
+[data-v-1b2f3e07]::view-transition-new(root){z-index:1}
+```
+
+`<html>` 上不带任何 `data-v-*`，而 view-transition 伪元素**只挂在文档根元素上** ——
+两个条件都不成立，5 条规则全部永不匹配。**构建不报错、产物里还能 grep 到**，属典型静默失效
+（与 §9.3 的「未定义 Stylus 变量原样输出」是同一类问题：看着生效，实际被浏览器丢弃）。
+
+失效后果（CDP 采样实测，修复前）：
+
+| 采样点 | `::view-transition-old/new(root)` 计算样式 | 同时在跑的动画 |
+| --- | --- | --- |
+| 切换中 40~400ms | `blend=plus-lighter`、`z=auto` | UA 默认 `fade-out`/`fade-in` + `plus-lighter` 混合（**250ms, linear**），与 JS 的 clip-path（**500ms, ease-in**）叠加 |
+
+即：`animation:none` 没生效 → 250ms 交叉淡入淡出一直在跑；`mix-blend-mode:normal` 没生效 →
+两层以 `plus-lighter` 加色叠加，画面发白；z-index 换序没生效 → 默认层级是 `new` 在上。
+
+**最后一条直接造成「两个方向不一样」**：原逻辑是「去程动 `new`、回程动 `old`」，
+回程那条动画被压在不透明的 `new` 之下，**完全看不见**，于是回程只剩默认淡出。
+
+### 10.3 做法
+
+1. **规则搬到全局**：新建 `theme/styles/view-transition.styl`（由 `theme/index.css` 顶部
+   `@import` 引入）；`Layout.vue` 的 scoped 块只留一句指向它的注释。
+2. **只留一条可见动画**：`::view-transition-old/new(root) { animation:none; mix-blend-mode:normal }`，
+   层级固定为 `old:1 / new:2`，**删掉按明暗方向换序的那套 `.darken::…` 规则**。
+   （UA 还会在 `::view-transition-group(root)` 上跑一条 250ms 的几何对齐动画；`root` 的快照
+   恒等于视口，它不产生可见位移，故保留。）
+3. **两个方向统一**：`ChangeTheme` 现在无论去哪个方向都只动
+   `::view-transition-new(root)`（新主题从点击处扩散），不再反转 clipPath、不再切换目标伪元素。
+4. **缓动对齐**：`ease-in` → `ease-in-out`。`ease-in` 在整个主题里**只此一处**，
+   其余是 `ease` / `ease-out`；揭示式动画「越接近结束越快」观感突兀。
+
+### 10.4 顺带修掉的两个健壮性问题
+
+- **不支持 View Transitions 的浏览器「点了没反应」**：原实现无条件调用
+  `document.startViewTransition(...)`，在不支持的环境会抛 `TypeError`；由于
+  `applyTheme` 写在回调里，**主题根本不会被切换**。现已先判断
+  `typeof document.startViewTransition !== 'function'`，降级为直接切换。
+- **定时器与动画时长靠人工对齐**：原先 `vs-remove-transition` 的释放写死 500ms，
+  与动画时长是两份需人工同步的数字；现改为等 `transition.finished`。
+  另补 `prefers-reduced-motion: reduce` 时跳过圆形擦除。
+
+### 10.5 本轮校验
+
+| 校验项 | 结果 |
+| --- | --- |
+| 产物 CSS | ✅ `::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}` 等 3 条均为**全局**选择器；`data-v*…view-transition` 命中数 0 |
+| CDP 实测（两方向 × 5 采样点） | ✅ 两方向均为 `Animation@::view-transition-new(root)(500ms,ease-in-out)`；伪元素 `anim=none / z=1,2 / blend=normal`；UA 默认 fade 与 plus-lighter 已消失 |
+| 抓帧（切换后 150ms） | ✅ 两方向都能看到「从点击处扩散的圆」，画面不再发白 |
+| `build:site` | ✅ exit=0 |
+| 8 项文档护栏（`docs:check` ×5 + contrast + placeholders + site-links） | ✅ 全过 |
+| `vitest run` | ✅ 4 文件 / 16 用例 |
+| `eslint`（全仓） | ✅ exit=0 |
+
+复现脚本（均为只读探针）：
+- `.workbuddy/tmp/probe-theme-transition.mjs` —— CDP 驱动无头 Chrome，采样
+  `getAnimations({subtree:true})` 与伪元素 `getComputedStyle`，两方向各抓一帧；
+- `.workbuddy/tmp/serve-site.mjs` —— 本地起已构建站点。**必须用它**：
+  `vitepress preview` 不带 `base` 前缀，产物里的 `/fei-ui-design/…` 资源会 404
+  （页面能打开但没有任何样式），排查时极易误判。
+
+### 10.6 尚未处理 / 建议
+
+1. **P3·`reloadConfig` 的「重置为暗色」从未生效**：该函数里写着
+   `localStorage.theme = 'dark'`，但全站读取的是 `localStorage.vsTheme` —— 这个 key
+   没有任何读取点，所以「重新加载配置」不会重置主题（其余项都会重置）。
+   已就地加注释、**未改语义**：「重置到底该跟随系统还是强制暗色」属产品判断，确认后再动。
+2. **P3·暗色模式下的代码块配色没有护栏**：`check-docs-contrast` 只校验
+   `--vs-theme-code2` 的**浅色值** `#363449`。暗色下该变量变为 `#161619`，而 shiki 两侧
+   都是深色主题、实际只用 `--shiki-light`。按比例换算：达标 token 都比 `#363449` 更亮，
+   底色变暗只会**提升**对比度，故无回归风险 —— 但这条推论尚未被自动化验证。
+
 
 

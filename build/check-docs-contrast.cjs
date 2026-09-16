@@ -110,7 +110,9 @@ for (const file of htmlFiles) {
   }
 
   /**
-   * 站点没有暗色开关，`.dark` 永不生效，实际生效的只有 --shiki-light 一侧
+   * 站点**有**暗色开关，但它走自研的 `body[vs-theme="dark"]` + `body.darken`
+   * （theme/components/Config.vue），不是 VitePress 的 `html.dark`，所以 `.dark`
+   * 永不生效，实际生效的只有 --shiki-light 一侧
    * （VitePress 自带 `html:not(.dark) .vp-code span { color: var(--shiki-light) }`）。
    * 两侧现在配置成同一个主题，所以取 light 侧即为所见。
    */
