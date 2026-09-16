@@ -328,13 +328,19 @@ function handleUp() {
 }
 
 function goBack() {
-  // 只有站内确实存在上一条记录时才后退；直接打开某个链接（无站内历史）时后退会离开站点，
-  // 此时回首页。判定依据与 vue-router 一致：push 时会在 history.state 写入 back。
-  const hasPrevious = Boolean(window.history.state && window.history.state.back)
-  if (hasPrevious) {
-    router.go(-1)
+  // ⚠️ VitePress 1.x **不用 vue-router**：`useRouter()` 返回的是 VitePress 自己的
+  // `{ route, go(href) }` —— 没有 push()，go() 收的也是目标 href 而不是前进/后退步数，
+  // 并且它只在离开某条记录时写 `{ scrollPosition }`、进入新记录时写 null，
+  // 从不写 `back`，所以 `history.state.back` 恒为 undefined（实测恒 null）。
+  // 旧写法 `router.go(-1)` / `router.push(...)` 两条分支都会抛
+  // `TypeError`（go(-1) 会把 -1 当 href 归一化），表现为「点了没反应」。
+  //
+  // 改用浏览器原生历史：VitePress 监听 popstate，会正常完成站内切换。
+  // 无历史可退（新标签页直接打开）时回文档首页，避免又变成「点了没反应」。
+  if (window.history.length > 1) {
+    window.history.back()
   } else {
-    router.push(site.value.base || '/')
+    router.go(site.value.base || '/')
   }
 }
 

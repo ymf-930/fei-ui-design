@@ -1254,11 +1254,17 @@ diff 只剩「去掉 `{ ... }`」，改动面最小、最容易复核。
 
 #### 8.11.4 入口 4：返回上一页
 
+> ⚠️ **本节的做法已被 §10.11 推翻**（2026-09-16 同日晚）：`router.go(-1)` / `router.push(...)`
+> 在 VitePress 1.x 下**根本不存在**，`goBack()` 每次点击都抛 `TypeError`，
+> 即这个按钮从补上起就一直是坏的。下表所列的按钮元素改动（`<a>` → `<button>`）
+> 与无障碍属性**仍然有效**，只有跳转实现被替换。
+
 取「补齐」而非「移除」（移除会丢掉一个各文档站都有的常规能力）：
 
-- `goBack()` 由 `Message.info('开发中')` 改为真实跳转：有站内上一条记录时 `router.go(-1)`，
+- ~~`goBack()` 由 `Message.info('开发中')` 改为真实跳转：有站内上一条记录时 `router.go(-1)`，
   否则 `router.push(site.base)` 回首页 —— 直接打开某个链接时后退会**离开站点**，
-  判定依据与 vue-router 一致（`push` 时写入 `history.state.back`）。
+  判定依据与 vue-router 一致（`push` 时写入 `history.state.back`）。~~
+  ← **实际从未生效**，见 §10.11。
 - 元素由 `<a>` 改为 `<button type="button">`：`<a>` 没有 `href` 时**不可键盘聚焦**，
   改 `button` 才能被 Tab 到、被回车触发；同时补 `title` 与 `aria-label`。
 - 为此在 `.back-link` 里补了 `background / border / color / cursor` 的按钮默认样式重置。
@@ -1837,6 +1843,186 @@ VuePress 0.x 的整套 Stylus 变量（`$borderColor`、`$textColor`、`$accentC
 扫描窗口的左边界下限写成了裸数字 `42`，而其余坐标都是 CSS 像素再乘 `s` ——
 `dpr=2` 时该下限退到 21 CSS 像素，把左边的**白色配置齿轮图标**扫了进来，
 于是「弦」量到的是齿轮不是圆。**混用 CSS 像素与设备像素的常量必须一起乘 `s`。**
+
+
+
+### 10.11 标题锚点 `#` 的位置 + 返回按钮不生效（2026-09-16 同日）
+
+**触发**：用户一次报两条 ——「在线文档 # 号在标题文字前」「文档上方返回按钮不生效」。
+
+两条的**性质完全不同**：第 1 条在本地产物上**不存在**（是旧产物残留），第 2 条是**真缺陷**。
+
+#### 10.11.1 第 1 条：`#` 在文字前 —— 本地产物无此现象，是旧构建的残留
+
+先纠正一个容易搞错的前提：**屏幕上那个 `#` 不是文字**。产物里锚点元素的内容是
+**U+200B 零宽空格**：
+
+```html
+<h2 id="基础用法" tabindex="-1">基础用法 <a class="header-anchor"
+    href="#基础用法" aria-label="Permalink to &quot;基础用法&quot;">&#8203;</a></h2>
+```
+
+`#` 由 VitePress 默认样式画出来：`.vp-doc .header-anchor::before{content:var(--vp-header-anchor-symbol)}`
+（实测 `getComputedStyle(a,'::before').content === '"#"'`）。所以「`#` 在文字前」这件事，
+只可能由**定位**决定，不可能由 DOM 顺序决定 —— 锚点在 DOM 里永远排在文字之后。
+
+把 `#` 顶到文字**左侧**的，是本主题的历史规则 `theme.styl`：
+
+```styl
+a.header-anchor
+  float left
+  margin-left -0.87em   // ← float 到文字的左边负偏移里
+```
+
+它与 `doc-typography.styl` 的 `.vp-doc a.header-anchor` 的关系（产物 CSS 实测）：
+
+| 规则 | 来源 | 特异性 | 后果 |
+| --- | --- | --- | --- |
+| `.vp-doc .header-anchor{position:absolute;top:0;left:0;margin-left:-.87em}` | VitePress 默认 | 0,2,0 | `#` 在文字左 |
+| `a.header-anchor{float:left;margin-left:-.87em}` | `theme.styl`（历史） | 0,1,1 | `#` 在文字左 |
+| `.vp-doc a.header-anchor,…{position:static;float:none;margin:0 0 0 8px}` | `doc-typography.styl`（§227886b 起） | **0,2,1** | `#` 在文字右 |
+
+`0,2,1` 稳压另外两条，**且不依赖样式表先后顺序**（含元素选择器的那条永远赢），
+所以现在的实现不可能被翻盘。
+
+**多页实测**（新增 `.workbuddy/scripts/probe-back-button.mjs` 的 A 段，
+按「标题文字 Range 的右边界 vs 锚点矩形左边界」逐条判决）：
+
+| 页面 | 锚点数 | 在文字前 | 在文字后 | 非 `.vp-doc` |
+| --- | --- | --- | --- | --- |
+| components/button.html | 13 | 0 | 13 | 0 |
+| components/table.html | 23 | 0 | 23 | 0 |
+| components/select.html | 13 | 0 | 13 | 0 |
+| components/form.html | 14 | 0 | 14 | 0 |
+| guide/common-api.html | 7 | 0 | 7 | 0 |
+
+另：全站扫 `site/**/*.html`，**525 个锚点全部落在 `.vp-doc` 容器内**（无一例外），
+故上表的 `0,2,1` 覆盖 100% 的锚点。放大 4 倍的标题截图亦为 `基础用法 #`。
+
+→ **结论：这条是旧产物造成的，源码无需改动。** 提交时序正好解释了这一对症状：
+
+```
+a807100  新增返回按钮（此时锚点仍是「# 在文字前」的旧样式）   ← 两者同时成立
+227886b  文档站正文排版统一：锚点改为跟在文字之后             ← 第 1 条在此修掉
+```
+
+即「# 在文字前 + 返回按钮不生效」精确对应 `a807100`~`227886b` 之间的构建。
+
+#### 10.11.2 第 2 条：返回按钮 —— VitePress 1.x 没有 vue-router
+
+**现象**：按钮可见、可点、命中测试也命中它自己（`elementFromPoint` 返回按钮内的 `<i>`），
+但点击后 URL、`history` 一概不动，控制台也**看不到报错**。
+
+**三层取证**：
+
+1. 拦 `history.pushState/replaceState/go`（用 `Page.addScriptToEvaluateOnNewDocument`
+   在页面脚本之前注入，避免漏掉初始化那一次）→ 三种触发方式（真实鼠标 / 程序化 `click()` /
+   直接调 invoker）**一次调用都没有**。
+2. 对照实验：真实点击侧边栏的跨页链接 → `pushState('/fei-ui-design/')` 正常出现。
+   → SPA 导航本身是好的，问题只在这个按钮。
+3. 把 Vue 挂的 invoker 抠出来直接调用：
+
+   ```
+   function x(){!!(window.history.state&&window.history.state.back)?t.go(-1):t.push(i.value.base||"/")}
+   → TypeError: t.push is not a function
+   ```
+
+**根因**：`t` 是 `useRouter()` 的返回值，而 **VitePress 1.x（本仓 1.0.0-rc.35）用的是它自己的
+router，不是 vue-router**：
+
+```js
+// node_modules/vitepress/dist/client/app/router.js
+export function createRouter(loadPageModule, fallbackComponent) {
+  const router = { route, go }        // ← 只有 route 和 go
+  async function go(href = …) {       // ← go 收的是「目标 href」，不是前进/后退步数
+    href = normalizeHref(href)
+    …
+  }
+}
+```
+
+| 旧代码的假设 | VitePress 1.x 的现实 | 后果 |
+| --- | --- | --- |
+| `router.push(href)` | 没有 `push` | `TypeError: t.push is not a function` |
+| `router.go(-1)` = 后退一步 | `go(href)`；`-1` 会被当 href 归一化 | `TypeError`（另一条分支同样抛） |
+| `history.state.back` 判站内历史 | `updateHistory` 只写 `{scrollPosition}` / `null`，**从不写 `back`** | 恒 `undefined`，判断永远走 else |
+
+也就是说 `goBack()` **两条分支都会抛**，只是 `history.state` 恒为 `null` 时先撞上第一条。
+「看不到报错」是 Vue 在事件回调里把异常交给 `console.error`，而我们最初只监听了
+`Runtime.exceptionThrown`（不是 `Runtime.consoleAPICalled`）—— 补上监听才看得见。
+
+**修法**（`Page.vue`）：
+
+```js
+if (window.history.length > 1) {
+  window.history.back()                 // 有可退历史 → 浏览器原生回退
+} else {
+  router.go(site.value.base || '/')     // 无历史（新标签直接打开）→ 回文档首页
+}
+```
+
+浏览器原生回退与 VitePress 是兼容的：VitePress 监听了 `popstate` 并据此 `loadPage`，
+站内回退仍是一次 SPA 切换。兜底那条用上了 VitePress 真正存在的 API
+（`router.go(href)`，且 href 必须**带 base** —— `normalizeHref` 用 `new URL(href,'http://a.com')`
+解析，不会替你补 base）。
+
+**取舍**（留给后续决策）：`history.length > 1` 无法区分「上一条是站内页」还是「从搜索引擎来」，
+所以从外部链接进入时点返回会离开站点。这正是 §8.11.4 原本想避免的情形，
+但要精确表达「仅站内回退」就必须自己维护一个站内导航栈（挂 `router.onAfterRouteChanged`），
+本轮没做。**「返回上一页」按字面语义就是浏览器回退**，故取现状。
+
+#### 10.11.3 本轮校验
+
+| 项 | 结果 |
+| --- | --- |
+| `probe-back-button.mjs` | ✅ 12/12 |
+| ├ S1 站内 `button.html → icon.html` 后点返回 | ✅ 退回 `button.html`，无异常 |
+| ├ S2 新标签直接打开（`history.length === 1`）后点返回 | ✅ 兜底跳到 `/fei-ui-design/` |
+| └ A 段 5 页 70 个锚点 | ✅ 0 个在文字前 |
+| `build:site` | ✅ exit=0，222.8s |
+| 8 项文档护栏 | ✅ 全过 |
+| `vitest run` | ✅ 4 文件 / 16 用例 |
+| `eslint`（全仓） | ✅ exit=0 |
+
+**S2 必须用 `Target.createTarget` 新建标签**：CDP 复用 `about:blank` 那个标签时
+`history.length` 恒 ≥ 2，兜底分支**一次都走不到**，会得到假绿。
+
+#### 10.11.4 顺带实测：导航栏搜索框同样是坏的（**未修**）
+
+排查过程中顺手验了一下导航栏搜索框（`SearchBox.vue` 在每页都渲染，
+`theme.search !== false && frontmatter.search !== false`）。在输入框里输入字符后：
+
+```
+[error] TypeError: Cannot read properties of undefined (reading 'length')
+        at ic.fn (assets/chunks/theme.C0DF_t1u.js)
+```
+
+下拉建议 DOM 为 `null` —— **搜索框输不出任何建议**。同一族的两个成因：
+
+- `SearchBox.vue:86` `const {pages} = site.value` → VitePress 1.x 的 `SiteData` **没有 `pages`**
+  （那是 VuePress 0.x 的字段），`pages.length` 直接抛错；
+- `SearchBox.vue:213` `router.push(...)` 里的 `router` **从未声明也从未导入**
+  （该文件只 import 了 `useData`），即使前面不抛也会是 `ReferenceError`。
+
+同族的还有 `$router.push(...)`：`HeaderNotification.vue:42`、
+`HomeIllustration1.vue:13`、`HomeIllustration2.vue:8`（`$router` 在 VitePress 下不存在）。
+这几个组件属于 §8.10.5 统计的「主题内未被引用的组件」范畴，部分已无人引用。
+
+→ **未修**。修搜索不是改一行的事：要么按 VitePress 1.x 的本地搜索索引重写
+（`site.themeConfig.search.provider: 'local'`），要么把这一整套 VuePress 0.x 的搜索组件下线。
+属于独立决策，建议单开一轮。
+
+#### 10.11.5 方法论（本轮踩到的）
+
+- **「读内部结构」的断言必须先用已知可用的对照组校准。** 前两轮我用
+  `el[Symbol(_vei)].click !== undefined` 判「监听器没挂上」，得出「handler 没绑定」的结论 ——
+  **是错的**：Vue 把 invoker 存在**原始 prop 名**下，即 `_vei.onClick`（`click` 当然为空）。
+  只差一步校准：同页面点一个已知能用的元素（侧边栏链接）做对照，就会立刻发现自己的判据是坏的。
+- **`Runtime.exceptionThrown` 收不到 Vue 事件回调里被 `console.error` 掉的异常**，
+  必须同时监听 `Runtime.consoleAPICalled` 并筛 `type === 'error'`。
+- **报「这里不对」时先确认对面跑的是哪份产物**：本轮两条反馈里，一条是旧构建残留
+  （§10.11.1），一条是真缺陷（§10.11.2）。判断依据是**提交时序 + 产物哈希**，不是感觉 ——
+  上一轮 §10.10 已因「缓存旧产物」误判过一次，这次直接先比对时序，省掉一整轮往返。
 
 
 
