@@ -251,6 +251,14 @@ const THEME_WIPE_DURATION = 500
 // 全站交互动效统一是 ease / ease-out，旧实现这里是唯一一处 ease-in。
 // 揭示式动画「越接近结束越快」观感突兀，故对齐为对称的 ease-in-out。
 const THEME_WIPE_EASING = 'ease-in-out'
+// 「回浅色」这一程要把层级反过来（旧图层在上、反向收缩），该类名与
+// theme/styles/view-transition.styl 里的 `html.vs-wipe-retract::view-transition-*(root)`
+// 一一对应；改名要两边一起改。注意必须挂在 documentElement 上 ——
+// 伪元素树挂在 <html> 下、与 <body> 是兄弟，挂 body 匹配不到。
+const THEME_WIPE_RETRACT_CLASS = 'vs-wipe-retract'
+// 连续快速点开关时，前一次过渡的 finished 会晚于后一次的启动 ——
+// 用序号让「旧过渡」的收尾动作作废，避免它把新过渡的方向类/transition 开关提前撤掉。
+let wipeSeq = 0
 
 // 当前是否暗色：本地偏好优先，其次跟随系统
 function currentThemeIsDark() {
@@ -315,31 +323,44 @@ function ChangeTheme(event) {
   const y = event?.clientY ?? Math.round(innerHeight / 2)
   const endRadius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y))
 
+  // 两个方向共用一个「以点击处为圆心、半径 0↔endRadius」的圆，但作用层与层级相反，
+  // 于是观感是一次往复：
+  //   去暗色：新（暗）层在上，圆由小到大铺满        —— 左下 → 右上
+  //   回浅色：旧（暗）层在上，同一个圆由大到小收回  —— 右上 → 左下
+  // 层级必须在过渡开始前就位（见 styles/view-transition.styl），
+  // 否则第一帧的上下关系是错的。
+  const root = document.documentElement
+  if (!nextIsDark) root.classList.add(THEME_WIPE_RETRACT_CLASS)
+  const seq = ++wipeSeq
+
   const transition = document.startViewTransition(() => {
     applyTheme(nextIsDark)
     localStorage.vsTheme = nextTheme
   })
 
-  // 两个方向都只动 ::view-transition-new(root)（新主题从点击处扩散），不再按方向反转。
-  // 旧实现「去程动 new、回程动 old」，而默认层级是 new 在上 —— 回程那条动画被压在下层
-  // 完全看不见，于是同一个开关两个方向观感不同。
   transition.ready
     .then(() => {
+      const circle = [`circle(0px at ${x}px ${y}px)`, `circle(${endRadius}px at ${x}px ${y}px)`]
       document.documentElement.animate(
-        {
-          clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${endRadius}px at ${x}px ${y}px)`],
-        },
+        { clipPath: nextIsDark ? circle : [...circle].reverse() },
         {
           duration: THEME_WIPE_DURATION,
           easing: THEME_WIPE_EASING,
-          pseudoElement: '::view-transition-new(root)',
+          pseudoElement: nextIsDark
+            ? '::view-transition-new(root)'
+            : '::view-transition-old(root)',
         },
       )
     })
     .catch(() => {})
 
-  // 等视图过渡真正结束再放开，避免固定 500ms 与动画时长对不齐
-  transition.finished.finally(releaseTransition)
+  // 等视图过渡真正结束再放开：一是避免固定 500ms 与动画时长对不齐，
+  // 二是方向类必须活到过渡结束，否则回程中途层级会被还原
+  transition.finished.finally(() => {
+    if (seq !== wipeSeq) return // 已被更新的一次切换接管，收尾交给它
+    root.classList.remove(THEME_WIPE_RETRACT_CLASS)
+    releaseTransition()
+  })
 }
 
 // Vue.prototype.$mobile = { active: (localStorage.mobile != 'true') || false }

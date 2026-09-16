@@ -1556,8 +1556,10 @@ VuePress 0.x 的整套 Stylus 变量（`$borderColor`、`$textColor`、`$accentC
    层级固定为 `old:1 / new:2`，**删掉按明暗方向换序的那套 `.darken::…` 规则**。
    （UA 还会在 `::view-transition-group(root)` 上跑一条 250ms 的几何对齐动画；`root` 的快照
    恒等于视口，它不产生可见位移，故保留。）
-3. **两个方向统一**：`ChangeTheme` 现在无论去哪个方向都只动
-   `::view-transition-new(root)`（新主题从点击处扩散），不再反转 clipPath、不再切换目标伪元素。
+3. ~~**两个方向统一**：`ChangeTheme` 现在无论去哪个方向都只动
+   `::view-transition-new(root)`（新主题从点击处扩散），不再反转 clipPath、不再切换目标伪元素。~~
+   **⚠️ 本条已被 §10.7 推翻**：「两个方向都从点击处扩散」只让两段动画的**构成**一致，
+   观感上并不是一次往复。现已改为「去程铺开、回程收回」，见 §10.7。
 4. **缓动对齐**：`ease-in` → `ease-in-out`。`ease-in` 在整个主题里**只此一处**，
    其余是 `ease` / `ease-out`；揭示式动画「越接近结束越快」观感突兀。
 
@@ -1600,6 +1602,62 @@ VuePress 0.x 的整套 Stylus 变量（`$borderColor`、`$textColor`、`$accentC
    `--vs-theme-code2` 的**浅色值** `#363449`。暗色下该变量变为 `#161619`，而 shiki 两侧
    都是深色主题、实际只用 `--shiki-light`。按比例换算：达标 token 都比 `#363449` 更亮，
    底色变暗只会**提升**对比度，故无回归风险 —— 但这条推论尚未被自动化验证。
+
+### 10.7 方向修正：去程铺开 / 回程收回（2026-09-16 同日）
+
+**触发**：用户反馈原话 **「动画是左下到右上，右上到左下」**。
+
+**先取证**：把视图过渡**冻结**在 6 个时间点，逐帧读**渲染后的像素**，沿「画面左下角 →
+右上角」对角线打 21 点亮度剖面（`D`=深色底 / `L`=浅色底，**从左往右读 = 从左下到右上**）：
+
+| 时间 | 修改前 light→dark | 修改前 dark→light |
+| --- | --- | --- |
+| 0ms | `LLLLLLLLLLLLLLLLLLLLL` | `DDDDDDDLDDDDDDDDDDDDD` |
+| 160ms | `LDDDDDDLLLLLLLLLLLLLL` | `DLLLLLLLDDDDDDDDDDDDD` |
+| 240ms | `DDDDDDDLDDDDLLLLLLLLL` | `LLLLLLLLLLLLDDDDDDDDD` |
+| 400ms | `DDDDDDDLDDDDDDDDDDDLL` | `LLLLLLLLLLLLLLLLLLLLL` |
+
+读完即知：**修改前两个方向的前沿都是「左下 → 右上」**，两段动画在几何与层级上完全一致
+（`z=2/1`、`blend=normal`、圆心同为点击处 `336,782`）。也就是说，用户那句话不是在描述
+「当前行为」，而是在给出**期望的动效** —— 一次**往复**。
+
+**为什么原实现做不到**：原作者写的本来就是往复（`.darken` 换序 +`[...clipPath].reverse()`
+去动 `old`）。但那批规则除了被 scoped 污染（§10.2），还叠了**第二个错**：
+`.darken` 挂在 **`<body>`** 上，而 view-transition 伪元素树挂在 `<html>` 下、与 `<body>`
+是**兄弟**关系 —— `body.<类>::view-transition-*(root)` 这类选择器**永远匹配不到**。
+所以「换序」从来就没生效过，是双重失效。
+
+**做法**：
+
+1. `view-transition.styl` 恢复按方向换序，但方向类挂**文档根元素**：
+   `html.vs-wipe-retract::view-transition-old(root){z-index:2}` /
+   `…-new(root){z-index:1}`；默认（去暗色）仍是 `old:1 / new:2`。
+2. `ChangeTheme` 恢复「去程动 `new`（半径 0→R，铺满）/ 回程动 `old`（半径 R→0，收回）」，
+   两程共用同一个以点击处为圆心的圆。**这次两个方向都真的看得见** —— 因为换序这回生效了。
+3. 方向类必须在 `startViewTransition` **之前**加、过渡**结束后**撤 —— 否则第一帧的上下
+   关系是错的；再用递增序号 `wipeSeq` 作废旧过渡的收尾，避免连点两下时前一次把方向类
+   （连同元素级 transition 开关）提前撤掉。
+
+**实测验证**（同一个探针，改后）：
+
+| 时间 | light→dark | dark→light |
+| --- | --- | --- |
+| 160ms | `LDDDDDDLLLLLLLLLLLLLL` | `DDDDDDDDDDDDDDDDDLLLL` |
+| 240ms | `DDDDDDDLDDDDLLLLLLLLL` | `DDDDDDDLDDDDDLLLLLLLL` |
+| 400ms | `DDDDDDDLDDDDDDDDDDDLL` | `LLLLLLLLLLLLLLLLLLLLL` |
+
+- 改后 light→dark：前沿**向右**推进 → **左下 → 右上** ✅
+- 改后 dark→light：亮色先出现在**最右端**、前沿**向左**推进 → **右上 → 左下** ✅
+- 层级实测已随方向翻转：去暗色 `z(new/old)=2/1`，回浅色 `z(new/old)=1/2`
+  —— 这同时证明 `html.vs-wipe-retract::…` 这条选择器**确实匹配**
+- 动画目标伪元素也随方向切换：去暗色 `::view-transition-new(root)`、
+  回浅色 `::view-transition-old(root)`，clipPath 关键帧相应反转
+
+**回退方式**：若确认要「两个方向都从点击处扩散」，把 §10.3 第 3 条的做法改回来
+（JS 两处方向分支 + 删掉方向类规则）即可；但要意识到那会让回程**不再收回**。
+
+**新增只读探针**：`.workbuddy/scripts/probe-wipe-geometry.mjs`
+（冻结 + 逐帧采样渲染像素 + 输出亮度剖面字符串；比看截图更容易比对方向）。
 
 
 

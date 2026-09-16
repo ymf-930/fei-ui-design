@@ -31,10 +31,10 @@
   mix-blend-mode: normal;
 }
 
-// 固定层级：新图层在上、旧图层在下。
-// Config.vue 现在**两个方向都只动 ::view-transition-new(root)**（新主题从
-// 点击处扩散），因此不再需要按明暗方向做 z-index 换序 —— 原先那套
-// `.darken::view-transition-old/new` 换序，正是「两个方向观感不一样」的来源。
+// ── 层级：谁在上由方向决定，观感是一次「去程铺开、回程收回」 ───────────────
+//
+// 去暗色（默认，无方向类）—— 新图层在上：
+//   暗色圆从点击处（左下角的开关）扩散铺满整页       观感「左下 → 右上」
 ::view-transition-old(root) {
   z-index: 1;
 }
@@ -42,6 +42,24 @@
 ::view-transition-new(root) {
   z-index: 2;
 }
+
+// 回浅色（Config.vue 在过渡前给根元素加上这个类）—— 旧图层（暗）在上：
+//   同圆心、同半径的圆**反向收缩**，暗色退回到点击处  观感「右上 → 左下」
+//   由上层（暗）被裁掉来露出下层（浅），所以收缩的是 old 而不是 new。
+html.vs-wipe-retract::view-transition-old(root) {
+  z-index: 2;
+}
+
+html.vs-wipe-retract::view-transition-new(root) {
+  z-index: 1;
+}
+
+// ⚠️ 这个方向类必须挂在**文档根元素**上，不能挂 body。
+//    view-transition 伪元素树挂在 <html> 下、与 <body> 是**兄弟**关系，
+//    所以 `body.<类>::view-transition-*(root)` 这类选择器永远匹配不到 ——
+//    原实现在 Layout.vue 里写的 `.darken::view-transition-old/new` 换序
+//    除了被 scoped 污染，还叠了这一个错，是**双重失效**。
+//    改类名时注意与 Config.vue 的 THEME_WIPE_RETRACT_CLASS 保持同步。
 
 // 说明：UA 在 ::view-transition-group(root) 上还会跑一条
 // `-ua-view-transition-group-anim-root`（250ms），用于对齐新旧快照的几何。
