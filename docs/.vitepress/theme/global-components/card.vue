@@ -42,7 +42,8 @@ const props = defineProps({
 
 const vsThemeVal = ref(null)
 const { vsTheme } = getCurrentInstance().appContext.config.globalProperties
-vsThemeVal.value = { ...vsTheme }
+// ⚠️ 共享同一个 reactive 对象，**不要**写成 `{ ...vsTheme }`（副本不接收外部写入）
+vsThemeVal.value = vsTheme
 </script>
 <style lang="stylus">
 getVar(var)

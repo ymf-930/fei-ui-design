@@ -1030,10 +1030,10 @@ export { FTimeline as FTimeLine }
 
 | # | 位置（全站每页） | 功能名称 | 入口元素 | 当前提示文案 | 点击后的真实行为 | 归类 | 建议 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | 左下角「配置」按钮展开菜单 · 第 3 项 | 展开 / 收起侧边栏子栏目 | `bx-list-plus` / `bx-list-minus`，`title`「打开/关闭侧边栏子栏目」 | **`暂未开发`** | 只写入 `Config.vue` 自己那份状态副本并写 `localStorage.sidebarCollapseOpen`（**全仓无任何地方读它**）→ 界面无任何变化 | 真未完成 | **补齐**（见下「两条反直觉项」）或移除该入口 |
-| 2 | 同上 · 第 5 项 | 打开 / 关闭所有代码 | `bx-code-block`，`title`「打开/关闭所有代码」 | **`开发中`** | 连 `localStorage` 都没写 → 完全无副作用 | 真未完成 | **补齐**（同上） |
-| 3 | 左下角配置区 · 翻译图标按钮 | 切换文档语言（国际化） | `.btn-lang.theme-translate` | **`暂未开发！`** | 无任何实现 | 真未完成 | ✅ **本轮已移除**（决策见 §8.9） |
-| 4 | 内容区左上角 | 返回上一页 | `<a class="back-link">` + `bx-left-arrow-alt`（**无 `href`**、无 `title`） | **`开发中`** | 无任何实现；`<a>` 无 href 也不可键盘聚焦 | 真未完成 | 二选一：补 `router.go(-1)` 与 `title`/`aria-label`，或直接移除 |
+| 1 | 左下角「配置」按钮展开菜单 · 第 3 项 | 展开 / 收起侧边栏子栏目 | `bx-list-plus` / `bx-list-minus`，`title`「打开/关闭侧边栏子栏目」 | ~~**`暂未开发`**~~ → **已无占位提示** | ~~只写入 `Config.vue` 自己那份状态副本并写 `localStorage.sidebarCollapseOpen`（**全仓无任何地方读它**）→ 界面无任何变化~~ → **已改为共享 `reactive` 对象**，写入可传播；`localStorage` 读写闭环（偏好刷新后保留）；分组标题可单独收起 | 真未完成 | ✅ **已补齐**（见 §8.11） |
+| 2 | 同上 · 第 5 项 | 打开 / 关闭所有代码 | `bx-code-block`，`title`「打开/关闭所有代码」 | ~~**`开发中`**~~ → **已无占位提示** | ~~连 `localStorage` 都没写 → 完全无副作用~~ → 已接入 `codex.vue` 的 `watch`，示例面板整体展开/收起，偏好写入 `localStorage` | 真未完成 | ✅ **已补齐**（见 §8.11） |
+| 3 | 左下角配置区 · 翻译图标按钮 | 切换文档语言（国际化） | `.btn-lang.theme-translate` | **`暂未开发！`** | 无任何实现 | 真未完成 | ✅ **已移除**（决策见 §8.9） |
+| 4 | 内容区左上角 | 返回上一页 | ~~`<a class="back-link">`~~ → `<button type="button" class="back-link">` + `bx-left-arrow-alt` | ~~**`开发中`**~~ → **已无占位提示** | ~~无任何实现；`<a>` 无 href 也不可键盘聚焦~~ → 已实现 `router.go(-1)`（无站内历史时回首页），并补 `title` / `aria-label`，改为 `<button>` 使其可键盘聚焦 | 真未完成 | ✅ **已补齐**（见 §8.11） |
 | 5 | 顶部导航 · logo 右侧 | 站点状态标记（非入口） | `<f-tag type="success" palin>开发中</f-tag>` | 文案本身即 **`开发中`** | 不可点击；标记整站处于开发状态 | 状态标记 | 保留或按发布状态改版本文案；`palin` 是 `plain` 的拼写错误（并入 P3 文档/代码一致性） |
 | 6 | 顶部导航 · 右侧 | 版本切换（Previous Version） | `<span title="Previous Version" class="v-old">v3.x</span>` | 无 —— 点击**没有任何反馈** | 不是链接、无 `@click`，纯静态文本 | 伪入口（死元素） | 二选一：补 `href` 指向 v3 文档站，或移除 |
 
@@ -1165,9 +1165,154 @@ export { FTimeline as FTimeLine }
 | 设计点 | 取值 / 行为 | 理由 |
 | --- | --- | --- |
 | 扫描对象 | 产物 `site/assets/chunks/theme.*.js` | **不扫源码** —— 源码 Markdown 正文的「开发中也推荐…」是误报，只有产物主题 chunk 才是「用户真会点到的入口」的准确集合 |
-| 基线 | `暂未开发` 1、`开发中` 3、`Coming soon` 0、`敬请期待` 0 | 对应 §8.10 入口 1 / 2+4+5；每条基线在脚本里写明理由 |
+| 基线 | 初始 `暂未开发` 1、`开发中` 3、`Coming soon` 0、`敬请期待` 0；**2026-09-16 晚随 §8.11 下调为 `暂未开发` 0、`开发中` 1** | 初始对应入口 1 / 2+4+5；每条基线在脚本里写明理由 |
 | 超基线 | exit 1，给出两条出路：`A. 补齐/移除（推荐）` 或 `B. 改基线 + 本节加一行` | 只报「失败」无法行动 |
 | 低于基线 | 不失败，提示下调 | 否则基线虚高，将来新增会被旧基线的余量掩盖 |
 | 目标文件找不到 | **报错 exit 1**（不静默跳过） | 主题产物布局变更时，静默跳过等于护栏永久失效 |
 | 反向自检 | 往隔离产物塞一处 `敬请期待` → exit 1 | 确认护栏不是「永远绿灯」 |
+
+### 8.11 补齐入口 1 / 2 / 4 的实现（2026-09-16）
+
+按 §8.10.3 的建议 1、2 执行：先修「接错了」的那两条，再补返回箭头。
+入口 5（状态标记）与入口 6（伪入口 `v3.x`）**本轮未动** —— 它们的去留取决于发布状态，
+不能靠改代码判断，见文末「仍待决策」。
+
+#### 8.11.1 根因修复：`vsTheme` 从「普通对象 + 副本」改为「共享 reactive 对象」
+
+§8.10.1 已证明：状态本身没问题，坏在传递方式。修法是让 4 个消费方共享**同一个**对象。
+
+| 位置 | 改动 |
+| --- | --- |
+| `theme/index.ts` | `globalProperties.vsTheme = { ... }` → `reactive({ ... })` |
+| `Config.vue` | `vsThemeVal.value = { ...vsTheme }` → `vsThemeVal.value = vsTheme` |
+| `SidebarLinks.vue` | 同上 |
+| `global-components/card.vue` | 同上 |
+| `global-components/codex.vue` | 同上 |
+
+**为什么保留 `ref` 包装而不直接改用裸对象**：`vsThemeVal` 在脚本里被大量写作
+`vsThemeVal.value.X`、在模板里写作 `vsThemeVal.X`（`ref` 自动解包）。
+保留 `ref(null)` + `.value = <reactive 对象>` 的写法，**模板与脚本一行都不用改**，
+diff 只剩「去掉 `{ ... }`」，改动面最小、最容易复核。
+
+实证（`.workbuddy/tmp/proof-vstheme-fix.mjs`，真实 vue 运行时，全部通过）：
+1. `ref(reactive(x)).value === reactive(x)` —— Vue 对已代理对象直接返回自身，不会多包一层；
+2. 旧写法 `{ ...vsTheme }` 的副本**仍然**不传播（对照组，证明这不是「碰巧好了」）；
+3. 新写法下 Config 写 → SidebarLinks 读到、codex 写 → Config 读到；
+4. 写入能触发 `watch`（模板重渲染依赖它）。
+
+#### 8.11.2 入口 1：展开 / 收起侧边栏子栏目
+
+除根因外还有两个独立缺陷：
+
+1. **`localStorage` 只写不读** —— `ChangeMenu` 写了 `sidebarCollapseOpen`，全仓无人读它，
+   刷新后偏好丢失。已在 `Config.vue` 的 `onMounted` 补读回。
+2. **分组标题「点开也收不起」** —— 旧表达式
+   `:open="fixed || i === openGroupIndex || vsThemeVal.sidebarCollapseOpen"`
+   用 `||` 串联全局开关，全局为 `true` 时表达式**恒真**。
+   改为 `isGroupOpen(i)`，按优先级判定：`fixed` → **用户点过的分组（`groupOverride`）** →
+   全局开关 → 当前页面所在分组。没有 `groupOverride`，就无法在「全局展开」时单独收起一组。
+
+顺带修掉一个**静默失效**：`watch(() => route, refreshIndex)` 监听的是同一个对象引用，
+**永不触发**，`refreshIndex` 实际从未执行过（`openGroupIndex` 一直是初始值 `0`）。
+已改为 `watch(() => route.path, refreshIndex, { immediate: true })`，
+`openGroupIndex` 初值同时由 `0` 改为 `-1`（`0` 会让第 0 组被误判为「当前所在分组」）。
+
+补充：确认 `Layout.vue:39` 渲染 `<Sidebar>` 时**未传 `fixed`**（默认 `false`），
+因此全局开关不会被 `fixed` 短路 —— 这是「改完到底有没有效果」的前提，必须验证。
+
+#### 8.11.3 入口 2：打开 / 关闭所有代码
+
+`codex.vue` 早已有 `watch(() => openCode)` → `active.value = val`，链路是通的，
+唯一的断点就是副本。根因修完即生效。另在 `Config.vue` 的 `ChangeOpenCode` 补写
+`localStorage.openCode`（`codex.vue` 的 `watch` 也会写，但它只在「当前页面存在示例面板」
+时挂载；无示例的页面上切换会丢）。
+
+#### 8.11.4 入口 4：返回上一页
+
+取「补齐」而非「移除」（移除会丢掉一个各文档站都有的常规能力）：
+
+- `goBack()` 由 `Message.info('开发中')` 改为真实跳转：有站内上一条记录时 `router.go(-1)`，
+  否则 `router.push(site.base)` 回首页 —— 直接打开某个链接时后退会**离开站点**，
+  判定依据与 vue-router 一致（`push` 时写入 `history.state.back`）。
+- 元素由 `<a>` 改为 `<button type="button">`：`<a>` 没有 `href` 时**不可键盘聚焦**，
+  改 `button` 才能被 Tab 到、被回车触发；同时补 `title` 与 `aria-label`。
+- 为此在 `.back-link` 里补了 `background / border / color / cursor` 的按钮默认样式重置。
+
+#### 8.11.5 顺带挖出的第二个真缺陷：`isActive` 是无限递归，被「永不触发的 watch」掩盖着
+
+修入口 1 时，`refreshIndex` 第一次真正被执行（此前那段 `watch(() => route, ...)` 永不触发），
+立刻暴露出 `SidebarLinks.vue` 里另一个问题 —— **整个 7 条用例的测试都挂在
+`RangeError: Maximum call stack size exceeded` 上**，但堆栈全在 Node 的 `console.log`
+对象检查里，看起来像「测试环境的问题」，实际是被测代码的问题：
+
+```js
+// 旧代码：本地声明了一个 isActive(page)
+function isActive(page) {
+  console.log(page);
+  return isActive(route, page.value?.regularPath)   // ← 又调用自己
+}
+```
+
+`resolveOpenGroupIndex` 里写的是 `isActive(route, c.path)` —— 于是 `page` 收到底层的
+`route` 对象，`console.log(route)` 去 inspect VitePress 那个巨大的响应式路由对象，
+下一次调用又传入 `route`……**两个问题叠在一起**：无限递归 + 在递归里打印大对象。
+
+> ⚠️ 这个函数原本就被两件事遮住了：① `refreshIndex` 从未执行过；
+> ② `// refreshIndex()` 在源码里是**被注释掉的**（第 66 行）。
+> 也就是说「注释掉一行」让一个必然栈溢出的函数长期存活了下来。
+
+修法：删掉本地 `isActive`，改为从 `../util` 导入真正的 `isActive(route, path)`。
+（`../util` 早就导出了正确实现，`SidebarGroup.vue` / `SidebarLink.vue` 用的都是它，
+**只有 `SidebarLinks.vue` 自己写了一个坏的**。）
+
+> 方法论教训：**静态检索证明不了「点了会动」**。若只做 grep + 编译校验，
+> 这次会得出「已修复」的结论并提交，而线上一点击配置菜单就是栈溢出。
+> 是「挂载真实组件 + 点击真实节点」这一步把它逼出来的。
+
+#### 8.11.6 固化为仓库测试（`docs/**/__tests__/`）
+
+入口 1 的行为已写成 7 条运行期用例：
+`docs/.vitepress/theme/__tests__/sidebar-collapse.test.ts`（配 `vitepress-mock.ts`）。
+
+接入方式（一处易踩的坑）：`vitest.config.ts` 原先 `include` 只有 `src/**`、
+`exclude` 里还明确排除了 `docs` —— **两处叠加会让文档站测试静默不跑**。
+已改为 `include` 显式收进 `docs/**/__tests__/*.test.*`，并从 `exclude` 移除 `docs`
+（`coverage.include` 仍只统计 `src/**`，不污染覆盖率口径）。
+
+**反向自检已做**（这一步不能省，否则无法区分「护栏有效」与「永远绿灯」）：
+把 `:open` 还原成旧表达式 `fixed || i === openGroupIndex || vsThemeVal.sidebarCollapseOpen`
+→ **正好 3 条用例失败**，其中就包括「全局展开时仍能单独收起某一个分组」这条原始缺陷；
+恢复修复后 7/7 通过。
+
+同时把 `ref(reactive(x))` 的语义、旧写法的对照组一并写进
+`.workbuddy/tmp/proof-vstheme-fix.mjs`（6 组断言，全过）。
+
+#### 8.11.7 本轮校验
+
+| 校验项 | 结果 |
+| --- | --- |
+| 实证脚本 `proof-vstheme-fix.mjs` | ✅ 6 组断言全过（含「旧写法不传播」的对照组） |
+| **运行期回归测试** `sidebar-collapse.test.ts` | ✅ 7/7 通过；**反向自检**（还原旧表达式）→ 3 条失败 ✅ |
+| 全量 `vitest run` | ✅ 4 文件 / 16 用例（原 3 文件 / 9 用例） |
+| `eslint`（`pnpm lint:check`，全仓） | ✅ exit=0 |
+| SFC 编译（`@vue/compiler-sfc`） | ✅ 5 个改动过的 SFC 全部 parse / template / script 通过 |
+| `docs:check` 五项 | ✅ 全过（81 个标签两条路径一致） |
+| 源码占位文案检索 | ✅ `docs/.vitepress/theme` 下仅剩 `Navbar.vue:10` 的站点状态标记一处 |
+| `build:site` + 三个产物护栏 | ✅ 见 §8.10.4 同款口径；基线已下调为 `暂未开发` 0 / `开发中` 1 |
+
+> **一处口径纠正**：此前把「`docs/` 不在 lint 范围」归因于 `.eslintignore`。
+> 实际 `.eslintignore` **并没有**列出 `docs/`；真正原因是 ESLint **默认忽略点目录**，
+> 而路径里含 `.vitepress`（实测报 `File ignored by default.`）。
+> 所以 `eslint . --ext ...` 全仓 exit=0 是可信的，文档站主题确实不在门禁内 ——
+> 这也解释了为什么那里的 5 个 `no-var` / `eqeqeq` 存量问题能长期存在。
+
+#### 8.11.8 仍待决策（不靠改代码能定的部分）
+
+- **入口 5**：`<f-tag type="success" palin>开发中</f-tag>` —— 保留须按发布状态改文案；
+  另 `palin` 是 `plain` 的拼写错误。
+- **入口 6**：`<span class="v-old">v3.x</span>` 是**纯静态文本**（无 `href`、无 `@click`）。
+  补 `href` 需要先知道 v3 文档站的真实地址，不能猜 —— 因此本轮不动。
+- **§8.10.2** 记录的 `codex.vue` CodePen / CodeSandbox 按钮实现是坏的（当前因无页面传参而不可见），
+  若要启用必须先修实现。
+
 

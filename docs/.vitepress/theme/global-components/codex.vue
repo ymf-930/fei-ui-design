@@ -174,7 +174,9 @@ const props = defineProps({
   },
 })
 const { vsTheme } = getCurrentInstance().appContext.config.globalProperties
-vsThemeVal.value = { ...vsTheme }
+// ⚠️ 共享同一个 reactive 对象，**不要**写成 `{ ...vsTheme }`：
+// 本文件用 watch 监听 openCode（配置面板「打开/关闭所有代码」），副本收不到写入
+vsThemeVal.value = vsTheme
 watch(
   () => vsThemeVal.value.openCode,
   val => {

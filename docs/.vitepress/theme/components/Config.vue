@@ -110,7 +110,6 @@
 </template>
 <script setup>
 import { onMounted, ref, getCurrentInstance, nextTick } from 'vue'
-import { Message } from 'fei-ui-design'
 
 const vsThemeVal = ref(null)
 
@@ -230,9 +229,8 @@ function ChangeColor(evt) {
 }
 
 function ChangeMenu() {
-  Message.info('暂未开发')
   vsThemeVal.value.sidebarCollapseOpen = !vsThemeVal.value.sidebarCollapseOpen
-  localStorage.sidebarCollapseOpen = !vsThemeVal.value.sidebarCollapseOpen
+  localStorage.sidebarCollapseOpen = vsThemeVal.value.sidebarCollapseOpen
 }
 
 function ChangeMobile() {
@@ -241,8 +239,10 @@ function ChangeMobile() {
 }
 
 function ChangeOpenCode() {
-  Message.info('开发中')
   vsThemeVal.value.openCode = !vsThemeVal.value.openCode
+  // codex.vue 的 watch 也会写一次，但它只在「当前页面存在示例面板」时才挂载；
+  // 这里补写一次，保证在无示例的页面上切换也能被记住
+  localStorage.openCode = vsThemeVal.value.openCode
 }
 
 const setTheme = forceTheme => {
@@ -333,9 +333,18 @@ function ChangeTheme(event) {
 // Vue.observable(this.$site.themeConfig)
 
 const { vsTheme } = getCurrentInstance().appContext.config.globalProperties
-vsThemeVal.value = { ...vsTheme }
+// ⚠️ 直接共享该 reactive 对象，**不要**写成 `{ ...vsTheme }`：
+// 展开运算符产出的是副本，本文件里的写入 SidebarLinks.vue 读不到，
+// 「展开/收起侧边栏子栏目」会表现为「点击无反应」。回归证明见 .workbuddy/tmp/proof-vstheme-fix.mjs
+vsThemeVal.value = vsTheme
 
 onMounted(() => {
+  // 恢复「子栏目展开/收起」偏好：此前只写不读，刷新后开关状态与实际界面不一致
+  const savedCollapseOpen = localStorage.getItem('sidebarCollapseOpen')
+  if (savedCollapseOpen !== null) {
+    vsThemeVal.value.sidebarCollapseOpen = savedCollapseOpen === 'true'
+  }
+
   const returnTheme = setTheme()
   vsThemeVal.value.themeDarken = returnTheme == 'dark'
   if (returnTheme === 'dark') {

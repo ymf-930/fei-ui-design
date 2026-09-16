@@ -17,9 +17,14 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
-    // 只收集组件测试，避免把构建产物与文档示例计入
-    include: ['src/**/*.{test,spec}.{ts,tsx,js,jsx}'],
-    exclude: ['node_modules', 'dist', 'es', 'lib', 'site', 'docs'],
+    // 只收集组件测试，避免把构建产物与文档示例计入。
+    // 文档站主题的测试单独放在 docs/**/__tests__/ 下，也必须在这里显式收进来
+    // （否则 docs/ 既不在 include 里、又被 exclude 排除，测试会静默不跑）。
+    include: [
+      'src/**/*.{test,spec}.{ts,tsx,js,jsx}',
+      'docs/**/__tests__/*.{test,spec}.{ts,tsx,js,jsx}'
+    ],
+    exclude: ['node_modules', 'dist', 'es', 'lib', 'site'],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'html', 'lcov'],

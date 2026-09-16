@@ -2,9 +2,15 @@
   <main ref="pageRef" class="page">
 
     <header ref="header" class="header-page">
-      <a class="back-link" @click="goBack">
+      <button
+        type="button"
+        class="back-link"
+        title="返回上一页"
+        aria-label="返回上一页"
+        @click="goBack"
+      >
         <i class="bx bx-left-arrow-alt"></i>
-      </a>
+      </button>
 
       <div class="header__content">
         <div ref="flex" class="flex-header">
@@ -165,7 +171,6 @@ import {computed, nextTick, onMounted, ref, watch} from "vue";
 import {useData, useRoute, useRouter} from "vitepress"
 import dayjs from "dayjs";
 import AsideNav from "./AsideNav.vue";
-import {Message} from 'fei-ui-design'
 
 const router = useRouter()
 
@@ -323,7 +328,14 @@ function handleUp() {
 }
 
 function goBack() {
-  Message.info('开发中')
+  // 只有站内确实存在上一条记录时才后退；直接打开某个链接（无站内历史）时后退会离开站点，
+  // 此时回首页。判定依据与 vue-router 一致：push 时会在 history.state 写入 back。
+  const hasPrevious = Boolean(window.history.state && window.history.state.back)
+  if (hasPrevious) {
+    router.go(-1)
+  } else {
+    router.push(site.value.base || '/')
+  }
 }
 
 function createEditLink(repo, docsRepo, docsDir, docsBranch, path) {
@@ -424,6 +436,11 @@ getVar(var)
   left 0px
   z-index 600
   margin 15px
+  // 元素是 <button>（<a> 无 href 时不可键盘聚焦），需清掉浏览器默认外观
+  background transparent
+  border 0px
+  color inherit
+  cursor pointer
   display block
   transition background .25s ease, box-shadow .25s ease, transform .25s ease
   border-radius 25px 10px 10px 10px

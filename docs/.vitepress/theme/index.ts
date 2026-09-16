@@ -1,3 +1,4 @@
+import { reactive } from "vue"
 import "./custom.styl"
 import 'boxicons/css/boxicons.min.css'
 import Layout from "./layouts/Layout.vue"
@@ -21,13 +22,18 @@ export default {
     app.use(FeiUI)
     app.component('demo-preview', ElementPlusContainer)
     app.component('card', card)
-    // 注册能够被应用内所有组件实例访问到的全局属性的对象
-    app.config.globalProperties.vsTheme = {
+    // 注册能够被应用内所有组件实例访问到的全局属性的对象。
+    // ⚠️ 必须是 reactive：各消费组件通过 `const vsThemeVal = ref(vsTheme)` 取用，
+    // 共享同一个代理。若写成普通对象、消费方再用 `{ ...vsTheme }` 取值，
+    // 展开运算符产出的是【副本】—— 一处写入其它组件读不到，
+    // 「展开/收起侧边栏子栏目」「打开/关闭所有代码」会表现为「点击无反应」。
+    // 回归证明：.workbuddy/tmp/proof-vstheme-fix.mjs
+    app.config.globalProperties.vsTheme = reactive({
       mobileActive: false,
       openCode: false,
       themeDarken: false,
       sidebarCollapseOpen: true,
-    }
+    })
     // app.component('codex', codex)
     // app is the Vue 3 app instance from createApp()
     // router is VitePress' custom router (see `lib/app/router.js`)
