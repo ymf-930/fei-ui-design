@@ -21,7 +21,12 @@ const path = require('path')
 
 const root = process.cwd()
 const docsDir = path.join(root, 'docs')
-const siteDir = path.join(root, 'site')
+// 产物目录可用 FEI_SITE_DIR 覆盖（相对仓库根）。
+// 用途：受限沙箱里 vite 的 emptyOutDir 清空 site/assets 会被「批量删除护栏」拦截，
+// 此时可 build 到隔离目录再让本脚本去校验，而不必改动默认行为。
+const siteDir = process.env.FEI_SITE_DIR
+  ? path.resolve(root, process.env.FEI_SITE_DIR)
+  : path.join(root, 'site')
 
 /** 组件示例里的占位链接：指向「假设的站点根」，不属于站点导航，无需修正 */
 const ALLOWLIST = new Set(['/'])

@@ -8,12 +8,11 @@ import { configProviderInjectionKey } from '../config-provider/src/context'
  * 并且在对应dom上增加  :theme-name="theme"
  */
 export default function useTheme() {
-  const { mergedThemeRef, mergedLocaleRef, mergedThemeNameRef } =
+  const { mergedThemeRef, mergedThemeNameRef } =
     inject(configProviderInjectionKey, null) || {}
 
   return {
     themeConfig: mergedThemeRef,
-    locale: mergedLocaleRef,
     themeName: mergedThemeNameRef
   }
 }

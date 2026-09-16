@@ -36,12 +36,6 @@ export default defineComponent({
     })
 
     provide(configProviderInjectionKey, {
-      // 语言环境包
-      mergedLocaleRef: computed(() => {
-        const { locale } = props
-        if (locale === null) return undefined
-        return locale === undefined ? FConfigProvider?.mergedLocaleRef.value : locale
-      }),
       mergedThemeRef,
       mergedThemeNameRef
     })

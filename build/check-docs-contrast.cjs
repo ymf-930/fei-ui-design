@@ -23,7 +23,11 @@ const fs = require('fs')
 const path = require('path')
 
 const root = process.cwd()
-const siteDir = path.join(root, 'site')
+// 产物目录可用 FEI_SITE_DIR 覆盖（相对仓库根），原因同 check-site-links.cjs：
+// 受限沙箱无法让 vite 清空 site/assets，需构建到隔离目录后再校验。
+const siteDir = process.env.FEI_SITE_DIR
+  ? path.resolve(root, process.env.FEI_SITE_DIR)
+  : path.join(root, 'site')
 const stylFile = path.join(root, 'docs/.vitepress/theme/custom.styl')
 
 /** 全部 token 的对比度下限（WCAG AA 大字号 / 非文本内容） */

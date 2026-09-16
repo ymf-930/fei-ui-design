@@ -110,3 +110,10 @@ jobs:
       # 但代码几乎不可读。docs:check 四件套都不看颜色，只能靠产物度量。
       - name: 校验代码块对比度
         run: pnpm run docs:check-contrast
+
+      # 覆盖「占位文案」盲区：主题里「先摆 UI、后接实现」的入口
+      # （点击后只弹一条「暂未开发」）不落在 Markdown 正文，
+      # 五件套与上面两个产物护栏都看不见，因此能被长期遗忘。
+      # 本步骤把占位文案冻结成基线，新增即失败（见 refactor-plan.md §8.10）。
+      - name: 校验占位文案基线
+        run: pnpm run docs:check-placeholders

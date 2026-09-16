@@ -77,19 +77,7 @@
         </li> -->
         <!--
                 <li class="theme-translate" title="Theme translate">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>
-
-                  <ul class="lang">
-                    <li
-                      v-for="(item, i) in lang[0].items"
-                      :key="i"
-                      v-show="item.link !== $page.path"
-                      >
-                      <router-link :to="item.link">
-                        {{ item.text }}
-                      </router-link>
-                    </li>
-                  </ul>
+                  ... 语言下拉（随国际化一起移除）
                 </li> -->
 
         <svg
@@ -109,27 +97,6 @@
       </ul>
     </button>
 
-    <button class="btn-lang theme-translate" @click="changeLang">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-        <path d="M0 0h24v24H0z" fill="none" />
-        <path
-          d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"
-        />
-      </svg>
-
-      <!--      <ul class="lang">
-        <li
-            v-for="(item, i) in lang[0].items"
-            :key="i"
-            v-show="item.link !== page.path"
-        >
-          <router-link :to="item.link">
-            {{ item.text }}
-          </router-link>
-        </li>
-      </ul>-->
-    </button>
-
     <button
       @click="ChangeTheme"
       :class="{ active: vsThemeVal.themeDarken }"
@@ -146,44 +113,12 @@
   </div>
 </template>
 <script setup>
-import { computed, onMounted, ref, getCurrentInstance, nextTick } from 'vue'
-import { useData } from 'vitepress'
+import { onMounted, ref, getCurrentInstance, nextTick } from 'vue'
 import { Message } from 'fei-ui-design'
 
 const vsThemeVal = ref(null)
 
 const sideBarOpen = ref(true)
-const lang = computed(() => {
-  const { site, page, theme } = useData()
-  const { locales } = site.value
-  if (locales.value && Object.keys(locales.value).length > 1) {
-    const currentLink = page.value.path
-    const themeLocales = theme.value.locales || {}
-    const languageDropdown = {
-      text: 'Languages',
-      items: Object.keys(locales.value).map(path => {
-        const locale = locales.value[path]
-        const text = (themeLocales[path] && themeLocales[path].label) || locale.text
-        let link
-        // Stay on the current page
-        if (locale.lang === lang.value) {
-          link = currentLink
-        }
-        /*else {
-          // Try to stay on the same page
-          link = currentLink.replace(this.$localeConfig.path, path)
-          // fallback to homepage
-          if (!routes.some(route => route.path === link)) {
-            link = path
-          }
-        }*/
-        return { text, link }
-      }),
-    }
-    return [languageDropdown]
-  }
-  return []
-})
 
 function reloadConfig() {
   const sidebar = document.querySelector('.theme-container > .sidebar')
@@ -394,10 +329,6 @@ function ChangeTheme(event) {
   }, 500)
 }
 
-function changeLang() {
-  Message.info({ message: '暂未开发！', zIndex: 3000 })
-}
-
 // Vue.prototype.$mobile = { active: (localStorage.mobile != 'true') || false }
 // Vue.prototype.$menu = { active: (localStorage.menu != 'true') || false }
 // Vue.observable(this.$site.sidebarCollapseOpen)
@@ -500,58 +431,6 @@ getVar(var)
       transition transform .25s ease, font-size .25s ease, opacity .25s ease !important
       font-size 1rem !important
       z-index -1
-
-.darken
-  .theme-translate
-    .lang
-      li
-        a
-          box-shadow 0px 8px 25px 0px rgba(0, 0, 0, .6)
-
-.theme-translate
-  position relative
-  z-index 100
-
-  &:hover
-    .lang
-      opacity 1
-      visibility visible
-      transform translate(0, -54px)
-
-  svg
-    width 18px
-    fill getVar(theme-color)
-
-  .lang
-    transition all .25s ease
-    position absolute
-    top 0px
-    left 0px
-    transform translate(0, -90%)
-    padding 0px
-    opacity 0
-    visibility hidden
-
-    li
-      text-align center
-      font-weight bold
-      padding 0px 0px !important
-      display block
-
-      a
-        padding 7px 15px
-        font-weight bold
-        background getVar(theme-layout)
-        border-radius 20px
-        transition all .25s ease
-        margin-bottom 10px
-        font-size .75rem
-        display block
-        box-shadow 0px 8px 20px 0px rgba(0, 0, 0, .08)
-
-        &:hover
-          box-shadow 0px 0px 0px 0px rgba(0, 0, 0, .08) !important
-          transform translate(0, 3px)
 
 .theme-color-layout
   position relative
