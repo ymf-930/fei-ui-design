@@ -31,10 +31,10 @@
   mix-blend-mode: normal;
 }
 
-// ── 层级：谁在上由方向决定，观感是一次「去程铺开、回程收回」 ───────────────
+// ── 层级：谁在上由方向决定，观感是一次「去程收回、回程铺开」 ───────────────
 //
-// 去暗色（默认，无方向类）—— 新图层在上：
-//   暗色圆从点击处（左下角的开关）扩散铺满整页       观感「左下 → 右上」
+// 回浅色（默认，无方向类）—— 新图层在上：
+//   浅色圆从点击处（左下角的开关）扩散铺满整页       观感「左下 → 右上」
 ::view-transition-old(root) {
   z-index: 1;
 }
@@ -43,14 +43,14 @@
   z-index: 2;
 }
 
-// 回浅色（Config.vue 在过渡前给根元素加上这个类）—— 旧图层（暗）在上：
-//   同圆心、同半径的圆**反向收缩**，暗色退回到点击处  观感「右上 → 左下」
-//   由上层（暗）被裁掉来露出下层（浅），所以收缩的是 old 而不是 new。
-html.vs-wipe-retract::view-transition-old(root) {
+// 去暗色（Config.vue 在过渡前给根元素加上这个类）—— 旧图层（浅）在上：
+//   同圆心、同半径的圆**反向收缩**，浅色收回到点击处  观感「右上 → 左下」
+//   由上层（浅）被裁掉来露出下层（暗），所以收缩的是 old 而不是 new。
+html.vs-wipe-old-top::view-transition-old(root) {
   z-index: 2;
 }
 
-html.vs-wipe-retract::view-transition-new(root) {
+html.vs-wipe-old-top::view-transition-new(root) {
   z-index: 1;
 }
 
@@ -59,7 +59,9 @@ html.vs-wipe-retract::view-transition-new(root) {
 //    所以 `body.<类>::view-transition-*(root)` 这类选择器永远匹配不到 ——
 //    原实现在 Layout.vue 里写的 `.darken::view-transition-old/new` 换序
 //    除了被 scoped 污染，还叠了这一个错，是**双重失效**。
-//    改类名时注意与 Config.vue 的 THEME_WIPE_RETRACT_CLASS 保持同步。
+//    类名按**机制**取（old 在上），不按明暗方向取：明暗方向是可调的产品决策，
+//    机制不是 —— 按方向取名的话，下次调整方向就会得到一个名不副实的类名。
+//    改类名时注意与 Config.vue 的 THEME_WIPE_OLD_TOP_CLASS 保持同步。
 
 // 说明：UA 在 ::view-transition-group(root) 上还会跑一条
 // `-ua-view-transition-group-anim-root`（250ms），用于对齐新旧快照的几何。

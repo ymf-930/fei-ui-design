@@ -251,11 +251,13 @@ const THEME_WIPE_DURATION = 500
 // 全站交互动效统一是 ease / ease-out，旧实现这里是唯一一处 ease-in。
 // 揭示式动画「越接近结束越快」观感突兀，故对齐为对称的 ease-in-out。
 const THEME_WIPE_EASING = 'ease-in-out'
-// 「回浅色」这一程要把层级反过来（旧图层在上、反向收缩），该类名与
-// theme/styles/view-transition.styl 里的 `html.vs-wipe-retract::view-transition-*(root)`
-// 一一对应；改名要两边一起改。注意必须挂在 documentElement 上 ——
-// 伪元素树挂在 <html> 下、与 <body> 是兄弟，挂 body 匹配不到。
-const THEME_WIPE_RETRACT_CLASS = 'vs-wipe-retract'
+// 需要「旧图层压在新图层之上」的那一程要加这个类 —— 目前是**去暗色**：那里收缩的是
+// 浅色快照（old），必须让 old 在上层才看得见。类名与 theme/styles/view-transition.styl
+// 里的 `html.vs-wipe-old-top::view-transition-*(root)` 一一对应，改名要两边一起改。
+// 名字按**机制**（old 在上）而不是按明暗方向取：明暗方向是可调的产品决策，机制不是 ——
+// 按方向取名的话，下次调整方向就会得到一个名不副实的常量。
+// 注意必须挂在 documentElement 上：伪元素树挂在 <html> 下、与 <body> 是兄弟，挂 body 匹配不到。
+const THEME_WIPE_OLD_TOP_CLASS = 'vs-wipe-old-top'
 // 连续快速点开关时，前一次过渡的 finished 会晚于后一次的启动 ——
 // 用序号让「旧过渡」的收尾动作作废，避免它把新过渡的方向类/transition 开关提前撤掉。
 let wipeSeq = 0
@@ -325,12 +327,12 @@ function ChangeTheme(event) {
 
   // 两个方向共用一个「以点击处为圆心、半径 0↔endRadius」的圆，但作用层与层级相反，
   // 于是观感是一次往复：
-  //   去暗色：新（暗）层在上，圆由小到大铺满        —— 左下 → 右上
-  //   回浅色：旧（暗）层在上，同一个圆由大到小收回  —— 右上 → 左下
+  //   去暗色：旧（浅）层在上，同一个圆由大到小收回  —— 右上 → 左下
+  //   回浅色：新（浅）层在上，圆由小到大铺满        —— 左下 → 右上
   // 层级必须在过渡开始前就位（见 styles/view-transition.styl），
   // 否则第一帧的上下关系是错的。
   const root = document.documentElement
-  if (!nextIsDark) root.classList.add(THEME_WIPE_RETRACT_CLASS)
+  if (nextIsDark) root.classList.add(THEME_WIPE_OLD_TOP_CLASS)
   const seq = ++wipeSeq
 
   const transition = document.startViewTransition(() => {
@@ -342,13 +344,15 @@ function ChangeTheme(event) {
     .then(() => {
       const circle = [`circle(0px at ${x}px ${y}px)`, `circle(${endRadius}px at ${x}px ${y}px)`]
       document.documentElement.animate(
-        { clipPath: nextIsDark ? circle : [...circle].reverse() },
+        // 去暗色是「铺满 → 收回」（裁掉上层的浅色快照），回浅色是「0 → 铺满」
+        { clipPath: nextIsDark ? [...circle].reverse() : circle },
         {
           duration: THEME_WIPE_DURATION,
           easing: THEME_WIPE_EASING,
+          // 收缩谁，谁就必须在上层；层级由 THEME_WIPE_OLD_TOP_CLASS 在过渡开始前定好
           pseudoElement: nextIsDark
-            ? '::view-transition-new(root)'
-            : '::view-transition-old(root)',
+            ? '::view-transition-old(root)'
+            : '::view-transition-new(root)',
         },
       )
     })
@@ -358,7 +362,7 @@ function ChangeTheme(event) {
   // 二是方向类必须活到过渡结束，否则回程中途层级会被还原
   transition.finished.finally(() => {
     if (seq !== wipeSeq) return // 已被更新的一次切换接管，收尾交给它
-    root.classList.remove(THEME_WIPE_RETRACT_CLASS)
+    root.classList.remove(THEME_WIPE_OLD_TOP_CLASS)
     releaseTransition()
   })
 }
