@@ -1370,3 +1370,139 @@ function isActive(page) {
 注明「没有真实地址时不要加回」。
 
 
+## 九、文档站正文排版统一（2026-09-16）
+
+**需求口径**：保持现有主题风格（`--vs-*` token、Poppins、卡片圆角、深色代码块）
+不变，把**组件在线使用说明文档**的正文排版做一次收敛，让字号成阶梯、间距成节奏、
+正文/列表/代码块/表格共用同一条左右基准线。**Markdown 内容与标题层级一律不动。**
+
+### 9.1 复现「不专业」的六个成因
+
+改造前先定位，避免只调数值：
+
+| # | 成因 | 证据 |
+| --- | --- | --- |
+| 1 | **同一批元素被四处重复定义、互相抵消** | 元素级规则分散在 `theme/custom.styl`、`theme/index.css`、`global-components/card.vue`、`global-components/codex.vue` 四处，后写的覆盖先写的 |
+| 2 | **卡片内内容额外内缩** | `card.vue` 给 `.text` 里的 `h2/p/li` 加 `padding 15px 20px`，导致「导语段落 ↔ 卡片内标题」左边缘差 20px |
+| 3 | **字号阶梯断裂** | VitePress 默认主题只声明了 `.vp-doc h1~h3`；`h4~h6` 落到浏览器默认的 `1.17em/.83em/.67em`，**h6 ≈10px，比正文（15px）还小** |
+| 4 | **表格是满格描边** | 原规则 `border-collapse:collapse` + 逐格 `1px solid #dfe2e5`，无圆角、无斑马纹；且 `color: var(--vs-theme-code)` |
+| 5 | **引用块对比度不达标** | 正文色 `#999` 在页面底 `#f4f7f8` 上约 **2.6:1**，低于 WCAG AA 的 4.5:1 |
+| 6 | **正文链接与正文同色** | 站点外壳有一条 `a { color: var(--vs-theme-color) !important }`（`custom.styl`），把 `.vp-doc a` 的主色**顶掉**，链接只剩 `font-weight:500` 可辨 |
+
+### 9.2 做法：单层收敛 + token 化
+
+新增 **`docs/.vitepress/theme/styles/doc-typography.styl`** 作为唯一权威来源：
+
+- 只作用于 `.vp-doc`，首页 `.home` / 导航 / 侧边栏 / 页脚不受影响；
+- 所有数值走 `--fd-*` token（字号阶梯 28/22/18/16/15/14、行高、8pt 间距、描边圆角、
+  两档文字色），规则里不写裸数字；
+- 原来四处重复的元素规则**全部删除**，避免再次互相抵消。
+
+**引入位置是关键**（踩过才写下来）：`doc-typography.styl` 由 `theme/index.css`
+顶部 `@import` 引入，而 `index.css` 在 `theme/index.ts` 里排在
+`import DefaultTheme from "vitepress/theme"` **之后**。这样同优先级规则才是本层胜出。
+产物已验证：
+
+```
+195852:.vp-doc h2{margin:48px 0 16px;border-top:1px solid var(--vp-c-divider);padding-top:24px;…;font-size:24px}   ← VitePress 默认
+307014:.vp-doc h2{font-size:var(--fd-fs-h2);letter-spacing:-.01em;margin:var(--fd-sp-7) 0 var(--fd-sp-3)}          ← 本层
+```
+
+**两条「必须排除 demo 区」的规则**（`:not(.example *)`）—— demo 渲染的是组件实体：
+`<f-table>` 就是 `<table>`（全站 74 个）；面包屑 / 分割线 / 下拉菜单 / 抽屉 / 菜单 /
+弹出信息的示例里是**真实的 `<a>`**。文档表格样式与文档链接色都不能刷到它们身上。
+
+**一处有意为之的视觉变更**：VitePress 默认给 `h2` 加了
+`border-top: 1px solid var(--vp-c-divider)` + `padding-top: 24px`。本层统一
+`border: 0; padding: 0`，h2 不再有顶部分隔线，层级改由间距表达 —— 因为组件文档的每个
+小节都包在 `<card>` 里，卡片边界本身已经很清楚地分段，再叠一条分隔线会在卡片顶部
+形成「双线」。**如需恢复，只需在 `doc-typography.styl` 的 `.vp-doc h2` 里补回
+`border-top` 与 `padding-top`。**
+
+### 9.3 顺带修掉的「看着生效、其实被浏览器丢弃」的声明
+
+这一轮最值钱的产出是把这类**静默失效**的 CSS 清掉。成因：VitePress 1.x 删除了
+VuePress 0.x 的整套 Stylus 变量（`$borderColor`、`$textColor`、`$accentColor`、
+`$MQNarrow`、`$MQMobile`、`$MQMobileNarrow`、`$navbarHeight`、`$codeLang`、
+`$lineNumbersWrapperWidth`、`$arrowBgColor`…）。**Stylus 对未定义变量不报错，而是把
+变量名原样输出**，产物里就是 `border-bottom:1px solid $borderColor` 这类非法值，
+浏览器整条丢弃；构建全程无任何警告。
+
+改动前产物里残留的非法串（`site/assets/style.*.css`）：`$borderColor`、
+`$MQNarrow`、`$MQMobileNarrow`、`$lineNumbersWrapperWidth`、`language-$codeLang`。
+
+本轮清除的位置：
+
+| 文件 | 原声明 | 处理 |
+| --- | --- | --- |
+| `styles/code.styl` | `for lang in $codeLang` 循环、`$lineNumbersWrapperWidth`、`.line-numbers-mode` / `.highlight-lines` / `.tag` | 整块删除（VitePress 1.x 已无这些结构，语言角标它自己输出 `span.lang`） |
+| `styles/wrapper.styl` | `@media (max-width: $MQNarrow)` / `$MQMobileNarrow` | 断点改**字面值** `1240px` / `560px`，窄屏内边距这才真正生效（该文件由 `components/Page.vue` `@require`） |
+| `styles/theme.styl` | `h2 { border-bottom 1px solid $borderColor }`、`hr { border-top 1px solid $borderColor }` | 删除并注明（该文件由 `layouts/404.vue` 引入，作用域是**全站**） |
+| `custom.styl` | `h2 { border-bottom … }`、`h1/h2/h3` 固定字号、`h1~h6 { line-height 1.25 !important }`、`a.header-anchor { float left; margin-left -0.87em }` | 删除；`!important` 行高会顶掉新 token，`float` 锚点在标题不再内缩后会被卡片 `overflow` 裁掉 |
+| `codex.vue` | `.con-code div[class*="language-"] …`、`.slots div …` | 删除 —— **`<style scoped>` 管不到插槽内容**（插槽 DOM 带使用方的 scope id） |
+
+### 9.4 尚未处理：外壳里仍有约 49 处未定义 Stylus 变量（P3）
+
+**为什么没一起改**：这些都落在站点外壳（导航 / 侧边栏 / 首页 / 搜索框），
+不在本次需求范围内；而且**补齐变量 = 激活一批从未生效过的规则**，属于「改行为」而非
+「调样式」，需要人眼在窄屏下过一遍才能确认。此处先建档，不改。
+
+根因（**关键**）：每个 SFC 的 `<style lang="stylus">` 是**独立的编译单元**，
+`styles/mixins.styl` 里的 `getVar()` / `getColor()` 不是全局注入的 ——
+**每个 SFC 都自己抄了一份**（`SearchBox.vue` 甚至自己定义了 `$borderColor`）。
+所以修法只能是「逐文件补本地 `$` 定义」，没有一处改全局的办法。
+
+| 文件 | 处数 | 变量 |
+| --- | --- | --- |
+| `components/AlgoliaSearchBox.vue` | 9 | `$borderColor` `$accentColor` `$textColor` `$MQMobile` |
+| `components/SearchBox.vue` | 4 | `$MQNarrow` `$MQMobile`（`$borderColor` 该文件自备，不算） |
+| `components/SidebarGroup.vue` | 3 | `$accentColor`（侧边栏分组 active/hover 高亮） |
+| `components/Sidebar.vue` | 3 | `$navbarHeight` `$textColor` `$borderColor` |
+| `components/AsideNav.vue` | 3 | `$navbarHeight` `$textColor` `$borderColor` |
+| `components/DropdownLink.vue` | 3 | `$MQMobile` `$arrowBgColor` |
+| `components/Page.vue` | 2 | `$accentColor`（返回顶部按钮 hover）、`$MQMobile` |
+| `components/Navbar.vue` | 2 | `$navbarHeight` |
+| `components/NavLinks.vue` / `NavLinks2.vue` | 各 2 | `$MQMobile` |
+| `components/Home.vue` | 2 | `$MQMobile` `$MQMobileNarrow` |
+| `global-components/Badge.vue` | 1 | `$accentColor` |
+| `global-components/codex.vue` | 1 | `$accentColor`（active 标签页；该处 `i { color:#fff !important }` 已把图标刷白，实为无效声明） |
+| `components/api.vue` | 1 | `$accentColor`（**该组件未被任何页面引用，属死组件**） |
+| `styles/arrow.styl` / `mobile.styl` | 4 / 3 | 两者都 `@require './config'`，而 **`config.styl` 不存在**；且无任何文件引入它们 |
+| `styles/palette.styl` / `custom-blocks.styl` | 2 / 2 | 定义了变量但无人引入，属**孤儿文件** |
+
+**严重度判断（已取证，故定 P3 而非 P1）**：主题内另有 **68 处字面断点**
+（`@media (max-width: 719px/1000px/1200px…`），窄屏布局由它们承担；
+失效的 `$MQ*` 只有 14 处，且 `a.sidebar-link.active/:hover` 的高亮、
+`:after` 指示条用的是字面值，**侧边栏「当前页」标识是正常的**。
+所以这批残留是可读性层面的小瑕疵，不是布局缺陷。
+
+### 9.5 本轮校验
+
+| 校验项 | 结果 |
+| --- | --- |
+| `build:site` | ✅ `build complete in 64.49s`（两次重建均 exit=0） |
+| 产物含 `--fd-*` token / `.vp-doc` 新规则 | ✅ 逐条 grep 命中；`--fd-fs-h1`、`--fd-sp-5`、`--fd-border`、`--fd-lh-body` 等值正确 |
+| 规则优先级 | ✅ 本层 `.vp-doc h2` 字节偏移 307014 > VitePress 默认 195852 |
+| `:not(.example *)` 保护 | ✅ 表格 8 条 + 链接 2 条均在产物中 |
+| 非法串残留 | ✅ `language-$codeLang`、`$lineNumbersWrapperWidth` 已归零（`$borderColor`/`$MQ*` 的残余来自 §9.4，已建档） |
+| `docs:check` 五项 | ✅ 全过（78 条链接 0 死链 / 81 个标签两条路径一致 / 格式 0 项） |
+| `docs:check-placeholders` | ✅ 未超基线 |
+| `docs:check-contrast` | ✅ 代码块底色与着色主题配套、全部 token 对比度达标 |
+| `docs:check-site`（产物资检） | ✅ 74 个源页面 / 75 个产物 html，站内链接全命中 |
+| `vitest run` | ✅ 4 文件 / 16 用例全过 |
+| `eslint`（全仓） | ✅ exit=0 |
+
+> **口径提醒（重复记一次）**：`vitepress build` 会清空 `outDir`（此处为 `../site`），
+> 在受限沙箱下「批量删除」会被拦截。做法是先把 `site` 与 `docs/.vitepress/.temp`
+> 移到 `.workbuddy/tmp/stale/` 再构建，不要试图给 `clean` 开白名单。
+
+### 9.6 后续建议
+
+1. **P3·外壳 Stylus 变量**：按 §9.4 的表逐文件补本地变量，改完必须在
+   ≤719px / ≤1000px / ≤1200px 三档下过一遍（激活规则会改布局）。
+2. **P2·可考虑加护栏**：产物 CSS 里出现 `$[A-Za-z_]` 一定是死代码，天然无误报。
+   但当前 §9.4 尚有 49 处存量，直接做成阻断项会红 —— 需要先清理，或按文件建基线。
+3. **P2·`api.vue` 是死组件**（无引用、无 md 使用 `con-api`），可整体删除，
+   与 §8.10 的占位清理同批处理。
+
+

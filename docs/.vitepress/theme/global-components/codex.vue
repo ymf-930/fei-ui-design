@@ -323,19 +323,9 @@ getVar(var)
   &:hover
     opacity .4
 
-.slot-all
-  > div
-    &:nth-last-child(2)
-      pre
-        margin-bottom 0px
-
-    &:last-child
-      div[class*="language-"]
-        border-radius 0px 0px 20px 20px
-
-        pre
-          margin-bottom 0px !important
-
+// 面板内的代码块由 doc-typography.styl 贴平（`.vp-doc .con-code …`）。
+// 历史上这里写过 `.slot-all > div:last-child div[class*="language-"] { border-radius: … }`
+// 与 `.slots div pre { width: 100% }`，但插槽内容不带本组件的 scope id，两条都不生效，已删。
 .con-codes
   position relative
   width 100%
@@ -347,29 +337,18 @@ getVar(var)
   top 0px
   left 0px
 
-  div
-    width 100%
-
-    pre
-      width 100%
-
-  > div
-    &:last-child
-      div[class*="language-"]
-        border-radius 0px 0px 20px 20px
-
 .ul-codes
   position relative
   display flex
   align-items center
   justify-content center
-  padding 0px 20px
+  padding 0px var(--fd-sp-5)
   margin 0px
 
   li
     list-style none
-    padding 10px
-    font-size .75rem
+    padding var(--fd-sp-3) var(--fd-sp-3)
+    font-size var(--fd-fs-xs)
     opacity .4
     transition all .25s ease
     cursor pointer
@@ -397,11 +376,18 @@ getVar(var)
       &:after
         width 100%
 
+/*
+ * ⚠️ 本组件的 `<style scoped>` **管不到插槽内容**。
+ * 模板里 `<slot name="template|script|style">` 的 DOM 由使用方（Markdown 页面）
+ * 编译，带的是使用方的 scope id，因此 `.con-code div[class*="language-"]`、
+ * `.slots div`、`.slots div pre` 这类写到插槽元素上的规则**永远不匹配**（历史遗留死代码，已删）。
+ * 深色代码面板内部（贴平、去圆角、内边距、字号行高）统一由
+ * styles/doc-typography.styl 的 `.vp-doc .con-code …` 负责。
+ */
 .code
   background getVar(theme-layout)
   z-index 300
   position relative
-  padding-bottom 10px
   transition all .25s ease
 
 .input-transparent
@@ -411,19 +397,14 @@ getVar(var)
   bottom 0px
   right 0px
 
+// 深色代码面板：通栏贴齐内容边，四角由 .card 的 overflow 裁剪
 .con-code
-  display: block;
-  transition: all .25s ease;
+  display: block
+  transition: all .25s ease
   background getVar(theme-code2)
-  border-radius 20px
-  width calc(100% - 20px)
-  margin 0px 10px
-
-  div[class*="language-"]
-    border-radius 0px
-
-  pre
-    margin-top 0px !important
+  border-radius 0
+  width 100%
+  margin 0px
 
 .header-codex
   width 100%
@@ -438,9 +419,12 @@ getVar(var)
     padding 0px
     justify-content center
     width 100%
-    padding 0px 4px
+    padding-left 4px
+    padding-right 4px
     align-items: stretch
-    padding-top 10px
+    // 工具条上下留白：代码面板展开时它同时充当「工具条 ↔ 深色面板」的分隔
+    padding-top var(--fd-sp-3)
+    padding-bottom var(--fd-sp-3)
 
     li
       list-style none

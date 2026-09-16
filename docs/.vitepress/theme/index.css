@@ -1,161 +1,50 @@
 @import './styles/grid.css';
 @import './styles/code.styl';
+@import './styles/doc-typography.styl';
 
 body {
   width: unset;
 }
 
-.vp-doc {
-  color: var(--vs-theme-color);
-
-  li + li {
-    margin-top: 0;
-  }
-
-  p {
-    line-height: 1.6;
-  }
-
-  h1 {
-    color: var(--vs-theme-color);
-    font-weight: 600;
-  }
-
-  h2 {
-    margin: 16px 0 16px;
-    border-top: none;
-    color: var(--vs-theme-color);
-    font-weight: 600;
-  }
-
-  h3 {
-    margin: 16px 0 16px;
-    border-top: none;
-    font-weight: 500;
-  }
-
-  a {
-    color: var(--fei-color-primary);
-  }
-
-  a,
-  a:hover {
-    text-decoration: none;
-  }
-
-  table {
-    display: table;
-    margin: 0;
-    border-collapse: collapse;
-    border-spacing: 0;
-    width: 100%;
-    color: var(--vs-theme-code);
-    overflow-x: hidden;
-  }
-
-  :not(pre) > code {
-    border-radius: 4px;
-    padding: 3px 6px;
-    color: var(--vs-theme-color);
-    transition:
-      color 0.5s,
-      background-color 0.5s;
-  }
-
-  [class*='language-'] pre {
-    padding: 0;
-    background: var(--vs-theme-code2);
-    code {
-      padding: 16px 20px;
-    }
-  }
-
-  /* [class*='language-'] code .highlighted {
-    background-color: transparent;
-  } */
-
-  [class*='language-'] > span.lang {
-    color: rgba(255, 255, 255, 0.4);
-    top: 0.8em;
-    right: 1.2em;
-  }
-
-  [class*='language-'] > button.copy {
-    display: none;
-  }
-
-  [class*='language-']:hover > button.copy + span.lang,
-  [class*='language-'] > button.copy:focus + span.lang {
-    opacity: 1;
-  }
-
-  div[class*='language-'] {
-    background-color: transparent;
-    margin: 0;
-  }
-
-  .header-anchor {
-    position: unset;
-  }
-
-  .fei-tag.is-dot {
-    color: var(--vs-theme-color) !important;
-  }
-  .fei-radio-group-capsule .fei-radio {
-    color: var(--vs-theme-code);
-  }
-
-  .fei-form-item__label {
-    color: var(--vs-theme-color);
-  }
-
-  .fei-tree-title {
-    color: var(--vs-theme-color);
-    &:hover {
-      color: var(--vs-theme-bg);
-    }
-  }
-  .fei-table-cell {
-    padding: 0;
-  }
-  .fei-desc__body table tr{
-    border: 0;
-  }
-  .fei-timeline-item{
-    width: 100%;
-  }
-  /* .fei-input{
-    background-color: var(--vs-theme-bg);
-  } */
+/*
+ * 文档站里「组件库自身」的适配。
+ *
+ * 正文排版（标题阶梯 / 段落 / 列表 / 代码块 / 表格 / 引用 / 锚点）统一收敛在
+ * styles/doc-typography.styl，已由本文件顶部的 @import 引入 —— 位置必须在
+ * `vitepress/theme` 默认样式之后，否则同优先级规则会被默认主题覆盖。
+ * 这里只保留一处必要例外：文档站主题是浅色，而组件库若干组件默认按自身主题取色，
+ * 在文档页面里需要就地改成站点文字色，否则会出现浅底浅字。
+ *
+ * 选择器一律写平铺形式（不用 CSS 嵌套），避免依赖压缩器的降级能力。
+ */
+.vp-doc .fei-tag.is-dot {
+  color: var(--vs-theme-color) !important;
 }
 
-/* .vitepress-demo-preview__element-plus__container {
-  background-color: #fff;
-} */
+.vp-doc .fei-radio-group-capsule .fei-radio {
+  color: var(--vs-theme-code);
+}
 
-/* .vitepress-demo-preview-preview {
-  th,
-  td {
-    border: none;
-    margin: 0;
-    padding: 0;
-  }
+.vp-doc .fei-form-item__label {
+  color: var(--vs-theme-color);
+}
 
-  ul,
-  ol {
-    padding-left: 0;
-    margin: 0;
-  }
+.vp-doc .fei-tree-title {
+  color: var(--vs-theme-color);
+}
 
-  li + li {
-   margin: 0;
-  }
+.vp-doc .fei-tree-title:hover {
+  color: var(--vs-theme-bg);
+}
 
-  tr {
-    border-top: none;
-  }
+.vp-doc .fei-table-cell {
+  padding: 0;
+}
 
-  td {
-    font-size: 14px;
-  }
-} */
+.vp-doc .fei-desc__body table tr {
+  border: 0;
+}
+
+.vp-doc .fei-timeline-item {
+  width: 100%;
+}

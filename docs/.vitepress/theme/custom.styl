@@ -299,92 +299,38 @@ p a code
   font-weight 400
   color getVar(theme-color)
 
-kbd
-  background #eee
-  border solid 0.15rem #ddd
-  border-bottom solid 0.25rem #ddd
-  border-radius 0.15rem
-  padding 0 0.15em
-
-blockquote
-  font-size .9rem
-  color #999
-  border-left .5rem solid #dfe2e5
-  margin 0.5rem 0
-  padding .25rem 0 .25rem 1rem
-
-  & > p
-    margin 0
-
-ul, ol
-  padding-left 1.2em
+// ── 正文排版 ────────────────────────────────────────────────────────────────
+// 标题阶梯、段落、列表、代码块、表格、引用的**元素级规则**已统一收敛到
+// styles/doc-typography.styl：那里只作用于 `.vp-doc`，选择器优先级也足以压过
+// VitePress 默认主题与组件库 reset，因此这里不再重复定义，避免两处规则互相抵消。
+//
+// 顺带清掉一批「看着生效、其实被浏览器丢弃」的声明：
+//   h2 { border-bottom 1px solid $borderColor } / hr { border-top 1px solid $borderColor }
+//     —— `$borderColor` 在本项目里**从未定义**（VitePress 1.x 已移除这批 Stylus 变量），
+//         Stylus 不报错、原样输出，浏览器按非法值丢弃。所以 h2 从来没有下划线，
+//        hr 也从来没有线（只剩 `border 0`）。
+//   h1/h2/h3 { font-size 2.2rem / 1.5rem / 1.35rem }
+//     —— 与 VitePress 的 `.vp-doc h1~h3` 冲突，且 h2 1.5rem 与 h3 1.35rem 只差 1.11 倍，
+//        层级挤在一起。新阶梯见 doc-typography.styl。
+//   h1~h6 { line-height 1.25 !important }
+//     —— `!important` 会顶掉新的行高 token，改为普通声明。
+//   a.header-anchor { float left; margin-left -0.87em }
+//     —— 正文改为不再内缩后，该负偏移会落到卡片 overflow 裁剪区之外，
+//        锚点 hover 时会整体消失；新写法（跟在标题文字之后）见 doc-typography.styl。
 
 strong
   font-weight 600
 
 h1, h2, h3, h4, h5, h6
   font-weight 600
-  line-height 1.25 !important
-  //.content:not(.custom) > &
-  //  margin-top (0.5rem - $navbarHeight)
-  //  padding-top ($navbarHeight + 1rem)
-  //  margin-bottom 0
-  //  &:first-child
-  //    margin-top -1.5rem
-  //    margin-bottom 1rem
-  //    + p, + pre, + .custom-block
-  //      margin-top 2rem
+  line-height 1.25
 
-  &:hover .header-anchor
-    opacity: 1
-
-h1
-  font-size 2.2rem
-
-h2
-  font-size 1.5rem
-  padding-bottom .3rem
-  border-bottom 1px solid $borderColor
-  font-weight: 600
-
-h3
-  font-size 1.35rem
-
-a.header-anchor
-  font-size 0.85em
-  float left
-  margin-left -0.87em
-  padding-right 0.23em
-  margin-top 0.125em
-  opacity 0
-
-  &:hover
-    text-decoration none
-
-code, kbd, .line-number
-  font-family source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace
-
-p, ul, ol
-  line-height 1.7
-
-hr
-  border 0
-  border-top 1px solid $borderColor
-
-table
-  border-collapse collapse
-  margin 1rem 0
-  overflow-x: auto
-
-tr
-  border-top 1px solid #dfe2e5
-
-  &:nth-child(2n)
-    background-color transparent
-
-th, td
-  border 1px solid #dfe2e5
-  padding .6em 1em
+kbd
+  background #eee
+  border solid 0.15rem #ddd
+  border-bottom solid 0.25rem #ddd
+  border-radius 0.15rem
+  padding 0 0.15em
 
 .theme-container
   &.sidebar-open

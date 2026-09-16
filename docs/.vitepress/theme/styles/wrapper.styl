@@ -1,9 +1,17 @@
+// 内容列容器：限定正文最大宽度，并在窄屏逐级收紧内边距。
+//
+// ⚠️ 断点必须写字面值，不要引用 $MQNarrow / $MQMobileNarrow。
+// 这两个是 VuePress 0.x 的 Stylus 变量，VitePress 1.x 已删除。
+// Stylus 对未定义变量不会报错，而是把变量名原样输出，产物里就留下
+// `@media (max-width: $MQNarrow)` 这种非法 CSS，被浏览器整条丢弃 —— 表现为
+// 窄屏内边距完全失效，且没有任何构建报错。同理的还有 $borderColor、
+// $textColor、$accentColor、$codeLang、$lineNumbersWrapperWidth 等。
+// 断点取值与 VitePress 默认主题保持一致：1240px / 560px。
 $wrapper
   max-width 1000px
   margin 0 auto
-  padding 2rem 2.5rem
-  @media (max-width: $MQNarrow)
-    padding 2rem
-  @media (max-width: $MQMobileNarrow)
-    padding 1.5rem
-
+  padding 32px 40px
+  @media (max-width: 1240px)
+    padding 32px
+  @media (max-width: 560px)
+    padding 24px 16px

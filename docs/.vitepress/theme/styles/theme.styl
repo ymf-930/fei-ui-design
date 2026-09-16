@@ -253,7 +253,11 @@ h1
 h2
   font-size 1.5rem
   padding-bottom .3rem
-  border-bottom 1px solid $borderColor
+  // 原为 `border-bottom 1px solid $borderColor`。`$borderColor` 是 VuePress 0.x 的
+  // Stylus 变量，VitePress 1.x 已删除；Stylus 不报错、把变量名原样输出，
+  // 于是这条声明在产物里是非法 CSS、被浏览器整体丢弃 —— h2 从来没有下划线。
+  // 文档正文区（`.vp-doc h2`）的标题外观统一由 styles/doc-typography.styl 决定，
+  // 这里是站点外壳（404 页等）的兜底，不再补一条从未生效的描边。
   font-weight: 600
 
 h3
@@ -278,7 +282,8 @@ p, ul, ol
 
 hr
   border 0
-  border-top 1px solid $borderColor
+  // 原为 `border-top 1px solid $borderColor`，与上方 h2 同一原因被浏览器丢弃
+  // （`$borderColor` 未定义）。文档正文区的分隔线见 doc-typography.styl 的 `.vp-doc hr`。
 
 table
   border-collapse collapse

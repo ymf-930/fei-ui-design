@@ -1,0 +1,467 @@
+// ============================================================================
+// 文档正文排版层（Documentation Typography）—— 唯一权威来源
+// ----------------------------------------------------------------------------
+// 范围：只作用于 `.vp-doc`（Markdown 正文）。首页 `.home`、导航、页脚、
+//       侧边栏属于站点外壳，不受影响。
+// 目标：字号成阶梯、间距成节奏、正文/列表/代码/表格共用同一条左右基准线。
+//
+// 四条硬约束（改之前先读）
+//   1. 数值只能来自下方 token，规则里不写裸数字
+//   2. 卡片内内容**不再**额外左右内缩 —— 与外层导语段落共用同一条内容边，
+//      这是「标题 / 正文 / 列表 / 表格 / 代码块左边缘对齐」的实现方式
+//   3. 凡「只想改文档、不该碰组件本体」的规则，都要排除 demo 区
+//      （`:not(.example *)`）—— 那里渲染的是被演示的组件实体
+//      （`<f-table>` 是 `<table>`、面包屑/下拉菜单/分割线里是真实的 `<a>`）
+//   4. 需要压过站点外壳规则时用 `!important`，但必须同时排除 demo 区
+//
+// 层级：由 theme/index.css 顶部 `@import` 引入。index.css 又在 index.ts 里排在
+//       `vitepress/theme`（默认主题样式）**之后**，所以同优先级的规则也是本层胜出
+//       —— 例如 VitePress 默认的 `.vp-doc h2{font-size:24px}` 会被本层覆盖。
+//       选择器一律带 `.vp-doc`，用来压过组件库的裸元素 reset（`p` / `ul` / `table`…）。
+// ============================================================================
+
+// ── 设计 token ──────────────────────────────────────────────────────────────
+:root {
+  // 字体族
+  --fd-font-sans: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  --fd-font-mono: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+
+  // 字号阶梯（≈1.2 模数，正文 15px）
+  //   28 / 22 / 18 / 16 / 15 / 14 —— 每一级都显式声明：
+  //   VitePress 默认主题只写了 h1~h3，h4~h6 会退回浏览器默认的
+  //   1.17em / .83em / .67em，其中 h6 只有 ~10px，比正文还小。
+  --fd-fs-h1: 28px;
+  --fd-fs-h2: 22px;
+  --fd-fs-h3: 18px;
+  --fd-fs-h4: 16px;
+  --fd-fs-h5: 15px;
+  --fd-fs-h6: 14px;
+  --fd-fs-body: 15px;
+  --fd-fs-sm: 13.5px;
+  --fd-fs-xs: 12.5px;
+  --fd-fs-code: 13px;
+
+  // 行高
+  --fd-lh-heading: 1.4;
+  --fd-lh-body: 1.75;
+  --fd-lh-code: 1.65;
+
+  // 间距节奏（8pt 栅格）
+  --fd-sp-1: 4px;
+  --fd-sp-2: 8px;
+  --fd-sp-3: 12px;
+  --fd-sp-4: 16px;
+  --fd-sp-5: 24px;
+  --fd-sp-6: 32px;
+  --fd-sp-7: 48px;
+
+  // 描边与圆角
+  --fd-border: #e6eaf0;
+  --fd-radius-sm: 6px;
+  --fd-radius-md: 10px;
+  --fd-radius-lg: 16px;
+
+  // 文字色：两档即可。两者在页面底色 #f4f7f8 上分别约 10:1 / 5.1:1
+  --fd-text-1: #2c3e50;
+  --fd-text-2: #5a6b7d;
+
+  // 文档 API 表格
+  --fd-th-bg: #f5f7fa;
+  --fd-table-bg: #fff;
+  --fd-tr-stripe: #fafbfd;
+  --fd-tr-hover: #f0f5ff;
+}
+
+// ── 正文根 ─────────────────────────────────────────────────────────────────
+.vp-doc {
+  font-family: var(--fd-font-sans);
+  font-size: var(--fd-fs-body);
+  line-height: var(--fd-lh-body);
+  color: var(--fd-text-1);
+  // 供 h2/h3 的 hover 高亮、以及锚点定位复用
+  --fd-anchor-offset: 96px;
+}
+
+// ── 标题阶梯 ───────────────────────────────────────────────────────────────
+.vp-doc h1,
+.vp-doc h2,
+.vp-doc h3,
+.vp-doc h4,
+.vp-doc h5,
+.vp-doc h6 {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-weight: 600;
+  line-height: var(--fd-lh-heading);
+  color: var(--fd-text-1);
+  // 站内锚点跳转时，标题不会被吸顶的导航栏/页头盖住
+  scroll-margin-top: var(--fd-anchor-offset);
+}
+
+.vp-doc h1 {
+  font-size: var(--fd-fs-h1);
+  letter-spacing: -0.02em;
+  margin: var(--fd-sp-6) 0 var(--fd-sp-4);
+}
+
+.vp-doc h2 {
+  font-size: var(--fd-fs-h2);
+  letter-spacing: -0.01em;
+  margin: var(--fd-sp-7) 0 var(--fd-sp-3);
+}
+
+.vp-doc h3 {
+  font-size: var(--fd-fs-h3);
+  margin: var(--fd-sp-6) 0 var(--fd-sp-2);
+}
+
+.vp-doc h4 {
+  font-size: var(--fd-fs-h4);
+  margin: var(--fd-sp-5) 0 var(--fd-sp-2);
+}
+
+.vp-doc h5 {
+  font-size: var(--fd-fs-h5);
+  margin: var(--fd-sp-4) 0 var(--fd-sp-2);
+  color: var(--fd-text-1);
+}
+
+.vp-doc h6 {
+  font-size: var(--fd-fs-h6);
+  margin: var(--fd-sp-4) 0 var(--fd-sp-2);
+  color: var(--fd-text-2);
+  letter-spacing: 0.01em;
+}
+
+// 首个/末个元素不产生多余外边距，保证「区块首行」与容器边缘严格齐平
+.vp-doc > div > div > *:first-child,
+.vp-doc .text > *:first-child {
+  margin-top: 0;
+}
+
+.vp-doc > div > div > *:last-child,
+.vp-doc .text > *:last-child {
+  margin-bottom: 0;
+}
+
+// ── 锚点 ───────────────────────────────────────────────────────────────────
+// 原实现是 `float: left; margin-left: -0.87em`：把锚点放到标题左侧的负偏移里。
+// 一旦标题不再内缩（本次对齐改造），该负偏移就落到卡片 overflow 裁剪区之外，
+// 锚点会在 hover 时彻底消失；且 `float` 会让标题首行产生位移风险。
+// 改为跟在标题文字之后的常规行内元素：不位移、不会被裁剪。
+.vp-doc a.header-anchor,
+.vp-doc .header-anchor {
+  position: static;
+  float: none;
+  display: inline-block;
+  margin: 0 0 0 var(--fd-sp-2);
+  padding: 0;
+  font-size: 0.8em;
+  font-weight: 500;
+  color: var(--fei-color-primary);
+  opacity: 0;
+  user-select: none;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.vp-doc h1:hover .header-anchor,
+.vp-doc h2:hover .header-anchor,
+.vp-doc h3:hover .header-anchor,
+.vp-doc h4:hover .header-anchor,
+.vp-doc h5:hover .header-anchor,
+.vp-doc h6:hover .header-anchor,
+.vp-doc .header-anchor:focus {
+  opacity: 1;
+}
+
+// ── 正文流 ─────────────────────────────────────────────────────────────────
+.vp-doc p {
+  margin: var(--fd-sp-4) 0;
+  font-size: var(--fd-fs-body);
+  line-height: var(--fd-lh-body);
+}
+
+.vp-doc strong {
+  font-weight: 600;
+  color: var(--fd-text-1);
+}
+
+.vp-doc a {
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+// 链接颜色必须单独成条，且**必须带 `!important`**：
+// custom.styl 里有一条站点级的 `a { color: var(--vs-theme-color) !important }`
+// （外壳所有 <a> 共用），会把正文链接刷成与正文同色（#2c3e50），
+// 段落里的链接于是几乎看不出来 —— 只有 `!important` + 更高优先级能压过去。
+// `:not(.example *)` 与表格同理：demo 区里真实存在 <a>（面包屑 / 分割线 /
+// 下拉菜单 / 抽屉 / 菜单 / 弹出信息等示例），文档链接色不能刷到组件本体上。
+.vp-doc a:not(.example *) {
+  color: var(--fei-color-primary) !important;
+}
+
+.vp-doc a:not(.example *):hover {
+  color: var(--fei-color-primary-active) !important;
+}
+
+.vp-doc hr {
+  margin: var(--fd-sp-6) 0;
+  border: 0;
+  border-top: 1px solid var(--fd-border);
+}
+
+.vp-doc img {
+  max-width: 100%;
+}
+
+// 独立成段的图片（徽章之类行内图片不受影响）
+.vp-doc .text > img,
+.vp-doc p > img:only-child {
+  display: block;
+  margin: var(--fd-sp-4) auto;
+  border-radius: var(--fd-radius-md);
+}
+
+// ── 列表 ───────────────────────────────────────────────────────────────────
+.vp-doc ul,
+.vp-doc ol {
+  margin: var(--fd-sp-4) 0;
+  padding-left: 1.6em;
+}
+
+.vp-doc ul {
+  list-style: disc;
+}
+
+.vp-doc ol {
+  list-style: decimal;
+}
+
+.vp-doc li {
+  font-size: var(--fd-fs-body);
+  line-height: var(--fd-lh-body);
+}
+
+.vp-doc li + li {
+  margin-top: var(--fd-sp-1);
+}
+
+.vp-doc li > ul,
+.vp-doc li > ol {
+  margin: var(--fd-sp-1) 0 0;
+}
+
+// 列表项里的多段文字不应把行距撑开
+.vp-doc li > p {
+  margin: var(--fd-sp-1) 0;
+}
+
+// ── 引用 ───────────────────────────────────────────────────────────────────
+// 原实现正文用 #999（在 #f4f7f8 上约 2.6:1，低于 WCAG AA 的 4.5:1）。
+.vp-doc blockquote {
+  margin: var(--fd-sp-4) 0;
+  padding: var(--fd-sp-3) var(--fd-sp-4);
+  border-left: 3px solid var(--fei-color-primary-light2);
+  border-radius: 0 var(--fd-radius-sm) var(--fd-radius-sm) 0;
+  background: var(--fei-color-primary-light6);
+  color: var(--fd-text-2);
+  font-size: var(--fd-fs-body);
+}
+
+.vp-doc blockquote > p {
+  margin: var(--fd-sp-2) 0;
+  font-size: var(--fd-fs-body);
+  line-height: var(--fd-lh-body);
+  color: inherit;
+}
+
+.vp-doc blockquote > p:first-child {
+  margin-top: 0;
+}
+
+.vp-doc blockquote > p:last-child {
+  margin-bottom: 0;
+}
+
+// ── 行内代码 ───────────────────────────────────────────────────────────────
+.vp-doc :not(pre) > code {
+  padding: 2px 6px;
+  border-radius: var(--fd-radius-sm);
+  background-color: var(--vs-theme-bg2);
+  color: var(--fd-text-1);
+  font-family: var(--fd-font-mono);
+  // 相对正文缩放，随字号阶梯同步；不要再写死 em 值
+  font-size: 0.9em;
+  box-shadow: none;
+}
+
+.vp-doc h1 > code,
+.vp-doc h2 > code,
+.vp-doc h3 > code,
+.vp-doc h4 > code,
+.vp-doc h5 > code,
+.vp-doc h6 > code {
+  font-size: 0.88em;
+}
+
+// ── 代码块 ─────────────────────────────────────────────────────────────────
+// 底色由 custom.styl 的 --vs-theme-code2 提供，语法着色主题在 .vitepress/config.js，
+// 两者必须配套 —— 见 build/check-docs-contrast.cjs。
+.vp-doc div[class*='language-'] {
+  position: relative;
+  margin: var(--fd-sp-4) 0;
+  border-radius: var(--fd-radius-md);
+  background-color: transparent;
+}
+
+.vp-doc [class*='language-'] pre {
+  margin: 0;
+  padding: 0;
+  background: var(--vs-theme-code2);
+  border-radius: inherit;
+  overflow-x: auto;
+}
+
+.vp-doc [class*='language-'] pre code {
+  display: block;
+  padding: var(--fd-sp-4) var(--fd-sp-5);
+  font-family: var(--fd-font-mono);
+  font-size: var(--fd-fs-code);
+  line-height: var(--fd-lh-code);
+  background: transparent;
+}
+
+// 语言角标与复制按钮
+.vp-doc [class*='language-'] > span.lang {
+  top: var(--fd-sp-3);
+  right: var(--fd-sp-4);
+  font-size: var(--fd-fs-xs);
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.vp-doc [class*='language-'] > button.copy {
+  display: none;
+}
+
+// 卡片里的代码面板（codex）自带容器与圆角，内层代码块必须贴平，
+// 否则会给深色面板内部再套一层圆角与间距。
+.vp-doc .con-code div[class*='language-'],
+.vp-doc .con-code div[class*='language-'] pre,
+.vp-doc .con-code div[class*='language-'] pre code {
+  margin: 0;
+  border-radius: 0;
+}
+
+.vp-doc .con-code div[class*='language-'] pre code {
+  padding: var(--fd-sp-4) var(--fd-sp-5);
+}
+
+// ── 文档 API 表格 ──────────────────────────────────────────────────────────
+// `:not(.example *)` 是刚需：demo 区里的 `<table>` 是 `<f-table>` 组件本体，
+// 站点共 74 个，不能套用文档表格的留白与描边。
+.vp-doc table:not(.example *) {
+  display: table;
+  width: 100%;
+  margin: var(--fd-sp-4) 0 var(--fd-sp-5);
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: var(--fd-radius-md);
+  background: var(--fd-table-bg);
+  color: var(--vs-theme-code);
+  font-size: var(--fd-fs-sm);
+  // 长标识符（如 --fei-border-radius-default）在必要时才折行
+  overflow-wrap: break-word;
+}
+
+.vp-doc table:not(.example *) th,
+.vp-doc table:not(.example *) td {
+  padding: var(--fd-sp-2) var(--fd-sp-4);
+  border: 0;
+  border-bottom: 1px solid var(--fd-border);
+  text-align: left;
+  vertical-align: top;
+  line-height: 1.6;
+}
+
+.vp-doc table:not(.example *) th {
+  background: var(--fd-th-bg);
+  border-top: 1px solid var(--fd-border);
+  color: var(--fd-text-1);
+  font-size: var(--fd-fs-sm);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+// 表头首列与末列承担外框 + 圆角（border-collapse: separate 下才生效）
+.vp-doc table:not(.example *) th:first-child {
+  border-left: 1px solid var(--fd-border);
+  border-top-left-radius: var(--fd-radius-md);
+}
+
+.vp-doc table:not(.example *) th:last-child {
+  border-right: 1px solid var(--fd-border);
+  border-top-right-radius: var(--fd-radius-md);
+}
+
+.vp-doc table:not(.example *) td:first-child {
+  border-left: 1px solid var(--fd-border);
+  color: var(--fd-text-1);
+  font-weight: 500;
+}
+
+.vp-doc table:not(.example *) td:last-child {
+  border-right: 1px solid var(--fd-border);
+}
+
+// 斑马纹（极淡）与行悬停，替代原来的逐格描边
+.vp-doc table:not(.example *) tbody tr:nth-child(2n) td {
+  background: var(--fd-tr-stripe);
+}
+
+.vp-doc table:not(.example *) tbody tr:hover td {
+  background: var(--fd-tr-hover);
+}
+
+// 收口：最后一行不画下边框，由容器圆角收尾
+.vp-doc table:not(.example *) tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.vp-doc table:not(.example *) tbody tr:last-child td:first-child {
+  border-bottom-left-radius: var(--fd-radius-md);
+}
+
+.vp-doc table:not(.example *) tbody tr:last-child td:last-child {
+  border-bottom-right-radius: var(--fd-radius-md);
+}
+
+// ── 窄屏 ───────────────────────────────────────────────────────────────────
+// 表格在窄屏改为可横向滚动块，避免列被压成竖排单字
+@media (max-width: 768px) {
+  .vp-doc table:not(.example *) {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .vp-doc table:not(.example *) th,
+  .vp-doc table:not(.example *) td {
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 560px) {
+  .vp-doc h1 {
+    font-size: 24px;
+  }
+
+  .vp-doc h2 {
+    font-size: var(--fd-fs-h3);
+  }
+}

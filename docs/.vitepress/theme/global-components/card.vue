@@ -46,64 +46,70 @@ const { vsTheme } = getCurrentInstance().appContext.config.globalProperties
 vsThemeVal.value = vsTheme
 </script>
 <style lang="stylus">
+// 卡片：组件文档的最小信息单元（小节标题 + 说明 + 示例 + 代码）
+//
+// 视觉规则（与 styles/doc-typography.styl 配套）
+//   1. 卡片内容**不额外左右内缩** —— 与外层导语段落共用同一条内容边，
+//      这是「标题 / 正文 / 列表 / 示例面板 / 代码面板左边缘对齐」的落点
+//   2. 小节间距由卡片自身的 margin 提供，**不再**用「h2 padding-top: 100px +
+//      卡片 margin-bottom: -50px」这种互相抵消的魔法数字；
+//      标题也不再在 hover 时改 padding（会左右跳动）
+//   3. 所有数值取自 doc-typography.styl 的 --fd-* token，本文件不写裸数字
 getVar(var)
     unquote("var(--vs-"+var+")")
 
-// 组件文档的导语（frontmatter 之后、第一个 <card> 之前的一段话）
-// 历史上用 `#####` 写成，现已改为普通段落，以保证标题层级为 H1 -> H2；
-// 这里同时保留 h5 选择器以兼容尚未迁移的页面。
-h5 + .card .text h2,
-p + .card .text h2
-  padding-top 30px !important
 .card
-  // background rgb(255,255,255)
-  border-radius 20px
+  // 20px 圆角 + overflow 裁剪：示例面板与代码面板都是通栏白底，
+  // 靠这里把它们的四角裁成与卡片一致
+  border-radius var(--vs-radius, 20px)
   overflow hidden
-  margin 20px 0px
-  margin-top 20px
-  margin-bottom -50px
+  margin var(--fd-sp-7) 0
   width 100%
+
   &:first-child
-    .text
-        h2
-          padding-top 30px !important
+    margin-top var(--fd-sp-6)
+
   &:last-of-type
     margin-bottom 0px
-  > .text
-    ul
-      margin-left 40px
-      padding-left 0px
-      li
-        p
-          padding-left 5px !important
+
   .text
+    // 导语图片（直属于 .text 的图）
     >img
       width 100%
       max-width 600px
       margin auto
-      margin-top 10px
+      margin-top var(--fd-sp-3)
       display block
-      border-radius 20px
+      border-radius var(--vs-radius, 20px)
+
+    // 标题只做「块首不额外留白」，其余层级间距沿用 doc-typography.styl
+    h2, h3, h4, h5, h6
+      z-index 200
+      position relative
+
+    p
+      z-index 200
+      position relative
+
   .example
     position relative
-    padding 10px
-    margin auto
-    margin-top 10px
-    border-radius 5px 20px 0px 0px
-    // border 1px solid rgba(0,0,0,.03)
-    // box-shadow 0px -15px 20px -25px rgba(0,0,0,.1)
-    border-bottom 0px solid rgba(0,0,0,.03)
-    background getVar(theme-layout)
-    position relative
-    overflow hidden
-    transition all .25s ease
     width 100%
     height auto
+    margin auto
+    margin-top var(--fd-sp-4)
+    padding var(--fd-sp-5) var(--fd-sp-5)
+    // 圆角交给 .card 的 overflow 裁剪，这里保持直角，避免两套圆角打架
+    border-radius 0
+    background getVar(theme-layout)
+    overflow hidden
+    transition all .25s ease
+
     .center
       justify-content flex-start
       >div
         width 100%
 
+    // 手机预览框：仅在 .mobile 时显形
     &:after
       transition all .25s ease
       width 100%
@@ -118,6 +124,7 @@ p + .card .text h2
       pointer-events none
       opacity 0
       visibility hidden
+
     &:before
       opacity 0
       visibility hidden
@@ -133,58 +140,32 @@ p + .card .text h2
       transform translate(-50%)
       border-radius 0px 0px 8px 8px
       transition all .25s ease
+
     &.mobile
       width 260px
       height 520px
       margin auto
-      margin-top 20px
-      margin-bottom 20px
+      margin-top var(--fd-sp-5)
+      margin-bottom var(--fd-sp-5)
       border-radius 25px
       padding 30px 20px
       overflow auto
+
       &:after
         opacity 1
         visibility visible
+
       &:before
         opacity 1
         visibility visible
+
       ~ .slotcode
           .code
             border-radius 20px
             background transparent
-  .text
-    h2, h3, h4, h5, h6
-      padding 15px 20px
-      margin 0px
-      border-bottom 0px
-      padding-bottom 10px
-      transition all .25s ease
-      z-index 200
-      position relative
-      &:hover
-        padding-left 40px
-    h2
-      padding-top 100px
 
-    p
-      padding 5px 20px
-      margin 0px
-      font-size .85rem
-      z-index 200
-      position relative
-    li
-      font-size .85rem
-
-@media (max-width: 500px)
+@media (max-width: 560px)
   .card
-    .text
-      padding 10px
-      h2
-        font-size 1.3rem
-        padding-top 80px
-        padding-left 10px
-        padding-bottom 0px
-      p
-        padding-left 10px
-        padding-top 10px
+    .example
+      padding var(--fd-sp-4) var(--fd-sp-4)
 </style>
