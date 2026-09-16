@@ -7,7 +7,9 @@
         <img class="logo-img not-darken" src="/logos/f-ui-logo.png" alt="FEI-UI-DESIGN">
         <img class="logo-img has-darken" src="/logos/f-ui-logo-white.png" alt="FEI-UI-DESIGN">
         <h1 class="logo-title pl-10 pr-16">FEI-UI-DESIGN</h1>
-        <f-tag type="success" palin>开发中</f-tag>
+        <!-- 状态标记：`TagProps` 没有 `plain`（那是 Button 的属性），原先写的 `palin` 是无效属性，
+             会静默透传成 `palin=""` 落在根节点上。如需描边款式，Tag 只提供 `no-border`。 -->
+        <f-tag type="success">开发中</f-tag>
       </div>
     </a>
     <div :class="{'remove-links': focused}"
@@ -19,7 +21,10 @@
       >
         <NavLinks class="can-hide"/>
       </div>
-      <span title="Previous Version" class="v-old">v3.x</span>
+      <!-- 「上一版 v3.x」入口已移除：本库版本线从未有过 3.x
+           （重构前 0.0.1~0.0.4，重构后自 0.0.2 起算），
+           且唯一候选旧项目 fei-ui-one 的文档站与 npm 包均已不可达。
+           证据与复原方式见 docs/.internal/refactor-plan.md §8.11.9。 -->
       <div class="con-links">
         <a title="Github" target="_blank" href="https://github.com/ymf-930/fei-ui-design">
           <i class="bx bxl-github"></i>
@@ -112,15 +117,6 @@ getVar(var)
   font-weight bold
   padding-left 30px
 
-.v-old
-  padding 10px
-  color inherit
-  opacity .5
-  transition all .25s ease
-
-  &:hover
-    opacity 1
-
 .external-links-search
   display flex
   align-items center
@@ -131,7 +127,7 @@ getVar(var)
   &.remove-links
     // width calc(100% - 60px)
 
-    .con-links, .v-old
+    .con-links
       display none
 
   .con-links

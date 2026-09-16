@@ -1010,11 +1010,22 @@ export { FTimeline as FTimeLine }
 > 由于该 prop 此前**无任何组件消费、且库内不存在语言包**，删除后不会改变任何现有渲染结果；
 > 但使用者若在模板上写过 `locale="en-US"`，该属性会退化为普通 HTML 属性透传，建议在发布说明中明确标注。
 
-> **移出本轮范围的一项**：`date-picker` 硬编码 dayjs locale ——
-> `basic-date-table.vue:91` / `basic-month-table.vue:81` 调用 `.locale('en')`，
-> 使月份与星期的内置文案**恒为英文**，与中文用户预期不符。
-> 它与「是否支持多语言」无关（不切 locale 也应当是中文），属**独立的文案缺陷**，
-> 转入待办，不在国际化移除范围内。
+> **~~移出本轮范围的一项：`date-picker` 硬编码 dayjs locale~~ → 复核结论：这不是缺陷（2026-09-16 更正）**
+>
+> 初判认为 `basic-date-table.vue:91` / `basic-month-table.vue:81` 的 `.locale('en')`
+> 会让月份与星期「恒为英文」。**复核后推翻**：那两个英文字符串只作**查表用的 key**，从不直接渲染：
+> - 月份 — `basic-month-table.vue:7` 渲染 `<span class="cell">{{ monthMap[months[cell.text]] }}</span>`，
+>   `monthMap`（同文件 `:64`）把 `jan…dec` 映射为 `一月…十二月`
+> - 星期 — `basic-date-table.vue:13` 渲染 `<th v-for="(week, key) in WEEKS">{{ weeksMap[week] }}</th>`，
+>   `weeksMap`（同文件 `:107`）把 `mon…sun` 映射为 `一…日`
+> - 逐文件检索确认 `months` / `WEEKS` **没有第二个消费点**，英文串到不了 DOM
+>
+> 所以 `.locale('en')` 的作用是「借一套稳定的英文标识当 key」，**面向用户的输出始终是中文**。
+> **该项从待办中移除**。它剩下的是写法问题（`ref` 当常量用、`@ts-ignore` 掩盖类型），
+> 归入 P1-1 类型债一并处理，**不计作独立缺陷**。
+>
+> 教训（已并入技能陷阱清单）：**判断「文案是否错」必须追到渲染点，不能停在数据来源** ——
+> 数据是英文 ≠ 界面是英文。
 
 ### 8.10 文档站「未完成功能入口」清单（2026-09-16 扫描）
 
@@ -1034,8 +1045,8 @@ export { FTimeline as FTimeLine }
 | 2 | 同上 · 第 5 项 | 打开 / 关闭所有代码 | `bx-code-block`，`title`「打开/关闭所有代码」 | ~~**`开发中`**~~ → **已无占位提示** | ~~连 `localStorage` 都没写 → 完全无副作用~~ → 已接入 `codex.vue` 的 `watch`，示例面板整体展开/收起，偏好写入 `localStorage` | 真未完成 | ✅ **已补齐**（见 §8.11） |
 | 3 | 左下角配置区 · 翻译图标按钮 | 切换文档语言（国际化） | `.btn-lang.theme-translate` | **`暂未开发！`** | 无任何实现 | 真未完成 | ✅ **已移除**（决策见 §8.9） |
 | 4 | 内容区左上角 | 返回上一页 | ~~`<a class="back-link">`~~ → `<button type="button" class="back-link">` + `bx-left-arrow-alt` | ~~**`开发中`**~~ → **已无占位提示** | ~~无任何实现；`<a>` 无 href 也不可键盘聚焦~~ → 已实现 `router.go(-1)`（无站内历史时回首页），并补 `title` / `aria-label`，改为 `<button>` 使其可键盘聚焦 | 真未完成 | ✅ **已补齐**（见 §8.11） |
-| 5 | 顶部导航 · logo 右侧 | 站点状态标记（非入口） | `<f-tag type="success" palin>开发中</f-tag>` | 文案本身即 **`开发中`** | 不可点击；标记整站处于开发状态 | 状态标记 | 保留或按发布状态改版本文案；`palin` 是 `plain` 的拼写错误（并入 P3 文档/代码一致性） |
-| 6 | 顶部导航 · 右侧 | 版本切换（Previous Version） | `<span title="Previous Version" class="v-old">v3.x</span>` | 无 —— 点击**没有任何反馈** | 不是链接、无 `@click`，纯静态文本 | 伪入口（死元素） | 二选一：补 `href` 指向 v3 文档站，或移除 |
+| 5 | 顶部导航 · logo 右侧 | 站点状态标记（非入口） | ~~`<f-tag type="success" palin>开发中</f-tag>`~~ → `<f-tag type="success">开发中</f-tag>` | 文案本身即 **`开发中`** | 位于首页链接（`<a :href="homeLink">`）内部，点击即回首页；标记整站处于开发状态 | 状态标记 | ✅ **文案保留、无效属性已修**：`palin` 不是 Tag 的属性（`plain` 是 **Button** 的属性，Tag 只有 `no-border`），会静默透传成 `palin=""`；版本号 `0.0.2` 与「开发中」相符，故文案据实保留（见 §8.11.9） |
+| 6 | 顶部导航 · 右侧 | 版本切换（Previous Version） | ~~`<span title="Previous Version" class="v-old">v3.x</span>`~~ → **已移除** | 无 —— 点击**没有任何反馈** | ~~不是链接、无 `@click`，纯静态文本~~ → **元素已删除**，同时清掉随之失效的 `.v-old` 样式与 `.remove-links` 中的引用 | 伪入口（死元素） | ✅ **已移除**：本库版本线从未有过 3.x，且唯一候选旧站点（`fei-ui-one`）已 404、其 npm 包也不存在 —— 不是「待补 URL」，而是**信息本身就是错的**（见 §8.11.9） |
 
 #### 8.10.1 两条与直觉相反：入口 1 / 2 不是「没开发」，而是「接错了」
 
@@ -1132,7 +1143,7 @@ export { FTimeline as FTimeLine }
 
 | 类别 | 数量 | 文件 |
 | --- | --- | --- |
-| 完全无引用（`theme/components`，含 `layouts` 目录） | 13 | `AlgoliaSearchBox` / `ASidebarLink` / `Branding` / `Codefund` / `headerSvg` / `HomeIllustration3` / `HomeIllustration4` / `HomePatrons` / `HomeTwiter` / `HomeUses` / `navbarLayout` / **`NavLinksLanguages`** / `PassLayout` |
+| 完全无引用（`theme/components`，含 `layouts` 目录） | 13 → **12** | `AlgoliaSearchBox` / `ASidebarLink` / `Branding` / `Codefund` / `headerSvg` / `HomeIllustration3` / `HomeIllustration4` / `HomePatrons` / `HomeTwiter` / `HomeUses` / `navbarLayout` / ~~**`NavLinksLanguages`**~~（已删，见下） / `PassLayout` |
 | 完全无引用（`global-components`） | 4 | `Badge` / `Coloren` / `docsWarn` / `Icons` |
 | 仅出现在注释里 | 5 | `HeaderNotification` / `HomeIllustration1` / `HomeIllustration2` / `NavLinks2` / `premiumThemes` |
 
@@ -1151,10 +1162,23 @@ export { FTimeline as FTimeLine }
 并按行判断引用是否落在注释里；再拿产物交叉验证。一次性脚本见
 `.workbuddy/tmp/scan-dead-theme-components.cjs`。
 
-**建议**：这 22 个文件属同一批「先摆 UI、后接实现」的遗留（多为 VitePress 默认主题的分叉副本）。
-**不建议逐个删** —— 单删一个会留下不一致状态。建议作为**独立一批**处理，删除前逐个确认
-（`HomeIllustration1/2/3/4`、`HomeComponents` 这类是首页插图，可能只是暂时下线）。
-本轮**未删任何文件**，只登记。
+**建议**：这批文件属「先摆 UI、后接实现」的遗留（多为 VitePress 默认主题的分叉副本）。
+**不建议逐个顺手删** —— 单删一个会留下不一致状态。建议作为**独立一批**处理，删除前逐个确认
+（`HomeIllustration1/2/3/4` 这类是首页插图，可能只是暂时下线）。
+
+**例外：`components/NavLinksLanguages.vue` 已于 2026-09-16 删除**（22 → 21）。
+它不是「顺手删」，而是 §8.9「移除国际化」决策**漏掉的源码残留**，故随该项一并清掉：
+
+| 检查 | 结果 |
+| --- | --- |
+| 是否被引用 | 全仓检索 `NavLinksLanguages` / `nav-links-languages`（`.vue/.ts/.js/.md/.json`）→ **0 命中**；`theme/index.ts` 的 `import` 与 `app.component` 里也没有 |
+| 是否被打包 | 产物 `site/assets/` 检索 `NavLinksLanguages` → **0 命中** |
+| 它到底是什么 | 170 行**语言下拉**，读 `this.$site.locales` / `this.$lang` / `this.$themeLocaleConfig` —— 全是 **VuePress 1.x 的 API**，在 VitePress 下**根本不可能工作**，属 VuePress 时代的分叉副本 |
+| 删除后如何复核 | 重新 `build:site` → exit=0。若「不可达」判断有误，Vite 解析导入时会**直接构建失败**，所以构建通过本身就是强证据 |
+| 如何找回 | 删除前记录 blob = `83e3b178c7e85d59a7ee5e2ce5a9b147b0d8d97d`（`git show 83e3b17 > <path>` 即还原） |
+
+> 其余 21 个**本轮仍未删**，只登记。它们与国际化无关（首页插图 / Algolia / 赞助等模板遗留），
+> 应作为独立一批逐个确认后再统一处理。
 
 #### 8.10.6 本轮新增护栏：`check-docs-placeholders`
 
@@ -1306,13 +1330,43 @@ function isActive(page) {
 > 所以 `eslint . --ext ...` 全仓 exit=0 是可信的，文档站主题确实不在门禁内 ——
 > 这也解释了为什么那里的 5 个 `no-var` / `eqeqeq` 存量问题能长期存在。
 
-#### 8.11.8 仍待决策（不靠改代码能定的部分）
+#### 8.11.8 原「仍待决策」三项的去向（2026-09-16 二次处理）
 
-- **入口 5**：`<f-tag type="success" palin>开发中</f-tag>` —— 保留须按发布状态改文案；
-  另 `palin` 是 `plain` 的拼写错误。
-- **入口 6**：`<span class="v-old">v3.x</span>` 是**纯静态文本**（无 `href`、无 `@click`）。
-  补 `href` 需要先知道 v3 文档站的真实地址，不能猜 —— 因此本轮不动。
-- **§8.10.2** 记录的 `codex.vue` CodePen / CodeSandbox 按钮实现是坏的（当前因无页面传参而不可见），
-  若要启用必须先修实现。
+| 项 | 去向 | 依据 |
+| --- | --- | --- |
+| **入口 5** | 文案**保留**、无效属性 `palin` **移除** | `0.0.2` 就是开发中（见 §8.11.9 证据表） |
+| **入口 6** | 元素**移除** | 不是「待补 URL」，而是版本号与目标双错（§8.11.9） |
+| **§8.10.2** `codex.vue` 的 CodePen / CodeSandbox | **仍不动** | 见下方说明 |
+
+`codex.vue` 继续不动的理由：它的两个按钮**当前不可见**（`card.vue` 未传 `codepen` / `codesandbox`），
+而修好它需要先决定「示例面板要不要提供在线试玩」这个产品问题；
+更要紧的是 `codesandbox` 分支的现有实现会把 `body` 滚动**永久锁死**，
+所以**不要为了「让按钮显出来」而随手传参** —— 那会把一个隐藏缺陷变成线上缺陷。
+
+#### 8.11.9 入口 5 / 6 的决断与证据（2026-09-16）
+
+**入口 5 · `<f-tag type="success" palin>` —— 属性名写错了，文案是对的**
+
+| 结论 | 证据 |
+| --- | --- |
+| `palin` 不是 Tag 的属性 | `src/tag/src/types.ts` 的 `TagProps` 里没有 `plain`；`docs/components/tag.md` 属性表只有 `no-border`。`plain` 是 **Button** 的属性（`docs/components/button.md:433`） |
+| 它会**静默**透传成 DOM 属性 | 产物 `theme.DZ7jE8hT.js` 的渲染函数写作 `q(h,{type:"success",palin:""},…)`；Tag 根节点是单元素 `<span>`，未声明属性按 fallthrough 落到它上面 —— **单根节点不触发任何 Vue 警告**，所以长期无人发现 |
+| 视觉上等于没写 | Tag 的类名拼接里没有 `plain` 分支，去掉前后渲染结果一致（纯清理，非行为变更） |
+| 「开发中」据实保留 | `package.json` `version=0.0.2`，`docs/guide/changelog.md` 说明重构后版本线自 `0.0.2` 起算 —— 未发布 1.0，状态标记准确 |
+
+**入口 6 · `<span class="v-old">v3.x</span>` —— 移除（而非补 `href`）**
+
+1. **本库没有 3.x 这条版本线**：`changelog.md` 载重构前为 `0.0.1~0.0.4`，
+   重构后重新自 `0.0.2` 起算，当前 `0.0.2`。「Previous Version = v3.x」对不上任何一条版本线。
+2. **唯一候选旧站点已不可达**：上一代项目为 `fei-ui-one`（README:9 指向
+   `https://ymf-930.gitee.io/fei-ui-one/#/guide`）。实测 Pages 根路径 **404**、
+   `gitee.com/ymf-930/fei-ui-one` 仓库页 **404**、`registry.npmjs.org/fei-ui-one` 返回 `{"error":"Not found"}`。
+3. **所以它不是「占位待补」，而是错误信息**：留着一个指向不存在的版本、又永远点不动的元素，
+   比没有它更糟 —— 使用者会以为存在上一版文档。
+
+同时清掉了随之失效的 `.v-old` 样式块与 `.remove-links` 里对它的 `display none`。
+复原方式：在 `.external-links-search` 内加回
+`<a class="v-old" href="<真实地址>">v3.x</a>` 并补回样式；模板中已保留说明性注释，
+注明「没有真实地址时不要加回」。
 
 
