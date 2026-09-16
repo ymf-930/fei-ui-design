@@ -301,6 +301,22 @@ const setTheme = forceTheme => {
   return isThemeDark ? 'dark' : 'light'
 }
 
+// 圆形擦除的圆心 = **开关自身的几何中心**，不是鼠标落点。
+// 用鼠标落点（event.clientX/Y）有两个坑：
+//   1. 点在开关边缘或图标一角时，圆从那个角发散，看着不像从开关里长出来；
+//   2. 键盘 Enter / 辅助技术触发的 click 不带坐标（恒为 0,0），圆心会飞到画面左上角。
+// 取中心还有一处好处：圆无论扩还是缩，都严格以开关为定点，两侧观感对称。
+// ⚠️ event.currentTarget 只在处理函数**同步执行**期间有值，之后为 null，
+//    所以矩形必须在这里就取出来 —— 不能留到 transition.ready 的回调里再算。
+function wipeOrigin(event) {
+  const fallback = { x: Math.round(innerWidth / 2), y: Math.round(innerHeight / 2) }
+  // 圆形开关优先取内层轨道 .switch-con（按钮自身 padding 不对称时也不会偏中心）
+  const anchor = event?.currentTarget?.querySelector?.('.switch-con') || event?.currentTarget
+  const rect = anchor?.getBoundingClientRect?.()
+  if (!rect || !rect.width || !rect.height) return fallback
+  return { x: Math.round(rect.left + rect.width / 2), y: Math.round(rect.top + rect.height / 2) }
+}
+
 function ChangeTheme(event) {
   const nextIsDark = !currentThemeIsDark()
   const nextTheme = nextIsDark ? 'dark' : 'light'
@@ -321,11 +337,10 @@ function ChangeTheme(event) {
     return
   }
 
-  const x = event?.clientX ?? Math.round(innerWidth / 2)
-  const y = event?.clientY ?? Math.round(innerHeight / 2)
+  const { x, y } = wipeOrigin(event)
   const endRadius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y))
 
-  // 两个方向共用一个「以点击处为圆心、半径 0↔endRadius」的圆，但作用层与层级相反，
+  // 两个方向共用一个「以开关中心为圆心、半径 0↔endRadius」的圆，但作用层与层级相反，
   // 于是观感是一次往复：
   //   去暗色：旧（浅）层在上，同一个圆由大到小收回  —— 右上 → 左下
   //   回浅色：新（浅）层在上，圆由小到大铺满        —— 左下 → 右上
