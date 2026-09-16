@@ -1117,3 +1117,57 @@ export { FTimeline as FTimeLine }
 >
 > **另为两个产物护栏加了 `FEI_SITE_DIR`**（`check-site-links.cjs` / `check-docs-contrast.cjs`）：
 > 指向隔离产物目录即可校验，用于无法清空 `site/` 的环境；默认仍读 `site/`，CI 行为不变。
+> （后续新增的 `check-docs-placeholders.cjs` 同样支持该变量。）
+
+#### 8.10.5 同一 family 的更大残留：主题内 22 个未被引用的组件
+
+做移除国际化的收尾核对时（确认「`theme-translate` 在源码里也清干净了」）发现：
+主题里还留着一份**完整的语言下拉实现** `components/NavLinksLanguages.vue`，
+读 `this.$site.locales` / `this.$localeConfig` —— 它**无人引用**，且**未被打包进产物**
+（产物中 `NavLinksLanguages` 命中 0）。这正是 §8.9 决策要清掉、却漏在源码里的东西。
+
+顺着这个线索做了全量扫描（只读脚本，方法见下），结论是它不是孤例：
+
+`.vitepress/theme` 下 `.vue` 共 **48 个，其中 22 个疑似死文件**：
+
+| 类别 | 数量 | 文件 |
+| --- | --- | --- |
+| 完全无引用（`theme/components`，含 `layouts` 目录） | 13 | `AlgoliaSearchBox` / `ASidebarLink` / `Branding` / `Codefund` / `headerSvg` / `HomeIllustration3` / `HomeIllustration4` / `HomePatrons` / `HomeTwiter` / `HomeUses` / `navbarLayout` / **`NavLinksLanguages`** / `PassLayout` |
+| 完全无引用（`global-components`） | 4 | `Badge` / `Coloren` / `docsWarn` / `Icons` |
+| 仅出现在注释里 | 5 | `HeaderNotification` / `HomeIllustration1` / `HomeIllustration2` / `NavLinks2` / `premiumThemes` |
+
+> `global-components/` 那 4 个名字过于通用（`Badge` / `Icons` 在别处的类名、词义中大量出现），
+> 静态检索易误判，**需人工确认**后再决定去留。
+
+> 说明：`global-components/` 下的文件在本配置里**没有全局注册**
+> （`theme/index.ts` 只 `app.component('card', card)`，`codex` 由 `card.vue` 直接 import），
+> 因此它们既不能从 Markdown 直接使用、也无处引用。
+
+**产物反证**（避免只做静态推断）：对疑似死文件逐个在 `site/assets/` 检索组件名 ——
+`NavLinksLanguages` / `PassLayout` / `HomeUses` / `HomeTwiter` / `Codefund` / `Branding` / `headerSvg`
+命中数均为 **0**，确认未被打包；`Badge` / `Icons` 因名字过于通用（命中的是别处的类名/词）不可作数。
+
+**扫描方法**（可复现，只读）：遍历 `theme/**/*.{vue,js,ts}` 建立「文件名 → 是否被其它文件引用」表，
+并按行判断引用是否落在注释里；再拿产物交叉验证。一次性脚本见
+`.workbuddy/tmp/scan-dead-theme-components.cjs`。
+
+**建议**：这 22 个文件属同一批「先摆 UI、后接实现」的遗留（多为 VitePress 默认主题的分叉副本）。
+**不建议逐个删** —— 单删一个会留下不一致状态。建议作为**独立一批**处理，删除前逐个确认
+（`HomeIllustration1/2/3/4`、`HomeComponents` 这类是首页插图，可能只是暂时下线）。
+本轮**未删任何文件**，只登记。
+
+#### 8.10.6 本轮新增护栏：`check-docs-placeholders`
+
+落实 §8.10.3 建议 3，把「占位文案」从看不见的角落变成必须显式登记的决策。
+脚本 `build/check-docs-placeholders.cjs`，已接 `package.json` 脚本与 CI docs 任务
+（依赖 `site/` 产物，故**不并入 `docs:check`**，与 `docs:check-site` / `docs:check-contrast` 并列）。
+
+| 设计点 | 取值 / 行为 | 理由 |
+| --- | --- | --- |
+| 扫描对象 | 产物 `site/assets/chunks/theme.*.js` | **不扫源码** —— 源码 Markdown 正文的「开发中也推荐…」是误报，只有产物主题 chunk 才是「用户真会点到的入口」的准确集合 |
+| 基线 | `暂未开发` 1、`开发中` 3、`Coming soon` 0、`敬请期待` 0 | 对应 §8.10 入口 1 / 2+4+5；每条基线在脚本里写明理由 |
+| 超基线 | exit 1，给出两条出路：`A. 补齐/移除（推荐）` 或 `B. 改基线 + 本节加一行` | 只报「失败」无法行动 |
+| 低于基线 | 不失败，提示下调 | 否则基线虚高，将来新增会被旧基线的余量掩盖 |
+| 目标文件找不到 | **报错 exit 1**（不静默跳过） | 主题产物布局变更时，静默跳过等于护栏永久失效 |
+| 反向自检 | 往隔离产物塞一处 `敬请期待` → exit 1 | 确认护栏不是「永远绿灯」 |
+

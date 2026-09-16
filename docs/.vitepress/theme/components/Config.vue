@@ -75,10 +75,6 @@
           <i class="bx bxs-color-fill"></i>
           <input @change="ChangeColor" type="color" value="#2564ff">
         </li> -->
-        <!--
-                <li class="theme-translate" title="Theme translate">
-                  ... 语言下拉（随国际化一起移除）
-                </li> -->
 
         <svg
           class="effect1config invert"
