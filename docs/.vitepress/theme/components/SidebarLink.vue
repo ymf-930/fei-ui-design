@@ -104,7 +104,10 @@ a.sidebar-link
   margin-left 0px
 
   span {
-    font-size .8rem
+    // 原为 .8rem = 12.8px，低于中文小字的常规下限 13px，且是全站最小的正文级文字。
+    // 改用排版层的「小号」token（14px）后与正文 15px 只差 1px，层次成立。
+    // 侧边栏固定 260px，最长条目为 9 个字符（实测），不会因此换行。
+    font-size var(--fd-fs-sm)
   }
 
   &:after

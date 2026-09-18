@@ -8,11 +8,12 @@
 @require './vf-checkBox.styl'
 @require './icons.styl'
 
-@font-face
-  font-family: "Poppins"
-  src: url("/Poppins/Poppins-Regular.ttf")
-  font-weight: 400
-  font-style: normal
+// @font-face 声明**只在 custom.styl 里保留一份**。
+// 本文件（404 页通过 layouts/404.vue 的 `<style src>` 引用）原先又声明了一遍
+// 同样的 Poppins 400，产物 CSS 里于是出现两份完全相同的 @font-face。
+// custom.styl 由 theme/index.ts 全局引入，404 页同样加载得到，故此处删除。
+// 另：custom.styl 还补了 500 / 600 两个字重（标题是 600，只注册 400 会被
+// 浏览器合成为伪粗体）。
 
 .fade-enter-active, .fade-leave-active
   transition: opacity .5s ease
@@ -123,17 +124,12 @@ html, body
   // background-color getVar(theme-bg) !important
   color getVar(theme-color) !important
 
-body
-  font-family "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif
-  -webkit-font-smoothing antialiased
-  -moz-osx-font-smoothing grayscale
-  font-size 16px
-
-input
-  font-family "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif
-
-button
-  font-family "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif
+// body / input / button 的字体声明已统一收到 custom.styl（`html body`）：
+//   本文件是 custom.styl 的历史副本，由 404 页（layouts/404.vue 的 `<style src>`）
+//   引入，但**整份被打进主样式表、全局生效**。原先这里那三条硬编码的
+//   "Poppins, …" 栈既压不过 custom.styl 的 `html body`（特异性 0,0,2），
+//   也压不过组件库 reset.css 给表单控件的 `font-family: inherit`，
+//   属于永远不会生效的重复声明，故删除，避免以后误以为有两处定义。
 
 *
   box-sizing: border-box

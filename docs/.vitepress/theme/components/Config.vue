@@ -292,6 +292,16 @@ function applyTheme(isDark) {
     document.body.removeAttribute('vs-theme')
     document.body.classList.remove('darken')
   }
+  // ⚠️ 属性必须**同时**写到 <html> 上：
+  //   1) 根元素的背景会成为**画布色**（内容不足一屏、overscroll 时露出来的那块），
+  //      而 `html` 的 `--vs-theme-layout` 不会因为 body 有属性就改变 ——
+  //      自定义属性只向下继承、**不向上传播**。不写这一句，暗色下 body 之外
+  //      仍是白的。
+  //   2) `color-scheme` 需要按 `html[vs-theme="dark"]` 命中（见 custom.styl），
+  //      否则滚动条、原生表单控件、自动填充仍是浅色。
+  //   同理，明暗切换的 view-transition 方向类也必须挂 documentElement
+  //   （伪元素树挂在 <html> 下，与 <body> 是兄弟）。
+  document.documentElement.setAttribute('vs-theme', isDark ? 'dark' : 'light')
   if (vsThemeVal.value) {
     vsThemeVal.value.themeDarken = isDark
   }
@@ -425,6 +435,15 @@ getColor(vsColor, alpha = 1)
 getVar(var)
   unquote("var(--vs-" + var + ")")
 
+// ⚠️ 选择器必须同时列 `:root[vs-theme="dark"]`，不能只写 `[vs-theme="dark"]`。
+//   浅色兜底写在 custom.styl / styles/theme.styl 的 `:root` 里（`--vs-theme-layout: #fff`），
+//   而 `:root` 与 `[vs-theme="dark"]` 的**特异性完全相同（0,1,0）**，两者都命中
+//   `<html>` 时只能靠源码顺序定胜负 —— 实测 `:root` 那份排在后面，于是
+//   `htmlAttr` 已经是 `dark`、但 `getComputedStyle(html).getPropertyValue('--vs-theme-layout')`
+//   仍是 `#fff`：`<html>` 的背景被画成白色，成为**画布色**，overscroll 与短页面
+//   底部直接露白条（`body` 因为有属性选择器 + `html body` 高特异性规则，反而是对的，
+//   更不容易被发现）。`:root[vs-theme="dark"]` 是 (0,2,0)，稳压 `:root`，与顺序无关。
+:root[vs-theme="dark"],
 [vs-theme="dark"]
   --vs-theme-bg: #18191c
   --vs-theme-color: #fff

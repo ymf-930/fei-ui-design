@@ -2140,6 +2140,166 @@ DEBUG=1 node node_modules/vitepress/bin/vitepress.js build docs
 即为此设。构建仍会在开头 `emptyDir(outDir)`，所以构建前要把 `site/` 先移走（移动不计删除额度）。
 本次 43.37s 完成。
 
+### 10.13 排版体检：字体颜色与字号（2026-09-18，仅评估未改动）
+
+用户要求「评估文档的字体颜色与文字大小是否合理」。本轮**只做体检与方案，不动代码**，
+完整报告（含全部实测数值、推荐 token 表、实施顺序、验收方法）在
+**`docs/.internal/typography-audit.md`**。要点：
+
+| 级别 | 结论 |
+| --- | --- |
+| P0-1 | 暗色主题下 `--fd-*` **一个都没覆盖** → 正文/标题/行内码 1.55~1.60 : 1，实际不可读 |
+| P0-2 | `custom.styl:62` 的 `--shiki-light: #e2777a` 兜底把 ` ```text ` 代码块整块染粉（4.10 : 1） |
+| P1-1 | 表格 `td` 被 VitePress 默认 `.vp-doc td{font-size:14px}` 直接命中 → 表体 14 > 表头 13.5，且字号不受 token 控制 |
+| P1-2 | 页面主标题 35px ↔ h2 22px 跨 1.59×；`--fd-fs-h1: 28px` 从未生效；主标题行高 24px **小于**字号 |
+| P1-3 | 同一页面两套字体栈（正文 Poppins/Noto Sans SC vs 外壳 Helvetica/Arial + 微软雅黑）；`custom.styl` 的 `body{font-family}` 是死代码 |
+| P2 | 半像素字号 13.5/12.5、h4 与正文只差 1px、外壳字号未共用阶梯、Poppins 只注册 400（600 为合成粗体）、语言角标 3.33 : 1 |
+
+**三条可复用的机制性教训**（比具体数值更重要）：
+
+1. **`font-size` 是继承属性，容器上的声明压不过直接命中子元素的声明。**
+   `.vp-doc table:not(.example *)` 特异性 (0,2,1) 也赢不了 VitePress 的
+   `.vp-doc td` (0,1,1) —— 因为后者是**直接声明**、前者只是**继承源**。
+   所以「在容器上设字号、指望子元素跟随」是错的，必须逐个元素显式声明。
+   （产物里 56 条 `.vp-doc` 字号规则只有 `td` 漏网，正是这个原因。）
+2. **暗色主题只覆盖了 `--vs-theme-*` 那 6 个变量**，自建 token 必须自己补暗色分支。
+   判断"哪些 token 没跟随主题"最快的办法：在产物 CSS 里 `grep -o -- "--fd-text-1:[^;]*"`
+   数出现次数 —— **只有 1 处**就说明没有暗色分支。
+3. **shiki `css-variables` 模式下 `:root` 的 `--shiki-light` 是"未切 token 文本"的兜底色。**
+   未识别语言（`text`/裸围栏）的整行不会带内联变量，于是落到它身上。
+   全站扫描 49 个代码块 4159 段文本才逮到 1 处 24 段，**只看主路径页面根本发现不了**。
+
+新增探针（均在 `.workbuddy/scripts/`）：
+
+| 脚本 | 作用 |
+| --- | --- |
+| `probe-typography.mjs` | 逐元素字号/颜色/背景合成/WCAG 对比度 + `.vp-doc` 内字号分布 census |
+| `probe-typography2.mjs` | 表格字号来源诊断 + 代码块 token 对比度分布 + 局部截图 |
+| `probe-typography3.mjs` | 明暗两套主题的完整层级阶梯 + 「代码块非 token 文本」检测 |
+| `probe-code-plain.mjs` | 全站代码块扫描未着色文本 |
+| `probe-fonts.mjs` | `CSS.getPlatformFontsForNode` 读**实际渲染字体** + `document.fonts` 已注册 face |
+| `count-code-fences.mjs` | 统计代码围栏语言用量 / 裸围栏 |
+| `shot-typography-spots.mjs` | 问题局部取证截图 |
+
+⚠️ 写截图探针时的两个 CDP 坑：`Page.captureScreenshot` 的 **`clip.scale` 是必填字段**
+（缺了报 `Failed to deserialize params.clip.scale - mandatory field missing`）；
+且 `captureBeyondViewport: true` 时 **`clip` 用的是页面坐标**，
+必须 `rect.y + window.scrollY`，否则裁到页面外、返回空图。
 
 
 
+
+
+---
+
+### 10.14 排版体检的落地实施（2026-09-18，承接 §10.13）
+
+§10.13 只做了评估、没动代码。本节记录按那份报告改了什么、以及**改的过程中
+新发现的三处同源缺陷**（都属于「VitePress 默认主题的暗色分支挂在 `html.dark`，
+而本站暗色是自研的 `body[vs-theme="dark"]`」这一个根因）。
+
+#### 10.14.1 按报告落地的改动
+
+| 编号 | 改动 | 文件 | 关键值 |
+| --- | --- | --- | --- |
+| P0-1 | `--fd-*` 补暗色分支 | `styles/doc-typography.styl` | `--fd-text-1: #e6e8eb`、`--fd-text-2: #a3aab4`、`--fd-link: #4d8dff`、`--fd-table-text: #c9ced6`、`--fd-quote-bg: rgba(77,141,255,.12)` + 描边/表头底/表格底/斑马纹/行悬停 |
+| P0-2 | shiki 兜底色 | `custom.styl` | `--shiki-light: #e2777a` → `#adbac7`（4.10 → 6.09 : 1）；顺手删掉**死声明** `--vp-code-tag-color: #e2777a`（全产物只出现 1 次，就是它自己） |
+| P1-1 | 表格 `td` 显式声明字号 | `doc-typography.styl` | 新增 `.vp-doc table:not(.example *) td { font-size: var(--fd-fs-sm); color: var(--fd-table-text) }` |
+| P1-2 | 标题阶梯 | `doc-typography.styl` + `Page.vue` | 主标题 35 → **30px** 并补 `line-height: 1.3`（原先行高 24px < 字号）；h2 22→24、h3 18→20、h4 16→17、h5 15→16、h6 14→15 |
+| P1-3 | 字体栈统一 | `custom.styl` + `doc-typography.styl` | `body` → `html body`（0,0,2）并用 `var(--fd-font-sans)`；`--fd-font-sans` 补 CJK 族名 |
+| P2-1 | 半像素归整 | `doc-typography.styl` | `--fd-fs-sm` 13.5 → 14、`--fd-fs-xs` 12.5 → 12（对齐组件库 14/12 两档） |
+| P2-3 | 外壳字号 | `SidebarLink.vue`、`SidebarGroup.vue`、`Page.vue` | 侧边栏链接 12.8 → 14px；分组标题 `bold`(700) → 600；右侧「本页目录」12.8 → 14px、`opacity .6 → .72` |
+| P2-4 | 字形 | `custom.styl`、`styles/theme.styl` | 补 Poppins **500 / 600** 两个 face + `font-display: swap`；删掉 `theme.styl` 里重复的 @font-face 与失效的 body/input/button 字体声明 |
+| P2-5 | 语言角标 | `doc-typography.styl` | `rgba(255,255,255,.4)` → `.55`（3.33 → 4.86 : 1） |
+
+验收（产物 + 无头 Chrome 实测）：
+
+| 项目 | 改前 | 改后 |
+| --- | --- | --- |
+| 暗色 h2 / 正文段落 | **1.60 : 1** ✗ | **14.32 : 1** ✅ |
+| 暗色行内 code | **1.55 : 1** ✗ | **13.55 : 1** ✅ |
+| 暗色正文链接 / 锚点 | **3.36 : 1** ✗ | **5.50 : 1** ✅ |
+| 暗色引用块 | 5.11 : 1（亮块） | **6.40 : 1** ✅ |
+| ` ```text ` 代码块 24 段 | `#e2777a` 4.10 : 1 ✗ | `#adbac7` **6.09 : 1** ✅ |
+| 表格 th / td 字号 | 13.5 : 14（倒挂） | 14 : 14 ✅ |
+| 页面主标题 字号 / 行高 | 35px / 24px（行高小于字号） | **30px / 39px** ✅ |
+| 侧边栏链接 | 12.8px / 700 | **14px / 600** ✅ |
+| 外壳与正文字体栈 | 两套（Helvetica+Arial vs Poppins） | **同一套**，标题用真实 SemiBold ✅ |
+| 8 项文档护栏 / vitest / eslint | — | 全 PASS / 16 of 16 / exit 0 |
+
+#### 10.14.2 改的过程中新发现的三处缺陷（同一根因，原报告未覆盖）
+
+**根因一句话**：VitePress 默认主题的暗色 token 定义在 `html.dark` 下，而本站
+明暗切换是**自研**的 `body[vs-theme="dark"]`（`components/Config.vue` 的
+`applyTheme()`）——`<html>` 上永远没有 `.dark`，所以凡是默认主题里写成
+`var(--vp-c-*)` 的**非文字色**，在暗色下都恒取浅色值。原报告只看了 `.vp-doc`
+里的字号/文字色，这三处是量到具体元素背景时才暴露的。
+
+**① `.vp-doc tr` 的白底（表格变白斑）**
+
+```css
+/* VitePress 默认主题 */
+.vp-doc tr { background-color: var(--vp-c-bg); border-top: 1px solid var(--vp-c-divider) }
+.vp-doc tr:nth-child(2n) { background-color: var(--vp-c-bg-soft) }
+```
+
+行底色画在单元格之下、表格底之上 → 暗色下整张表是白的。实测改前
+`tr` 暗色底 `#ffffff`（**1.58 : 1**）、`td` `#ffffff`（**1.23 : 1**）。
+修法：`.vp-doc table:not(.example *) tr, … tr:nth-child(2n) { background: transparent; border-top: 0 }`
+（行底色交给单元格；顺带消掉了 tr 的 border-top 与单元格 border-bottom 叠出来的双线）。
+
+**② `body` 的白底（页面底部露白条）**
+
+```css
+/* VitePress 默认主题 */
+body { min-height: 100vh; color: var(--vp-c-text-1); background-color: var(--vp-c-bg); … }
+```
+
+它与 `custom.styl` 的 `html, body { background-color: var(--vs-theme-layout) }`
+**同特异性、但排在产物后面** → 赢，且恒取 `#ffffff`。后果是暗色下 `body` 仍把
+整页盒子画成白色，凡 `.page` / `.sidebar` / `.navbar` 没盖住的地方就露白 ——
+实测 1440×2600 视口下 `/guide/` 页面**底部约 200px 纯白**（截图
+`.workbuddy/tmp/probe-dark-canvas-tall/guide-index-dark-viewport.png`）。
+修法：选择器改 `html, html body`（0,0,2 压 0,0,1）。
+
+**③ `color-scheme` 恒为浅色**
+
+VitePress 把 `color-scheme: dark` 写在 `html.dark` 下 → 永不生效。影响 UA 层级的
+默认底色：画布、**滚动条**、原生表单控件、自动填充背景。修法：
+`html[vs-theme="dark"] { color-scheme: dark }`。
+
+**配套的必要改动**：②③ 都要靠 `html` 上的属性才能命中，而 `applyTheme()` 原先
+只把 `vs-theme` 写到 `<body>`。自定义属性**只向下继承、不向上传播**，所以
+`<html>` 的 `--vs-theme-layout` 不会因为 body 有属性而变暗。因此 `applyTheme()`
+现在**同时**写 `<html>` 与 `<body>` 两层；`doc-typography.styl` 的暗色 token 块
+选择器也放宽成 `html[vs-theme="dark"], body[vs-theme="dark"]`，
+任一层被删都不会静默退回浅色值。
+
+#### 10.14.3 可复用的判别方法
+
+**「自研暗色 + VitePress 默认主题」这类组合，要专门扫一遍 `var(--vp-c-*)`。**
+判据：
+
+```bash
+# 1) 产物里凡是选择器命中我们页面、又用了 --vp-c-* 的规则，都是嫌疑对象
+# 2) 逐个判断它是否被自己的权威层压住（文字色通常压住了，背景色常漏）
+node -e "…扫 selector + var(--vp-c-*)…"
+```
+
+实扫结果：13 条里 11 条已被 `doc-typography.styl` 压住（`h2` 边框、`blockquote` 边框、
+`a` 颜色、`th/td` 边框、`hr` 边框…），**漏的正好是三条「背景/色彩方案」类**：
+`tr` 背景、`body` 背景、`html.dark` 的 `color-scheme`。规律很清楚 ——
+**默认主题里改「字」的规则多半被我们的排版层覆盖了，改「底」的没有。**
+
+另外一条方法论：**量背景不能只量目标元素，必须量到「谁真正画了这层底色」。**
+`td` 的 `color` 一切正常，问题在 `tr`；`body` 的 `color` 正常，问题在它的
+`background-color`。本轮新增/改进了三个探针来固化这一点：
+
+| 脚本 | 作用 |
+| --- | --- |
+| `probe-typography.mjs`（已扩充） | 采样器新增 `tr（表格行）`——只量 `td` 的 color 看不出白底 |
+| `probe-dark-canvas.mjs`（新增） | 量 `html`/`body`/`.page` 的底色与矩形，`--h=` 可把视口调高逼出「内容不足一屏」的露白 |
+| `shot-inline-code.mjs`（新增） | 行内 code 的底色来源链（元素 → 祖先逐层 `background-color`）+ 3× 放大截图 |
+
+⚠️ 判读截图的一个坑：`body` 在暗色下是白的、被 `.page` 盖住，所以
+**普通高度视口下的截图完全看不出问题**，必须把视口调到高于内容才会露出来。

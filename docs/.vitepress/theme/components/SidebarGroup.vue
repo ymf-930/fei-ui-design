@@ -133,7 +133,9 @@ getVar(var)
   transition color .15s ease
   cursor pointer
   font-size 1em
-  font-weight bold
+  // 原为 bold(700)：分组标题是「容器标签」，比正文重一级即可。
+  // 700 既比正文重两级，又比同页的标题（600）更重，语义上说不通。
+  font-weight 600
   // text-transform uppercase
   padding 0.35rem 1.5rem 0.35rem 1.25rem
   width 100%

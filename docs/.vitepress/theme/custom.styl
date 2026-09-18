@@ -57,10 +57,18 @@
   --vs-button-text-color: #fff;
 
   --vp-code-block-bg: var(--vs-theme-code);
-  --vp-code-tag-color: #e2777a;
+  // 原先这里还有一条 `--vp-code-tag-color: #e2777a`（粉红）。它在**整份产物**
+  // 里只出现 1 次（就是这行定义本身），没有任何规则或脚本消费它 ——
+  // 属于死声明，且是唯一残留的粉红色源，已删除以免以后被误当成"代码块配色"。
 
-  --shiki-light: #e2777a!important;
-  --shiki-dark: #9CCFD8!important;
+  // ⚠️ 这是 shiki `css-variables` 模式下**未切 token 的文本**的兜底色。
+  // 正常 token 的 span 都带内联 style="--shiki-light:#xxxxxx"，内联自定义属性
+  // 优先于 :root，所以不受这里影响；但未识别语言（```text / 裸围栏）整行不会
+  // 被切 token，文本直接落在 <span class="line"> 里 → 继承这个值。
+  // 原为 #e2777a（粉红，4.10:1），会让整块说明文字看起来像「被删除的内容」。
+  // 现与 github-dark-dimmed 的正文色一致 → 6.09:1。
+  --shiki-light: #adbac7 !important;
+  --shiki-dark: #9CCFD8 !important;
 }
 
 [class*="--default"], [class*="--primary"] {
@@ -83,11 +91,32 @@
   --vs-color: var(--vs-warn)
 }
 
+// Poppins 的 400 / 500 / 600 三个字重。
+//   组件与文档的标题统一用 font-weight 600，只注册 400 的话浏览器会拿 400 的
+//   轮廓**合成伪粗体**（笔画发虚、字重比设计稿轻）。docs/public/Poppins/ 里本来
+//   就躺着全套 18 个字重，这里补上实际用到的两个即可，零新增资源。
+//   `font-display: swap` 避免首屏在字体到达前空白。
+//   注意：这里只声明一次。styles/theme.styl（404 页引用）里那份重复声明已删除。
 @font-face
   font-family: "Poppins"
-  src: url("/Poppins/Poppins-Regular.ttf")
+  src: url("/Poppins/Poppins-Regular.ttf") format("truetype")
   font-weight: 400
   font-style: normal
+  font-display: swap
+
+@font-face
+  font-family: "Poppins"
+  src: url("/Poppins/Poppins-Medium.ttf") format("truetype")
+  font-weight: 500
+  font-style: normal
+  font-display: swap
+
+@font-face
+  font-family: "Poppins"
+  src: url("/Poppins/Poppins-SemiBold.ttf") format("truetype")
+  font-weight: 600
+  font-style: normal
+  font-display: swap
 
 .fade-enter-active, .fade-leave-active
   transition: opacity .5s ease
@@ -204,7 +233,18 @@ box-icon
     .sidebar
       transform: translate(0%) !important
 
-html, body
+// ⚠️ 选择器必须是 `html body`（特异性 0,0,2），不能只写 `body`（0,0,1）。
+//   VitePress 默认主题有一条 `body { background-color: var(--vp-c-bg); ... }`，
+//   与本文件同特异性、但排在产物**后面** → 它赢。而 `--vp-c-bg` 的暗色分支挂在
+//   `html.dark` 下，本站暗色是自研的 `body[vs-theme="dark"]`，`<html>` 永不带
+//   `.dark` → 它**恒取 #ffffff**。后果：暗色下 `body` 仍把整页盒子画成白色，
+//   凡 `.page` / `.sidebar` 没盖住的地方（内容比视口短时页面底部的空区）就露白条
+//   —— 实测 1440×2600 视口下 /guide/ 底部有约 200px 纯白。
+//   `html` 自身也要声明：根元素的背景会成为**画布色**（overscroll 时可见），
+//   而它的 `--vs-theme-layout` 只有把属性也写到 <html> 上才会变（见 Config.vue
+//   的 applyTheme —— 自定义属性只向下继承、不向上传播）。
+html,
+html body
   padding 0
   margin 0
   // background-color #f4f7f8
@@ -213,17 +253,29 @@ html, body
   color getVar(theme-color) !important
   scroll-behavior: smooth;
 
-body
-  font-family "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif
+// `color-scheme` 决定 UA 层级的默认底色（画布、滚动条、原生表单控件、
+// 自动填充的背景）。VitePress 把它写在 `html.dark` 下，本站永不带 `.dark`
+// → 一直是浅色，暗色主题下滚动条与原生控件会突兀地发白。
+html[vs-theme="dark"]
+  color-scheme dark
+
+// ⚠️ 必须写 `html body`（特异性 0,0,2），不能只写 `body`（0,0,1）。
+//   组件库 src/_styles/common/reset.css 有一条
+//     body { font-family: var(--fei-font-family) }
+//   而 src/_styles/index.css 在 theme/index.ts 里**排在 ./index.css 之后**加载，
+//   同特异性下后者胜出 —— 只写 `body` 的话这一段就是死代码（实测确实如此：
+//   外壳一直走 Helvetica/Arial，只有 .vp-doc 靠 --fd-font-sans 单独拉回 Poppins，
+//   同一页出现两套字体栈）。改成 `html body` 后外壳与正文共用同一条栈，
+//   中英混排的字面才统一。
+//   input / button 不再单独声明：reset.css 已给它们 `font-family: inherit`。
+//   ⚠️ 这里**不再**声明 font-size：原先写的 `font-size 16px` 同样被 reset.css 的
+//      `body { font-size: var(--fei-font-size-default) }`（14px）压掉，从未生效。
+//      把它一起挪进 `html body` 会让它突然生效，从而改变外壳所有 em 单位的基准，
+//      属于本轮范围之外的行为变更，故直接删掉。
+html body
+  font-family var(--fd-font-sans)
   -webkit-font-smoothing antialiased
   -moz-osx-font-smoothing grayscale
-  font-size 16px
-
-input
-  font-family "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif
-
-button
-  font-family "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif
 
 *
   box-sizing: border-box

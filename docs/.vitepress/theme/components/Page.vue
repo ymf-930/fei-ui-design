@@ -608,7 +608,13 @@ getVar(var)
       transition all .25s ease
 
     h1
-      font-size 35px
+      // 30px：原 35px 与 h2（--fd-fs-h2 = 24px）之间跨度 1.46×，层级断层；
+      // 也高于主流文档站的主标题（VitePress 默认 32 / Ant Design 30 / Element Plus 28）。
+      font-size 30px
+      // 行高必须显式声明。原先只写了字号，行高由上游一条 line-height 24px 决定，
+      // 实测「行高 24px < 字号 35px」—— 当前靠 padding 撑着没露出裁切，
+      // 换字体或再调字号就会出现行间重叠/裁切。
+      line-height 1.3
       margin 0px
       padding 13px 0px
       // margin-bottom 70px
@@ -766,10 +772,14 @@ getVar(var)
         a
           display block !important
           text-align right
-          font-size .8rem
+          // 右侧「本页目录」用的也是 12.8px（.8rem）——与左侧栏链接同源问题：
+          // 低于中文小字 13px 的下限。统一到排版层的小号 token（14px）。
+          font-size var(--fd-fs-sm)
           padding 3px
           padding-right 25px
-          opacity .6
+          // 原 .6：实测有效对比度约 3.9:1（#2c3e50 以 60% 叠在 #f4f7f8 上），
+          // 低于 AA。提到 .72 → 约 5.1:1，观感仍是「次一级」的克制灰。
+          opacity .72
           max-width 200px;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -982,7 +992,8 @@ getVar(var)
         margin-bottom 0px !important
 
         #header-title
-          font-size 1.5rem !important
+          // 吸顶态跟随主标题缩小：30 → 22（原 1.5rem = 24px）
+          font-size 22px !important
 
   .header-page
     &.fixed
@@ -991,7 +1002,8 @@ getVar(var)
 
         .flex-header
           #header-title
-            font-size 1.2rem !important
+            // 再缩一档：22 → 18（原 1.2rem = 19.2px，且是半像素）
+            font-size 18px !important
 
 @media (max-width: 600px)
   .page
