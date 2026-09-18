@@ -455,13 +455,6 @@ getVar(var)
           width 1px
           background getVar(theme-layout)
           display block
-      &.active
-        color $accentColor !important
-        opacity 1
-        border-radius 12px 12px 0px 0px
-        background getVar(theme-code2)
-        i
-          color #fff !important
       svg, i
         max-width 18px
         fill getVar(theme-color) !important

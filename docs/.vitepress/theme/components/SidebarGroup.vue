@@ -160,15 +160,6 @@ getVar(var)
     top -0.12em
     left 0.5em
 
-  &.clickable
-    &.active
-      font-weight 600
-      color $accentColor
-      border-left-color $accentColor
-
-    &:hover
-      color $accentColor
-
 .sidebar-group-items
   transition height .1s ease-out
   font-size 0.95em

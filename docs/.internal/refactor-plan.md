@@ -2804,6 +2804,120 @@ DOM（CDP 实挂）      feiButton 10 / feiInput 2 / feiCheckbox 4 / vsLeftover 
 
 品牌素材（Logo SVG/PNG）替换属独立设计议题，**需与「品牌 Logo」任务一起做**，不在前缀迁移范围内。
 
+### 10.19 死代码清理（2026-09-18，用户指令「删掉死代码」）
+
+§10.17.3 与 §8.10.5 遗留的两笔（「13 条死 CSS」+「35 个从 index.ts 不可达的主题文件」）本轮一次性清掉。
+**用户两次拍板**：死 CSS「全删，外观不变」；孤儿资源「97 个全删」。
+
+#### 10.19.1 判定方法：可达性分析（不靠"看着像死"）
+
+三次扫描交叉验证，**以「从入口出发的可达性」为最终依据**：
+
+| 方法 | 脚本 | 结论 |
+| --- | --- | --- |
+| 字符串级「文件名是否被提到」 | 早期 `scan-dead-theme-components.cjs` | 只作粗筛，**通用名会大量误判** |
+| 只追 JS `import` 边 | `audit-dead-files.py`（原始版） | 漏 `@require` / `<style src>` / md 引用 / 目录 index ⇒ 假阳性 |
+| **可达性（入口 BFS）** | `.workbuddy/tmp/reachability.cjs` | **权威**：20 个不可达 `.vue` |
+
+入口 = `theme/index.ts` + `.vitepress/config.*` + **全部 `.md`**（md 可 import 组件、也可用全局注册组件）。
+**反向还要查「只被死文件引用」的传递死链** —— 本次结果为 0（每个存活文件都有存活引用者）。
+
+#### 10.19.2 实际删除：**124 个文件**
+
+| 类别 | 数量 | 明细 |
+| --- | --- | --- |
+| 不可达 `.vue` 组件 | **21** | `AlgoliaSearchBox` / `ASidebarLink` / `Branding` / `Codefund` / `HeaderNotification` / `headerSvg` / `HomeIllustration1~4` / `HomePatrons` / `HomeTwiter` / `HomeUses` / `NavLinks2` / `PassLayout` / `api.vue` / `Badge` / `Coloren` / `docsWarn` / `Icons` / **`Color.vue`** |
+| 从未参与编译的 `.styl` | **6** | `arrow` / `custom-blocks` / `mobile` / `palette` / `toc` / `styleSass.stylus`（对应 `@require` **一直是被注释着的**） |
+| 孤儿静态资源 | **97**（≈10.3 MB） | 46 个随上述组件一起失去引用；51 个本就零引用 |
+
+另有 11 个文件被**局部清理**（净 −271 行）：10 条死 CSS 声明 + 7 处坏 `@media` 块。
+
+⚠️ **`Color.vue` 是本轮唯一靠"复核"捞回来的**：上一轮的可达性脚本按**组件名**匹配 md 标签，
+而 `anchor.md` / `timeline.md` 里的 `<Color/>` 指向的是**就地 import** 的
+`./demo/Anchor/Color.vue`（另一个文件）⇒ 全局那个被误判成"活"。
+**教训：按名字匹配标签时，必须确认那次 import/注册到底绑定的是哪个文件。**
+
+#### 10.19.3 死 CSS 的两类，以及"删"为什么零风险
+
+| 类别 | 形态 | 后果 | 数量 |
+| --- | --- | --- | --- |
+| **A. 死声明** | 声明值里引用未定义变量，如 `border-top 6px solid $arrowBgColor` | 浏览器丢弃**这一条声明** | 10 |
+| **B. 坏 `@media` 块** | 媒体条件里含未定义变量，如 `@media (max-width: $MQMobile)` | 浏览器丢弃**整个块** | 7 处 / 3 条唯一 |
+
+**根因**：这些变量（`$accentColor` / `$navbarHeight` / `$textColor` / `$borderColor` / `$arrowBgColor` / `$MQMobile`）
+原本由 `palette.styl` 与 VuePress 的 `theme.styl` 提供 —— 而 **`palette.styl` 从未被任何文件 `@require`**
+（`theme.styl` 里的 `@require` 全被注释掉了）。所以它们在整个编译上下文里都不存在。
+
+Stylus 对未定义变量**不报错、原样输出** ⇒ 产物里是**语法非法**的 CSS ⇒ 浏览器静默丢弃、构建零警告。
+（与 §10.17.3 同一个坑。）
+
+**"删除零风险"是证明出来的**，两条独立证据：
+
+1. **CSS 层面**：非法声明的属性值对任何选择器都无效 ⇒ 删掉不可能改变渲染。
+2. **DOM 层面**（CDP 实测，三页）：
+   ```js
+   matchMedia('(max-width: 768px)').matches      // true   ← 375px 视口
+   matchMedia('(max-width: $MQMobile)').matches  // false  ← 该条件永不成立
+   ```
+   且那 7 个选择器在真实 DOM 里**全部命中 0**：
+   `.header__btns` / `.sidebar .nav-links` / `.navbar .logo` /
+   `.dropdown-title .arrow` / `.header-codex ul li.active` / `.sidebar-heading.clickable[.active|:hover]`
+   —— 其中 `.header__btns`、`.nav-links`（在 `.sidebar` 内）、`.logo` **根本不在模板里**；
+   `.dropdown-wrapper` / `.nav-dropdown` / `.dropdown-item` 全站 0（自定义下拉那一层不渲染）。
+
+#### 10.19.4 顺带修掉：`layouts/404.vue` 的 `<router-link>`（VuePress 1.x 遗留）
+
+做多页冒烟时 404 页报 `Hydration completed but contains mismatches.`，定位过程与结论：
+
+```
+SSR   : <h1>404</h1><!---->                                   ← 渲染成空注释
+client: <h1>404</h1><router-link to="/">Take me home.</router-link>  ← 未解析元素！
+```
+
+`<router-link>` 是 **VuePress 1.x / Vue Router 3** 的全局组件，VitePress（Vue Router 4）里**不存在**。
+后果两条：① SSR 与水合结果不一致 ⇒ 水合告警；② 该链接**没有 href，点不动**。
+改用原生 `<a :href>` + `useData().site.value.base`（base 形如 `/fei-ui-design/`），
+并顺手删掉同文件里声明后从未使用的 `msgs` 数组。
+
+⚠️ **写这条修复注释时踩了一个新坑**：注释里写了字面量 `<!---->`，它的 `-->` **提前闭合了 HTML 注释**，
+剩下半截变成非法内容 ⇒ `@vue/compiler-dom` 解析抛错、**构建直接中断**。
+⇒ **HTML 注释内不能出现连续两个减号**（Vue 官方文档明确提到 `--` 在注释里非法）。
+
+#### 10.19.5 守卫脚本修正（防"守卫腐烂"）
+
+`audit-dead-files.py` 原版只追 JS `import`，把 `@require` 的 styl、md 引用的组件、目录 index
+一律误判为死 ⇒ 每次跑都报 8 个假阳性。**噪声多了人就会学会忽略它，守卫随即腐烂**（同 §10.18.5 的教训）。
+本轮补齐 5 类边：`import/require`、Stylus `@import/@require`、`<style src>`、
+**`<preview path="...">`（VitePress demo-preview，不是 import！）**、目录 `index.*` 解析，
+并把 `__tests__/*` 列为白名单。修后：**A 段 0 个，退出码 0**。
+
+#### 10.19.6 验证（全绿）
+
+```
+vitest 16/16 ✓
+build:site ✓ 73 页面        ← 构建通过本身即「删除无残留导入」的强证据（Vite 会直接失败）
+check-site-links ✓ / check-docs-contrast ✓ / check-docs-placeholders ✓
+audit-dead-files.py  A 段 0 个，EXIT=0
+audit-dead-css.py    被丢弃的声明 0 条（原 10）
+count-bad-media      未解析媒体查询 0 处（原 7）；产物里残留 $ 变量（原 5 种）→ 空
+eslint               0 error
+CDP 首页              feiButton 10 / feiInput 2 / feiCheckbox 4 / vs 残留 [] / 控制台报错 无
+CDP 多页冒烟           8 页全部渲染正常、无断图；删改后 404 页水合告警消除
+```
+
+#### 10.19.7 本轮发现但**未处理**（留给后续）
+
+1. **自定义侧边栏链在运行时并不渲染**：`Sidebar.vue` 的 `.content-sidebar` 出现在 DOM（2 处），
+   但 `SidebarLinks → SidebarGroup → SidebarLink` 这条链渲染不出来 ——
+   实测 `.sidebar-heading.clickable` / `.sidebar-group`（自定义那套）均为 0，
+   活着的侧边栏是 **VitePress 自己的**（`.sidebar-heading` 8 个来自它）。
+   因此 `SidebarLink.vue:35` 的 `h('router-link', …)` 也从未执行（DOM 里未解析 `router-link` 元素为 0）。
+   ⇒ **这几个组件"可达但运行时无效"**，是否保留需产品决策。
+2. **更大范围的"选择器永不匹配" CSS**：本轮只清了引用了未定义变量的那批。
+   例如 `@media (max-width: 1000px) { .sidebar .nav-links {…} }` 媒体条件**合法**，
+   但 `.sidebar .nav-links` 永不匹配。全量清理需要覆盖率分析，未做。
+3. **首页 `.home .features` / `.feature` 元素不存在**，相关规则（含刚删的两个坏 `@media` 内的）本就无效。
+
 ## §11 工程环境与工具链速查（跨轮次复用，2026-09-18 追加）
 
 > 本仓库 git 在 **E 盘**、工作区在 **C 盘**（跨盘）+ 受限沙箱，导致下列行为与常规环境不同。

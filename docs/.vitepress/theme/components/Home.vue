@@ -425,40 +425,6 @@ getVar(var)
 //   text-align center
 //   color lighten($textColor, 25%)
 
-@media (max-width: $MQMobile)
-  .home
-    .features
-      flex-direction column
-
-    .feature
-      max-width 100%
-      padding 0 2.5rem
-
-@media (max-width: $MQMobileNarrow)
-  .home
-    .hero
-      img
-        max-height 210px
-        margin 2rem auto 1.2rem
-
-      h1
-        font-size 2rem
-
-      h1, .description, .action
-        margin 1.2rem auto
-
-      .description
-        font-size 1.2rem
-        margin-bottom: 1rem;
-
-      .action-button
-        font-size 1rem
-        padding 0.6rem 1.2rem
-
-    .feature
-      h2
-        font-size 1.25rem
-
 @media (max-width: 1400px)
   .home
     .content-i

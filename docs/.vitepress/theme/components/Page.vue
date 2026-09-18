@@ -921,16 +921,6 @@ getColor(colorx, alpha = 1)
   .page .sidebar
     display none !important
 
-@media (max-width: $MQMobile)
-  .page-edit
-    .edit-link
-      margin-bottom .5rem
-
-    .last-updated
-      font-size .8em
-      float none
-      text-align left
-
 @media (max-width: 600px)
   .page-nav
     .inner

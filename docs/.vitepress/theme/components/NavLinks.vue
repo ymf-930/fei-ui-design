@@ -103,13 +103,4 @@ getColor(vsColor, alpha = 1)
   .repo-link
     margin-left 1.5rem
 
-@media (max-width: $MQMobile)
-  .nav-links
-    .nav-item, .repo-link
-      margin-left 0
-
-@media (min-width: $MQMobile)
-  .nav-links a
-    &:hover, &.router-link-active
-      color getVar(theme-color)
 </style>

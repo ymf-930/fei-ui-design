@@ -1,10 +1,8 @@
-//@require './code'
-//@require './custom-blocks'
-//@require './arrow'
-//@require './wrapper'
-//@require './toc'
-// 原先这里还 @require 了 vf-button.styl / vf-input.styl / vf-checkBox.styl
-// 三份 vuesax 组件外观复刻样式，随首页改用组件库真实组件一并删除。
+// 本文件只保留一处有效 @require。原先注释掉的这些已在「死代码清理」（2026-09-18）中删除：
+//   arrow.styl / custom-blocks.styl / mobile.styl / palette.styl / toc.styl
+//   （它们从未参与编译 —— 对应 @require 一直被注释着）+ vf-button/input/checkBox.styl
+//   （三份 vuesax 外观复刻样式，随首页改用组件库真实组件一并删除）。
+// ⚠️ `@require` 指向不存在的文件会让 Stylus **直接构建失败**，所以改名前先确认文件存在。
 @require './icons.styl'
 
 // @font-face 声明**只在 custom.styl 里保留一份**。
@@ -314,5 +312,3 @@ th, td
       display none
     .page
       padding-left 0
-
-//@require 'mobile.styl'

@@ -6,7 +6,6 @@
     @touchstart="onTouchStart"
     @touchend="onTouchEnd"
   >
-    <!--    <HeaderNotification/>-->
     <ClientOnly>
       <Navbar
         v-if="shouldShowNavbar"
@@ -66,7 +65,6 @@ import Page from '../components/Page.vue'
 import Sidebar from '../components/Sidebar.vue'
 import DocsHome from '../components/DocsHome.vue'
 import Config from '../components/Config.vue'
-// import HeaderNotification from '../components/HeaderNotification.vue'
 
 const {site, page, frontmatter, title} = useData()
 const router = useRouter()

@@ -9,7 +9,6 @@
     <div class="content-sidebar">
       <slot name="top"/>
       <SidebarLinks :fixed="fixed" :depth="0" :items="items"/>
-      <!--      <NavLinks2 />-->
       <slot name="bottom"/>
     </div>
   </aside>
@@ -53,52 +52,6 @@ getVar(var)
   pointer-events none
   fill getVar(theme-layout)
 
-.header__btns
-  display flex
-  align-items center
-  justify-content center
-  padding 0px 10px
-  transition all .25s ease
-  max-width 90px
-  overflow hidden
-
-  button
-    background transparent
-    border 0px
-    width 35px
-    padding 0px
-    display flex
-    align-items center
-    justify-content center
-    height $navbarHeight
-    cursor pointer
-    transition all .25s ease
-    outline none
-    opacity .4
-    position relative
-
-    &:after
-      content ''
-      position absolute
-      bottom 0px
-      left 50%
-      transform translate(-50%)
-      background $textColor
-      width 0px
-      height 2px
-      transition all .25s ease
-
-    &.active
-      opacity 1
-
-      &:after
-        width 60%
-
-    svg
-      max-width 20px
-      max-height 20px
-
-
 .sidebar
   padding-right 5px
   z-index 1800 !important
@@ -130,20 +83,6 @@ getVar(var)
 
   a
     display inline-block
-
-  .nav-links
-    display none
-    border-bottom 1px solid $borderColor
-    padding 0.5rem 0 0.75rem 0
-
-    a
-      font-weight 600
-
-    .nav-item, .repo-link
-      display block
-      line-height 1.25rem
-      font-size 1.1em
-      padding 0.5rem 0 0.5rem 1.5rem
 
   & .content-sidebar > .sidebar-links
     padding 1.5rem 0
