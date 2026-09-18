@@ -2303,3 +2303,136 @@ node -e "…扫 selector + var(--vp-c-*)…"
 
 ⚠️ 判读截图的一个坑：`body` 在暗色下是白的、被 `.page` 盖住，所以
 **普通高度视口下的截图完全看不出问题**，必须把视口调到高于内容才会露出来。
+
+## §10.15 第四处同源缺陷：`:root` 与 `[vs-theme="dark"]` 的特异性平局（2026-09-18 追加）
+
+§10.14 收尾时用 `probe-dark-canvas.mjs` 复测，`html` 背景**仍然是白**。当时的
+**第一反应是「探针没模拟真实行为」，第二反应是「`:root` 兜底赢了特异性平局」**
+—— 两个都要处理，前者会造出**假绿/假红**，后者才是真缺陷。
+
+### 10.15.1 先修探针：探针与实现不同构，测出来的是假象
+
+原探针的「切暗色」只写 `document.body`：
+
+```js
+document.body.setAttribute('vs-theme','dark'); document.body.classList.add('darken')
+```
+
+而真实的 `applyTheme()`（§10.14 已改成同时写 `<html>`）：
+
+```js
+document.documentElement.setAttribute('vs-theme', isDark ? 'dark' : 'light')
+document.body.setAttribute('vs-theme', isDark ? 'dark' : 'light')
+```
+
+两者差一个 `<html>`。后果是 `--vs-theme-layout` 在 `<html>` 上**取不到暗色值**，
+只能落到 `custom.styl` / `styles/theme.styl` 里 `:root { --vs-theme-layout: #fff }`
+这个浅色兜底 —— 于是探针报出 `htmlBg: rgb(255,255,255)`，**看起来像缺陷，其实是探针自己造的**。
+
+> **方法论（本轮最重要的一条）**：探针里凡是「模拟应用状态」的语句，必须与实现
+> **逐字符对齐**。只要有一处不同构，测出来的既可能是假绿也可能是假红，而且**两种都很难怀疑到探针头上**。
+> 现在探针把这段抽成 `SET_THEME(dark)` 常量，并在文件头写明「必须与 `applyTheme()` 完全一致」，
+> 同时新增 `htmlAttr` / `htmlLayoutVar` / `htmlColorScheme` 三个采样点，让「属性写没写上去」
+> 与「变量有没有解析成暗色」两件事分开可见。
+
+### 10.15.2 再修实现：特异性平局靠源码顺序定胜负，而实测站错了边
+
+把探针修成同构之后，结果变成**「属性是对的、变量还是错的」**：
+
+```
+"htmlAttr": "dark",          ← 属性写上了
+"htmlLayoutVar": "#fff",     ← 但 --vs-theme-layout 仍是浅色兜底
+"htmlColorScheme": "dark",   ← color-scheme 因为用了 html[vs-theme="dark"]（0,1,1）反而是对的
+```
+
+根因：`<html>` **同时**匹配两条同特异性规则
+
+| 规则 | 位置 | 特异性 |
+| --- | --- | --- |
+| `:root { --vs-theme-layout: #fff }` | `custom.styl`（浅色兜底），`styles/theme.styl` 里还有一份重复 | **(0,1,0)** |
+| `[vs-theme="dark"] { --vs-theme-layout: #1e2023 }` | `Config.vue` | **(0,1,0)** |
+
+平局 → 由**源码顺序**定胜负。产物实测：两份 `:root` 分别在字节偏移 `304719` 与 `504714`，
+而暗色块在 `474408` —— **后一份 `:root`（504714）排在暗色块之后**，`<html>` 输掉。
+
+为什么 `body` 反而是对的？因为 `body` 只被 `[vs-theme="dark"]` 命中，没有 `:root` 跟它抢。
+**于是出现「`body` 正确、`html` 错误」这种很容易被当成「没问题」的组合**：
+`<html>` 的背景会成为**画布色**，只在 overscroll 与「内容短于视口时的页面底部」显形，
+平时被 `body` 和 `.page` 盖得严严实实。
+
+修法（一行选择器）：把暗色 token 块的选择器写成
+
+```stylus
+:root[vs-theme="dark"],
+[vs-theme="dark"]
+  --vs-theme-bg: #18191c
+  ...
+```
+
+`:root[vs-theme="dark"]` 是 **(0,2,0)**，稳压两份 `:root` 的 (0,1,0)，**与样式表顺序无关**；
+`[vs-theme="dark"]` 保留，继续覆盖 `body` 及其它可能挂属性的元素。
+
+修复后复测：
+
+```
+"htmlAttr": "dark", "htmlLayoutVar": "#1e2023",
+"htmlColorScheme": "dark",
+"htmlBg": "rgb(30, 32, 35)",  "bodyBg": "rgb(30, 32, 35)"
+```
+
+`guide-index` 在 1440×2600 视口下 `gapBelowPage = 855px`（正好是原来会露白条的那块），
+截图确认整屏纯暗色，无白条。
+
+### 10.15.3 规律与排查清单
+
+- **凡是「浅色兜底写在 `:root`、暗色覆盖写在属性选择器」的组合，都要查特异性是不是平局。**
+  平局一律用 `:root[attr="value"]` 破，不要靠「我把它写在后面」。
+- 判别口诀：**属性对不对看 `getAttribute`，变量对不对看 `getPropertyValue('--x')`，
+  两者要分别采样** —— 只采一个会把「属性写了但变量没变」误判成修好了。
+- 🔁 与 §10.14 同源：四次缺陷（`tr` 白块、`body` 白条、`color-scheme`、`html` 画布白）
+  **全部**是「VitePress 默认主题的暗色分支挂在 `html.dark` 下，而本站暗色是自研的」。
+  自查方式：`node -e`（见 §10.14）扫产物里命中本站页面又用了 `--vp-c-*` 的规则，
+  重点看**背景/色彩方案**类。
+
+### 10.15.4 本轮验证（全部通过）
+
+| 项 | 结果 |
+| --- | --- |
+| `vitest run` | 4 文件 / 16 用例全绿 |
+| `eslint . --ext …` | 退出码 0 |
+| 8 项文档与产物护栏 | `check-docs-api`/`-links`/`-demo`/`-style`/`-tags`/`check-site-links`/`-contrast`/`-placeholders` 全 PASS |
+| 暗色对比度（CDP） | h2 与正文 14.32:1、`td` 14.16:1、`tr` 11.00:1、代码块 `span.line` 9.14:1、引用 6.40:1 |
+| 外壳字号（CDP） | 页头 30px/600/39px、h2 24px、正文 15px/26.25px、侧边栏 14px/500、导航 14.4px |
+| 字体（CDP） | Poppins 400/500/600 三个 face 均 `loaded`，`document.fonts.check('600 22px Poppins') = true`（不再是合成粗体） |
+| 代码块（CDP） | 49 个块 / 4159 段可见文本，24 段未切 token 者已为 `#adbac7`（6.09:1） |
+
+⚠️ **一条已知假阳性，不要再当缺陷**：`probe-typography.mjs` 的 `pre code（代码块）` 行会报
+`rgba(60, 60, 67, 0.78)` / 1.45:1。那是 **`code` 元素自身的计算色**（VitePress 的 `--vp-c-text-1`），
+而代码块的**每一个可见字符都在 shiki 的 token `span` 里**，实显色由 span 决定。
+`probe-typography3.mjs` 已经内置了这条判别，会额外打印
+「✓ 代码块所有可见字符都被 token 包裹（span.line 的兜底色不外显）」；
+要看**实显色**用 `probe-code-plain.mjs`（按文本段采样），别看 `pre code` 的计算色。
+
+### 10.15.5 构建侧的一条经验（`build:site` 的沙箱删除护栏）
+
+`.temp` 被删的时机**不止收尾那一处**。本轮第一次重建直接失败在
+`vite:prepareOutDir → emptyDir`，目标 `docs/.vitepress/.temp/components_loading.md.js`：
+
+```
+[safe-delete][SAFE_DELETE_BULK_CONFIRM_REQUIRED] {"count":50,"threshold":50,"scope":"turn",…}
+```
+
+即 **SSR 产物目录就是 `tempDir`**，构建**开始时**也要清它一次。所以「只移 `site`」
+不够，正确顺序是：
+
+```bash
+mv site .workbuddy/tmp/stale/site-<date>
+find docs/.vitepress/.temp -mindepth 1 -maxdepth 1 \
+  -exec mv {} .workbuddy/tmp/stale/vp-temp-<date>/ \;   # 内容全部移走
+rmdir docs/.vitepress/.temp                              # 清空后 rmdir 才能成功
+DEBUG=1 "<托管node绝对路径>" node_modules/vitepress/bin/vitepress.js build docs
+```
+
+`.temp` **目录本身**被占用时 `mv` 会报 `Permission denied`，但逐个移出**条目**是可行的，
+移空之后 `rmdir` 也就成功了。这样 `emptyDir` 面对的是空目录、一次删除都不需要，
+收尾的 `rimraf` 又被 `DEBUG=1` 跳过。本次实测构建 39.61s。
