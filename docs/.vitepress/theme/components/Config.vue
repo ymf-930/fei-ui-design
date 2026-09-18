@@ -1,6 +1,13 @@
 <template>
   <div class="config">
-    <button class="config-btn">
+    <!-- 齿轮入口（含展开的 options 菜单）只在有侧边栏的文档页出现。
+         首页没有侧边栏、也没有代码块，菜单里「收起/展开侧边栏」「展开侧边栏子栏目」
+         「打开/关闭所有代码」三项全是空操作，留着只会迷惑人。
+         明暗开关是**另一个按钮**（.switch-dark），首页保留。 -->
+    <button
+      v-if="!isHome"
+      class="config-btn"
+    >
       <i class="bx bx-cog"></i>
       <svg
         class="effect1config"
@@ -109,7 +116,12 @@
   </div>
 </template>
 <script setup>
-import { onMounted, ref, getCurrentInstance, nextTick } from 'vue'
+import { onMounted, ref, computed, getCurrentInstance, nextTick } from 'vue'
+import { useData } from 'vitepress'
+
+const { frontmatter } = useData()
+// 首页（docs/index.md 的 `home: true`）。只认真正的主页，不含 docsHome 类页面。
+const isHome = computed(() => !!frontmatter.value.home)
 
 const vsThemeVal = ref(null)
 

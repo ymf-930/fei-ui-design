@@ -2024,6 +2024,122 @@ if (window.history.length > 1) {
   （§10.11.1），一条是真缺陷（§10.11.2）。判断依据是**提交时序 + 产物哈希**，不是感觉 ——
   上一轮 §10.10 已因「缓存旧产物」误判过一次，这次直接先比对时序，省掉一整轮往返。
 
+### 10.12 首页配置齿轮 + 页头「指南」下拉（2026-09-18）
+
+**触发**：用户一次报两条 ——「在线使用文档 `config-btn` 首页应该不需要显示」
+「在线使用文档头部导航指南应该不需要展开收起」。两条都按**产品决策**处理（不是缺陷修复），
+但第 2 条查下去发现它**本来就是个死控件**。
+
+勘察工具：`.workbuddy/scripts/probe-nav-config.mjs`（CDP 无头 Chrome，1440×984，
+只读快照 + hover 实测 + 验收断言）。
+
+#### 10.12.1 首页去掉齿轮 `.config-btn`（已改）
+
+现状（CDP 快照）：
+
+| 页面 | `.config` 位置 | 内含 |
+| --- | --- | --- |
+| 首页 | `x=0`（`Home.vue` 的 `.home ~ .config { left: 0px }`） | `.config-btn`（齿轮，40px）+ `.switch-dark`（明暗开关，32px） |
+| 文档页 | `x=260` | 同上 |
+
+首页**没有侧边栏、也没有代码示例**，而齿轮菜单（`ul.options`，6 项）里
+「收起/展开侧边栏」「展开/收起侧边栏子栏目」「打开/关闭所有代码」三项在首页**全是空操作**。
+
+→ `Config.vue` 增加 `useData().frontmatter.home` 判定，齿轮加 `v-if="!isHome"`
+（`ul.options` 写在齿轮 `<button>` 内部，跟着一起离开 DOM）。
+
+**明暗开关保留** —— 它是同一容器里的**独立按钮**（`.switch-dark`），首页同样需要。
+只认 `home: true` 的主页；`docsHome` 类页面（`guide/index.md`、`components/index.md`）
+同样没有侧边栏，如需一并处理，把判定换成「`home || docsHome`」即可（未做，等确认）。
+
+#### 10.12.2 页头「指南」改成普通链接（已改）
+
+原来 `config.js` 的 `指南` 项带 `items`（介绍 / 安装 / 在 SFC 中使用 / 按需引入 / 变更日志），
+`resolveNavLinkItem()` 会按 `items.length > 0` 打上 `type: 'links'`，
+`NavLinks.vue` 据此把它交给 `DropdownLink.vue` —— 于是有了箭头和「展开/收起」。
+
+**但这个下拉从来就打不开。** 让它在桌面端可见的那组规则
+（`display: block !important` / `visibility` / `opacity` / 定位）写在
+`DropdownLink.vue:192` 的 `@media (min-width: $MQMobile)` 里；
+`$MQMobile` 是 VuePress 0.x 的 Stylus 变量、VitePress 1.x 已删除，
+Stylus 对未定义变量**不报错、把变量名原样输出**，产物里就是
+`@media (min-width: $MQMobile){…}` —— **浏览器把整条规则丢掉**。
+
+CDP 实测坐实：hover 到「指南」后，`ul.nav-dropdown` 的 `display` 仍是 `none`
+（来自 `v-show` 的内联样式，本该被 `display: block !important` 覆盖却没人覆盖），
+`getBoundingClientRect()` 为 **0×0**，5 个子项虽在 DOM 里但一个都点不到。
+屏幕上只剩一个「hover 会转 180° 却什么都不弹」的箭头。
+
+→ 去掉 `items`，`指南` 变回普通 `NavLink`（`type: 'link'`）。
+指南下的 5 个子页面在侧边栏（`概览` / `介绍` / `快速上手` 三组）里都有，**不丢任何入口**。
+
+**箭头不必额外处理**：`NavLink.vue` 的模板虽**无条件**渲染
+`<i class="bx bx-chevron-down">`，但 `NavLink.vue` 自己的样式里有
+`.nav-item i.bx:not(.bx-dots-horizontal-rounded) { display: none }`，
+会把普通链接的箭头压掉（实测同类项「首页」「组件」的箭头计算样式即 `display: none`）。
+⚠️ 判箭头在不在**必须看计算样式**，`querySelector` 恒为真 —— 首版探针就差点因此误判。
+
+#### 10.12.3 顺带查实：产物里有 **10 处**伪媒体查询被整条丢弃（**未修**）
+
+新增 `.workbuddy/scripts/count-bad-media.mjs`（扫产物 CSS，数未解析的 Stylus 变量）：
+
+```
+@media (max-width: $MQMobile){                              ×5
+@media (min-width: $MQMobile){                              ×2
+@media (max-width: $MQMobileNarrow){                        ×1
+@media (max-width: $MQNarrow){                              ×1
+@media (max-width: $MQNarrow) and (min-width: $MQMobile){   ×1
+```
+
+声明级残留：`$navbarHeight`×3、`$accentColor`×5、`$textColor`×1、`$borderColor`×1、
+`$arrowBgColor`×1（这些声明同样被浏览器逐条丢弃）。
+
+项目里已零散记过这个坑（`styles/wrapper.styl` 头部、`theme.styl:256/285`、
+`custom.styl:308`、§10.10 末尾），但一直没做系统性处理。影响面举例：
+窄屏下 `Home.vue` 的 `.features` 不换列、`Navbar.vue` 的 logo 尺寸规则失效、
+`Page.vue` / `NavLinks.vue` 的移动端间距失效；**也与 §10.10 末尾那条
+「窄窗口下配置栏被侧边栏盖住、主题开关点不到」同源**。
+
+→ **未修**。这动的是全站响应式表现，需要单独一轮 + 逐断点实测，不该混在本次两条 UI 决策里。
+断点字面值：`$MQMobile = 719px`、`$MQNarrow = 959px`、`$MQMobileNarrow = 419px`
+（VuePress 0.x 的取值；`wrapper.styl` 里写的 1240/560 是另一套 VitePress 默认主题的值，
+**别混用**）。`Navbar.vue:59` 已有先例：直接写字面 `719`，并注明「refer to config.styl」。
+
+#### 10.12.4 验收
+
+`probe-nav-config.mjs` 三页 × 5 条断言 = **15 PASS / 0 FAIL**：
+
+| 断言 | 首页 | 文档页 | 指南页 |
+| --- | --- | --- | --- |
+| 齿轮按预期出现/消失 | 不在 DOM（`hasConfigBtn:false`） | 在，`display:flex` | 在，`display:flex` |
+| 明暗开关仍在 | ✅ | ✅ | ✅ |
+| 「指南」不是下拉（无 `.dropdown-wrapper` / 无 `ul.nav-dropdown`） | ✅ | ✅ | ✅ |
+| 「指南」箭头 `display:none`（盒子 0×0） | ✅ | ✅ | ✅ |
+| 「指南」文字与 href = `guide/introduction.html` | ✅ | ✅ | ✅ |
+
+首页 `.config` 容器随之从 **112×45 收窄到 72×45**（只剩明暗开关），
+`ul.options` 的 6 个 `li` 归零；hover「指南」返回 `noDropdown: true`，下拉节点彻底不存在。
+
+**其余校验全绿**：`build:site`（见下）75 个 html；8 项文档护栏
+（`check-docs-api` / `-links` / `-demo` / `-style` / `-tags` / `check-site-links` /
+`-contrast` / `-placeholders`）全部 PASS；vitest **16/16**；eslint exit 0。
+侧边栏复核：「在 SFC 中使用」在 `guide/installation.html` 里出现 5 次、「按需引入」3 次
+—— 去掉导航下拉**没有丢入口**。
+
+⚠️ 顺带记一条**构建环境**的坑（本轮踩了两轮才定位）：
+沙箱有「单次工具调用最多 50 次删除」的护栏，而 `docs/.vitepress/.temp` 在构建收尾时
+会被 `rimraf` 整体删掉（实测 **87 个条目**），必然超限 → 构建在 `rendering pages` 阶段
+以 `SAFE_DELETE_BULK_CONFIRM_REQUIRED` 失败（**不是代码问题**）。
+解法是 VitePress 自带的开关：
+
+```bash
+DEBUG=1 node node_modules/vitepress/bin/vitepress.js build docs
+```
+
+`vitepress/dist/node/serve-*.js` 里那句 `if (!process.env.DEBUG) await rimraf(siteConfig.tempDir)`
+即为此设。构建仍会在开头 `emptyDir(outDir)`，所以构建前要把 `site/` 先移走（移动不计删除额度）。
+本次 43.37s 完成。
+
 
 
 

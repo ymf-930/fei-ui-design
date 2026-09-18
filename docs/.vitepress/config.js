@@ -58,17 +58,17 @@ export default defineConfig({
     editLinks: true,
     nav: [
       { text: '首页', link: link('') },
-      {
-        text: '指南',
-        link: link('guide/introduction'),
-        items: [
-          { text: '介绍', link: link('guide/introduction') },
-          { text: '安装', link: link('guide/installation') },
-          { text: '在 SFC 中使用', link: link('guide/usage-sfc') },
-          { text: '按需引入', link: link('guide/import-on-demand') },
-          { text: '变更日志', link: link('guide/changelog') }
-        ]
-      },
+      // 「指南」是**普通链接**，不是下拉。
+      // 原先它带 items，会被 NavLinks.vue 判成 type:'links' 交给 DropdownLink ——
+      // 但那个下拉在本项目里**根本打不开**：让它能在桌面端出现的规则
+      // （`display: block !important` / `visibility` / `opacity`）写在
+      // `@media (min-width: $MQMobile)` 里，而 $MQMobile 是 VuePress 0.x 的 Stylus
+      // 变量、VitePress 1.x 已删除 ⇒ Stylus 对未定义变量不报错、原样输出，
+      // 浏览器把 `@media (min-width: $MQMobile){…}` 整条丢弃。
+      // 结果只剩一个「hover 会转 180° 但什么都不弹」的箭头。
+      // 指南下的 5 个子页面在侧边栏里都有，去掉 items 不丢入口。
+      // 同类坑见 theme/styles/wrapper.styl 顶部注释。
+      { text: '指南', link: link('guide/introduction') },
       { text: '组件', link: link('components/button') }
     ],
     sidebar: {
