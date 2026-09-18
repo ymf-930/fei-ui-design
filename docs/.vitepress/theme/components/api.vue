@@ -332,7 +332,10 @@ getVar(var)
     font-size .8rem
     opacity .4
   &.open-btn
-    color getVar(theme-text) !important
+    // `theme-text` 这个令牌**从未定义**（令牌集是 --vs-theme-{bg,bg2,color,code,code2,layout}），
+    // 产物里会落到 `color: var(--vs-theme-text)` —— 变量不存在 → 声明整条失效。
+    // 语义上要的就是正文色，改用 `theme-color`（浅色 #2c3e50 / 暗色 #fff）。
+    color getVar(theme-color) !important
     background getVar(theme-bg2)
     border 1px solid getVar(theme-bg2)
     .close

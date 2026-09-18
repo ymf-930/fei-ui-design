@@ -4,18 +4,15 @@ getColor(colorx, alpha = 1)
 getVar(var)
   unquote("var(--vs-" + var + ")")
 
-//@mixin state($color)
-.vs-input
-  background: getColor($color, .1) !important
-  color: getColor($color, 1)
-
-.vs-input__label
-  color: getColor($color, 1)
-
-.vs-input__icon
-  color: getColor($color, 1)
-  background: getColor($color, .1)
-  box-shadow: -15px 10px 10px -10px getColor($color, .1)
+/*
+ * 原有一段 `//@mixin state($color)` + `.vs-input / .vs-input__label / .vs-input__icon`
+ * 直接用 `$color` 的规则。mixin 声明被注释掉后，`$color` 成了**未定义变量**：
+ * Stylus 对未定义变量不报错、原样拼进 unquote()，于是产物 CSS 里出现
+ * `background: rgba(var(--vs-$color), .1) !important`、`color: rgba(var(--vs-$color), 1)`
+ * 等 **17 条语法非法的声明**，浏览器整条丢弃，构建零警告。
+ * 实测无视觉影响（`.vs-input` 的真样式在本文件下方另有定义，会正常覆盖），
+ * 但留着会让「产物里的 vs- 变量」看起来像漏改。已删除这 12 行死重。
+ */
 
 /*
 .vs-input-parent

@@ -790,7 +790,8 @@ getVar(var)
         background transparent
         padding 5px 10px
         border 0px
-        color getVar(theme-text)
+        // `theme-text` 从未定义（应为 `theme-color`），原写法会让这条 color 整条失效
+        color getVar(theme-color)
         transition all .25s ease
         width 130px
         border 0px

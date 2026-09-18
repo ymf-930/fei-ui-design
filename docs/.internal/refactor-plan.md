@@ -2583,6 +2583,11 @@ rc.35 的 `vitepress/theme` 只导出 `VPImage`/`VPButton` 那一批。而主题
 
 `probe-docs-ux5.mjs` 在 `tEstnx` 之后这一版产物上复测：
 
+> ⚠️ **本节的 codex 部分（A/C 段）已被 §10.17 推翻并回退。**
+> 用户随后明确要求「不要改动代码查看方式及相关图标按钮位置」，
+> 故 `.panel-head` / `.code-trigger` 已删除，A/C 段断言已改回「工具条在面板之外」。
+> 本节其余四项（logo / 卡片圆角 / 搜索 / 悬浮提示）仍然有效。
+
 | 段 | 结论 |
 |---|---|
 | A/C | 代码块展开后 `headerInPanel: true`、`sameRow: true`、工具条底色与面板同色（`rgb(54,52,73)`），收起态入口为「查看代码」 |
@@ -2599,3 +2604,106 @@ rc.35 的 `vitepress/theme` 只导出 `VPImage`/`VPButton` 那一批。而主题
 其实**没落盘**（两个编辑各自读旧内容再写回），直到探针报 `["Github","npm 包"]` 才暴露。
 ⇒ 该条纪律（同一文件多次改动必须**串行**、改完 Read 复核）已在 `MEMORY.md` 记为「已复现多次」，
 本轮是第 N 次复现，**不要再图快并行**。
+
+---
+
+## §10.17 回退 §10.16 的 codex 结构改动；并查清「还有很多 vs-」的真实成因（2026-09-18 追加）
+
+### 10.17.1 起因：用户否定了 §10.16 对 codex 的改法
+
+用户反馈：**「不要改动我的代码查看方式、及相关图标按钮位置」**。
+
+§10.16 为满足「查看代码按钮与代码区域不需要分开」，做了两件**结构性**动作：
+
+1. 把 `.header-codex`（CodePen / CodeSandbox / 复制 / 展开折叠 四个图标）从 `.con-code`
+   **之外**搬进其中，与页签合成 `.panel-head`；
+2. 收起态**新增**一个通栏 `.code-trigger`（图标 +「查看代码」）当唯一入口。
+
+方向没错，但**改变了读者原有的操作路径** —— 入口位置、按钮数量、页签与操作图标的相对位置
+全变了。这是产品决策，不该在排查过程中顺手改掉。
+
+**处理：整体回退到 `b2a4994^` 的结构，只保留文案本地化。** 具体：
+
+- 模板 / 样式 / 高度算式回到原状：`.header-codex` 排在 `.con-code` 之前、
+  `ulRef.value.scrollHeight` 参与高度计算、`.ul-codes` 居中（`padding 0 var(--fd-sp-5)`）、
+  `.header-codex li` 用 `getVar(theme-color)` 深色图标、分隔线用 `getVar(theme-layout)`；
+- 保留的中文化：`代码已复制`、`在 CodePen 中打开`、`在 CodeSandbox 中打开`、`复制代码`、
+  `收起代码 / 查看代码`、页签 `模板 / 脚本 / 样式 / 全部`；
+- 顺手删掉 `console.log(slots)`（调试残留，与交互无关）；
+- **刻意不碰** `.header-codex li.active` 原有的 `$accentColor`（属既有缺陷，见 §10.17.3，
+  留给用户决定）。
+
+> **原设计的「相连」手法本来就有**：`.header-codex li.active` 带
+> `border-radius 12px 12px 0 0` + `background getVar(theme-code2)` —— 展开时那个图标变成
+> **与深色面板同色的页签**，视觉上与面板连成一体（探针实测 `toggleActiveBg: rgb(54,52,73)`）。
+> §10.16 没识别出这一点，误判为「两块分离」而重做了结构。
+
+### 10.17.2 用户第二问：「是不是有改造遗漏，现在还有很多 vs-」
+
+背景：用户参考 Vuesax 自建组件库，看到主题里大量 `vs-` 前缀，怀疑有漏改。
+新增 `.workbuddy/scripts/audit-vs-prefix.py` 盘查后分三类，**只有第三类算缺陷**：
+
+| 类别 | 规模 | 性质 |
+|---|---|---|
+| **机制层**：`--vs-theme-*` 令牌 + `[vs-theme]` 属性 | 6 个令牌 / 1 个属性 | **必须保留**：`Config.vue` 与 `applyTheme()` 运行时读写，是明暗主题的契约 |
+| **命名层（活的）**：`.vs-button` / `.vs-input` / `.vs-checkbox` 等 | 29 个类名 | 文档站**自己的** UI 原子（首页装饰卡），样式在 `custom.styl` + `styles/vf-*.styl`；与组件库 `src/`（早已统一 `fei-`，328 处）**是两套独立实现**。产物里只有 `index.html` 命中（55 处元素） |
+| **死代码** | 36 个类名 / **32 个变量** | 随 Vuesax 搬来、本站从未使用：社交品牌色 28 个（`--vs-youtube`/`--vs-facebook`…）、`--vs-zindex-1..4`、`.vs-loading`/`.vs-clipboard` 整套、按钮的 hover/loading/动画态 |
+
+**结论：`vs-` 命名本身不是漏改**（`--vs-*` 是本站的令牌 API，`.vs-*` 是文档站自有的 UI 原子）。
+真正的「遗漏」是同一次迁移里没被带过来的 **VuePress 0.x 变量** —— 见下节。
+
+### 10.17.3 真·遗漏：未定义 Stylus 变量进了产物，被浏览器静默丢弃
+
+Stylus 对未定义变量**不报错**，原样拼进 `unquote()` → 产物里是语法非法的声明 →
+浏览器整条丢弃 → **构建零警告、页面静默缺样式**。
+
+新增 `.workbuddy/scripts/audit-dead-css.py`：从产物 CSS 抠出含 `$` 的声明，
+再判定「同一条规则内该属性有没有合法兜底」。改动前：**25 条，全部无兜底**，落在 11 个选择器上。
+逐条核对「选择器是否真的命中产物」后的判定：
+
+| 选择器 | 缺失属性 | 源码位置 | 可见缺陷？ |
+|---|---|---|---|
+| `.up:hover` | `color` | `components/Page.vue` | **是** —— 返回顶部按钮真实渲染 |
+| `.vs-input` / `.vs-input__label` / `.vs-input__icon` | `background`/`color`/`box-shadow` | `styles/vf-input.styl` | 否 —— 后续规则已覆盖；label 未渲染 |
+| `.navbar .logo` | `height`/`min-width` | `components/Navbar.vue` | 否 —— `.logo` 元素已不存在（模板用 `.logo-img`） |
+| `.header__btns button(:after)` | `height`/`background` | `AsideNav.vue`/`Sidebar.vue` | 否 —— 两组件均不渲染 |
+| `.sidebar .nav-links` | `border-bottom` | 同上 | 否 |
+| `.sidebar-heading.clickable.active/:hover` | `color`/`border-left-color` | `SidebarGroup.vue` | 否 —— 活的侧边栏是 VitePress 自己的，类名只有 `open sidebar-heading`，无 `clickable` |
+| `.dropdown-wrapper .dropdown-title .arrow` | `border-top` | `DropdownLink.vue`/`styles/arrow.styl` | 否 |
+| `.header-codex ul li.active` | `color` | `global-components/codex.vue` | 否 —— 该 `li` 只有图标，且图标被强制 `#fff` |
+
+**本轮修掉 3 处**：
+
+1. `styles/vf-input.styl`：删掉「mixin 声明被注释、下面仍引用 `$color`」的 12 行 ——
+   它产出 17 条 `rgba(var(--vs-$color), …)`，是「产物里看着像漏改的 vs- 变量」的主因
+   （无视觉影响）。文件顶部留了注释说明来由。
+2. `components/Page.vue` 的 `.up:hover`：改用 `getColor('primary', 1)`。
+   ⚠️ **不能直接写 `rgba(var(--vs-primary), 1)`** —— Stylus 有同名内置函数 `rgba()`，
+   它要求首参是真颜色字面量，会在编译期抛 `assertColor` 让**整个构建中断**（实测 `at ".up"`）。
+   必须走 `unquote()` 拼串；为此在本文件补了 `getColor` 助手（与 `custom.styl`/`Config.vue`/`vf-*.styl` 一致）。
+3. `components/api.vue`、`components/homeInit.vue` 的 `getVar(theme-text)`：该令牌**从未定义**
+   （令牌集只有 `--vs-theme-{bg,bg2,color,code,code2,layout}`）⇒ 改回 `theme-color`。
+   改完产物里「引用了但未定义的 `--vs-*`」归零。
+
+**余下 13 条未修**（都在从不渲染的元素/组件上，见上表）：属「连带清理死组件」的范畴，
+需要产品决策（删文件 vs 留待启用），**未擅自处理**。
+
+### 10.17.4 验证
+
+`probe-docs-ux5.mjs` 的 C 段已按**用户原有交互**重写断言（不再是「header 在面板内」）：
+
+```
+收起态：headerOutsidePanel true / extraTrigger false / headerVisible true /
+        panelShown false / headerCentered true / hasToggle true
+展开态：headerStillOutside true / tabsCentered true / tabsLabels [模板, 全部] /
+        toggleActiveBg rgb(54,52,73)（= --vs-theme-code2，原本的「页签相连」手法）
+```
+
+E 段（`[title]`）4 个页面待改英文 **0 条**；F 段（外壳可见文字）4 个页面 **0 条**；
+复制按钮 `title="复制代码"`、`rawCopyCode` 命中 0。死 CSS **25 → 13 条**。
+`vitest` 4 文件 16 用例、`eslint`、`docs:check` 五项、三项产物护栏全绿。
+
+⚠️ **探针的选择器表与交互动作必须跟着结构一起回退**：C 段原用
+`.panel-head .ul-codes li` / 点 `.code-trigger`，F 段的 `CHROME` 表同样引用了它们。
+回退代码却不回退探针，就会「断言已不存在的元素」，得到一堆**假绿**。
+
