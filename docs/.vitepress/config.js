@@ -90,9 +90,9 @@ export default defineConfig({
     /**
      * 语法着色主题。**两侧都必须给，且都必须是深色主题**，原因：
      *
-     * 1) 本主题的代码块底色是深色（`--vs-theme-code2` = #363449，见
+     * 1) 本主题的代码块底色是深色（`--fei-theme-code2` = #363449，见
      *    theme/custom.styl 与 theme/index.css）。站点**有**暗色开关，但它走的是自研的
-     *    `body[vs-theme="dark"]` + `body.darken`（theme/components/Config.vue），
+     *    `body[fei-theme="dark"]` + `body.darken`（theme/components/Config.vue），
      *    并非 VitePress 的 `html.dark`，所以 `.dark` 永不生效，
      *    实际命中只有 VitePress 自带的那条
      *    `html:not(.dark) .vp-code span { color: var(--shiki-light) }`

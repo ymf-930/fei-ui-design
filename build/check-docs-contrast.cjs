@@ -3,7 +3,7 @@
  *
  * 背景（这是一个真实踩过的坑）：
  *   代码块的底色与语法着色主题是**两处独立配置**，分别落在
- *     - 底色：docs/.vitepress/theme/custom.styl 的 --vs-theme-code2
+ *     - 底色：docs/.vitepress/theme/custom.styl 的 --fei-theme-code2
  *     - 配色：docs/.vitepress/config.js 的 markdown.theme
  *   二者一旦不配套（例如底色是深色、而 light 侧却给按白底设计的 github-light），
  *   代码会变成「深字压深底」：正文 token 对比度低到 1.22:1，肉眼几乎不可读。
@@ -43,14 +43,14 @@ if (!fs.existsSync(siteDir)) {
 // ---------- 代码块底色：直接读变量定义，避免与样式表手动保持同步 ----------
 /**
  * 真正可见的底色是 index.css 里
- *   [class*='language-'] pre { background: var(--vs-theme-code2) }
- * 所以取 --vs-theme-code2，而不是名字更像「代码色」的 --vs-theme-code
+ *   [class*='language-'] pre { background: var(--fei-theme-code2) }
+ * 所以取 --fei-theme-code2，而不是名字更像「代码色」的 --fei-theme-code
  * （后者被表格文字、胶囊单选当【文字色】用）。
  */
 function readCodeBg () {
   if (!fs.existsSync(stylFile)) return null
   const styl = fs.readFileSync(stylFile, 'utf8')
-  const m = styl.match(/--vs-theme-code2:\s*(#[0-9a-fA-F]{3,8})/)
+  const m = styl.match(/--fei-theme-code2:\s*(#[0-9a-fA-F]{3,8})/)
   return m ? m[1] : null
 }
 
@@ -110,7 +110,7 @@ for (const file of htmlFiles) {
   }
 
   /**
-   * 站点**有**暗色开关，但它走自研的 `body[vs-theme="dark"]` + `body.darken`
+   * 站点**有**暗色开关，但它走自研的 `body[fei-theme="dark"]` + `body.darken`
    * （theme/components/Config.vue），不是 VitePress 的 `html.dark`，所以 `.dark`
    * 永不生效，实际生效的只有 --shiki-light 一侧
    * （VitePress 自带 `html:not(.dark) .vp-code span { color: var(--shiki-light) }`）。
@@ -127,13 +127,13 @@ for (const file of htmlFiles) {
 
 // ---------- 输出 ----------
 const lines = []
-lines.push(`[docs-contrast] 代码块底色 = ${CODE_BG || '(未取到)'}  来源 docs/.vitepress/theme/custom.styl --vs-theme-code2`)
+lines.push(`[docs-contrast] 代码块底色 = ${CODE_BG || '(未取到)'}  来源 docs/.vitepress/theme/custom.styl --fei-theme-code2`)
 lines.push(`[docs-contrast] 扫描 ${htmlFiles.length} 个 html，命中 ${codeBlocks} 个 shiki 代码块 / ${tokenSpans} 个着色 span`)
 
 const problems = []
 
 if (!CODE_BG) {
-  problems.push('无法从 custom.styl 解析 --vs-theme-code2，护栏失效，请检查样式变量是否被改名')
+  problems.push('无法从 custom.styl 解析 --fei-theme-code2，护栏失效，请检查样式变量是否被改名')
 }
 
 if (brokenBlocks.length) {

@@ -154,7 +154,7 @@ const slots = useSlots()
 const active = ref(false)
 const check = ref(false)
 const activeSlot = ref(0)
-const vsThemeVal = ref(null)
+const feiThemeVal = ref(null)
 const ulRef = ref(null)
 const codexRef = ref(null)
 const slot0Ref = ref(null)
@@ -172,12 +172,12 @@ const props = defineProps({
     default: '',
   },
 })
-const { vsTheme } = getCurrentInstance().appContext.config.globalProperties
-// ⚠️ 共享同一个 reactive 对象，**不要**写成 `{ ...vsTheme }`：
+const { feiTheme } = getCurrentInstance().appContext.config.globalProperties
+// ⚠️ 共享同一个 reactive 对象，**不要**写成 `{ ...feiTheme }`：
 // 本文件用 watch 监听 openCode（配置面板「打开/关闭所有代码」），副本收不到写入
-vsThemeVal.value = vsTheme
+feiThemeVal.value = feiTheme
 watch(
-  () => vsThemeVal.value.openCode,
+  () => feiThemeVal.value.openCode,
   val => {
     active.value = val
     localStorage.openCode = val
@@ -195,7 +195,7 @@ watch(
 )
 // Vue.observable(this.$site.themeConfig)
 onMounted(() => {
-  vsThemeVal.value.openCode = localStorage.openCode === 'true'
+  feiThemeVal.value.openCode = localStorage.openCode === 'true'
 })
 
 function toggleCode() {
@@ -215,7 +215,7 @@ function openCodesandbox(url) {
 function clipboard(text) {
   var aux = document.createElement('textarea')
   aux.value = text
-  aux.className = 'vs-clipboard'
+  aux.className = 'fei-clipboard'
   document.body.appendChild(aux)
   aux.focus()
   aux.select()
@@ -273,7 +273,7 @@ function leavecodes(el, done) {
 </script>
 <style lang="stylus" scoped>
 getVar(var)
-  unquote("var(--vs-" + var + ")")
+  unquote("var(--fei-" + var + ")")
 
 .noti-code
   position fixed

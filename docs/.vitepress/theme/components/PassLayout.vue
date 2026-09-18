@@ -70,7 +70,7 @@ export default {
 </script>
 <style lang="stylus">
 getVar(var)
-  unquote("var(--vs-"+var+")")
+  unquote("var(--fei-"+var+")")
 .pass
   padding-top 60px
   ~ .config

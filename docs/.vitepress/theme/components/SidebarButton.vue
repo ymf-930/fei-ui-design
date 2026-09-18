@@ -17,9 +17,9 @@ export default {
 
 <style lang="stylus">
 getColor(vsColor, alpha = 1)
-    unquote("rgba(var(--vs-"+vsColor+"), "+alpha+")")
+    unquote("rgba(var(--fei-"+vsColor+"), "+alpha+")")
 getVar(var)
-    unquote("var(--vs-"+var+")")
+    unquote("var(--fei-"+var+")")
 .isSidebarOpen
   .sidebar-button
     transform rotate(90deg)

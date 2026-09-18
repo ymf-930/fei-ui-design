@@ -46,11 +46,11 @@
 // 去暗色（Config.vue 在过渡前给根元素加上这个类）—— 旧图层（浅）在上：
 //   同圆心、同半径的圆**反向收缩**，浅色收回到点击处  观感「右上 → 左下」
 //   由上层（浅）被裁掉来露出下层（暗），所以收缩的是 old 而不是 new。
-html.vs-wipe-old-top::view-transition-old(root) {
+html.fei-wipe-old-top::view-transition-old(root) {
   z-index: 2;
 }
 
-html.vs-wipe-old-top::view-transition-new(root) {
+html.fei-wipe-old-top::view-transition-new(root) {
   z-index: 1;
 }
 

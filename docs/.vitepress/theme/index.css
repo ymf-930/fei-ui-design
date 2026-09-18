@@ -21,23 +21,23 @@ body {
  * 选择器一律写平铺形式（不用 CSS 嵌套），避免依赖压缩器的降级能力。
  */
 .vp-doc .fei-tag.is-dot {
-  color: var(--vs-theme-color) !important;
+  color: var(--fei-theme-color) !important;
 }
 
 .vp-doc .fei-radio-group-capsule .fei-radio {
-  color: var(--vs-theme-code);
+  color: var(--fei-theme-code);
 }
 
 .vp-doc .fei-form-item__label {
-  color: var(--vs-theme-color);
+  color: var(--fei-theme-color);
 }
 
 .vp-doc .fei-tree-title {
-  color: var(--vs-theme-color);
+  color: var(--fei-theme-color);
 }
 
 .vp-doc .fei-tree-title:hover {
-  color: var(--vs-theme-bg);
+  color: var(--fei-theme-bg);
 }
 
 .vp-doc .fei-table-cell {

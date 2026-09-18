@@ -64,10 +64,10 @@ const openGroupIndex = ref(-1)
 // 没有它就无法在「全局展开」时单独收起某一组（旧实现的 :open 用 `||` 连全局开关，
 // 全局为 true 时表达式恒真 → 分组标题点开也收不起）。
 const groupOverride = ref({})
-const vsThemeVal = ref(false)
-const { vsTheme } = getCurrentInstance().appContext.config.globalProperties
-// ⚠️ 共享同一个 reactive 对象，**不要**写成 `{ ...vsTheme }`（副本会导致配置里的写入读不到）
-vsThemeVal.value = vsTheme
+const feiThemeVal = ref(false)
+const { feiTheme } = getCurrentInstance().appContext.config.globalProperties
+// ⚠️ 共享同一个 reactive 对象，**不要**写成 `{ ...feiTheme }`（副本会导致配置里的写入读不到）
+feiThemeVal.value = feiTheme
 
 // 分组是否展开，按优先级：
 //   1) fixed —— 强制全展开
@@ -77,7 +77,7 @@ function isGroupOpen(index) {
   if (props.fixed) return true
   const override = groupOverride.value[index]
   if (override !== undefined) return override
-  return vsThemeVal.value.sidebarCollapseOpen || index === openGroupIndex.value
+  return feiThemeVal.value.sidebarCollapseOpen || index === openGroupIndex.value
 }
 
 function toggleGroup(index) {
@@ -85,7 +85,7 @@ function toggleGroup(index) {
 }
 
 // 切换全局开关时清掉逐组覆盖，让「展开/收起所有子栏目」名副其实
-watch(() => vsThemeVal.value.sidebarCollapseOpen, () => {
+watch(() => feiThemeVal.value.sidebarCollapseOpen, () => {
   groupOverride.value = {}
 })
 

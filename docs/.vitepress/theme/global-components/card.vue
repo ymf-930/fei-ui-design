@@ -3,7 +3,7 @@
     <div class="text">
       <slot></slot>
     </div>
-    <div v-if="slots.example" class="example" :class="{ mobile: vsThemeVal.mobileActive }">
+    <div v-if="slots.example" class="example" :class="{ mobile: feiThemeVal.mobileActive }">
       <div class="center">
         <slot name="example" />
       </div>
@@ -40,10 +40,10 @@ const props = defineProps({
   },
 })
 
-const vsThemeVal = ref(null)
-const { vsTheme } = getCurrentInstance().appContext.config.globalProperties
-// ⚠️ 共享同一个 reactive 对象，**不要**写成 `{ ...vsTheme }`（副本不接收外部写入）
-vsThemeVal.value = vsTheme
+const feiThemeVal = ref(null)
+const { feiTheme } = getCurrentInstance().appContext.config.globalProperties
+// ⚠️ 共享同一个 reactive 对象，**不要**写成 `{ ...feiTheme }`（副本不接收外部写入）
+feiThemeVal.value = feiTheme
 </script>
 <style lang="stylus">
 // 卡片：组件文档的最小信息单元（小节标题 + 说明 + 示例 + 代码）
@@ -62,7 +62,7 @@ vsThemeVal.value = vsTheme
 //      注意「只留底部圆角」也救不了：正文正好是卡片最后一个元素时，
 //      末行的字同样会落进左下圆弧里。所以裁剪必须离开 `.text`。
 getVar(var)
-    unquote("var(--vs-"+var+")")
+    unquote("var(--fei-"+var+")")
 
 .card
   margin var(--fd-sp-7) 0
@@ -78,11 +78,11 @@ getVar(var)
   // （下面还接着代码面板时，四角都是内部边界，保持直角）。
   // 排除 `.mobile`：那是手机预览框，四角 25px 圆角是它自己的画框，不能被这里覆盖。
   > .example:last-child:not(.mobile)
-    border-radius 0 0 var(--vs-radius, 20px) var(--vs-radius, 20px)
+    border-radius 0 0 var(--fei-radius, 20px) var(--fei-radius, 20px)
 
   // 代码面板容器：永远是卡片最后一个元素，负责卡片底部的两个圆角
   > .slotcode
-    border-radius 0 0 var(--vs-radius, 20px) var(--vs-radius, 20px)
+    border-radius 0 0 var(--fei-radius, 20px) var(--fei-radius, 20px)
     overflow hidden
 
   .text
@@ -93,7 +93,7 @@ getVar(var)
       margin auto
       margin-top var(--fd-sp-3)
       display block
-      border-radius var(--vs-radius, 20px)
+      border-radius var(--fei-radius, 20px)
 
     // 标题只做「块首不额外留白」，其余层级间距沿用 doc-typography.styl
     h2, h3, h4, h5, h6

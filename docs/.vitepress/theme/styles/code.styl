@@ -18,7 +18,7 @@
 // 文档正文里代码块的内边距、字号、行高、圆角由 styles/doc-typography.styl 接管，
 // 这里只保留站点级兜底。
 getVar(var)
-    unquote("var(--vs-"+var+")")
+    unquote("var(--fei-"+var+")")
 
 code
   padding 0.25rem 0.5rem
@@ -34,8 +34,8 @@ code
     &.inserted
       color #2564ff
 
-// 注意：代码块的【底色】变量是 --vs-theme-code2；
-// --vs-theme-code 是【文字色】（表格文字、胶囊单选在用），名字相近用途相反。
+// 注意：代码块的【底色】变量是 --fei-theme-code2；
+// --fei-theme-code 是【文字色】（表格文字、胶囊单选在用），名字相近用途相反。
 pre, pre[class*="language-"]
   line-height 1.4
   margin 0

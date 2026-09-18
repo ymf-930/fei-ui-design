@@ -39,7 +39,7 @@ const props = defineProps({
 
 <style lang="stylus">
 getVar(var)
-  unquote("var(--vs-" + var + ")")
+  unquote("var(--fei-" + var + ")")
 
 .effect1
   transform rotate(-90deg)

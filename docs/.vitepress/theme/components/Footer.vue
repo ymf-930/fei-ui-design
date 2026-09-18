@@ -143,9 +143,9 @@ export default {
 </script>
 <style lang="stylus" scoped>
 getColor(colorx, alpha = 1)
-    unquote("rgba(var(--vs-"+colorx+"), "+alpha+")")
+    unquote("rgba(var(--fei-"+colorx+"), "+alpha+")")
 getVar(var)
-    unquote("var(--vs-"+var+")")
+    unquote("var(--fei-"+var+")")
 
 .darken
   .subscribe-content

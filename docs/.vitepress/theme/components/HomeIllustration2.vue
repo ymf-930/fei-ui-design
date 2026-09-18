@@ -24,9 +24,9 @@ export default {
 
 <style scoped lang="stylus">
 getColor(colorx, alpha = 1)
-    unquote("rgba(var(--vs-"+colorx+"), "+alpha+")")
+    unquote("rgba(var(--fei-"+colorx+"), "+alpha+")")
 getVar(var)
-    unquote("var(--vs-"+var+")")
+    unquote("var(--fei-"+var+")")
 .btn-action
   display inline-block
   font-size 1rem

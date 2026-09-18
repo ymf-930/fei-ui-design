@@ -73,11 +73,7 @@ import { computed, ref } from 'vue'
 import { siteHref } from '../util'
 import NavLink from './NavLink.vue'
 import Footer from './Footer.vue'
-import HomeInit from './homeInit.vue'
-// import Illustration1 from './HomeIllustration1.vue'
-// import Illustration2 from './HomeIllustration2.vue'
 import components from './HomeComponents.vue'
-// import PremiumThemes from './premiumThemes.vue'
 
 const star = ref(0)
 const github = ref(false)
@@ -122,10 +118,10 @@ function time(name) {
 
 <style lang="stylus">
 getColor(colorx, alpha = 1)
-  unquote("rgba(var(--vs-" + colorx + "), " +alpha + ")")
+  unquote("rgba(var(--fei-" + colorx + "), " +alpha + ")")
 
 getVar(var)
-  unquote("var(--vs-" + var + ")")
+  unquote("var(--fei-" + var + ")")
 .has-darken
     display none
 .darken

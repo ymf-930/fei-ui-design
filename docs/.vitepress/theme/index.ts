@@ -23,12 +23,12 @@ export default {
     app.component('demo-preview', ElementPlusContainer)
     app.component('card', card)
     // 注册能够被应用内所有组件实例访问到的全局属性的对象。
-    // ⚠️ 必须是 reactive：各消费组件通过 `const vsThemeVal = ref(vsTheme)` 取用，
-    // 共享同一个代理。若写成普通对象、消费方再用 `{ ...vsTheme }` 取值，
+    // ⚠️ 必须是 reactive：各消费组件通过 `const feiThemeVal = ref(feiTheme)` 取用，
+    // 共享同一个代理。若写成普通对象、消费方再用 `{ ...feiTheme }` 取值，
     // 展开运算符产出的是【副本】—— 一处写入其它组件读不到，
     // 「展开/收起侧边栏子栏目」「打开/关闭所有代码」会表现为「点击无反应」。
     // 回归证明：.workbuddy/tmp/proof-vstheme-fix.mjs
-    app.config.globalProperties.vsTheme = reactive({
+    app.config.globalProperties.feiTheme = reactive({
       mobileActive: false,
       openCode: false,
       themeDarken: false,

@@ -301,7 +301,7 @@ onBeforeUnmount(() => {
 
 <style scoped lang="stylus">
 getVar(var)
-  unquote("var(--vs-" + var + ")")
+  unquote("var(--fei-" + var + ")")
 
 .fade-enter-active, .fade-leave-active
   transition: all .2s ease

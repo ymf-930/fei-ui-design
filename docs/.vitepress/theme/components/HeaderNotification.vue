@@ -60,7 +60,7 @@ export default {
 </script>
 <style lang="stylus">
 getVar(var)
-    unquote("var(--vs-"+var+")")
+    unquote("var(--fei-"+var+")")
 
 .header-notification
   width 100%

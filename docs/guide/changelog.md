@@ -76,7 +76,7 @@ title: 变更日志
       display: inline-block;
       vertical-align: middle;
       margin: 0 15px;
-      background: var(--vs-theme-bg2);
+      background: var(--fei-theme-bg2);
       padding: 0.1em 0.4em;
       border-radius: 3px;
       font-size: 0.9em;

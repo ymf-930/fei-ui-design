@@ -28,7 +28,7 @@ export default {
 
 <style lang="stylus" scoped>
 getVar(var)
-    unquote("var(--vs-"+var+")")
+    unquote("var(--fei-"+var+")")
 .badge
   display inline-block
   font-size .7rem

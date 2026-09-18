@@ -92,7 +92,7 @@ const href = computed(() => siteHref(props.item.link, site.value.base))
 
 <style lang="stylus">
 getVar(var)
-  unquote("var(--vs-" + var + ")")
+  unquote("var(--fei-" + var + ")")
 
 .sidebar-group
   .sidebar-group

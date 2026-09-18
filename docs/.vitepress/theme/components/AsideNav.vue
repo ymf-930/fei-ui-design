@@ -64,7 +64,7 @@ function navClick(nav){
 <style lang="stylus">
 // vuesax-theme
 getVar(var)
-  unquote("var(--vs-" + var + ")")
+  unquote("var(--fei-" + var + ")")
 
 .effect1
   transform rotate(-90deg)

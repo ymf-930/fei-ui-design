@@ -434,14 +434,14 @@ function fetchAnchors() {
 <style lang="stylus">
 @require '../styles/wrapper.styl'
 getVar(var)
-  unquote("var(--vs-" + var + ")")
+  unquote("var(--fei-" + var + ")")
 
-// ⚠️ 必须用 unquote() 拼字符串，**不能**直接写 `rgba(var(--vs-primary), 1)`：
+// ⚠️ 必须用 unquote() 拼字符串，**不能**直接写 `rgba(var(--fei-primary), 1)`：
 // Stylus 有同名内置函数 rgba()，它要求第一个参数是真正的颜色字面量，
 // 直接写会在编译期抛 `assertColor` 失败（实测构建中断在 `.up`）。
 // 本仓库其它文件（custom.styl / Config.vue / vf-*.styl）都是这个写法。
 getColor(colorx, alpha = 1)
-  unquote("rgba(var(--vs-" + colorx + "), " + alpha + ")")
+  unquote("rgba(var(--fei-" + colorx + "), " + alpha + ")")
 
 .back-link
   position absolute

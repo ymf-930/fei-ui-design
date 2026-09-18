@@ -1,6 +1,6 @@
 <template lang="html">
-  <div v-if="props || slots || events" id="vs-api" class="con-api">
-    <!-- <h2 class="h2"><a href="#vs-api">#</a> API</h2> -->
+  <div v-if="props || slots || events" id="fei-api" class="con-api">
+    <!-- <h2 class="h2"><a href="#fei-api">#</a> API</h2> -->
     <div class="content-api">
 
       <div v-for="(table, key) in getTables" class="content-table">
@@ -51,7 +51,7 @@
                 <a :href="tr.usage" v-if="tr.usage" class="btn-usage">
                   Usage <i class='bx bx-code-block'></i>
                 </a>
-                <a :href="`#vs-api-${tr.name}`" v-if="tr.code" @click="toggleCode($event,tr)" class="btn-toggle-code">
+                <a :href="`#fei-api-${tr.name}`" v-if="tr.code" @click="toggleCode($event,tr)" class="btn-toggle-code">
                   <span class="open">Open <i class='bx bx-code-alt' ></i></span> <span class="close">Close <i class='bx bx-x' ></i></span>
                 </a>
               </td>
@@ -183,7 +183,7 @@ export default {
     clipboard(text) {
       var aux = document.createElement("textarea");
       aux.value = text
-      aux.className = "vs-clipboard"
+      aux.className = "fei-clipboard"
       document.body.appendChild(aux);
       aux.focus();
       aux.select();
@@ -204,14 +204,14 @@ export default {
       let nextCode = trParent.nextElementSibling
       if(nextCode) {
         if(nextCode.classList.contains('open')) {
-          evt.target.setAttribute('href', '#vs-api-close-' + tr.name)
+          evt.target.setAttribute('href', '#fei-api-close-' + tr.name)
           nextCode.classList.remove('open')
           evt.target.classList.remove('open-btn')
 
           nextCode.querySelector('pre').style.padding = '0px 20px'
           nextCode.querySelector('pre').style.maxHeight = `0px`
         } else {
-          evt.target.setAttribute('href', '#vs-api-' + tr.name)
+          evt.target.setAttribute('href', '#fei-api-' + tr.name)
           evt.target.classList.add('open-btn')
           nextCode.classList.add('open')
           // console.dir()
@@ -232,7 +232,7 @@ export default {
 </script>
 <style lang="stylus">
 getVar(var)
-  unquote("var(--vs-"+var+")")
+  unquote("var(--fei-"+var+")")
 .content-table
   &:last-child
     table
@@ -332,8 +332,8 @@ getVar(var)
     font-size .8rem
     opacity .4
   &.open-btn
-    // `theme-text` 这个令牌**从未定义**（令牌集是 --vs-theme-{bg,bg2,color,code,code2,layout}），
-    // 产物里会落到 `color: var(--vs-theme-text)` —— 变量不存在 → 声明整条失效。
+    // `theme-text` 这个令牌**从未定义**（令牌集是 --fei-theme-{bg,bg2,color,code,code2,layout}），
+    // 产物里会落到 `color: var(--fei-theme-text)` —— 变量不存在 → 声明整条失效。
     // 语义上要的就是正文色，改用 `theme-color`（浅色 #2c3e50 / 暗色 #fff）。
     color getVar(theme-color) !important
     background getVar(theme-bg2)

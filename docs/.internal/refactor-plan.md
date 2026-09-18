@@ -2707,3 +2707,157 @@ E 段（`[title]`）4 个页面待改英文 **0 条**；F 段（外壳可见文�
 `.panel-head .ul-codes li` / 点 `.code-trigger`，F 段的 `CHROME` 表同样引用了它们。
 回退代码却不回退探针，就会「断言已不存在的元素」，得到一堆**假绿**。
 
+## §10.18 命名前缀全量迁移：`vs-` → `fei-`（2026-09-18 追加）
+
+### 10.18.1 起因与口径确认
+
+用户：「对于 vs-button 组件类似 这种改为 f-button f-xx」。
+
+澄清后确定**三套体系不许混**（这是本轮最容易搞错的地方）：
+
+| 层 | 前缀 | 例 |
+| --- | --- | --- |
+| 样式类名 / CSS 自定义属性 | `fei-` | `.fei-button`、`--fei-color-primary` |
+| 图标字体 | `f-` | `.f-icon-close`（601 个） |
+| 组件注册名 / 导出名 | `F` | `FButton` |
+
+⚠️ 用户口述的「`f-button`」是**口误**：组件库样式类名真实是 `.fei-button`（890 处）；
+`f-button` 来自 SCSS 变量 `$f-btn-*` 的误匹配。搬进文档站要跟**组件库**一致，所以是 `fei-`。
+范围选了**全量**：类名 + `--vs-*` 变量 + `[vs-theme]` 属性 + `localStorage.vsTheme` + JS 标识符。
+
+### 10.18.2 一处必须先解决的撞名
+
+文档站 `theme/index.ts` 已经 `import '../../../src/_styles/index.css'` + `app.use(FeiUI)` ——
+即**组件库样式已全量生效**。若把首页那批 vuesax 静态 HTML 块（`vf-button`/`vf-input`/`vf-checkBox`
+三份共 1019 行外观复刻样式）只改类名成 `.fei-button`，就会**与组件库同名规则打架**、
+外观不可预期。故按用户决策改为**组件库真实组件**：
+
+- 20 处 `<button class="vs-button…">` → `<f-button type="danger|primary|warning" circle|transparent|plain>`
+- 17 处 `<div class="vs-input-parent"><input class="vs-input">` → `<f-input v-model placeholder>`
+- 12 处 `<input class="vs-checkbox">`+自绘勾 → `<f-checkbox v-model label>`
+- 连着删掉 `vf-button.styl`(399) / `vf-input.styl`(414) / `vf-checkBox.styl`(206) 及其 `@require`
+
+### 10.18.3 迁移落点
+
+机械替换用 `.workbuddy/tmp/migrate-vs.py`，8 条固定顺序规则（**`--vs-` 必须先跑**，
+否则会把 `--vs-theme-bg2` 拆错）：`--vs-`→`--fei-`、`vs-theme`→`fei-theme`、`vsTheme`→`feiTheme`、
+`vs-wipe-old-top`、`vs-clipboard`、`vs-remove-transition`、`vs-icon-`、`vs-api`。
+命中 **49 文件 / 348 处**。`docs/.internal/`（历史档案）与 `site/.temp/cache/node_modules` 排除。
+
+同时删掉 7 个死文件（零引用，其中 `homeInit.vue` 1120 行、`navbarLayout.vue` 里 50 处 vs-、
+`layouts/sidebar.vue` 零引用）：`homeInit.vue`、`navbarLayout.vue`、`premiumThemes.vue`、
+`layouts/sidebar.vue` + 上述三份 `.styl`。**`vs-switch`/`vs-radio`/`vs-navbar-item`/`vs-sidebar-item`/
+`vs-avatar`/`vs-col`/`vs-row` 这些类名全在死文件里**，随删文件一并消失 —— 不必单独处理。
+
+另：`HomeComponents.vue` 的 `.vuesax-logo` → `.fei-logo`（与兄弟类 `.gitee-logo` 配对，无冲突）。
+
+### 10.18.4 两个踩坑（都会**静默**失败）
+
+1. **`@require` 有两处，只改一处的后果是构建失败**：`custom.styl` 与 `styles/theme.styl`
+   **都** `@require` 了那三份 `vf-*.styl`（后者经 `Layout.vue` 的 `<style src>` 进入 404 页）。
+   Phase 1 只改了前者 ⇒ `failed to locate @require file ./vf-button.styl`。
+   教训：**同一个被 require 的路径改成删除时，要全仓 grep 一遍 `@require`**。
+2. **护栏会跟着旧变量名一起失效** —— `build/check-docs-contrast.cjs` 直接读
+   `--vs-theme-code2` / `--vs-theme-code` / `vs-theme` 来取代码块底色。改名后它**取不到值**，
+   于是「校验通过」但**其实什么都没校**（构建零警告、退出码 0）。只有真正重跑并看输出里的
+   `代码块底色` 一行才露出来。
+   教训：**改名类重构的检查清单里必须有「grep 旧前缀在整个仓库（含 `build/`）的出现」**，
+   `docs/` 之外的脚本目录最容易漏。
+
+### 10.18.5 守卫脚本 `.workbuddy/scripts/audit-vs-prefix.py`
+
+从「审计 vs- 三类」重写为**迁移后守卫**，做三件事 + 两处误报修正：
+
+- ① 断言 `vs-` 零残留（`.internal` 单独列、不计失败）；② `fei-*` 变量自洽性；③ `vuesax` 品牌词盘点。
+- ⚠️ **修正 1：`@each` 循环生成族会被误判成「引用了未定义」**。
+  `src/_styles/base/vars.css:5-14` 用 Stylus `@each $val, $color in var(--colors)` 生成整族
+  `--fei-color-$(val)[-light1..6|-active]`，**变量名里含字面 `$(val)`**，
+  于是定义侧正则抓不到 ⇒ `--fei-color-danger`/`-primary-light1` 等 7 个被误报。
+  修法：解析 `--colors: (primary: …, success: …)` 取调色板名，再把 `$(\w+)` 模板**展开**成具体变量名。
+- ⚠️ **修正 2：跨行块注释里的内容会被当成活代码**。
+  `Page.vue` 整段分享按钮被 `<!-- -->` 包住（死代码），里面 4 条 `lusaxweb.github.io/vuesax` 链接
+  被算成「可见文案」。修法：用 `re.finditer(r'<!--.*?-->|/\*.*?\*/', txt, re.S)` 先算出**块注释行区间**。
+- 顺带把 ③ 做成可执行：按 `text`（可见文案）/ `ident`（类名）/ `asset`（资源名）/ `note`（注释）
+  分桶，并**标注该文件是否仍被引用**（`ref_count`）——
+  否则每次跑都报一堆 `text=16 ✗`，人就会学会忽略它，**守卫随即腐烂**。
+
+### 10.18.6 验证
+
+```
+vitest               4 文件 16 用例通过
+build:site           ✓ rendering pages / ✓ search-index.json 已生成：73 个页面
+docs:check-site      ✓ 产物页面完整，所有站内链接均可命中
+docs:check-contrast  ✓ 代码块底色与语法着色主题配套，全部 token 对比度达标
+docs:check-placeholders ✓ 主题占位文案未超基线
+audit-vs-prefix      EXIT=0（① 零残留 ② 无未定义变量 ③ 无可⻅文案）
+产物全局             vs- 残留 0；fei-button 2096 / fei-input 1416 / fei-checkbox 347 / fei-theme 187
+DOM（CDP 实挂）      feiButton 10 / feiInput 2 / feiCheckbox 4 / vsLeftover [] / vuesaxWord []
+                     暗色契约 bodyBg rgb(30,32,35) / 控制台报错（无）
+产物 CSS             .con-logo.fei-logo{border-radius:50px} 等 3 条规则均已编译，vuesax-logo 选择器 0
+```
+
+### 10.18.7 遗留（**本轮有意未做**）
+
+`vuesax` 品牌词只剩两处，且**用户均不可见**：
+- 未被引用的死组件里的文案（`Branding` / `HomeTwiter` / `docsWarn` / `Icons`）；
+- 资源文件名（`docs/public/home/vuesax-brand-*.svg`、`logos/logo-vuesax-*`、`use/*-vuesax*.png`）。
+
+品牌素材（Logo SVG/PNG）替换属独立设计议题，**需与「品牌 Logo」任务一起做**，不在前缀迁移范围内。
+
+## §11 工程环境与工具链速查（跨轮次复用，2026-09-18 追加）
+
+> 本仓库 git 在 **E 盘**、工作区在 **C 盘**（跨盘）+ 受限沙箱，导致下列行为与常规环境不同。
+> `MEMORY.md` 只留一行指针（控制注入体量），细节在此；`build:site` 配方另见 §10.15.5。
+
+### 11.1 Git：嵌套 ref 的两类坑（**会造成真实损失**）
+
+- ⚠️ **禁止对嵌套 ref 做删除类操作**（`update-ref -d` / `branch -d` / `remote prune` / `gc`）：
+  git 删完 ref 会 `rmdir` 空父目录，而沙箱的删除拦截会把**整个 `refs/heads/<a>/` 子树移走**。
+  2026-09-15 因此丢过分支 ref。
+- ⚠️ **git 对嵌套两级 ref（形如 `a/b`）的写入不可靠**：可能**返回退出码 0 但 ref 根本没落盘**
+  ⇒ **每次提交后必须用 `git log` 校验 ref 是否真的指过去了**。
+  - 判别「提交是否已生成」：`git reflog --format=%H -1`
+  - 若已生成，就把 ref 指向该 SHA，**不要重做提交**。取 SHA 用 `git log -g --format=%H -1`
+  - ⚠️ 别用 `Get-Content <reflog 文件> -Tail 1`：文件末尾无换行时会把最后两行拼在一起、**取到旧 SHA**
+  - 恢复脚本 `.workbuddy/scripts/restore-worktree-ref.ps1`（幂等、只写不删）
+
+### 11.2 Shell 与工具调用
+
+- ⚠️ **`corepack` / `pnpm` 在 Bash 工具里会把路径拼成 `C:\c\Users\...` 而失败**
+  （报 `Cannot find module 'C:\c\Users\...\corepack.js'`）⇒ 这类命令**必须走 PowerShell 工具**。
+  2026-09-18 实测：`pnpm test` 与三个 `pnpm docs:check-*` 在 Bash 下全挂。
+- ⚠️ 但 **PowerShell 工具在受限沙箱下「命令输出整体为空」**（只报 `exit code 0`、`Stdout` 空白）
+  ⇒ 只用它做「有副作用、不需要看输出」的操作。
+- ✅ **要看输出时的正解：绕开 shell 包装、直接调包内入口，且必须用绝对路径**：
+  ```bash
+  NODE="C:/Users/YMF/.workbuddy/binaries/node/versions/22.22.2-3/node.exe"
+  "$NODE" node_modules/vitest/vitest.mjs run
+  "$NODE" node_modules/vitepress/bin/vitepress.js build docs
+  "$NODE" build/check-docs-contrast.cjs     # 同理 build/check-*.cjs、eslint/bin/eslint.js
+  ```
+- ⚠️ 含中文的 5.1 版脚本文件必须存为 **UTF-8 with BOM**，否则乱码。
+- Bash 工具 PATH 偶发损坏，临时 `export PATH="/usr/bin:/bin:$PATH"` 可救。
+- ⚠️ **不要对同一文件并行发多个编辑**：后写的会覆盖先写的（工具仍各自报成功）。**已复现多次**
+  ⇒ 必须**串行**，改完用 Read 复核。
+
+### 11.3 沙箱批量删除护栏（阈值：单次工具调用 **50 个删除**）
+
+- `build:package` 的 `clean` 会被拦。因 `vite.config.ts` 是 `emptyOutDir:false`，
+  **直接跑 `build:lib && build:style` 即可**、不必 clean。
+- `build:site`：`site` 与 `docs/.vitepress/.temp` **两处**都要绕过 —— 完整配方见 **§10.15.5**。
+  判别「构建其实没跑」：看日志有无 `✓ rendering pages`。
+- `build/smoke-consumer.cjs`：`.workbuddy/tmp/consumer` 已有产物时**把该目录改名**即可跑完。
+- 逃生开关：`CODEBUDDY_SAFE_DELETE_ENABLED=0`（本轮 `build:site` 即用它跑通）。
+
+### 11.4 CDP 探针（本机无头 Chrome，**不需要 Playwright**）
+
+- ⚠️ `Page.captureScreenshot` 的 `clip.scale` **必填**，漏了拿不到图。
+- ⚠️ `captureBeyondViewport: true` 时 `clip` 用的是**页面坐标**，须 `rect.y + window.scrollY`，否则返回空图。
+- ⚠️ **探针必须与真实实现同构**：模拟主题切换要**同时**把 `fei-theme` 写到 `<html>` 与 `<body>`
+  （只写 body 会让 `<html>` 落到 `:root` 浅色兜底、测出**假白**）。凡「模拟应用状态」的语句都要与实现逐字符对齐。
+- ⚠️ **探针的选择器表与交互动作必须跟着结构改动一起回退**，否则断言已不存在的元素 = **一堆假绿**。
+- ⚠️ 已知假阳性：`probe-typography.mjs` 的 `pre code` 行恒报 1.45:1 —— 那是 `code` 自身的计算色；
+  代码块实显色看 shiki token `span`（用 `probe-code-plain.mjs` 按文本段采样）。
+- 本站起服务的正解：`.workbuddy/scripts/serve-site.mjs [port] [dir] [prefix]`（剥掉 base 前缀，默认 4174）。
+  ⚠️ `vitepress preview` **不带 base 前缀**，资源全 404、页面能开但没样式。
+

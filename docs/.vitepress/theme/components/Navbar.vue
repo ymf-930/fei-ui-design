@@ -95,7 +95,7 @@ function css(el, property) {
 $navbar-vertical-padding = 0.7rem
 $navbar-horizontal-padding = 1.5rem
 getVar(var)
-  unquote("var(--vs-" + var + ")")
+  unquote("var(--fei-" + var + ")")
 
 .logo-img
   fill getVar(theme-color)

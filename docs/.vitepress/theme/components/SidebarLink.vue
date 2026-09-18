@@ -64,10 +64,10 @@ function renderChildren(h, children, path, route, maxDepth, depth = 1, NEWS, UPD
 
 <style lang="stylus">
 getVar(var)
-  unquote("var(--vs-" + var + ")")
+  unquote("var(--fei-" + var + ")")
 
 getColor(var, alpha = 1)
-  unquote("rgba(var(--vs-" + var + "), " +alpha + ")")
+  unquote("rgba(var(--fei-" + var + "), " +alpha + ")")
 
 .sidebar-new
   position relative

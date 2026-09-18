@@ -50,10 +50,10 @@ const repoLink = computed(() => {
 
 <style lang="stylus">
 getVar(var)
-  unquote("var(--vs-" + var + ")")
+  unquote("var(--fei-" + var + ")")
 
 getColor(vsColor, alpha = 1)
-  unquote("rgba(var(--vs-" + vsColor + "), " +alpha + ")")
+  unquote("rgba(var(--fei-" + vsColor + "), " +alpha + ")")
 
 .nav-links
   display flex

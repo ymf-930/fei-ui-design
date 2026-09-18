@@ -83,7 +83,7 @@
   // 文档 API 表格
   --fd-th-bg: #f5f7fa;
   --fd-table-bg: #fff;
-  // 表格正文色独立成 token，**不要**复用 --vs-theme-code：
+  // 表格正文色独立成 token，**不要**复用 --fei-theme-code：
   // 那个值在暗色下会被改成近黑（#141417），现在压在白色表格底上没问题，
   // 一旦表格底跟着变暗就会变成黑底黑字。
   --fd-table-text: #3f3d56;
@@ -96,19 +96,19 @@
 }
 
 // ── 暗色主题 ────────────────────────────────────────────────────────────────
-// 站点外壳（导航 / 侧边栏 / 页头）跟随 --vs-theme-* 变暗，但本层的 --fd-* 是
+// 站点外壳（导航 / 侧边栏 / 页头）跟随 --fei-theme-* 变暗，但本层的 --fd-* 是
 // 自建 token，必须自己声明暗色分支 —— 否则外壳变黑、正文仍是 #2c3e50，
 // 实测对比度只剩 1.60:1（行内码 1.55:1），用户会以为「文档坏了」。
 //
-// 选择器必须是 `body[vs-theme="dark"]`：applyTheme()（components/Config.vue）
+// 选择器必须是 `body[fei-theme="dark"]`：applyTheme()（components/Config.vue）
 // 把该属性写在 <body> 上（不是 <html>）。**不要**写成 `.darken` ——
 // 那个类只负责消息组件里 .has-darken / .not-darken 的显隐。
-// 选择器同时接受 `html[vs-theme="dark"]` 与 `body[vs-theme="dark"]`：
+// 选择器同时接受 `html[fei-theme="dark"]` 与 `body[fei-theme="dark"]`：
 // applyTheme()（components/Config.vue）会把属性写到**两层**上 —— <html> 那份是给
 // 画布色与 color-scheme 用的，<body> 那份是给外壳 token 用的。只认其中一层，
 // 以后有人删掉任一侧，这一整层排版就会静默退回浅色值。
-html[vs-theme="dark"],
-body[vs-theme="dark"] {
+html[fei-theme="dark"],
+body[fei-theme="dark"] {
   --fd-text-1: #e6e8eb;      // on #18191c → 14.3:1
   --fd-text-2: #a3aab4;      // → 7.5:1
   --fd-link: #4d8dff;        // → 5.50:1
@@ -247,7 +247,7 @@ body[vs-theme="dark"] {
 }
 
 // 链接颜色必须单独成条，且**必须带 `!important`**：
-// custom.styl 里有一条站点级的 `a { color: var(--vs-theme-color) !important }`
+// custom.styl 里有一条站点级的 `a { color: var(--fei-theme-color) !important }`
 // （外壳所有 <a> 共用），会把正文链接刷成与正文同色（#2c3e50），
 // 段落里的链接于是几乎看不出来 —— 只有 `!important` + 更高优先级能压过去。
 // `:not(.example *)` 与表格同理：demo 区里真实存在 <a>（面包屑 / 分割线 /
@@ -346,7 +346,7 @@ body[vs-theme="dark"] {
 .vp-doc :not(pre) > code {
   padding: 2px 6px;
   border-radius: var(--fd-radius-sm);
-  background-color: var(--vs-theme-bg2);
+  background-color: var(--fei-theme-bg2);
   color: var(--fd-text-1);
   font-family: var(--fd-font-mono);
   // 相对正文缩放，随字号阶梯同步；不要再写死 em 值
@@ -364,7 +364,7 @@ body[vs-theme="dark"] {
 }
 
 // ── 代码块 ─────────────────────────────────────────────────────────────────
-// 底色由 custom.styl 的 --vs-theme-code2 提供，语法着色主题在 .vitepress/config.js，
+// 底色由 custom.styl 的 --fei-theme-code2 提供，语法着色主题在 .vitepress/config.js，
 // 两者必须配套 —— 见 build/check-docs-contrast.cjs。
 .vp-doc div[class*='language-'] {
   position: relative;
@@ -376,7 +376,7 @@ body[vs-theme="dark"] {
 .vp-doc [class*='language-'] pre {
   margin: 0;
   padding: 0;
-  background: var(--vs-theme-code2);
+  background: var(--fei-theme-code2);
   border-radius: inherit;
   overflow-x: auto;
 }
@@ -428,7 +428,7 @@ body[vs-theme="dark"] {
   border-spacing: 0;
   border-radius: var(--fd-radius-md);
   background: var(--fd-table-bg);
-  // 文字色**不能**写 --vs-theme-code：那是组件库的「深色文字色」，
+  // 文字色**不能**写 --fei-theme-code：那是组件库的「深色文字色」，
   // 暗色主题下它会被改成近黑（#141417），现在压在白色表格底上没问题，
   // 一旦表格底跟着变暗就会变成黑底黑字。见 custom.styl:104 的同类提醒。
   color: var(--fd-table-text);
@@ -441,7 +441,7 @@ body[vs-theme="dark"] {
 //     .vp-doc tr { background-color: var(--vp-c-bg); border-top: 1px solid var(--vp-c-divider) }
 //     .vp-doc tr:nth-child(2n) { background-color: var(--vp-c-bg-soft) }
 //   1) 那套 token 的**暗色分支挂在 `html.dark` 下**，而本站暗色是自研的
-//      `body[vs-theme="dark"]`（见 components/Config.vue）→ `--vp-c-bg` 恒取
+//      `body[fei-theme="dark"]`（见 components/Config.vue）→ `--vp-c-bg` 恒取
 //      浅色 #ffffff。行底色画在单元格之下、表格底之上，于是暗色主题下整张
 //      表格变成白斑：实测 tr 1.58:1、td 1.23:1，肉眼看是「表格没跟着变暗」。
 //   2) `border-top` 与单元格各自的 `border-bottom` 叠加，会在每行之间形成

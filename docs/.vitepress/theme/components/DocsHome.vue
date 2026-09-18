@@ -20,7 +20,7 @@ export default {
 </script>
 <style lang="stylus">
 getVar(var)
-    unquote("var(--vs-"+var+")")
+    unquote("var(--fei-"+var+")")
 .docs-home
   ~ .config
     left 0px

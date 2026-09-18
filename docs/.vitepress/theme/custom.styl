@@ -1,62 +1,63 @@
 /* .vitepress/theme/custom.css */
-@require './styles/vf-button.styl'
-@require './styles/vf-input.styl'
-@require './styles/vf-checkBox.styl'
+// 原先这里 @require 了 vf-button.styl / vf-input.styl / vf-checkBox.styl 三份
+// vuesax 组件外观复刻样式。首页 HomeComponents.vue 里的静态装饰块已改为组件库
+// 真实组件（FButton / FInput / FCheckbox），样式改由 src/_styles 全局提供，
+// 那三份复刻样式（约 1000 行）已删除。
 @require './styles/icons.styl'
 
 :root {
-  --vs-primary: 25, 91, 255;
-  --vs-warn: 255, 186, 0;
-  --vs-danger: 255, 71, 87;
-  --vs-success: 70, 201, 58;
-  --vs-dark: 30, 30, 30;
-  --vs-light: 244, 247, 248;
-  --vs-color: 17, 18, 20;
-  --vs-facebook: 59, 89, 153;
-  --vs-twitter: 29, 161, 242;
-  --vs-youtube: 255, 0, 0;
-  --vs-pinterest: 189, 8, 28;
-  --vs-linkedin: 0, 119, 181;
-  --vs-snapchat: 255, 252, 0;
-  --vs-whatsapp: 37, 211, 102;
-  --vs-tumblr: 54, 70, 93;
-  --vs-reddit: 255, 69, 0;
-  --vs-spotify: 30, 215, 96;
-  --vs-amazon: 255, 153, 0;
-  --vs-medium: 2, 184, 117;
-  --vs-vimeo: 26, 183, 234;
-  --vs-skype: 0, 175, 240;
-  --vs-dribbble: 234, 76, 137;
-  --vs-slack: 74, 21, 75;
-  --vs-yahoo: 67, 2, 151;
-  --vs-twitch: 100, 65, 164;
-  --vs-gitee: 114, 137, 218;
-  --vs-telegram: 0, 136, 204;
-  --vs-google-plus: 219, 68, 55;
-  --vs-messenger: 0, 132, 255;
-  --vs-background: 255, 255, 255;
-  --vs-text: 44, 62, 80;
-  --vs-gray-1: 249, 252, 253;
-  --vs-gray-2: 244, 247, 248;
-  --vs-gray-3: 240, 243, 244;
-  --vs-gray-4: 230, 233, 234;
+  --fei-primary: 25, 91, 255;
+  --fei-warn: 255, 186, 0;
+  --fei-danger: 255, 71, 87;
+  --fei-success: 70, 201, 58;
+  --fei-dark: 30, 30, 30;
+  --fei-light: 244, 247, 248;
+  --fei-color: 17, 18, 20;
+  --fei-facebook: 59, 89, 153;
+  --fei-twitter: 29, 161, 242;
+  --fei-youtube: 255, 0, 0;
+  --fei-pinterest: 189, 8, 28;
+  --fei-linkedin: 0, 119, 181;
+  --fei-snapchat: 255, 252, 0;
+  --fei-whatsapp: 37, 211, 102;
+  --fei-tumblr: 54, 70, 93;
+  --fei-reddit: 255, 69, 0;
+  --fei-spotify: 30, 215, 96;
+  --fei-amazon: 255, 153, 0;
+  --fei-medium: 2, 184, 117;
+  --fei-vimeo: 26, 183, 234;
+  --fei-skype: 0, 175, 240;
+  --fei-dribbble: 234, 76, 137;
+  --fei-slack: 74, 21, 75;
+  --fei-yahoo: 67, 2, 151;
+  --fei-twitch: 100, 65, 164;
+  --fei-gitee: 114, 137, 218;
+  --fei-telegram: 0, 136, 204;
+  --fei-google-plus: 219, 68, 55;
+  --fei-messenger: 0, 132, 255;
+  --fei-background: 255, 255, 255;
+  --fei-text: 44, 62, 80;
+  --fei-gray-1: 249, 252, 253;
+  --fei-gray-2: 244, 247, 248;
+  --fei-gray-3: 240, 243, 244;
+  --fei-gray-4: 230, 233, 234;
 
-  --vs-shadow-opacity: .05;
-  --vs-radius: 20px;
-  --vs-zindex-1: 100000;
-  --vs-zindex-2: 99000;
-  --vs-zindex-3: 98000;
-  --vs-zindex-4: 97000;
-  --vs-background-opacity: .2
+  --fei-shadow-opacity: .05;
+  --fei-radius: 20px;
+  --fei-zindex-1: 100000;
+  --fei-zindex-2: 99000;
+  --fei-zindex-3: 98000;
+  --fei-zindex-4: 97000;
+  --fei-background-opacity: .2
 
-  --vs-color-rotate: var(--vs-primary);
-  --vs-color-darken: var(--vs-primary);
-  --vs-button-padding: 8px 12px;
-  --vs-button-margin: 5px;
-  --vs-button-border-radius: 12px;
-  --vs-button-text-color: #fff;
+  --fei-color-rotate: var(--fei-primary);
+  --fei-color-darken: var(--fei-primary);
+  --fei-button-padding: 8px 12px;
+  --fei-button-margin: 5px;
+  --fei-button-border-radius: 12px;
+  --fei-button-text-color: #fff;
 
-  --vp-code-block-bg: var(--vs-theme-code);
+  --vp-code-block-bg: var(--fei-theme-code);
   // 原先这里还有一条 `--vp-code-tag-color: #e2777a`（粉红）。它在**整份产物**
   // 里只出现 1 次（就是这行定义本身），没有任何规则或脚本消费它 ——
   // 属于死声明，且是唯一残留的粉红色源，已删除以免以后被误当成"代码块配色"。
@@ -72,23 +73,23 @@
 }
 
 [class*="--default"], [class*="--primary"] {
-  --vs-color: var(--vs-primary)
+  --fei-color: var(--fei-primary)
 }
 
 [class*="--danger"] {
-  --vs-color: var(--vs-danger)
+  --fei-color: var(--fei-danger)
 }
 
 [class*="--success"] {
-  --vs-color: var(--vs-success)
+  --fei-color: var(--fei-success)
 }
 
 [class*="--dark"] {
-  --vs-color: var(--vs-dark)
+  --fei-color: var(--fei-dark)
 }
 
 [class*="--warn"] {
-  --vs-color: var(--vs-warn)
+  --fei-color: var(--fei-warn)
 }
 
 // Poppins 的 400 / 500 / 600 三个字重。
@@ -125,19 +126,19 @@
   opacity: 0
 
 :root
-  --vs-primary: 26, 92, 255
-  --vs-theme-bg: #f4f7f8
-  --vs-theme-color: #2c3e50
-  --vs-theme-layout: #fff
-  --vs-theme-bg2: #eef2f5
-  // 注意：--vs-theme-code / --vs-theme-code2 名字相近但用途相反，别混用。
-  //   --vs-theme-code  → 深色【文字色】。表格正文、胶囊单选、.darken 消息内容在用。
+  --fei-primary: 26, 92, 255
+  --fei-theme-bg: #f4f7f8
+  --fei-theme-color: #2c3e50
+  --fei-theme-layout: #fff
+  --fei-theme-bg2: #eef2f5
+  // 注意：--fei-theme-code / --fei-theme-code2 名字相近但用途相反，别混用。
+  //   --fei-theme-code  → 深色【文字色】。表格正文、胶囊单选、.darken 消息内容在用。
   //                      改成浅色会让这些文字在浅底上消失。
-  //   --vs-theme-code2 → 代码块【底色】。见 theme/index.css 的
-  //                      [class*='language-'] pre { background: var(--vs-theme-code2) }。
+  //   --fei-theme-code2 → 代码块【底色】。见 theme/index.css 的
+  //                      [class*='language-'] pre { background: var(--fei-theme-code2) }。
   //                      语法着色主题必须与它配套，见 .vitepress/config.js 的 markdown.theme。
-  --vs-theme-code: #3f3d56
-  --vs-theme-code2: #363449
+  --fei-theme-code: #3f3d56
+  --fei-theme-code2: #363449
 
 *::-webkit-scrollbar {
   width: 5px;
@@ -156,7 +157,7 @@
 ::selection
   background: alpha(#2564ff, .15)
 
-.vs-remove-transition
+.fei-remove-transition
   *, *:after, *:before
     transition: all 0s !important
 
@@ -169,7 +170,7 @@
 
 .darken
   .fei-message__content{
-    color: var(--vs-theme-code);
+    color: var(--fei-theme-code);
   }
   .data
     background: rgba(0, 0, 0, .3) !important
@@ -187,20 +188,16 @@
   padding: 20px
   flex-wrap: wrap
 
-// vs-clipboard
+// fei-clipboard
 
 getColor(colorx, alpha = 1)
   unquote("rgba(var(--" + colorx + "), " +alpha + ")")
 
 
 getVar(var)
-  unquote("var(--vs-" + var + ")")
+  unquote("var(--fei-" + var + ")")
 
-// .darken
-//   .vs-loading:not(.vs-loading--background)
-//     background: getVar(theme-layout)
-
-.vs-clipboard
+.fei-clipboard
   opacity 0
   position fixed
   bottom 0px
@@ -236,12 +233,12 @@ box-icon
 // ⚠️ 选择器必须是 `html body`（特异性 0,0,2），不能只写 `body`（0,0,1）。
 //   VitePress 默认主题有一条 `body { background-color: var(--vp-c-bg); ... }`，
 //   与本文件同特异性、但排在产物**后面** → 它赢。而 `--vp-c-bg` 的暗色分支挂在
-//   `html.dark` 下，本站暗色是自研的 `body[vs-theme="dark"]`，`<html>` 永不带
+//   `html.dark` 下，本站暗色是自研的 `body[fei-theme="dark"]`，`<html>` 永不带
 //   `.dark` → 它**恒取 #ffffff**。后果：暗色下 `body` 仍把整页盒子画成白色，
 //   凡 `.page` / `.sidebar` 没盖住的地方（内容比视口短时页面底部的空区）就露白条
 //   —— 实测 1440×2600 视口下 /guide/ 底部有约 200px 纯白。
 //   `html` 自身也要声明：根元素的背景会成为**画布色**（overscroll 时可见），
-//   而它的 `--vs-theme-layout` 只有把属性也写到 <html> 上才会变（见 Config.vue
+//   而它的 `--fei-theme-layout` 只有把属性也写到 <html> 上才会变（见 Config.vue
 //   的 applyTheme —— 自定义属性只向下继承、不向上传播）。
 html,
 html body
@@ -256,7 +253,7 @@ html body
 // `color-scheme` 决定 UA 层级的默认底色（画布、滚动条、原生表单控件、
 // 自动填充的背景）。VitePress 把它写在 `html.dark` 下，本站永不带 `.dark`
 // → 一直是浅色，暗色主题下滚动条与原生控件会突兀地发白。
-html[vs-theme="dark"]
+html[fei-theme="dark"]
   color-scheme dark
 
 // ⚠️ 必须写 `html body`（特异性 0,0,2），不能只写 `body`（0,0,1）。

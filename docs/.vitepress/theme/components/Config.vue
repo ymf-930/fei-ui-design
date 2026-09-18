@@ -48,20 +48,20 @@
           <i v-else title="展开侧边栏" class="bx bx-right-indent"></i>
         </li>
         <li
-          :title="`${!vsThemeVal.sidebarCollapseOpen ? '打开' : '关闭'}侧边栏子栏目`"
+          :title="`${!feiThemeVal.sidebarCollapseOpen ? '打开' : '关闭'}侧边栏子栏目`"
           @click="ChangeMenu"
-          :class="{ active: !vsThemeVal.sidebarCollapseOpen }"
+          :class="{ active: !feiThemeVal.sidebarCollapseOpen }"
         >
-          <i v-if="vsThemeVal.sidebarCollapseOpen" class="bx bx-list-minus"></i>
+          <i v-if="feiThemeVal.sidebarCollapseOpen" class="bx bx-list-minus"></i>
           <i v-else class="bx bx-list-plus"></i>
         </li>
-        <!-- <li title="View examples mobile style" @click="ChangeMobile" :class="{'active': vsThemeVal.mobileActive}">
+        <!-- <li title="View examples mobile style" @click="ChangeMobile" :class="{'active': feiThemeVal.mobileActive}">
           <i class="bx bx-mobile-alt"></i>
         </li> -->
         <li
-          :title="`${!vsThemeVal.openCode ? '打开' : '关闭'}所有代码`"
+          :title="`${!feiThemeVal.openCode ? '打开' : '关闭'}所有代码`"
           @click="ChangeOpenCode"
-          :class="{ active: vsThemeVal.openCode }"
+          :class="{ active: feiThemeVal.openCode }"
         >
           <i class="bx bx-code-block"></i>
         </li>
@@ -70,12 +70,12 @@
           <input @change="changeColorLayout($event.target.value)" type="color" value="#2564ff" />
         </li>
         <li
-          :title="`${!vsThemeVal.themeDarken ? '黑色' : '白色'}主题`"
+          :title="`${!feiThemeVal.themeDarken ? '黑色' : '白色'}主题`"
           class="li-darken"
           @click="ChangeTheme"
-          :class="{ active: vsThemeVal.themeDarken }"
+          :class="{ active: feiThemeVal.themeDarken }"
         >
-          <i v-if="!vsThemeVal.themeDarken" class="bx bx-brightness-half"></i>
+          <i v-if="!feiThemeVal.themeDarken" class="bx bx-brightness-half"></i>
           <i v-else class="bx bx-brightness"></i>
         </li>
         <!-- <li class="theme-color-primary" title="Theme Primary Color">
@@ -102,13 +102,13 @@
 
     <button
       @click="ChangeTheme"
-      :class="{ active: vsThemeVal.themeDarken }"
-      :title="`切换到${!vsThemeVal.themeDarken ? '暗色' : '浅色'}主题`"
+      :class="{ active: feiThemeVal.themeDarken }"
+      :title="`切换到${!feiThemeVal.themeDarken ? '暗色' : '浅色'}主题`"
       class="li-darken switch-dark"
     >
       <div class="switch-con">
         <span class="circle">
-          <i v-if="vsThemeVal.themeDarken" class="bx bxs-sun"></i>
+          <i v-if="feiThemeVal.themeDarken" class="bx bxs-sun"></i>
           <i v-else class="bx bxs-moon"></i>
         </span>
       </div>
@@ -123,7 +123,7 @@ const { frontmatter } = useData()
 // 首页（docs/index.md 的 `home: true`）。只认真正的主页，不含 docsHome 类页面。
 const isHome = computed(() => !!frontmatter.value.home)
 
-const vsThemeVal = ref(null)
+const feiThemeVal = ref(null)
 
 const sideBarOpen = ref(true)
 
@@ -133,28 +133,28 @@ function reloadConfig() {
   const config = document.querySelector('.theme-container > .config')
   const effect1 = document.querySelector('.header-page > .effect1')
 
-  sidebar.style.removeProperty(`--vs-theme-layout`)
-  navbar.style.removeProperty(`--vs-theme-layout`)
-  navbar.style.removeProperty(`--vs-theme-bg2`)
-  config.style.removeProperty(`--vs-theme-layout`)
-  sidebar.style.removeProperty(`--vs-theme-color`)
-  navbar.style.removeProperty(`--vs-theme-color`)
-  config.style.removeProperty(`--vs-theme-color`)
+  sidebar.style.removeProperty(`--fei-theme-layout`)
+  navbar.style.removeProperty(`--fei-theme-layout`)
+  navbar.style.removeProperty(`--fei-theme-bg2`)
+  config.style.removeProperty(`--fei-theme-layout`)
+  sidebar.style.removeProperty(`--fei-theme-color`)
+  navbar.style.removeProperty(`--fei-theme-color`)
+  config.style.removeProperty(`--fei-theme-color`)
   document.body.classList.remove('hidden-sidebar')
-  document.body.style.setProperty(`--vs-primary`, '26, 92, 255')
-  vsThemeVal.value.mobileActive = false
+  document.body.style.setProperty(`--fei-primary`, '26, 92, 255')
+  feiThemeVal.value.mobileActive = false
   localStorage.mobile = false
 
-  vsThemeVal.value.sidebarCollapseOpen = true
+  feiThemeVal.value.sidebarCollapseOpen = true
   localStorage.sidebarCollapseOpen = true
 
-  vsThemeVal.value.openCode = false
+  feiThemeVal.value.openCode = false
 
-  // 主题重置交给 setTheme()：它内部已负责 vs-theme 属性、.darken、themeDarken
+  // 主题重置交给 setTheme()：它内部已负责 fei-theme 属性、.darken、themeDarken
   // 与 localStorage，不需要在这里再重复一遍。
   //
   // 注：此处原本还有一行 `localStorage.theme = 'dark'` —— 该 key 全站没有任何
-  // 读取点（真正被读的是 localStorage.vsTheme），所以「重置为暗色」的意图
+  // 读取点（真正被读的是 localStorage.feiTheme），所以「重置为暗色」的意图
   // 实际从未生效。是否要真的重置成暗色属于产品语义，未擅自改动，先记录在此。
   setTheme()
 }
@@ -212,19 +212,19 @@ function changeColorLayout(colorBase) {
   const config = document.querySelector('.theme-container > .config')
   const effect1 = document.querySelector('.header-page > .effect1')
 
-  sidebar.style.setProperty(`--vs-theme-layout`, colorBase)
-  navbar.style.setProperty(`--vs-theme-layout`, colorBase)
-  navbar.style.setProperty(`--vs-theme-bg2`, colorBase)
-  config.style.setProperty(`--vs-theme-layout`, colorBase)
+  sidebar.style.setProperty(`--fei-theme-layout`, colorBase)
+  navbar.style.setProperty(`--fei-theme-layout`, colorBase)
+  navbar.style.setProperty(`--fei-theme-bg2`, colorBase)
+  config.style.setProperty(`--fei-theme-layout`, colorBase)
 
   if (contrastColor(colorBase)) {
-    sidebar.style.setProperty(`--vs-theme-color`, '#2c3e50')
-    navbar.style.setProperty(`--vs-theme-color`, '#2c3e50')
-    config.style.setProperty(`--vs-theme-color`, '#2c3e50')
+    sidebar.style.setProperty(`--fei-theme-color`, '#2c3e50')
+    navbar.style.setProperty(`--fei-theme-color`, '#2c3e50')
+    config.style.setProperty(`--fei-theme-color`, '#2c3e50')
   } else {
-    sidebar.style.setProperty(`--vs-theme-color`, '#fff')
-    navbar.style.setProperty(`--vs-theme-color`, '#fff')
-    config.style.setProperty(`--vs-theme-color`, '#fff')
+    sidebar.style.setProperty(`--fei-theme-color`, '#fff')
+    navbar.style.setProperty(`--fei-theme-color`, '#fff')
+    config.style.setProperty(`--fei-theme-color`, '#fff')
   }
 
   setTimeout(() => {
@@ -236,24 +236,24 @@ function ChangeColor(evt) {
   evt.target.closest('button').focus()
   const rgb = hexToRgb(evt.target.value)
   const color = `${rgb.r},${rgb.g},${rgb.b}`
-  document.body.style.setProperty(`--vs-primary`, color)
+  document.body.style.setProperty(`--fei-primary`, color)
 }
 
 function ChangeMenu() {
-  vsThemeVal.value.sidebarCollapseOpen = !vsThemeVal.value.sidebarCollapseOpen
-  localStorage.sidebarCollapseOpen = vsThemeVal.value.sidebarCollapseOpen
+  feiThemeVal.value.sidebarCollapseOpen = !feiThemeVal.value.sidebarCollapseOpen
+  localStorage.sidebarCollapseOpen = feiThemeVal.value.sidebarCollapseOpen
 }
 
 function ChangeMobile() {
-  vsThemeVal.value.mobileActive = !vsThemeVal.value.mobileActive
-  localStorage.mobile = !vsThemeVal.value.mobileActive
+  feiThemeVal.value.mobileActive = !feiThemeVal.value.mobileActive
+  localStorage.mobile = !feiThemeVal.value.mobileActive
 }
 
 function ChangeOpenCode() {
-  vsThemeVal.value.openCode = !vsThemeVal.value.openCode
+  feiThemeVal.value.openCode = !feiThemeVal.value.openCode
   // codex.vue 的 watch 也会写一次，但它只在「当前页面存在示例面板」时才挂载；
   // 这里补写一次，保证在无示例的页面上切换也能被记住
-  localStorage.openCode = vsThemeVal.value.openCode
+  localStorage.openCode = feiThemeVal.value.openCode
 }
 
 // ── 明暗主题 ────────────────────────────────────────────────────────────────
@@ -265,19 +265,19 @@ const THEME_WIPE_DURATION = 500
 const THEME_WIPE_EASING = 'ease-in-out'
 // 需要「旧图层压在新图层之上」的那一程要加这个类 —— 目前是**去暗色**：那里收缩的是
 // 浅色快照（old），必须让 old 在上层才看得见。类名与 theme/styles/view-transition.styl
-// 里的 `html.vs-wipe-old-top::view-transition-*(root)` 一一对应，改名要两边一起改。
+// 里的 `html.fei-wipe-old-top::view-transition-*(root)` 一一对应，改名要两边一起改。
 // 名字按**机制**（old 在上）而不是按明暗方向取：明暗方向是可调的产品决策，机制不是 ——
 // 按方向取名的话，下次调整方向就会得到一个名不副实的常量。
 // 注意必须挂在 documentElement 上：伪元素树挂在 <html> 下、与 <body> 是兄弟，挂 body 匹配不到。
-const THEME_WIPE_OLD_TOP_CLASS = 'vs-wipe-old-top'
+const THEME_WIPE_OLD_TOP_CLASS = 'fei-wipe-old-top'
 // 连续快速点开关时，前一次过渡的 finished 会晚于后一次的启动 ——
 // 用序号让「旧过渡」的收尾动作作废，避免它把新过渡的方向类/transition 开关提前撤掉。
 let wipeSeq = 0
 
 // 当前是否暗色：本地偏好优先，其次跟随系统
 function currentThemeIsDark() {
-  if (localStorage.vsTheme) {
-    return localStorage.vsTheme === 'dark'
+  if (localStorage.feiTheme) {
+    return localStorage.feiTheme === 'dark'
   }
   return window.matchMedia('(prefers-color-scheme: dark)').matches
 }
@@ -286,38 +286,38 @@ function currentThemeIsDark() {
 // 保证视图过渡的「新」快照拿到的是一份完整的目标状态。
 function applyTheme(isDark) {
   if (isDark) {
-    document.body.setAttribute('vs-theme', 'dark')
+    document.body.setAttribute('fei-theme', 'dark')
     document.body.classList.add('darken')
   } else {
-    document.body.removeAttribute('vs-theme')
+    document.body.removeAttribute('fei-theme')
     document.body.classList.remove('darken')
   }
   // ⚠️ 属性必须**同时**写到 <html> 上：
   //   1) 根元素的背景会成为**画布色**（内容不足一屏、overscroll 时露出来的那块），
-  //      而 `html` 的 `--vs-theme-layout` 不会因为 body 有属性就改变 ——
+  //      而 `html` 的 `--fei-theme-layout` 不会因为 body 有属性就改变 ——
   //      自定义属性只向下继承、**不向上传播**。不写这一句，暗色下 body 之外
   //      仍是白的。
-  //   2) `color-scheme` 需要按 `html[vs-theme="dark"]` 命中（见 custom.styl），
+  //   2) `color-scheme` 需要按 `html[fei-theme="dark"]` 命中（见 custom.styl），
   //      否则滚动条、原生表单控件、自动填充仍是浅色。
   //   同理，明暗切换的 view-transition 方向类也必须挂 documentElement
   //   （伪元素树挂在 <html> 下，与 <body> 是兄弟）。
-  document.documentElement.setAttribute('vs-theme', isDark ? 'dark' : 'light')
-  if (vsThemeVal.value) {
-    vsThemeVal.value.themeDarken = isDark
+  document.documentElement.setAttribute('fei-theme', isDark ? 'dark' : 'light')
+  if (feiThemeVal.value) {
+    feiThemeVal.value.themeDarken = isDark
   }
 }
 
 // 读取并应用主题。传 forceTheme 可强制指定（当前无调用点），不传则跟随偏好/系统。
 const setTheme = forceTheme => {
-  document.body.classList.add('vs-remove-transition')
+  document.body.classList.add('fei-remove-transition')
   const isThemeDark =
     forceTheme === 'dark' ? true : forceTheme === 'light' ? false : currentThemeIsDark()
 
   applyTheme(isThemeDark)
-  localStorage.vsTheme = isThemeDark ? 'dark' : 'light'
+  localStorage.feiTheme = isThemeDark ? 'dark' : 'light'
 
   setTimeout(() => {
-    document.body.classList.remove('vs-remove-transition')
+    document.body.classList.remove('fei-remove-transition')
   }, 100)
 
   return isThemeDark ? 'dark' : 'light'
@@ -345,8 +345,8 @@ function ChangeTheme(event) {
 
   // 视图过渡的「新」快照在属性写入后立刻拍摄：此时若还有 250ms 的颜色过渡在跑，
   // 快照会拍到过渡的起始值（旧色）。所以要先禁掉元素级 transition。
-  document.body.classList.add('vs-remove-transition')
-  const releaseTransition = () => document.body.classList.remove('vs-remove-transition')
+  document.body.classList.add('fei-remove-transition')
+  const releaseTransition = () => document.body.classList.remove('fei-remove-transition')
 
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   // 不支持 View Transitions 或用户要求减弱动效：直接切换，不做圆形擦除。
@@ -354,7 +354,7 @@ function ChangeTheme(event) {
   // 表现为「点了开关但主题没变」。
   if (typeof document.startViewTransition !== 'function' || prefersReduced) {
     applyTheme(nextIsDark)
-    localStorage.vsTheme = nextTheme
+    localStorage.feiTheme = nextTheme
     setTimeout(releaseTransition, 100)
     return
   }
@@ -374,7 +374,7 @@ function ChangeTheme(event) {
 
   const transition = document.startViewTransition(() => {
     applyTheme(nextIsDark)
-    localStorage.vsTheme = nextTheme
+    localStorage.feiTheme = nextTheme
   })
 
   transition.ready
@@ -407,50 +407,50 @@ function ChangeTheme(event) {
 // Vue.prototype.$mobile = { active: (localStorage.mobile != 'true') || false }
 // Vue.prototype.$menu = { active: (localStorage.menu != 'true') || false }
 // Vue.observable(this.$site.sidebarCollapseOpen)
-// Vue.observable(vsThemeVal.value)
+// Vue.observable(feiThemeVal.value)
 // Vue.observable(this.$mobile)
 // Vue.observable(this.$site.themeConfig)
 
-const { vsTheme } = getCurrentInstance().appContext.config.globalProperties
-// ⚠️ 直接共享该 reactive 对象，**不要**写成 `{ ...vsTheme }`：
+const { feiTheme } = getCurrentInstance().appContext.config.globalProperties
+// ⚠️ 直接共享该 reactive 对象，**不要**写成 `{ ...feiTheme }`：
 // 展开运算符产出的是副本，本文件里的写入 SidebarLinks.vue 读不到，
 // 「展开/收起侧边栏子栏目」会表现为「点击无反应」。回归证明见 .workbuddy/tmp/proof-vstheme-fix.mjs
-vsThemeVal.value = vsTheme
+feiThemeVal.value = feiTheme
 
 onMounted(() => {
   // 恢复「子栏目展开/收起」偏好：此前只写不读，刷新后开关状态与实际界面不一致
   const savedCollapseOpen = localStorage.getItem('sidebarCollapseOpen')
   if (savedCollapseOpen !== null) {
-    vsThemeVal.value.sidebarCollapseOpen = savedCollapseOpen === 'true'
+    feiThemeVal.value.sidebarCollapseOpen = savedCollapseOpen === 'true'
   }
 
-  // setTheme() 内部已经写好 vs-theme 属性、.darken、themeDarken，无需再重复
+  // setTheme() 内部已经写好 fei-theme 属性、.darken、themeDarken，无需再重复
   setTheme()
 })
 </script>
 <style lang="stylus">
 getColor(vsColor, alpha = 1)
-  unquote("rgba(var(--vs-" + vsColor + "), " +alpha + ")")
+  unquote("rgba(var(--fei-" + vsColor + "), " +alpha + ")")
 
 getVar(var)
-  unquote("var(--vs-" + var + ")")
+  unquote("var(--fei-" + var + ")")
 
-// ⚠️ 选择器必须同时列 `:root[vs-theme="dark"]`，不能只写 `[vs-theme="dark"]`。
-//   浅色兜底写在 custom.styl / styles/theme.styl 的 `:root` 里（`--vs-theme-layout: #fff`），
-//   而 `:root` 与 `[vs-theme="dark"]` 的**特异性完全相同（0,1,0）**，两者都命中
+// ⚠️ 选择器必须同时列 `:root[fei-theme="dark"]`，不能只写 `[fei-theme="dark"]`。
+//   浅色兜底写在 custom.styl / styles/theme.styl 的 `:root` 里（`--fei-theme-layout: #fff`），
+//   而 `:root` 与 `[fei-theme="dark"]` 的**特异性完全相同（0,1,0）**，两者都命中
 //   `<html>` 时只能靠源码顺序定胜负 —— 实测 `:root` 那份排在后面，于是
-//   `htmlAttr` 已经是 `dark`、但 `getComputedStyle(html).getPropertyValue('--vs-theme-layout')`
+//   `htmlAttr` 已经是 `dark`、但 `getComputedStyle(html).getPropertyValue('--fei-theme-layout')`
 //   仍是 `#fff`：`<html>` 的背景被画成白色，成为**画布色**，overscroll 与短页面
 //   底部直接露白条（`body` 因为有属性选择器 + `html body` 高特异性规则，反而是对的，
-//   更不容易被发现）。`:root[vs-theme="dark"]` 是 (0,2,0)，稳压 `:root`，与顺序无关。
-:root[vs-theme="dark"],
-[vs-theme="dark"]
-  --vs-theme-bg: #18191c
-  --vs-theme-color: #fff
-  --vs-theme-layout: #1e2023
-  --vs-theme-bg2: #141417
-  --vs-theme-code: #141417
-  --vs-theme-code2: #161619
+//   更不容易被发现）。`:root[fei-theme="dark"]` 是 (0,2,0)，稳压 `:root`，与顺序无关。
+:root[fei-theme="dark"],
+[fei-theme="dark"]
+  --fei-theme-bg: #18191c
+  --fei-theme-color: #fff
+  --fei-theme-layout: #1e2023
+  --fei-theme-bg2: #141417
+  --fei-theme-code: #141417
+  --fei-theme-code2: #161619
 
 .switch-dark
   position relative

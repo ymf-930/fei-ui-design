@@ -3,9 +3,9 @@
  *
  * 背景（见 docs/.internal/refactor-plan.md §8.10 入口 1、§8.11.2）：
  *   这个入口原本点击后只弹一条「暂未开发」，且**修不掉**——两个叠在一起的原因：
- *   1. 状态传递写成了副本：`app.config.globalProperties.vsTheme` 是普通对象，
- *      各组件用 `{ ...vsTheme }` 取值 → 一处写入其它组件读不到；
- *   2. `:open="fixed || i === openGroupIndex || vsThemeVal.sidebarCollapseOpen"`
+ *   1. 状态传递写成了副本：`app.config.globalProperties.feiTheme` 是普通对象，
+ *      各组件用 `{ ...feiTheme }` 取值 → 一处写入其它组件读不到；
+ *   2. `:open="fixed || i === openGroupIndex || feiThemeVal.sidebarCollapseOpen"`
  *      用 `||` 串联全局开关 → 全局为 true 时表达式恒真，分组标题**点开也收不起**。
  *
  * 这份测试**必须能跑出真实 DOM 变化**（挂载真实组件 + 点击真实节点），
@@ -27,7 +27,7 @@ vi.mock('vitepress', async () => {
 
 /**
  * 模拟 app 级单例：真实实现是 enhanceApp 里的
- * `app.config.globalProperties.vsTheme = reactive({...})`。
+ * `app.config.globalProperties.feiTheme = reactive({...})`。
  * 关键在于「同一个 reactive 对象被所有挂载实例共享」——这正是被测的不变量。
  */
 const globalTheme = reactive({
@@ -54,7 +54,7 @@ async function mountSidebar(props = {}) {
   const SidebarLinks = (await import('../components/SidebarLinks.vue')).default
   const wrapper = mount(SidebarLinks, {
     props: { items, depth: 0, sidebarDepth: 0, ...props },
-    global: { config: { globalProperties: { vsTheme: globalTheme } } },
+    global: { config: { globalProperties: { feiTheme: globalTheme } } },
   })
   await nextTick()
   return wrapper

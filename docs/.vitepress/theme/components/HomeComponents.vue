@@ -1,6 +1,6 @@
 <template>
   <div class="con-components">
-    <div class="con-logo vuesax-logo">
+    <div class="con-logo fei-logo">
       <img src="/logos/fei-logo.png" alt="" />
       <div class="github-logo__1"></div>
       <div class="github-logo__2"></div>
@@ -36,16 +36,8 @@
           <p>Do you want to participate in our initiative? We are open.</p>
 
           <footer>
-            <button
-              class="vs-button vs-button--null vs-button--size-null vs-button--danger vs-button--default"
-            >
-              <div class="vs-button__content">Open</div>
-            </button>
-            <button
-              class="vs-button vs-button--null vs-button--size-null vs-button--dark vs-button--shadow"
-            >
-              <div class="vs-button__content">cancel</div>
-            </button>
+            <f-button type="danger">Open</f-button>
+            <f-button>cancel</f-button>
           </footer>
         </div>
       </div>
@@ -76,11 +68,7 @@
           <span class="not-darken">Potted cactus</span>
           <span class="has-darken">Red Shoes</span>
         </h4>
-        <button
-          class="vs-button vs-button--null vs-button--size-null vs-button--block vs-button--primary vs-button--default"
-        >
-          <div class="vs-button__content">Button</div>
-        </button>
+        <f-button type="primary" class="home-button--block">Button</f-button>
       </div>
 
       <div class="component5">
@@ -94,13 +82,9 @@
       </div>
 
       <div class="component6">
-        <button
-          class="vs-button vs-button--null vs-button--size-null vs-button--icon vs-button--dark vs-button--transparent"
-        >
-          <div class="vs-button__content">
-            <i class="bx bx-dots-vertical-rounded"></i>
-          </div>
-        </button>
+        <f-button circle transparent>
+          <i class="bx bx-dots-vertical-rounded"></i>
+        </f-button>
         <div class="con-load"></div>
       </div>
 
@@ -127,26 +111,10 @@
         </div>
 
         <footer>
-          <div class="vs-input-parent vs-input-parent--state-null vs-component--primary">
-            <!--            <div class="vs-input-content">-->
-            <!--              <input placeholder="Comment" id="vs-input&#45;&#45;415" class="vs-input">-->
-            <!--              <label for="vs-input&#45;&#45;415" class="vs-input__label">Comment</label>-->
-            <!--              <div class="vs-input__affects">-->
-            <!--                <div class="vs-input__affects__1"></div>-->
-            <!--                <div class="vs-input__affects__2"></div>-->
-            <!--                <div class="vs-input__affects__3"></div>-->
-            <!--                <div class="vs-input__affects__4"></div>-->
-            <!--              </div>-->
-            <!--            </div>-->
-            <input placeholder="Comment" id="vs-input--415" class="vs-input" />
-          </div>
-          <button
-            class="vs-button vs-button--null vs-button--size-null vs-button--icon vs-button--primary vs-button--flat"
-          >
-            <div class="vs-button__content">
-              <i class="bx bx-send"></i>
-            </div>
-          </button>
+          <f-input v-model="input1" placeholder="Comment" class="home-input" />
+          <f-button type="primary" circle plain>
+            <i class="bx bx-send"></i>
+          </f-button>
         </footer>
       </div>
 
@@ -202,27 +170,15 @@
       </div>
 
       <div class="component10">
-        <button
-          class="vs-button vs-button--null vs-button--size-null vs-button--icon vs-button--danger vs-button--default"
-        >
-          <div class="vs-button__content">
-            <i class="bx bx-play"></i>
-          </div>
-        </button>
-        <button
-          class="vs-button vs-button--null vs-button--size-null vs-button--icon vs-button--warn vs-button--default"
-        >
-          <div class="vs-button__content">
-            <i class="bx bx-git-pull-request"></i>
-          </div>
-        </button>
-        <button
-          class="vs-button vs-button--null vs-button--size-null vs-button--icon vs-button--primary vs-button--default"
-        >
-          <div class="vs-button__content">
-            <i class="bx bxl-github"></i>
-          </div>
-        </button>
+        <f-button type="danger" circle>
+          <i class="bx bx-play"></i>
+        </f-button>
+        <f-button type="warning" circle>
+          <i class="bx bx-git-pull-request"></i>
+        </f-button>
+        <f-button type="primary" circle>
+          <i class="bx bxl-github"></i>
+        </f-button>
       </div>
 
       <div :class="{ active: focusDrop }" class="component11">
@@ -251,28 +207,10 @@
       </div>
 
       <div class="component12">
-        <div
-          class="vs-input-parent vs-input-parent--state-null vs-component--primary"
-          placeholder="Search"
-        >
-          <div class="vs-input-content">
-            <input placeholder="" id="vs-input--424" class="vs-input" />
-            <label for="vs-input--424" class="vs-input__label">Search</label>
-            <div class="vs-input__affects">
-              <div class="vs-input__affects__1"></div>
-              <div class="vs-input__affects__2"></div>
-              <div class="vs-input__affects__3"></div>
-              <div class="vs-input__affects__4"></div>
-            </div>
-          </div>
-        </div>
-        <button
-          class="vs-button vs-button--null vs-button--size-null vs-button--icon vs-button--primary vs-button--default"
-        >
-          <div class="vs-button__content">
-            <i class="bx bx-search"></i>
-          </div>
-        </button>
+        <f-input v-model="input2" placeholder="Search" class="home-input" />
+        <f-button type="primary" circle>
+          <i class="bx bx-search"></i>
+        </f-button>
       </div>
 
       <div class="component13">
@@ -284,76 +222,20 @@
         </header>
         <ul>
           <li>
-            <div class="vs-checkbox-content vs-component--primary">
-              <div class="vs-checkbox-con">
-                <input type="checkbox" id="435" class="vs-checkbox" />
-                <div class="vs-checkbox-mask">
-                  <i class="vs-icon-check">
-                    <span>
-                      <div class="line1"></div>
-                      <div class="line2"></div>
-                    </span>
-                  </i>
-                </div>
-              </div>
-              <label for="435" class="vs-checkbox-label">Spain</label>
-            </div>
+            <f-checkbox v-model="check1" label="Spain" />
           </li>
           <li>
-            <div class="vs-checkbox-content vs-component--primary">
-              <div class="vs-checkbox-con">
-                <input type="checkbox" id="437" class="vs-checkbox" />
-                <div class="vs-checkbox-mask">
-                  <i class="vs-icon-check">
-                    <span>
-                      <div class="line1"></div>
-                      <div class="line2"></div>
-                    </span>
-                  </i>
-                </div>
-              </div>
-              <label for="437" class="vs-checkbox-label">Germany</label>
-            </div>
+            <f-checkbox v-model="check2" label="Germany" />
           </li>
           <li>
-            <div class="vs-checkbox-content vs-component--primary">
-              <div class="vs-checkbox-con">
-                <input type="checkbox" id="439" class="vs-checkbox" />
-                <div class="vs-checkbox-mask">
-                  <i class="vs-icon-check">
-                    <span>
-                      <div class="line1"></div>
-                      <div class="line2"></div>
-                    </span>
-                  </i>
-                </div>
-              </div>
-              <label for="439" class="vs-checkbox-label">Italy</label>
-            </div>
+            <f-checkbox v-model="check3" label="Italy" />
           </li>
           <li>
-            <div class="vs-checkbox-content vs-component--primary">
-              <div class="vs-checkbox-con">
-                <input type="checkbox" id="441" class="vs-checkbox" />
-                <div class="vs-checkbox-mask">
-                  <i class="vs-icon-check">
-                    <span>
-                      <div class="line1"></div>
-                      <div class="line2"></div>
-                    </span>
-                  </i>
-                </div>
-              </div>
-              <label for="441" class="vs-checkbox-label">Japan</label>
-            </div>
+            <f-checkbox v-model="check4" label="Japan" />
           </li>
         </ul>
 
-        <button
-          class="vs-button vs-button--null vs-button--size-null vs-button--block vs-button--primary vs-button--default"
-        >
-          <div class="vs-button__content">Lets Go!</div>
-        </button>
+        <f-button type="primary" class="home-button--block">Lets Go!</f-button>
       </div>
     </div>
   </div>
@@ -370,6 +252,10 @@ const selectValue = ref('')
 const input1 = ref('')
 const input2 = ref('')
 const input3 = ref('')
+const check1 = ref(false)
+const check2 = ref(false)
+const check3 = ref(false)
+const check4 = ref(false)
 
 function handleClickOption(val) {
   selectValue.value = val
@@ -397,9 +283,15 @@ function handleBurDrop() {
 </script>
 <style scoped lang="stylus">
 getColor(colorx, alpha = 1)
-  unquote("rgba(var(--vs-"+colorx+"), "+alpha+")")
+  unquote("rgba(var(--fei-"+colorx+"), "+alpha+")")
 getVar(var)
-  unquote("var(--vs-"+var+")")
+  unquote("var(--fei-"+var+")")
+
+// 首页卡片改用真实组件后补齐的修饰类。
+// 通栏按钮在原有样式体系里由 `--block` 修饰承担，组件库 FButton 没有对应 prop，
+// 用这一条宽度规则代替；component4 / component13 两个通栏按钮共用。
+.home-button--block
+  width 100%
 
 @keyframes rotate-load
   0%
@@ -480,7 +372,7 @@ getVar(var)
   border-radius 50%
   box-shadow 0px 8px 20px 0px rgba(0,0,0,.04)
   transition all .25s ease
-  &.vuesax-logo
+  &.fei-logo
     border-radius 50px
     img
       width 70%
@@ -562,10 +454,8 @@ getVar(var)
       &:hover
         box-shadow 0px 0px 0px 0px rgba(0,0,0,.1)
         transform translate(0, 5px)
-      .vs-input-parent
+      :deep(.home-input)
         width calc(100% - 50px)
-        :deep(input)
-          width 100% !important
       ul
         margin 0px
         padding 10px 0px
@@ -1003,18 +893,8 @@ getVar(var)
           width 42px
           height 42px
           margin-left 10px
-        :deep(.vs-input-parent)
+        :deep(.home-input)
           width calc(100% - 60px)
-        :deep(input)
-          width 100%
-          padding 10px 14px
-          border 0px
-          background getVar(theme-bg)
-          border-radius 10px
-          font-size .7rem
-          transition all .25s ease
-          &:focus
-            background getVar(theme-bg2)
 
       .content-text
         h4
@@ -1318,9 +1198,6 @@ getVar(var)
           bottom -30px
           button
             min-width 100px
-          .vs-button--shadow
-            background getVar(theme-layout) !important
-            color getVar(theme-color) !important
         p
           font-size .8rem
           padding-bottom 20px
@@ -1384,7 +1261,7 @@ getVar(var)
     // overflow hidden
     &.btn-hover
       &.fuidesign-hover
-        .vuesax-logo
+        .fei-logo
           transform scale(1)
           opacity 1
       &.gitee-hover

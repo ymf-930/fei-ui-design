@@ -125,7 +125,7 @@ export default {
 
 <style lang="stylus">
 getVar(var)
-    unquote("var(--vs-"+var+")")
+    unquote("var(--fei-"+var+")")
 .nav-links
   display flex
   align-items center

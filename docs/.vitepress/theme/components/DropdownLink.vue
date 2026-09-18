@@ -94,7 +94,7 @@ export default {
 
 <style lang="stylus">
 getVar(var)
-    unquote("var(--vs-"+var+")")
+    unquote("var(--fei-"+var+")")
 .dropdown-wrapper
   .dropdown-title
     display flex !important
