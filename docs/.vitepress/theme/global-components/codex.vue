@@ -1,72 +1,97 @@
 <template>
-  <div class="code">
+  <div class="code" :class="{ 'code--open': active }">
     <div :class="{ copied: check }" class="noti-code">
       <i class="bx bx-check"></i>
-      Code copied
+      代码已复制
     </div>
-    <header class="header-codex">
-      <ul>
-        <li title="Codepen" v-if="codepen" @click="openCodepen" class="con-link">
-          <i class="bx bxl-codepen"></i>
-        </li>
 
-        <li title="Codesandbox" v-if="codesandbox" @click="openCodesandbox">
-          <svg
-            t="1514359261842"
-            class="icon"
-            style=""
-            viewBox="0 0 1024 1024"
-            version="1.1"
-            fill="currentColor"
-            xmlns="http://www.w3.org/2000/svg"
-            p-id="9197"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-            width="15px"
-            height="15px"
-          >
-            <path
-              d="M755 140.3l0.5-0.3h0.3L512 0 268.3 140h-0.3l0.8 0.4L68.6 256v512L512 1024l443.4-256V256L755 140.3z m-30 506.4v171.2L548 920.1V534.7L883.4 341v215.7l-158.4 90z m-584.4-90.6V340.8L476 534.4v385.7L300 818.5V646.7l-159.4-90.6zM511.7 280l171.1-98.3 166.3 96-336.9 194.5-337-194.6 165.7-95.7L511.7 280z"
-              p-id="9198"
-            ></path>
-          </svg>
-        </li>
+    <!-- 收起态入口。
+         展开后「复制 / CodePen / CodeSandbox」都在面板头里，收起时代码不可见，
+         复制与外部沙箱都无从谈起，因此这里只留一个明确的「查看代码」按钮，
+         而不是把整条工具条再复制一份（那会让同一组控件出现两处状态）。 -->
+    <button
+      v-show="!active"
+      type="button"
+      class="code-trigger"
+      title="查看代码"
+      aria-label="查看代码"
+      @click="toggleCode"
+    >
+      <i class="bx bx-code-alt"></i>
+      <span>查看代码</span>
+    </button>
 
-        <li title="Copy code" :class="{ copied: check }" @click="copy">
-          <i v-if="!check" class="bx bx-copy"></i>
-          <i v-else class="bx bx-check"></i>
-        </li>
-        <li
-          :title="active ? 'hide code' : 'View code'"
-          :class="{ active: active }"
-          class="not-a con-link"
-          @click="toggleCode"
-        >
-          <i v-if="!active" class="bx bx-code-alt"></i>
-
-          <i v-else class="bx bx-hide"></i>
-        </li>
-      </ul>
-    </header>
     <transition v-on:before-enter="beforeEnter" v-on:enter="enter" v-on:leave="leave">
       <div ref="codexRef" v-show="active" class="con-code">
-        <ul ref="ulRef" class="ul-codes">
-          <li v-if="slots.template" :class="{ active: activeSlot === 0 }" @click="activeSlot = 0">
-            Template
-          </li>
-          <li v-if="slots.script" :class="{ active: activeSlot === 1 }" @click="activeSlot = 1">
-            Script
-          </li>
-          <li v-if="slots.style" :class="{ active: activeSlot === 2 }" @click="activeSlot = 2">
-            Style
-          </li>
-          <li
-            v-if="Object.keys(slots).length > 0"
-            :class="{ active: activeSlot === 3 }"
-            @click="activeSlot = 3"
-          >
-            All
-          </li>
-        </ul>
+        <!-- 面板头：页签在左、操作在右，**整条头都在深色面板内部**。
+             历史形状是「浅色带上的悬浮工具条 + 下面另起一块深色面板」，
+             两者底色不同、视觉上被切成两块；把 header 收进 .con-code 后成为一块。 -->
+        <div ref="panelHeadRef" class="panel-head">
+          <ul ref="ulRef" class="ul-codes">
+            <li v-if="slots.template" :class="{ active: activeSlot === 0 }" title="模板" @click="activeSlot = 0">
+              Template
+            </li>
+            <li v-if="slots.script" :class="{ active: activeSlot === 1 }" title="脚本" @click="activeSlot = 1">
+              Script
+            </li>
+            <li v-if="slots.style" :class="{ active: activeSlot === 2 }" title="样式" @click="activeSlot = 2">
+              Style
+            </li>
+            <li
+              v-if="Object.keys(slots).length > 0"
+              :class="{ active: activeSlot === 3 }"
+              title="全部"
+              @click="activeSlot = 3"
+            >
+              All
+            </li>
+          </ul>
+
+          <header class="header-codex">
+            <ul>
+              <li title="在 CodePen 中打开" v-if="codepen" @click="openCodepen" class="con-link">
+                <i class="bx bxl-codepen"></i>
+              </li>
+
+              <li title="在 CodeSandbox 中打开" v-if="codesandbox" @click="openCodesandbox">
+                <svg
+                  t="1514359261842"
+                  class="icon"
+                  style=""
+                  viewBox="0 0 1024 1024"
+                  version="1.1"
+                  fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg"
+                  p-id="9197"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  width="15px"
+                  height="15px"
+                >
+                  <path
+                    d="M755 140.3l0.5-0.3h0.3L512 0 268.3 140h-0.3l0.8 0.4L68.6 256v512L512 1024l443.4-256V256L755 140.3z m-30 506.4v171.2L548 920.1V534.7L883.4 341v215.7l-158.4 90z m-584.4-90.6V340.8L476 534.4v385.7L300 818.5V646.7l-159.4-90.6zM511.7 280l171.1-98.3 166.3 96-336.9 194.5-337-194.6 165.7-95.7L511.7 280z"
+                    p-id="9198"
+                  ></path>
+                </svg>
+              </li>
+
+              <li title="复制代码" :class="{ copied: check }" @click="copy">
+                <i v-if="!check" class="bx bx-copy"></i>
+                <i v-else class="bx bx-check"></i>
+              </li>
+              <li
+                :title="active ? '收起代码' : '查看代码'"
+                :class="{ active: active }"
+                class="not-a con-link"
+                @click="toggleCode"
+              >
+                <i v-if="!active" class="bx bx-code-alt"></i>
+
+                <i v-else class="bx bx-hide"></i>
+              </li>
+            </ul>
+          </header>
+        </div>
+
         <div class="con-codes">
           <transition
             v-on:before-enter="beforeEntercodes"
@@ -78,7 +103,7 @@
 
               <footer
                 @click="toggleCode"
-                :title="active ? 'Hide code' : 'View code'"
+                :title="active ? '收起代码' : '查看代码'"
                 class="footer-code"
               >
                 <i class="bx bx-hide"></i>
@@ -95,7 +120,7 @@
 
               <footer
                 @click="toggleCode"
-                :title="active ? 'Hide code' : 'View code'"
+                :title="active ? '收起代码' : '查看代码'"
                 class="footer-code"
               >
                 <i class="bx bx-hide"></i>
@@ -113,7 +138,7 @@
 
               <footer
                 @click="toggleCode"
-                :title="active ? 'Hide code' : 'View code'"
+                :title="active ? '收起代码' : '查看代码'"
                 class="footer-code"
               >
                 <i class="bx bx-hide"></i>
@@ -133,7 +158,7 @@
 
               <footer
                 @click="toggleCode"
-                :title="active ? 'Hide code' : 'View code'"
+                :title="active ? '收起代码' : '查看代码'"
                 class="footer-code"
               >
                 <i class="bx bx-hide"></i>
@@ -151,12 +176,12 @@ import { useRoute, useRouter } from 'vitepress'
 const router = useRouter()
 const route = useRoute()
 const slots = useSlots()
-console.log(slots);
 const active = ref(false)
 const check = ref(false)
 const activeSlot = ref(0)
 const vsThemeVal = ref(null)
 const ulRef = ref(null)
+const panelHeadRef = ref(null)
 const codexRef = ref(null)
 const slot0Ref = ref(null)
 const slot1Ref = ref(null)
@@ -190,8 +215,11 @@ watch(
     await nextTick()
     const slotRefs = [slot0Ref, slot1Ref, slot2Ref, slot3Ref]
     let h = slotRefs[val].value.scrollHeight
-    let ul = ulRef.value.scrollHeight
-    codexRef.value.style.height = h + ul - 1 + 'px'
+    // ⚠️ 面板头的高度必须量 `.panel-head` 本身，**不能**只量页签 ul：
+    // 头里现在是「页签在左 + 操作按钮在右」同占一行，操作按钮（含上下留白 ~49px）
+    // 比页签（~26px）高，只按页签算会把面板高度算矮，代码尾部被永久截掉。
+    let head = panelHeadRef.value.offsetHeight
+    codexRef.value.style.height = h + head - 1 + 'px'
   },
 )
 // Vue.observable(this.$site.themeConfig)
@@ -337,12 +365,14 @@ getVar(var)
   top 0px
   left 0px
 
+// 页签：贴在面板头左侧。水平内边距交给 .panel-head，这里只管间距
 .ul-codes
   position relative
   display flex
   align-items center
-  justify-content center
-  padding 0px var(--fd-sp-5)
+  justify-content flex-start
+  flex-wrap wrap
+  padding 0px
   margin 0px
 
   li
@@ -390,6 +420,46 @@ getVar(var)
   position relative
   transition all .25s ease
 
+  // 展开时容器底色跟随深色面板：JS 把面板高度写成 `scrollHeight - 1`（取整补偿），
+  // 差的那 1px 会露出容器底色 —— 容器若仍是浅色，深色面板底部就挂一条白缝。
+  &.code--open
+    background getVar(theme-code2)
+
+// 收起态入口。通栏、居中，图标 + 文案（旧版只有一个 0.6 透明度的裸眼睛图标，
+// 既不好点也不自解释）。
+.code-trigger
+  display flex
+  align-items center
+  justify-content center
+  gap 6px
+  width 100%
+  padding var(--fd-sp-3) var(--fd-sp-4)
+  border 0
+  background transparent
+  color getVar(theme-color)
+  font-family inherit
+  font-size var(--fd-fs-sm)
+  opacity .5
+  cursor pointer
+  transition all .25s ease
+  outline none
+
+  i
+    font-size 1rem
+
+  &:hover
+    opacity 1
+
+// 面板头：页签在左、操作在右，**整条都在深色面板内部**
+.panel-head
+  display flex
+  align-items center
+  justify-content space-between
+  flex-wrap wrap
+  gap var(--fd-sp-2)
+  padding 0 var(--fd-sp-3)
+  border-bottom 1px solid rgba(255, 255, 255, .08)
+
 .input-transparent
   position absolute
   z-index 0
@@ -397,7 +467,8 @@ getVar(var)
   bottom 0px
   right 0px
 
-// 深色代码面板：通栏贴齐内容边，四角由 .card 的 overflow 裁剪
+// 深色代码面板：通栏贴齐内容边。四角不再由 .card 的 overflow 裁剪
+// （那会把卡片正文首行一起裁掉，见 card.vue），改由 .card > .slotcode 自己圆角。
 .con-code
   display: block
   transition: all .25s ease
@@ -407,28 +478,28 @@ getVar(var)
   margin 0px
 
 .header-codex
-  width 100%
   display flex
   align-items center
-  justify-content center
+  justify-content flex-end
+  flex 0 0 auto
 
   ul
     display flex
     align-items center
     margin 0px
     padding 0px
-    justify-content center
-    width 100%
-    padding-left 4px
-    padding-right 4px
+    justify-content flex-end
     align-items: stretch
-    // 工具条上下留白：代码面板展开时它同时充当「工具条 ↔ 深色面板」的分隔
+    // 操作按钮上下留白：与左侧页签共同撑出面板头的高度
     padding-top var(--fd-sp-3)
     padding-bottom var(--fd-sp-3)
 
     li
       list-style none
-      color getVar(theme-color)
+      // ⚠️ 这里是深色面板内部，图标必须用白色。
+      // 旧版工具条挂在浅色带（--vs-theme-layout）上，用的是 getVar(theme-color)（深色）；
+      // 搬进面板后若沿用，浅色主题下就是「深色图标压在深色底上」= 看不见。
+      color #fff
       opacity .6
       padding 3px 10px
       transition all .25s ease
@@ -454,18 +525,19 @@ getVar(var)
           height 60%
           top 20%
           width 1px
-          background getVar(theme-layout)
+          background rgba(255, 255, 255, .25)
           display block
       &.active
-        color $accentColor !important
+        // `$accentColor` 是 VuePress 0.x 的变量，VitePress 1.x 已删 ——
+        // Stylus 对未定义变量不报错、原样输出，浏览器整条丢弃（死 CSS，构建零警告）。
+        // 这里换成实色，顺便把「页签式圆角底」改成不抢眼的浅色块。
         opacity 1
-        border-radius 12px 12px 0px 0px
-        background getVar(theme-code2)
+        background rgba(255, 255, 255, .12)
         i
           color #fff !important
       svg, i
         max-width 18px
-        fill getVar(theme-color) !important
+        fill #fff !important
       &:hover
         opacity 1
       &:not(.not-a)

@@ -1,6 +1,8 @@
 import { defineConfig } from 'vitepress'
 import { containerPreview, componentPreview } from '@vitepress-demo-preview/plugin'
 import { fileURLToPath, URL } from 'node:url'
+import { createSearchIndex } from './utils/search-index.js'
+import { vitepressUiLocalizer } from './utils/localize-vitepress.js'
 
 /**
  * 站点部署根路径。开发环境为 '/'，生产环境为 '/fei-ui-design/'（以斜杠结尾）。
@@ -24,6 +26,12 @@ const SITE_BASE = process.env.NODE_ENV === 'production' ? '/fei-ui-design/' : '/
 function link(path = '') {
   return '/' + String(path).replace(/^\/+/, '')
 }
+
+/**
+ * 本地搜索索引（构建期生成，见 utils/search-index.js 顶部的原因说明）。
+ * 每页渲染时把产物 HTML 收进来，buildEnd 时写成 outDir/search-index.json。
+ */
+const searchIndex = createSearchIndex()
 
 export default defineConfig({
   lang: 'zh-CN',
@@ -109,6 +117,39 @@ export default defineConfig({
     config(md) {
       md.use(containerPreview)
       md.use(componentPreview)
+      // VitePress 硬编码的界面文案（代码块复制按钮的 `title="Copy Code"`）
+      // 只能靠包一层 md.render 做定向替换，见 utils/localize-vitepress.js
+      md.use(vitepressUiLocalizer)
+      // 收集本地搜索索引（顺序无所谓，只包一层 md.render）
+      md.use(searchIndex.plugin)
+    }
+  },
+
+  /**
+   * 把 VitePress 自己算出来的页面标题交给索引。
+   *
+   * 为什么不能只靠 `env.frontmatter.title`：标题的最终来源是
+   * frontmatter.title → 首个 h1 → 首个标题 → 文件名，只有 VitePress 知道结果；
+   * markdown 插件那边 `env` 里有没有 frontmatter 并不保证。两条路径互相兜底，
+   * 谁先跑都能得到正确标题（见 utils/search-index.js 的 titles Map）。
+   */
+  transformPageData(pageData) {
+    searchIndex.setTitle(pageData.relativePath, pageData.title)
+  },
+
+  /**
+   * 站内搜索索引写盘。放 `buildEnd` 是刻意的：
+   * - 早于它写会被 outDir 的清理/拷贝覆盖（public/ 的拷贝发生在构建中段）；
+   * - `search-index.json` 落在 **outDir 根**（与 index.html 同级），
+   *   因此地址就是 `<base>search-index.json`，前端按 `site.base` 拼即可。
+   * 注意它必须**跳过** dev server：dev 下没有构建产物，前端会退化成「无数据」提示。
+   */
+  buildEnd(siteConfig) {
+    try {
+      const count = searchIndex.writeIndex(siteConfig.outDir)
+      console.log(`  ✓ search-index.json 已生成：${count} 个页面`)
+    } catch (err) {
+      console.warn('  ! search-index.json 生成失败：', err && err.message)
     }
   },
   vite: {

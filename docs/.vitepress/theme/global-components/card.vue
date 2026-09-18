@@ -55,14 +55,16 @@ vsThemeVal.value = vsTheme
 //      卡片 margin-bottom: -50px」这种互相抵消的魔法数字；
 //      标题也不再在 hover 时改 padding（会左右跳动）
 //   3. 所有数值取自 doc-typography.styl 的 --fd-* token，本文件不写裸数字
+//   4. **圆角与裁剪下沉到「需要裁的那两块面板」，卡片容器自己不再 overflow**
+//      —— 旧写法 `.card { border-radius: 20px; overflow: hidden }` 会把卡片正文
+//      首行第一个字裁掉：`.text` 里的段落没有左右内边距（刻意的，见下条注释），
+//      于是首行正好压在左上 20px 圆角的裁切弧里，字形缺一角（用户报的「文字显示不全」）。
+//      注意「只留底部圆角」也救不了：正文正好是卡片最后一个元素时，
+//      末行的字同样会落进左下圆弧里。所以裁剪必须离开 `.text`。
 getVar(var)
     unquote("var(--vs-"+var+")")
 
 .card
-  // 20px 圆角 + overflow 裁剪：示例面板与代码面板都是通栏白底，
-  // 靠这里把它们的四角裁成与卡片一致
-  border-radius var(--vs-radius, 20px)
-  overflow hidden
   margin var(--fd-sp-7) 0
   width 100%
 
@@ -71,6 +73,17 @@ getVar(var)
 
   &:last-of-type
     margin-bottom 0px
+
+  // 示例面板：**只有它是卡片最后一个元素时**才需要底部圆角
+  // （下面还接着代码面板时，四角都是内部边界，保持直角）。
+  // 排除 `.mobile`：那是手机预览框，四角 25px 圆角是它自己的画框，不能被这里覆盖。
+  > .example:last-child:not(.mobile)
+    border-radius 0 0 var(--vs-radius, 20px) var(--vs-radius, 20px)
+
+  // 代码面板容器：永远是卡片最后一个元素，负责卡片底部的两个圆角
+  > .slotcode
+    border-radius 0 0 var(--vs-radius, 20px) var(--vs-radius, 20px)
+    overflow hidden
 
   .text
     // 导语图片（直属于 .text 的图）

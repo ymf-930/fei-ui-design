@@ -67,22 +67,22 @@
                           </button>
                         </li>-->
             <!--            <li class="divider"/>-->
-                <li title="Package NPM">
+                <li title="npm 包">
               <a target="_blank" href="https://www.npmjs.com/package/fei-ui-design">
                 <i class="bx bx-package"></i>
               </a>
             </li>
-            <li title="View Code Github">
+            <li title="查看源码">
               <a target="_blank" href="https://github.com/ymf-930/fei-ui-design">
                 <i class="bx bx-code-alt"></i>
               </a>
             </li>
-            <li title="Edit Page">
+            <li title="编辑此页">
               <a target="_blank" :href="editLink">
                 <i class="bx bx-edit"></i>
               </a>
             </li>
-            <li title="Report a Bug">
+            <li title="报告问题">
               <a
                 target="_blank"
                 :href="`https://github.com/ymf-930/fei-ui-design/issues/new?title=[${page.title}] - Your Bug Name&amp;body=**Steps to Reproduce**%0A1. Do something%0A2. Do something else.%0A3. Do one last thing.%0A%0A**Expected**%0AThe ${page.title} should do this%0A%0A**Result**%0AThe ${page.title} does not do this%0A%0A**Testcase**%0A(fork this to get started)%0Ahttp://jsfiddle.net/exmple-bug/1/`">

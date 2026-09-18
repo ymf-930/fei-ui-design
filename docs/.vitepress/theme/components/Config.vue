@@ -103,7 +103,7 @@
     <button
       @click="ChangeTheme"
       :class="{ active: vsThemeVal.themeDarken }"
-      :title="`Theme ${!vsThemeVal.themeDarken ? 'Dark' : 'Light'}`"
+      :title="`切换到${!vsThemeVal.themeDarken ? '暗色' : '浅色'}主题`"
       class="li-darken switch-dark"
     >
       <div class="switch-con">

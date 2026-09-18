@@ -4,8 +4,13 @@
 
     <a :href="homeLink" class="home-link">
       <div flex="cross:center">
-        <img class="logo-img not-darken" src="/logos/f-ui-logo.png" alt="FEI-UI-DESIGN">
-        <img class="logo-img has-darken" src="/logos/f-ui-logo-white.png" alt="FEI-UI-DESIGN">
+        <!-- 品牌标记：渐变蓝色「F」，**明暗两套主题共用同一张图**。
+             旧写法是 `not-darken`(黑) + `has-darken`(白) 两张图切换，那套约定属于
+             单色标记时代 —— 现在的标记本身带品牌渐变（青→蓝→紫）、底色透明，
+             在 #1e2023 的暗色导航上与在白底上一样清晰，再切白色反而丢掉品牌色。
+             图源：用户提供的 1774×887 品牌图，按 alpha 通道裁出图形部分
+             （256..524 × 295..576），补 6% 外边距后居中放进 256×256 方形容器。 -->
+        <img class="logo-img" src="/logos/fei-logo.png" alt="FEI-UI-DESIGN">
         <h1 class="logo-title pl-10 pr-16">FEI-UI-DESIGN</h1>
         <!-- 状态标记：`TagProps` 没有 `plain`（那是 Button 的属性），原先写的 `palin` 是无效属性，
              会静默透传成 `palin=""` 落在根节点上。如需描边款式，Tag 只提供 `no-border`。 -->
@@ -26,7 +31,7 @@
            且唯一候选旧项目 fei-ui-one 的文档站与 npm 包均已不可达。
            证据与复原方式见 docs/.internal/refactor-plan.md §8.11.9。 -->
       <div class="con-links">
-        <a title="Github" target="_blank" href="https://github.com/ymf-930/fei-ui-design">
+        <a title="GitHub 仓库" target="_blank" href="https://github.com/ymf-930/fei-ui-design">
           <i class="bx bxl-github"></i>
         </a>
       </div>

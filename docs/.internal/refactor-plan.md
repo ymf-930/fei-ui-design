@@ -2436,3 +2436,137 @@ DEBUG=1 "<托管node绝对路径>" node_modules/vitepress/bin/vitepress.js build
 `.temp` **目录本身**被占用时 `mv` 会报 `Permission denied`，但逐个移出**条目**是可行的，
 移空之后 `rmdir` 也就成功了。这样 `emptyDir` 面对的是空目录、一次删除都不需要，
 收尾的 `rimraf` 又被 `DEBUG=1` 跳过。本次实测构建 39.61s。
+
+## §10.16 文档站五项体验缺陷（悬浮提示英文 / 代码块分离 / logo / 卡片圆角裁字 / 站内搜索）（2026-09-18 追加）
+
+用户一次性报了 5 条，逐条定位后**根因各不相同**，唯一共同点是「都只在产物里看得出来」——
+因此本轮所有结论都由 `.workbuddy/scripts/probe-docs-ux5.mjs`（CDP 驱动无头 Chrome，五段）
+在**真实产物**上取证，不靠读源码推断。
+
+### 10.16.1 悬浮提示仍是英文 —— 三类来源，只有一类能配出来
+
+按「能不能从配置修」分三类，处理方式完全不同：
+
+| 来源 | 例子 | 处理 |
+|---|---|---|
+| 主题组件模板里的 `title` | `Navbar.vue` 的 `Github`、`Page.vue` 的 `Package NPM`/`View Code Github`/`Edit Page`/`Report a Bug`、`Home.vue` 的 `Get Started`、`Config.vue` 的 `Theme ${dark?'Dark':'Light'}`、`codex.vue` 的 `Copy Code` | 逐条改成中文（`GitHub 仓库`、`npm 包`、`查看源码`、`编辑此页`、`报告问题`、`快速开始`、`切换到暗色/浅色主题`、`复制代码`） |
+| **VitePress 硬编码** | `title="Copy Code"` | 见下 |
+| 死组件里的可见文案 | `Footer.vue` 的 `Github`/`Github Issues` | 顺手中文化（该文件无任何引用，见 §10.16.1 末尾） |
+
+⚠️ **VitePress 1.0.0-rc.35 的英文界面文案只有一处硬编码**：代码块右上角复制按钮。
+它在 `markdown/plugins/highlight.ts` 里**渲染期拼字符串**：
+
+```js
+return `<div class="language-${lang}">…<button title="Copy Code" class="copy"></button>…`
+```
+
+所以：`themeConfig` 里配不出来（`copyCodeTooltip` 之类的键是**更晚版本**才有的）；
+`md.core.ruler` / `md.renderer.rules` 钩子也抓不到（字符串在 fence 渲染函数内部拼，钩子只能拿到最终 HTML）。
+唯一落点是**包一层 `md.render` 做定向替换** ⇒ 新增 `utils/localize-vitepress.js`。
+
+⚠️ 替换**不能裸替 `title="Copy Code"`**：文档里的代码示例经 shiki 着色后**引号是原样的**
+（只有 `<`/`>` 被转义），一篇讲「怎么自定义代码块」的文档完全可能原样印出这段字符串。
+改为匹配**整只 `/<button\b[^>]*\btitle="Copy Code"[^>]*>/`** —— HTML 里的 `<button` 必然是真按钮，
+示例里的 `<` 已转义成 `&lt;`，永远匹配不上。已用两个用例钉住（真标签被替换、转义串保持原样）。
+
+排查方式上有一条**方法论**：探针扫 `[title]` 找英文时，**必须先挖掉专有名词白名单**
+（`npm`/`pnpm`/`GitHub`/`Gitee`/`CodePen`/`CodeSandbox`/`Props`/`Events`…）。
+否则 `npm 包`、`Gitee 仓库`、`在 CodePen 中打开` 会被永远判成「英文未改」，
+告警长红、检查失去意义 —— 这正是本轮第一版探针的假阳性。
+
+### 10.16.2 「查看代码」按钮与代码区**不该分开**
+
+原结构里工具栏 `.header-codex` 在 `.con-code` **之外**：收起态下它是一条**独立浅色横带**，
+与下方深色代码面板形成视觉断裂（用户截图里正是「两个不相干的块」）。改法：
+
+- **收起态**新增 `.code-trigger`（`<i class="bx bx-code-alt">` + 「查看代码」）作为唯一切入点；
+- **展开态**把工具栏移进 `.con-code`，成为 `.panel-head`（左 `.ul-codes` 页签 / 右 `.header-codex` 动作），
+  底色跟随 `--vs-theme-code2`，与代码面板**同属一个深色块**；
+- 高度算式随之改：`codexRef.style.height = h + panelHeadRef.offsetHeight - 1 + 'px'`
+  （原为 `h + ulRef.value.scrollHeight`，`ulRef` 已不再是直接子层级）；
+- 顺带清掉 `$accentColor` 死变量（`.active` 改 `rgba(255,255,255,.12)`），并为整个组件删掉
+  `console.log(slots)` 调试残留。
+
+⚠️ 这次重构踩了一个**结构性**坑：第一次改完模板后构建报
+`Element is missing end tag`（`24:5`）。真因是编辑时**旧的一段 `<transition>…<div class="con-code">…<ul class="ul-codes">`
+没删干净**，与新块并存。定位手法值得记：`@vue/compiler-sfc` 的 `parse` 只给出行列，
+真正指认「谁没闭合」要靠**自写标签栈扫描器**（栈顶是 `svg` 却遇到 `</path>` ⇒ MISMATCH）。
+修完把**全部 8 个被改 SFC** 都过一遍 `@vue/compiler-sfc` 编译 + Stylus 块渲染（产物 0 处死 `$var`）才收工。
+
+### 10.16.3 logo 调整：从双图切到单图 + 裁剪
+
+原 `f-ui-logo.png` / `f-ui-logo-white.png` 是两张 1200×1200，语义重复且分辨率严重浪费。
+从设计稿 `logo.png`（1774×887）裁出 **F 标记**：bbox `x 256–524 / y 295–576`，四周留 6% padding、
+居中到正方形，`LANCZOS` 重采样，透明底，输出 **256×256** `docs/public/logos/fei-logo.png`（约 39KB）；
+`favicon.ico` 同步按同一标记重生成（16–128 多尺寸）。
+
+之所以能从两张并为一张：品牌渐变是**青→蓝→紫**，在浅色与深色导航底色上对比度都够
+⇒ 原先 `not-darken` / `has-darken` 的双 `<img>` 切换可以直接删掉。
+`Navbar.vue` 与 `HomeComponents.vue` 均改为单 `<img class="logo-img" src="/logos/fei-logo.png">`。
+
+### 10.16.4 卡片圆角把文字裁掉
+
+`.card` 上的 `border-radius: var(--vs-radius,20px)` + `overflow:hidden` 让**首行/末行文字**
+在 20px 圆角处被切掉（探针量到 `leftInset 0`，即文字左边缘正好顶到圆角切线）。
+
+改法是**把「裁剪」这件事下放到真正需要它的子面板**：
+
+- `.card` 本体**去掉** `border-radius` 与 `overflow:hidden`；
+- 只给 `.example:last-child:not(.mobile)`、`.slotcode` 补 `border-radius: 0 0 20px 20px` + `overflow:hidden`。
+
+这样圆角依旧只出现在卡片底部（视觉不变），而 `.text` 正文区不再被任何 `overflow` 约束。
+复测 4 个抽样页：`radius 0`、`overflow visible`、无文字裁切、无横向溢出。
+
+### 10.16.5 站内搜索不完整 —— 这一处工作量最大
+
+**现状认定（先证伪再修）**：VitePress **1.0.0-rc.35 没有内置本地搜索**。
+`themeConfig.search.provider: 'local'` 与 `VPLocalSearchBox` 都是**更晚版本**才提供的；
+rc.35 的 `vitepress/theme` 只导出 `VPImage`/`VPButton` 那一批。而主题里那份 `SearchBox.vue`
+抄的是 **VuePress 0.x** 实现，依赖 `site.pages`（`{title, headers, path}`）与 `$router` ——
+这两样在 VitePress 1.x **都不存在**：输入第一个字符即抛
+`TypeError: Cannot read properties of undefined (reading 'length')`，下拉永不出现、回车也跳不动。
+
+**做法 = 构建期自造索引 + 重写组件**：
+
+- `utils/search-index.js`（新增）：挂到 markdown-it 上包一层 `render`，把每页**渲染后的 HTML**
+  收进来，按 `<h2>/<h3>` 的**真实 `id`** 切小节 —— 用产物里的 id 而不是自己复刻 slugify，
+  锚点必然与页面一致。`buildEnd` 时写成 `outDir/search-index.json`（落在**站点根**，与 `index.html` 同级，
+  故地址就是 `<base>search-index.json`）。放 `buildEnd` 是刻意的：早于它写会被 public/ 的拷贝覆盖。
+- 页标题不能只靠 `env.frontmatter.title`（markdown 插件的 `env` 里有没有 frontmatter 并不保证），
+  权威来源是 VitePress 自己算的 `pageData.title` ⇒ 由 `transformPageData` 喂进来，两条路径互相兜底。
+- `components/SearchBox.vue`（**整体重写**）：懒加载索引（`fetch(<base>search-index.json)`，共享同一个
+  Promise）、`title > header > body` 打分排序、每文档最多 3 条、总计 ≤20 条；片段用 `<mark>` 高亮
+  （**不用 `v-html`**）；`/` 与 `Ctrl/Cmd+K` 聚焦、`Esc` 关闭、`↑↓` 选择、回车跳转；
+  跳转用原生 `window.location.href`（与全站其它链接同一套约定）。
+  下拉容器用 `@mousedown.prevent` —— 否则 input 的 `blur` 会**先于** `click` 触发，结果点不中。
+
+⚠️ **索引质量两个坑，不修的话「搜什么都命中全站」**：
+
+1. **`<pre>` 必须整体丢出索引**，否则代码块里遍地是 `f-button`、`props`、`button` ——
+   实测修前 108 处 `button` 噪声；行内 `<code>` 要保留（它常常就是那唯一一处 API 说明）。
+2. VitePress 标题锚点的内容是 **U+200B 零宽空格**，产物里写作**命名实体** `&ZeroWidthSpace;`；
+   JS 的 `\s` **不匹配 U+200B** ⇒ 每个小标题都拖着一个零宽字符进索引（搜索结果标题看起来「带方框」）。
+   两种写法（命名实体 + 裸码点 `\u200b-\u200d\ufeff`）都要处理。
+
+修前索引 288KB / 修后 138KB；73 个页面入索引。
+
+### 10.16.6 验证结果
+
+`probe-docs-ux5.mjs` 在 `tEstnx` 之后这一版产物上复测：
+
+| 段 | 结论 |
+|---|---|
+| A/C | 代码块展开后 `headerInPanel: true`、`sameRow: true`、工具条底色与面板同色（`rgb(54,52,73)`），收起态入口为「查看代码」 |
+| B | 4 个抽样页 `card radius 0` / `overflow visible` / 无文字裁切 / 无横向溢出 |
+| D | logo `src=/fei-ui-design/logos/fei-logo.png`，`nat 256×256`，明暗两张截图均正常 |
+| E | 4 个页面**待改英文 0 条**；复制按钮 `title="复制代码"`、`rawCopyCode` 命中 0 |
+| 搜索 | 输入 `button` 出 14 条、`安装` 出 9 条、乱码出「未找到与「…」匹配的内容」；点击/回车/Esc/`/` 快捷键全部生效 |
+
+护栏：`vitest` 4 文件 16 用例全绿；`eslint` 归零；`docs:check` 五项全绿；
+`check-site-links`（75 个产物页、站内链接全命中）、`check-docs-contrast`（全 token 达标）、
+`check-docs-placeholders`（未超基线）均通过。
+
+⚠️ 本轮又踩了一次**「同一文件并行发多个编辑」**：`Navbar.vue` 的 `title="Github"` 第一次改完
+其实**没落盘**（两个编辑各自读旧内容再写回），直到探针报 `["Github","npm 包"]` 才暴露。
+⇒ 该条纪律（同一文件多次改动必须**串行**、改完 Read 复核）已在 `MEMORY.md` 记为「已复现多次」，
+本轮是第 N 次复现，**不要再图快并行**。

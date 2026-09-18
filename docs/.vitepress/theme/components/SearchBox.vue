@@ -1,255 +1,321 @@
 <template>
   <div
     class="search-box"
-    :class="{focused, showSuggestions}"
+    :class="{ focused, 'show-suggestions': open }"
   >
     <div class="con-input">
       <input
-        @input="searchVal = $event.target.value"
-        aria-label="Search"
-        :value="searchVal"
-        :class="{ 'focused': focused }"
+        ref="inputRef"
+        :value="query"
         :placeholder="placeholder"
+        :aria-expanded="open ? 'true' : 'false'"
+        aria-label="站内搜索"
+        aria-controls="search-suggestions"
+        role="combobox"
         autocomplete="off"
         spellcheck="false"
-        @focus="focused = true, emit('focus')"
-        @blur="focused = false, emit('blur')"
-        @keyup.enter="go(focusIndex)"
-        @keyup.up="onUp"
-        @keyup.down="onDown"
-        ref="input"
+        @input="onInput"
+        @focus="onFocus"
+        @blur="onBlur"
+        @keydown.enter.prevent="go(focusIndex)"
+        @keydown.up.prevent="move(-1)"
+        @keydown.down.prevent="move(1)"
+        @keydown.esc.prevent="close"
       >
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
         <path
           d="M10,18c1.846,0,3.543-0.635,4.897-1.688l4.396,4.396l1.414-1.414l-4.396-4.396C17.365,13.543,18,11.846,18,10 c0-4.411-3.589-8-8-8s-8,3.589-8,8S5.589,18,10,18z M10,4c3.309,0,6,2.691,6,6s-2.691,6-6,6s-6-2.691-6-6S6.691,4,10,4z"/>
       </svg>
     </div>
+
+    <!--
+      `@mousedown.prevent` 不是装饰：下拉项要能点。
+      没有它时，鼠标按下的瞬间 input 先 blur → `open` 变 false → 整个下拉被卸载，
+      随后的 click 落在一个已经消失的节点上，永远不触发。
+      阻止 mousedown 默认行为即可保住焦点，同时 click 照常派发。
+    -->
     <transition name="fade">
       <ul
-        v-if="showSuggestions"
+        v-if="open"
+        id="search-suggestions"
         class="suggestions"
-        :class="{ 'align-right': alignRight }"
-        @mouseleave="unfocus"
+        role="listbox"
+        @mousedown.prevent
       >
-        <li
-          class="suggestion"
-          v-for="(s, i) in suggestions"
-          :key="i"
-          :class="{ focused: i === focusIndex }"
-        >
-          <!--          @mousedown="go(i)"-->
-          <!--          @mouseenter="focus(i)"-->
-          <a :href="s.path" @click.prevent>
-            <span class="page-title">{{ s.title || s.path }}</span>
-            <span v-if="s.header" class="header">
-              <i class='bx bx-chevron-right'></i>
-              {{ s.header.title }}
-            </span>
-          </a>
+        <li v-if="loading" class="suggestion suggestion--empty">正在加载搜索索引…</li>
+        <li v-else-if="error" class="suggestion suggestion--empty">{{ error }}</li>
+        <li v-else-if="!results.length" class="suggestion suggestion--empty">
+          未找到与「{{ query.trim() }}」匹配的内容
         </li>
+        <template v-else>
+          <li
+            v-for="(s, i) in results"
+            :key="s.href"
+            class="suggestion"
+            :class="{ focused: i === focusIndex }"
+            role="option"
+            :aria-selected="i === focusIndex"
+            @mouseenter="focusIndex = i"
+          >
+            <a :href="s.href">
+              <span class="page-title">{{ s.title }}</span>
+              <span v-if="s.header" class="header">
+                <i class="bx bx-chevron-right"></i>{{ s.header }}
+              </span>
+              <span v-if="s.snippet.length" class="snippet">
+                <template v-for="(part, j) in s.snippet" :key="j">
+                  <mark v-if="part.hit">{{ part.text }}</mark>
+                  <template v-else>{{ part.text }}</template>
+                </template>
+              </span>
+            </a>
+          </li>
+        </template>
       </ul>
     </transition>
   </div>
 </template>
 
 <script setup>
-/* global SEARCH_MAX_SUGGESTIONS, SEARCH_PATHS, SEARCH_HOTKEYS */
-import {useData} from "vitepress";
-import {computed, onBeforeUnmount, onMounted, ref, watch} from "vue";
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { useData } from 'vitepress'
+import { siteHref } from '../util'
 
-const {site} = useData()
-const emit = defineEmits(['focus','blur','showSuggestions'])
-const SEARCH_MAX_SUGGESTIONS = 5
-const SEARCH_PATHS = null
-const SEARCH_HOTKEYS = ['s', '/']
+/**
+ * 站内搜索。
+ *
+ * ## 这份实现替换了什么
+ *
+ * 旧版是从 VuePress 0.x 抄来的，在 VitePress 1.x 下**完全不可用**：
+ * - `const { pages } = site.value` —— `SiteData` 里没有 `pages`，
+ *   输入第一个字符就在 computed 里抛 `Cannot read properties of undefined (reading 'length')`；
+ * - `router.push(...)` —— `router` 从未声明也从未导入，即使前面不抛也是 ReferenceError；
+ * - `useData()` 被写在 `onMounted` 里 —— 生命周期钩子中 `inject()` 取不到 provider，
+ *   解构 undefined 直接抛错，导致后面的 `keydown` 快捷键**一次都没注册上**；
+ * - 只匹配页面标题、写死最多 5 条、`aria-label="Search"`。
+ *
+ * 现在：索引在**构建期**生成（见 `.vitepress/utils/search-index.js`），
+ * 覆盖每个页面的标题 + 二级/三级小标题 + 正文，首次输入时懒加载，
+ * 支持 ↑/↓/Enter/Esc、鼠标点击、空结果提示与中文无障碍标签。
+ */
+const { site, theme } = useData()
+const emit = defineEmits(['focus', 'blur', 'showSuggestions'])
 
-const input = ref(null)
-const searchVal = ref('')
+// 一次最多展示多少条；同一个小节不重复出现
+const MAX_RESULTS = 20
+
+const inputRef = ref(null)
+const query = ref('')
 const focused = ref(false)
+const dismissed = ref(false)
 const focusIndex = ref(0)
-const placeholder = ref(undefined)
+const loading = ref(false)
+const error = ref('')
+const placeholder = ref('搜索文档')
 
-const showSuggestions = computed(() => {
-  const active = (
-    focused.value
-    && suggestions.value
-    && suggestions.value.length
-  )
-  return active
-})
-const suggestions = computed(() => {
-  const query = searchVal.value.trim().toLowerCase()
-  if (!query) {
-    return
-  }
+/** @type {import('vue').Ref<Array<{path:string,title:string,sections:Array<{title:string,id:string,text:string}>}>>} */
+const index = ref([])
+let indexPromise = null
 
-  const {pages} = site.value
-  const max = site.value.themeConfig.searchMaxSuggestions || SEARCH_MAX_SUGGESTIONS
-  // const localePath = this.$localePath
-  const localePath = '/'
-  const matches = item => (
-    item
-    && item.title
-    && item.title.toLowerCase().indexOf(query) > -1
-  )
-  const res = []
-  for (let i = 0; i < pages.length; i++) {
-    if (res.length >= max) break
-    const p = pages[i]
-    // filter out results that do not match current locale
-    if (getPageLocalePath(p) !== localePath) {
-      continue
-    }
+const trimmed = computed(() => query.value.trim())
+const open = computed(() => focused.value && !dismissed.value && trimmed.value.length > 0)
+const results = computed(() => search(trimmed.value))
 
-    // filter out results that do not match searchable paths
-    if (!isSearchable(p)) {
-      continue
-    }
-
-    if (matches(p)) {
-      res.push(p)
-    } else if (p.headers) {
-      for (let j = 0; j < p.headers.length; j++) {
-        if (res.length >= max) break
-        const h = p.headers[j]
-        if (matches(h)) {
-          res.push(Object.assign({}, p, {
-            path: p.path + '#' + h.slug,
-            header: h
-          }))
-        }
-      }
-    }
-  }
-  return res
-})
-// make suggestions align right when there are not enough items
-const alignRight = computed(() => {
-  const navCount = (site.value.themeConfig.nav || []).length
-  const repo = site.value.repo ? 1 : 0
-  return navCount + repo <= 2
-})
-onMounted(() => {
-  const {theme} = useData()
-  console.log(theme);
-  placeholder.value = theme.value.searchPlaceholder || 'search'
-  document.addEventListener('keydown', onHotkey)
-})
-onBeforeUnmount(() => {
-  document.removeEventListener('keydown', onHotkey)
-})
-watch(() => suggestions.value, () => {
-  const active = (
-    focused.value
-    && suggestions.value
-    && suggestions.value.length
-  )
-  emit('showSuggestions', active)
-})
-watch(() => focused.value, () => {
-  const active = (
-    focused.value
-    && suggestions.value
-    && suggestions.value.length
-  )
-  emit('showSuggestions', active)
-})
-
-function getPageLocalePath(page) {
-  for (const localePath in site.value.locales || {}) {
-    if (localePath !== '/' && page.path.indexOf(localePath) === 0) {
-      return localePath
-    }
-  }
-  return '/'
+/**
+ * 懒加载索引。只请求一次，并发调用共享同一个 Promise。
+ * 开发环境没有构建产物 ⇒ 明确告诉用户，而不是留一个「搜不到」的假象。
+ */
+function loadIndex() {
+  if (indexPromise) return indexPromise
+  loading.value = true
+  error.value = ''
+  const url = `${site.value.base}search-index.json`.replace(/([^:])\/{2,}/g, '$1/')
+  indexPromise = fetch(url)
+    .then(res => {
+      if (!res.ok) throw new Error(String(res.status))
+      return res.json()
+    })
+    .then(list => {
+      index.value = Array.isArray(list) ? list : []
+      return index.value
+    })
+    .catch(() => {
+      error.value = import.meta.env.DEV
+        ? '开发环境暂无搜索索引（需先执行 docs:build 生成）'
+        : '搜索索引加载失败，请刷新重试'
+      indexPromise = null
+      return []
+    })
+    .finally(() => {
+      loading.value = false
+    })
+  return indexPromise
 }
 
-function isSearchable(page) {
-  let searchPaths = SEARCH_PATHS
+/** 收录命中片段：返回 [{text, hit}] 便于模板逐段渲染（不用 v-html） */
+function snippetOf(text, needle) {
+  const at = text.toLowerCase().indexOf(needle)
+  if (at < 0) return []
+  const from = Math.max(0, at - 16)
+  const cut = text.slice(from, from + 90)
+  const hits = []
+  let rest = cut
+  const lower = needle
+  for (;;) {
+    const i = rest.toLowerCase().indexOf(lower)
+    if (i < 0) {
+      if (rest) hits.push({ text: rest, hit: false })
+      break
+    }
+    if (i > 0) hits.push({ text: rest.slice(0, i), hit: false })
+    hits.push({ text: rest.slice(i, i + needle.length), hit: true })
+    rest = rest.slice(i + needle.length)
+  }
+  return hits.filter(p => p.text)
+}
 
-  // all paths searchables
-  if (searchPaths === null) {
-    return true
+/**
+ * 打分：标题 > 小标题 > 正文，前缀命中额外加权。
+ * 同一页面最多出 3 条（避免一个长页面把所有结果位占满）。
+ */
+function search(raw) {
+  if (!raw || !index.value.length) return []
+  const needle = raw.toLowerCase()
+  const scored = []
+  const perDoc = new Map()
+
+  for (const doc of index.value) {
+    const pageTitle = (doc.title || '').toLowerCase()
+    for (const sec of doc.sections || []) {
+      const head = (sec.title || '').toLowerCase()
+      const body = (sec.text || '').toLowerCase()
+      let score = 0
+
+      if (pageTitle === needle) score += 200
+      else if (pageTitle.startsWith(needle)) score += 120
+      else if (pageTitle.includes(needle)) score += 80
+
+      if (head === needle) score += 160
+      else if (head.startsWith(needle)) score += 100
+      else if (head.includes(needle)) score += 60
+
+      const at = body.indexOf(needle)
+      if (at >= 0) {
+        let count = 0
+        let from = at
+        while (count < 5) {
+          count++
+          from = body.indexOf(needle, from + needle.length)
+          if (from < 0) break
+        }
+        score += 20 + count * 4
+      }
+
+      if (score <= 0) continue
+
+      const used = perDoc.get(doc.path) || 0
+      if (used >= 3) continue
+      perDoc.set(doc.path, used + 1)
+
+      const path = sec.id ? `${doc.path}#${sec.id}` : doc.path
+      scored.push({
+        score: score - used * 5,
+        href: siteHref(path, site.value.base),
+        title: doc.title || doc.path,
+        header: sec.title || '',
+        snippet: snippetOf(sec.text || '', needle),
+      })
+    }
   }
 
-  searchPaths = Array.isArray(searchPaths) ? searchPaths : new Array(searchPaths)
+  return scored
+    .sort((a, b) => b.score - a.score)
+    .slice(0, MAX_RESULTS)
+}
 
-  return searchPaths.filter(path => {
-    return page.path.match(path)
-  }).length > 0
+function onInput(e) {
+  query.value = e.target.value
+  dismissed.value = false
+  focusIndex.value = 0
+  if (trimmed.value.length) loadIndex()
+}
+
+function onFocus() {
+  focused.value = true
+  dismissed.value = false
+  emit('focus')
+  if (trimmed.value.length) loadIndex()
+}
+
+function onBlur() {
+  focused.value = false
+  emit('blur')
+}
+
+function close() {
+  dismissed.value = true
+  focusIndex.value = 0
+}
+
+function move(step) {
+  if (!open.value || !results.value.length) return
+  const total = results.value.length
+  focusIndex.value = (focusIndex.value + step + total) % total
+}
+
+function go(i) {
+  const hit = results.value[i]
+  if (!hit) return
+  // 原生跳转（全站导航/侧边栏也是原生 <a>），与主题既有约定一致
+  window.location.href = hit.href
 }
 
 function onHotkey(event) {
-  if (event.srcElement === document.body && SEARCH_HOTKEYS.includes(event.key)) {
-    input.value && input.value.focus()
+  // 在输入框 / 文本域 / 可编辑区里不抢键
+  const el = event.target
+  const tag = el && el.tagName
+  if (tag === 'INPUT' || tag === 'TEXTAREA' || (el && el.isContentEditable)) return
+  const isK = event.key === 'k' || event.key === 'K'
+  if ((event.metaKey || event.ctrlKey) && isK) {
+    inputRef.value && inputRef.value.focus()
+    event.preventDefault()
+    return
+  }
+  if (event.key === '/' && !event.metaKey && !event.ctrlKey && !event.altKey) {
+    inputRef.value && inputRef.value.focus()
     event.preventDefault()
   }
 }
 
-function onUp() {
-  if (showSuggestions.value) {
-    if (focusIndex.value > 0) {
-      focusIndex.value--
-    } else {
-      focusIndex.value = suggestions.value.length - 1
-    }
-  }
-}
+watch(open, val => emit('showSuggestions', val))
 
-function onDown() {
-  if (showSuggestions.value) {
-    if (focusIndex.value < suggestions.value.length - 1) {
-      focusIndex.value++
-    } else {
-      focusIndex.value = 0
-    }
-  }
-}
+onMounted(() => {
+  placeholder.value = theme.value.searchPlaceholder || '搜索文档'
+  document.addEventListener('keydown', onHotkey)
+})
 
-function go(i) {
-  if (!showSuggestions.value) {
-    return
-  }
-  router.push(suggestions.value[i].path)
-  searchVal.value = ''
-  focusIndex.value = 0
-}
-
-
-function focus(i) {
-  focusIndex.value = i
-}
-
-function unfocus() {
-  focusIndex.value = -1
-}
-
-
+onBeforeUnmount(() => {
+  document.removeEventListener('keydown', onHotkey)
+})
 </script>
 
 <style scoped lang="stylus">
-$borderColor = rgba(0, 0, 0, .1)
 getVar(var)
   unquote("var(--vs-" + var + ")")
 
 .fade-enter-active, .fade-leave-active
-  transition: all .25s ease
+  transition: all .2s ease
 
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */
+.fade-enter, .fade-leave-to
   opacity 0
-  transform translate(0, calc(100% + 10px)) !important
-
-.darken
-  .search-box
-    input
-      background rgba(0, 0, 0, .25)
+  transform translate(0, -6px)
 
 .search-box
   display inline-block
   margin-right 1rem
   position relative
 
-  &.showSuggestions
+  &.show-suggestions
     .con-input
       input
         background getVar(theme-bg2)
@@ -269,26 +335,16 @@ getVar(var)
 
   input
     cursor text
+    display block
     width 15rem
     color getVar(theme-color)
-    display inline-block
-    border 1px solid darken($borderColor, 10%)
-    border-radius 2rem
     font-size 0.85rem
-    line-height 2rem
-    padding 0 0.5rem 0 2rem
+    padding 4px 20px
     outline none
-    transition all .2s ease
-    // background #f4f7f8
-    background rgba(0, 0, 0, .05)
-    background-size 1rem
-    display block
-    border-radius 0px
     border 0px
-    padding 4px
-    padding-left 20px
-    opacity 1
+    background rgba(0, 0, 0, .05)
     border-radius 14px 5px 14px 14px
+    transition all .2s ease
 
     &::placeholder
       color getVar(theme-color)
@@ -300,125 +356,103 @@ getVar(var)
       ~ svg
         transform scale(1.15)
 
+  // 下拉：**右对齐**。搜索框贴在导航栏最右侧，若按左侧对齐，
+  // 400px 宽的面板会直接顶出视口右边。
   .suggestions
-    background getVar(theme-layout)
-    width 100%
     position absolute
-    bottom 0px
-    top auto !important
-    padding 10px
-    list-style-type none
-    box-shadow 0px 5px 20px -5px rgba(0, 0, 0, .1)
-    transform translate(0, calc(100% + 20px))
-    min-width 25rem
-    margin 0px !important
-    border-radius 14px
+    top calc(100% + 10px)
+    right 0
+    left auto
     z-index 1000
-
-    &.align-right
-      right 0
+    width 26rem
+    max-width calc(100vw - 32px)
+    max-height 60vh
+    overflow-y auto
+    margin 0px
+    padding 8px
+    list-style none
+    background getVar(theme-layout)
+    border 1px solid rgba(0, 0, 0, .08)
+    border-radius 14px
+    box-shadow 0px 16px 40px -12px rgba(0, 0, 0, .28)
 
   .suggestion
-    display flex
-    align-items center
-    justify-content flex-start
-    padding 0.5rem 0.6rem
-    border-radius 12px
+    border-radius 10px
+    transition background .15s ease
     cursor pointer
-    transition all .25s ease
 
-    &:hover
-      background getVar(theme-bg) !important
+    &:hover,
+    &.focused
+      background getVar(theme-bg)
 
     a
-      display flex
-      align-items center
-      justify-content flex-start
-      white-space normal
+      display block
+      padding 8px 10px
       color getVar(theme-color)
+      text-decoration none
 
-      box-icon
-        width 17px
-        height 17px
-        fill getVar(theme-color)
-        margin-right 5px
+    .page-title
+      font-size var(--fd-fs-sm)
+      font-weight 600
 
-      .page-title
-        font-weight 600
+    .header
+      display inline-flex
+      align-items center
+      margin-left 4px
+      font-size var(--fd-fs-xs)
+      opacity .8
 
-      .header
-        font-size 0.9em
-        margin-left 0.25em
-        opacity .85
-        font-weight normal
-        display flex
-        align-items center
-        justify-content center
+    .snippet
+      display block
+      margin-top 2px
+      font-size var(--fd-fs-xs)
+      line-height 1.5
+      opacity .7
+      overflow hidden
+      text-overflow ellipsis
+      white-space nowrap
 
-    &.focused
-      // background-color #f3f4f5
+    mark
+      background rgba(37, 100, 255, .18)
+      border-radius 3px
+      color inherit
+      font-weight 700
 
-      a
-        color getVar(theme-color)
+    &--empty
+      padding 10px
+      font-size var(--fd-fs-sm)
+      opacity .6
+      cursor default
 
-@media (max-width: $MQNarrow)
+      &:hover
+        background transparent
+
+.darken
   .search-box
     input
-      cursor pointer
-      width 40px
-      border-color transparent
-      position relative
-
-      &::placeholder
-        color transparent
-
-      &:focus
-        cursor text
-        left 0
-        width 10rem
-
-        &::placeholder
-          color inherit
-
-// Match IE11
-@media all and (-ms-high-contrast: none)
-  .search-box input
-    height 2rem
-
-@media (max-width: $MQNarrow) and (min-width: $MQMobile)
-  .search-box
-    .suggestions
-      left 0
-
-@media (max-width: $MQMobile)
-  .search-box
-    margin-right 0
+      background rgba(0, 0, 0, .25)
 
     .suggestions
-      right 0
-
+      border-color rgba(255, 255, 255, .1)
 
 @media (max-width: 500px)
   .search-box
     width 100%
+    margin-right 0
 
-  .suggestions
-    width calc(100vw - 20px) !important
-    min-width auto !important
-    right auto
-    left 0px
-
-  &.focused
-    width 100%
-
-  input
-    transition all 0s ease
-    color transparent !important
-
-    &:focus
-      width 100%
-      color inherit !important
-
-    &::placeholder
+    input
+      transition all 0s ease
       color transparent !important
+
+      &:focus
+        width 100%
+        color inherit !important
+
+      &::placeholder
+        color transparent !important
+
+    .suggestions
+      width calc(100vw - 24px)
+      right auto
+      left 0px
 </style>

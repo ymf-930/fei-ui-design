@@ -1,8 +1,7 @@
 <template>
   <div class="con-components">
     <div class="con-logo vuesax-logo">
-      <img class="not-darken" src="/logos/f-ui-logo.png" alt="" />
-      <img class="has-darken" src="/logos/f-ui-logo-white.png" alt="" />
+      <img src="/logos/fei-logo.png" alt="" />
       <div class="github-logo__1"></div>
       <div class="github-logo__2"></div>
       <div class="github-logo__3"></div>
@@ -52,8 +51,7 @@
       </div>
 
       <div class="component2">
-        <img class="not-darken" src="/logos/f-ui-logo.png" alt="" />
-        <img class="has-darken" src="/logos/f-ui-logo-white.png" alt="" />
+        <img src="/logos/fei-logo.png" alt="" />
       </div>
 
       <div class="component3">

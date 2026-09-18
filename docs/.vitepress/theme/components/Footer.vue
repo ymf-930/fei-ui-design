@@ -114,11 +114,11 @@ export default {
           title: '帮助',
           items: [
             {
-              text: 'Github Issues',
+              text: 'GitHub 问题反馈',
               link: 'https://github.com/ymf-930/fei-ui-design/issues'
             },
             {
-              text: 'Gitee Issues',
+              text: 'Gitee 问题反馈',
               link: 'https://gitee.com/ymf930/fei-ui-design/issues'
             }
           ]
@@ -127,11 +127,11 @@ export default {
           title: '社区',
           items: [
             {
-              text: 'Github',
+              text: 'GitHub 仓库',
               link: 'https://github.com/ymf-930/fei-ui-design/'
             },
             {
-              text: 'Gitee',
+              text: 'Gitee 仓库',
               link: 'https://gitee.com/ymf930/fei-ui-design'
             },
           ]

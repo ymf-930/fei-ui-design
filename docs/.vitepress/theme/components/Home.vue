@@ -15,14 +15,14 @@
             <NavLink
               @mouseleave.native="time('fuidesign')"
               @mouseenter.native="(fuidesign = true), (expand = true)"
-              title="Get Started"
+              title="快速开始"
               class="action-button"
               :item="actionLink"
             />
             <a
               @mouseleave="time('gitee')"
               @mouseenter="(gitee = true), (expand = true)"
-              title="Gitee"
+              title="Gitee 仓库"
               class="gitee"
               target="_blank"
               href="https://gitee.com/ymf930/fei-ui-design"
@@ -36,7 +36,7 @@
             <a
               @mouseleave="time('github')"
               @mouseenter="(github = true), (expand = true)"
-              title="Github"
+              title="GitHub 仓库"
               class="github"
               target="_blank"
               href="https://github.com/ymf-930/fei-ui-design"
