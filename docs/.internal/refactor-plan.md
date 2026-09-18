@@ -2474,6 +2474,35 @@ return `<div class="language-${lang}">…<button title="Copy Code" class="copy">
 否则 `npm 包`、`Gitee 仓库`、`在 CodePen 中打开` 会被永远判成「英文未改」，
 告警长红、检查失去意义 —— 这正是本轮第一版探针的假阳性。
 
+#### ⚠️ 只扫 `title` 是**不够**的 —— 页签的「可见文字」是另一个盲区
+
+第一版探针报「0 条英文」之后，**人工看截图**才发现 codex 面板的页签正文仍是
+`Template` / `Script` / `Style` / `All`。原因是那 4 个 `<li>` 的 `title` 早就改成了
+模板/脚本/样式/全部，而**标签正文**没人动 —— 读者一眼看到的英文根本没进检查范围。
+
+> 教训：**`title` 改了 ≠ 读者看到的改了。** 中文化检查必须**两类都扫**：
+> `[title]` 属性 **和** 元素的可见文字。
+
+扫可见文字还有两个必须处理的细节，否则又是假阳性/假阴性：
+
+1. **只能取「元素直接持有的文本节点」**（`el.childNodes` 里 `nodeType === 3` 的那些），
+   不能 `textContent` —— 后者会把整棵子树的文字都算进来，导航项一取就把整页内容带进结果。
+2. `<input>` 没有可见文字，要单独取 `placeholder`。
+3. 只扫**外壳选择器**（导航 / 代码面板 / 页脚 / 配置栏 / 搜索框），
+   **不要扫 `.vp-doc` 正文** —— 正文里出现英文 API 名（`f-button`、`Props`）是正常的。
+
+同时**顺带纠正一处此前的误判**：`components/Footer.vue` **不是死组件**，
+它由 `DocsHome.vue` 使用、而 `DocsHome.vue` 被 `layouts/Layout.vue` 引入
+（出现在 `guide/index` 与 `components/index` 两个页面上），所以它的
+`Theme based on` 是**真实可见**的英文，已改为「主题基于」。
+判「组件是否活」要**同时**满足「被 import」且「用在模板里」两个条件：
+- `homeInit.vue` 是典型的**只 import 不用**（`Home.vue` 第 76 行 import、模板里从没出现），
+  产物中 0 处文案 ⇒ 死 import；
+- `premiumThemes.vue`（Home.vue 里注释掉）、`HeaderNotification.vue`（Layout.vue 里注释掉）、
+  `api.vue`、`Branding.vue`、`HomePatrons.vue`、`PassLayout.vue`、`Color.vue`/`Coloren.vue`
+  也都未渲染。
+判别产物是否真的渲染：`grep -l "<该组件独有文案>" site/`。
+
 ### 10.16.2 「查看代码」按钮与代码区**不该分开**
 
 原结构里工具栏 `.header-codex` 在 `.con-code` **之外**：收起态下它是一条**独立浅色横带**，

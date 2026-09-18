@@ -44,7 +44,7 @@
       </span>
       <span class="span-lusaxweb">
         <span>
-          Theme based on
+          主题基于
         </span>
         <a target="_blank" href="https://github.com/gumingWu/vitepress-fun">vitepress-fun</a>
       </span>

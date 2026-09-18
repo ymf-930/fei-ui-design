@@ -28,14 +28,16 @@
              两者底色不同、视觉上被切成两块；把 header 收进 .con-code 后成为一块。 -->
         <div ref="panelHeadRef" class="panel-head">
           <ul ref="ulRef" class="ul-codes">
+            <!-- 页签的**可见文字**与 `title` 必须同语言：曾经 title 已中文化、
+                 但标签正文还是 Template/Script/Style/All，读者看到的仍是英文 -->
             <li v-if="slots.template" :class="{ active: activeSlot === 0 }" title="模板" @click="activeSlot = 0">
-              Template
+              模板
             </li>
             <li v-if="slots.script" :class="{ active: activeSlot === 1 }" title="脚本" @click="activeSlot = 1">
-              Script
+              脚本
             </li>
             <li v-if="slots.style" :class="{ active: activeSlot === 2 }" title="样式" @click="activeSlot = 2">
-              Style
+              样式
             </li>
             <li
               v-if="Object.keys(slots).length > 0"
@@ -43,7 +45,7 @@
               title="全部"
               @click="activeSlot = 3"
             >
-              All
+              全部
             </li>
           </ul>
 
