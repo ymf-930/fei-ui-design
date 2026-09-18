@@ -49,22 +49,28 @@
     </header>
     <transition v-on:before-enter="beforeEnter" v-on:enter="enter" v-on:leave="leave">
       <div ref="codexRef" v-show="active" class="con-code">
+        <!--
+          四个页签（Template / Script / Style / All）**按用户决定保持英文**，不要再中文化。
+          用户 2026-09-18 明确要求：代码查看面板的页签用英文（改造前的原样）。
+          注意：本组件其它可见文案（「代码已复制」、各 title 悬浮提示）仍是中文，两类文案
+          刻意不统一 —— 改这里之前先确认这是有意为之，别当成漏翻。
+        -->
         <ul ref="ulRef" class="ul-codes">
           <li v-if="slots.template" :class="{ active: activeSlot === 0 }" @click="activeSlot = 0">
-            模板
+            Template
           </li>
           <li v-if="slots.script" :class="{ active: activeSlot === 1 }" @click="activeSlot = 1">
-            脚本
+            Script
           </li>
           <li v-if="slots.style" :class="{ active: activeSlot === 2 }" @click="activeSlot = 2">
-            样式
+            Style
           </li>
           <li
             v-if="Object.keys(slots).length > 0"
             :class="{ active: activeSlot === 3 }"
             @click="activeSlot = 3"
           >
-            全部
+            All
           </li>
         </ul>
         <div class="con-codes">

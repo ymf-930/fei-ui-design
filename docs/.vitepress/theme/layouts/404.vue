@@ -11,7 +11,7 @@
         ⚠️ 写本条注释时注意：HTML 注释内不能出现连续两个减号，否则注释会提前闭合，
         导致 Vue SFC 解析失败（构建直接中断）。
       -->
-      <a :href="homeHref">Take me home.</a>
+      <a :href="homeHref">返回首页</a>
     </div>
   </div>
 </template>
