@@ -2965,6 +2965,76 @@ check-site-links ✓ / check-docs-contrast ✓ / check-docs-placeholders ✓
 ④ 是否存在第三个 worktree（`git worktree list` 只有 main + 本 worktree）。
 **结论：工作树内不存在英文页签，唯一存量在主仓库源码。**
 
+## §10.21 首页视觉回归：外壳字体栈被打翻 + 搜索框高度丢失（2026-09-22 追加）
+
+用户报「首页控件样式与改动前不一致」（附改动前/后两张截图：标题词间空格像"丢了"、
+左下角控件变少）。**先构建基线 + 全量 DOM diff 再动手** —— 结论是两处**真回归**，
+另两处差异来自**用户自己的既有决策**，不改。
+
+### 10.21.1 方法：基线产物 + 全量元素树 diff
+
+- 基线 = `git checkout 6c51741 -- docs/.vitepress/theme` 后重新 `build`（`6c51741` 是产品反馈
+  那批提交的父提交）。产物留档 `.workbuddy/tmp/stale/site-fix/site`，起在 4177。
+- 探针 `.workbuddy/scripts/probe-home-tree.mjs`：遍历全 DOM，按**结构键**
+  （`tag#id.class` 路径）记 rect + 30 项计算样式，连采两次把会动的元素标 unstable；
+  `--pause=1` 用 `document.getAnimations().forEach(a => { a.pause(); a.currentTime = 0 })`
+  把动画**确定性**冻在 t=0（比 `animation:none` 保真：保留 keyframes 的 from 态）；
+  `--theme=dark` 走**真实点击** `.switch-dark`（别只写属性：`6c51741` 那版的暗色是
+  JS 写内联 CSS 变量，不是属性选择器，写属性会测出"假亮"）。
+- 对比脚本 `.workbuddy/tmp/diff-tree.mjs`：输出「仅基线有 / 仅当前有 / 共有但属性不同」。
+
+⚠️ **起站必须 `.workbuddy/scripts/serve-site.mjs <port> <dir> /fei-ui-design`（尾斜杠不能有）**。
+带尾斜杠时 `path.startsWith(PREFIX + '/')` 判定失败 ⇒ **HTML 能开、assets 全 404**、
+页面静默变无样式 —— 那时采到的 rect 全是流式布局，diff 出一堆**假差异**（本轮真踩了）。
+
+### 10.21.2 真回归 ①：外壳字体栈被"提升特异性"打翻（主因）
+
+`custom.styl` 在重构中把 `body { font-family "Poppins", … }`（特异性 (0,0,1)）
+"修正"为 `html body { font-family var(--fd-font-sans) }`（(0,0,2)，栈首仍是 Poppins）。
+动机是"让外壳与正文共用一条栈"，但**后果是把组件库字体压掉了**：
+`src/_styles/common/reset.css` 的 `body { font-family: var(--fei-font-family) }`
+（`Helvetica Neue, Helvetica, …`）与它同为 (0,0,1) 但**更晚**加载 —— 原来靠"晚"赢；
+改成 `html body` 后特异性更高，Poppins 栈夺回控制权。
+
+**可见症状**：h1 的 `line-height` 一直是 24px（VitePress `base.css` 的 `h1..h6` 规则，
+与 `theme.styl` 的 `h1..h6{line-height:1.25}` 同为 (0,0,1) 但更晚 ⇒ 一直赢，
+**基线亦然，非本轮引入**）。但 Poppins 的 em 盒（`<b>` 行盒 **52px**）远高于 Helvetica（**41px**），
+同样 24px 行距下两行标题就**视觉重叠**、词间空格看着像"没了"；
+连带 hero 变宽（`content-hero` 574 → 589）、复选框缺字形由空心变实心。
+
+**修法**：把值换回 `var(--fei-font-family)`（Helvetica Neue / PingFang SC 栈），即
+**刻意保留两套字体栈** —— 外壳走组件库栈，`.vp-doc` 由 `styles/doc-typography.styl`
+里那条 `font-family: var(--fd-font-sans)` 单独保持 Poppins；规则位置不动
+（`html body` 的特异性仍高于 reset.css，只是值相同，结论一致）。代码里已就地写长注释锁住。
+修后实测 h1 字体族 = `"Helvetica Neue", Helvetica, …`、`<b>` 行盒 41px，与基线**逐项相同**。
+
+### 10.21.3 真回归 ②：搜索框高度 40px → 32px
+
+`SearchBox.vue` 的 `input` 丢了基线的 `line-height 2rem`（=32px），padding 也从
+`4px` + `padding-left 20px` 变成 `4px 20px`。缺 `line-height` ⇒ 继承 `body` 的 24px
+⇒ 高度由 32+4+4 变 24+4+4，搜索框 **40px 缩到 32px**，导航栏右端随之矮一截。
+**修法**：显式写回 `line-height 2rem` 与 `padding 4px` + `padding-left 20px`。
+
+### 10.21.4 两处**不是回归**、故不改（均出自用户自己的决策）
+
+| 差异 | 出处 | 为什么不改 |
+| --- | --- | --- |
+| 首页左下角少「配置齿轮」（`.config` 112 → 72px） | §10.12.1，**用户产品反馈**「首页去掉齿轮」 | 用户明确要求过，恢复等于推翻该决策 |
+| 右侧演示区各卡片内部尺寸变化（见下） | §10.18.2，**用户决策**「撞名处改用组件库真实组件」 | 是 vs→fei 重命名的必然配套，回退等于推翻用户的重命名要求 |
+
+演示区实测（确定性冻结，基线 → 当前）：`component1>footer` 50→32px；`component4` 228→210；
+`component7` 399→389（其 `footer` 52→42）；`component10` 64.4×163.2 → 187.2×62
+（旧的 3 个图标按钮是**竖排**、新组件是**横排**）；`component12` 48→32；
+`component13>ul` 197.9→141（每项 `li` 44.48→30.27）。即"新组件更紧凑"。
+**已如实报给用户，待其拍板是否也要按基线盒型回填 CSS。**
+
+### 10.21.5 教训
+
+**"把一条看着不生效的规则改成生效"之前，必须先实测谁的层叠真的赢了。**
+`html body` 那一改动机是"让样式生效"（原 `body` 声明确被 reset.css 压掉），
+但生效方向是**把外壳拉进 Poppins 栈**，恰好就是用户看到的"字变了"。凡动
+**字体/排版基座**，改完必须跑基线构建 + 全量 diff；只验证"规则生效了"会漏掉"生效成了什么"。
+
 ## §11 工程环境与工具链速查（跨轮次复用，2026-09-18 追加）
 
 > 本仓库 git 在 **E 盘**、工作区在 **C 盘**（跨盘）+ 受限沙箱，导致下列行为与常规环境不同。

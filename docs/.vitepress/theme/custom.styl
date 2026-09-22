@@ -260,17 +260,23 @@ html[fei-theme="dark"]
 //   组件库 src/_styles/common/reset.css 有一条
 //     body { font-family: var(--fei-font-family) }
 //   而 src/_styles/index.css 在 theme/index.ts 里**排在 ./index.css 之后**加载，
-//   同特异性下后者胜出 —— 只写 `body` 的话这一段就是死代码（实测确实如此：
-//   外壳一直走 Helvetica/Arial，只有 .vp-doc 靠 --fd-font-sans 单独拉回 Poppins，
-//   同一页出现两套字体栈）。改成 `html body` 后外壳与正文共用同一条栈，
-//   中英混排的字面才统一。
+//   同特异性下后者胜出 —— 只写 `body` 的话这一段就是死代码。
 //   input / button 不再单独声明：reset.css 已给它们 `font-family: inherit`。
+//
+// ⚠️⚠️ 值必须是 `var(--fei-font-family)`（Helvetica Neue / PingFang SC 栈），
+//   **不是** `var(--fd-font-sans)`（Poppins 栈）。曾一度改成后者以「统一外壳与正文
+//   的字体栈」，但 Poppins 的 em 盒明显更高（实测首页 h1 的行盒从 41px 涨到 52px），
+//   在 24px 行距下两行标题视觉上挤在一起；且 hero 文案整体变宽、左移 8px
+//   （`.content-hero` 574→589 宽、x 69→61）—— 首页视觉与改动前不一致。
+//   故**刻意保持两套栈**：外壳走组件库字体栈；`.vp-doc` 由
+//   styles/doc-typography.styl 里那条 `font-family: var(--fd-font-sans)` 单独保持
+//   Poppins。改这一行之前先读这段。
+//
 //   ⚠️ 这里**不再**声明 font-size：原先写的 `font-size 16px` 同样被 reset.css 的
 //      `body { font-size: var(--fei-font-size-default) }`（14px）压掉，从未生效。
-//      把它一起挪进 `html body` 会让它突然生效，从而改变外壳所有 em 单位的基准，
-//      属于本轮范围之外的行为变更，故直接删掉。
+//      把它一起挪进 `html body` 会让它突然生效，从而改变外壳所有 em 单位的基准。
 html body
-  font-family var(--fd-font-sans)
+  font-family var(--fei-font-family)
   -webkit-font-smoothing antialiased
   -moz-osx-font-smoothing grayscale
 

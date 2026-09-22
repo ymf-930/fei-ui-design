@@ -339,7 +339,12 @@ getVar(var)
     width 15rem
     color getVar(theme-color)
     font-size 0.85rem
-    padding 4px 20px
+    // ⚠️ 高度 = line-height + 上下 padding，必须与改动前一致（40px）。
+    //    这里刻意**显式**写 line-height 2rem（=32px）：不写会继承 body 的 24px，
+    //    搜索框会从 40px 缩到 32px（导航栏高度随之变化）—— 那是本次的视觉回归。
+    line-height 2rem
+    padding 4px
+    padding-left 20px
     outline none
     border 0px
     background rgba(0, 0, 0, .05)
