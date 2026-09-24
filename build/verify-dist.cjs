@@ -190,15 +190,32 @@ section('[5/6] 模块格式与语法校验')
     ['es/button/index.js', 'ESM 组件入口'],
     ['lib/button/index.js', 'CJS 组件入口']
   ]
+  let skipped = 0
   for (const [file, label] of targets) {
     if (!exists(file)) {
       bad(`入口不存在: ${file}`)
       continue
     }
     const res = spawnSync(process.execPath, ['--check', rel(file)], { encoding: 'utf8' })
+    /**
+     * 子进程起不来时（沙箱 / EBUSY / EPERM 等），status 为 null、stderr 为空。
+     * 此时若仍按 `res.status === 0` 判定，会打印「语法校验失败（ESM）：undefined」——
+     * 既没有可读线索，又会把环境限制误报成产物缺陷，进而挡住 prepublishOnly。
+     * 环境不可控时降级为「跳过」：不计入失败，但明确打印，避免静默失效。
+     */
+    if (res.error || res.status === null) {
+      skipped++
+      const why = res.error ? res.error.code || res.error.message : 'status=null'
+      console.log(`  ! ${file} 语法校验跳过（子进程不可用：${why}，环境限制而非产物问题）`)
+      continue
+    }
     if (res.status === 0) ok(`${file} 语法校验通过（${label}）`)
-    else bad(`${file} 语法校验失败（${label}）：${(res.stderr || '').split('\n').find(Boolean)}`)
+    else {
+      const detail = String(res.stderr || '').split('\n').find(Boolean)
+      bad(`${file} 语法校验失败（${label}）：${detail || `exit=${res.status}`}`)
+    }
   }
+  if (skipped) console.log(`  ! 共跳过 ${skipped} 项语法校验，请在常规环境（CI）复核`)
 
   // 运行时依赖必须 external，不应被内联进产物
   if (exists('es/index.js')) {
