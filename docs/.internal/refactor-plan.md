@@ -1361,10 +1361,15 @@ function isActive(page) {
 | 视觉上等于没写 | Tag 的类名拼接里没有 `plain` 分支，去掉前后渲染结果一致（纯清理，非行为变更） |
 | 「开发中」据实保留 | `package.json` `version=0.0.2`，`docs/guide/changelog.md` 说明重构后版本线自 `0.0.2` 起算 —— 未发布 1.0，状态标记准确 |
 
+> ⚠️ 现状（2026-09-24，见 §10.23）：`changelog.md` 的该句说明**已随重构前历史一并移除**，
+> 上表引述为**当时状态**。结论不受影响 —— `package.json` 仍是 `0.0.2`，仍属未发布。
+
 **入口 6 · `<span class="v-old">v3.x</span>` —— 移除（而非补 `href`）**
 
 1. **本库没有 3.x 这条版本线**：`changelog.md` 载重构前为 `0.0.1~0.0.4`，
    重构后重新自 `0.0.2` 起算，当前 `0.0.2`。「Previous Version = v3.x」对不上任何一条版本线。
+   （⚠️ 现状 2026-09-24，见 §10.23：在线页已删除重构前历史 ⇒ **该页现只列 `未发布` / `0.0.2`**；
+   上面引述为当时状态。`git show <本提交之前>:docs/guide/changelog.md` 可查原貌。）
 2. **唯一候选旧站点已不可达**：上一代项目为 `fei-ui-one`（README:9 指向
    `https://ymf-930.gitee.io/fei-ui-one/#/guide`）。实测 Pages 根路径 **404**、
    `gitee.com/ymf-930/fei-ui-one` 仓库页 **404**、`registry.npmjs.org/fei-ui-one` 返回 `{"error":"Not found"}`。
@@ -3100,12 +3105,18 @@ check-site-links ✓ / check-docs-contrast ✓ / check-docs-placeholders ✓
 
 | 手段 | 结果 |
 | --- | --- |
-| 全页像素区域 diff（浅色） | **3 个预期区域**：齿轮区（§10.12.1 用户要求隐藏）、`component2` logo 换图、导航 logo 换图 |
-| 全页像素区域 diff（暗色） | 同上 **3 个预期区域**（修复前是 7 个） |
+| 像素区域 diff（浅色）※ | **3 个预期区域**：齿轮区（§10.12.1 用户要求隐藏）、`component2` logo 换图、导航 logo 换图 |
+| 像素区域 diff（暗色）※ | 同上 **3 个预期区域**（修复前是 7 个） |
 | 结构化 diff（浅色） | 几何差异 9（**全为**齿轮 + logo 的配对假象）、**同几何样式差异 0** |
 | 结构化 diff（暗色） | 几何 12（同上 + 开关随齿轮隐藏左移）、样式差异 1 |
 | vitest | 16/16（4 文件，逐文件跑） |
 | 护栏 | `docs:check-api/links/demo/style/tags`、`check-site-links`、`check-docs-contrast`、`check-docs-placeholders`、`audit-dead-files`、`audit-dead-css`、`count-bad-media`、`audit-vs-prefix` 全绿 |
+
+※ **覆盖面口径**：像素 diff 用的 `probe-home-tree.mjs` 的 `home.png` 是**首屏 1422×888**
+（`Page.captureScreenshot` 不带 `clip`），**不含滚动区** ⇒ 上表结论**只覆盖首屏**。
+首屏以下的差异由**结构化 diff**（全量 DOM 树，含滚动区）兜底 —— 它同样只剩
+「齿轮 / logo 配对假象」。两者合起来才等于「整页无差异」，引用时别把前者说成「全页」。
+（坐标系细节见 §11.4。）
 
 **两条如实记录的残差（都不是缺陷）**：
 
@@ -3130,6 +3141,30 @@ check-site-links ✓ / check-docs-contrast ✓ / check-docs-placeholders ✓
    但它把**注释里描述基线**的 `旧 .vs-button …` 也算了进去（②③ 都做了注释过滤，① 漏了）
    ⇒ 一份把基线写清楚的注释反而把守卫刷红。已给 ① 加 `strip_comments()`（`<!-- -->`、
    `/* */`、`//`；`//` 用 `(?<!:)` 避开协议），与 ②③ 的口径统一。
+
+### 10.23 在线变更日志页的内容口径（2026-09-24，用户两次指令）
+
+**指令**：① 「在线使用文档更新下变更日志内容，不要体现出 vs → fei」；
+② 「重构前的历史记录不要」。
+
+**结论**：`docs/guide/changelog.md` **只保留重构后的版本线**，2023 年重构前的
+`0.0.1 ~ 0.0.4` 四段整段删除（含 `## 历史记录（重构前）` 标题）。
+
+| 改动点 | 处理 | 理由 |
+| --- | --- | --- |
+| `## 历史记录（重构前）` + 4 个 `change-log` 块 | **整段删除** | 用户指令 ②；旧版本线不属于当前组件库的发布记录 |
+| 前置说明「2023 年重构前的旧版本见文末」 | 改为「**最新版本列在最上方**」 | 引导目标已不存在，留着即成死指引 |
+| 前置说明的 `>` 引用块（0.0.1~0.0.4 与 0.0.2 不是同一条版本线） | **删除** | 该说明只为解释两段并存，历史删除后即无意义 |
+| 版本块 id `v0-0-2-now` | 改回 `v0-0-2` | 当初加 `-now` 后缀只为避开 2023 历史里的同名 id，历史删除后不再撞 |
+| 根 `CHANGELOG.md` | 同步改中性措辞（「旧名称以别名形式保留一个版本」→「一律采用 `F` 前缀 PascalCase」） | 在线页正文指向它；⚠️ 该文件**本就不含重构前历史**，无需删段 |
+
+**措辞红线**：两处都不得出现 `vs-` / 旧前缀 / 重命名来源等字样。复查命令
+（应零命中）：`grep -rn "vs-\|vuesax" --include=*.md docs | grep -v "\.internal\|\.temp"`。
+
+**顺带修正的档案引述**：§8.11.9 的入口 5 / 入口 6 两处曾以
+「`changelog.md` 说明重构后版本线自 `0.0.2` 起算」「`changelog.md` 载重构前为 `0.0.1~0.0.4`」
+作为证据 —— 这两句在本次删除后**已不再对应该页现状**，已就地加注（引述保留为**当时状态**，
+不改历史结论）。
 
 ## §11 工程环境与工具链速查（跨轮次复用，2026-09-18 追加）
 
@@ -3186,7 +3221,14 @@ check-site-links ✓ / check-docs-contrast ✓ / check-docs-placeholders ✓
 ### 11.4 CDP 探针（本机无头 Chrome，**不需要 Playwright**）
 
 - ⚠️ `Page.captureScreenshot` 的 `clip.scale` **必填**，漏了拿不到图。
-- ⚠️ `captureBeyondViewport: true` 时 `clip` 用的是**页面坐标**，须 `rect.y + window.scrollY`，否则返回空图。
+- ⚠️ **`clip` 的坐标系取决于 `captureBeyondViewport`**：显式传 `true` 时是**页面坐标**
+  （须 `rect.y + window.scrollY`）；**不传（默认 `false`）时是视口坐标、且视口外根本不渲染**
+  ⇒ 截出来是**空白**，不是报错。两个脚本口径不同，别混：
+  · `probe-home-tree.mjs` 不传 clip ⇒ `home.png` 就是**首屏 1422×888**，**不含滚动区**；
+    用它做像素 diff 时，结论的**覆盖面只有首屏**（首屏以下未参与比对）。
+  · `cdp-eval.mjs` 支持 `--clip`，但**没传 `captureBeyondViewport`** ⇒ 同样是视口坐标。
+    要截首屏以下：用 `--vh=<px>` 把视口一次性拉高（本轮实测 `--vh=1500` 后 888px 以下的内容才渲染出来；
+    `window.scrollTo` 在本站**无效** —— `scrollY` 读回恒为 0，别指望滚动）。
 - ⚠️ **探针必须与真实实现同构**：模拟主题切换要**同时**把 `fei-theme` 写到 `<html>` 与 `<body>`
   （只写 body 会让 `<html>` 落到 `:root` 浅色兜底、测出**假白**）。凡「模拟应用状态」的语句都要与实现逐字符对齐。
 - ⚠️ **探针的选择器表与交互动作必须跟着结构改动一起回退**，否则断言已不存在的元素 = **一堆假绿**。
@@ -3198,9 +3240,11 @@ check-site-links ✓ / check-docs-contrast ✓ / check-docs-placeholders ✓
   （脚本默认值已是 `/fei-ui-design`）。
 - ✅ 换产物后**不需要重启**静态服务（逐请求读盘）；但要核对首页真实引用的资源名：
   `curl -s <home> | grep -o 'assets/style\.[A-Za-z0-9_-]*\.css'`，再拿这个名字单独请求一次确认 200。
-- ✅ `cdp-eval.mjs` 也能截图：`--shot=<png> [--clip=x,y,w,h]`（`clip.scale` 必填）。
+- ✅ `cdp-eval.mjs` 也能截图：`--shot=<png> [--clip=x,y,w,h] [--vh=<px>] [--vw=<px>]`（`clip.scale` 必填）。
   **求值在前、截图在后** ⇒ 可以在 `--file` 的表达式里先 `el.click()` 再 `await sleep(900)`，
   一次调用就拿到「交互后」的像素（本轮用它截复选框的选中态）。
+  ⚠️ `--vh` 是**2026-09-24 新加**的参数（`Emulation.setDeviceMetricsOverride`），
+  用来解决「首屏以下截出空白」——见上一条的坐标系说明。
 - ⚠️ **Bash 里的裸 `python` 解析到托管的 3.13，没有 Pillow**（`ModuleNotFoundError: PIL`）
   ⇒ 所有像素脚本一律用
   `C:/Users/YMF/.workbuddy/binaries/python/envs/default/Scripts/python.exe`（Pillow 12.3）。
