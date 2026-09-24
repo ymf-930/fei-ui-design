@@ -1,6 +1,6 @@
 <template>
   <f-space>
-    <div style="width: 240px; margin-bottom: 20px; padding: 8px; border: 1px solid #ccc">
+    <div style="width: 240px; margin-bottom: 20px; padding: 8px; border: 1px solid #ccc; border-radius: 6px">
       <f-space>
         string
         <f-button>button</f-button>
@@ -10,7 +10,7 @@
         </f-card>
       </f-space>
     </div>
-    <div style="width: 240px; margin-bottom: 20px; padding: 8px; border: 1px solid #ccc">
+    <div style="width: 240px; margin-bottom: 20px; padding: 8px; border: 1px solid #ccc; border-radius: 6px">
       <f-space alignment="flex-start">
         string
         <f-button>button</f-button>
@@ -20,7 +20,7 @@
         </f-card>
       </f-space>
     </div>
-    <div style="width: 240px; margin-bottom: 20px; padding: 8px; border: 1px solid #ccc">
+    <div style="width: 240px; margin-bottom: 20px; padding: 8px; border: 1px solid #ccc; border-radius: 6px">
       <f-space alignment="flex-end">
         string
         <f-button>button</f-button>

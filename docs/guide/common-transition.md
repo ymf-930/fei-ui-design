@@ -133,7 +133,7 @@ const activeTab = ref('tab1')
 <style scoped>
 .demo-transition {
   padding: 20px;
-  border-radius: 4px;
+  border-radius: 6px;
   border: 1px solid var(--vp-c-divider);
   margin-bottom: 20px;
   overflow: hidden;
@@ -142,7 +142,7 @@ const activeTab = ref('tab1')
   margin-bottom: 10px;
   width: 200px;
   height: 100px;
-  border-radius: 4px;
+  border-radius: 6px;
   background-color: var(--fei-color-primary);
   text-align: center;
   color: #fff;

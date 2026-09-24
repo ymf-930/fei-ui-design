@@ -1,6 +1,6 @@
 <template>
   <div style="width: 224px">
-    <div v-no-data:[dataText]="true" style="border: 1px solid #eee; height: 150px"></div>
+    <div v-no-data:[dataText]="true" style="border: 1px solid #eee; height: 150px; border-radius: 6px"></div>
   </div>
 </template>
 

@@ -27,7 +27,7 @@ import Target from './demo/Anchor/Target.vue'
 
 ```html
 <template>
-  <div style="overflow: hidden; border: 1px solid #eee">
+  <div style="overflow: hidden; border: 1px solid #eee; border-radius: 6px">
     <div style="width: 200px">
       <f-anchor show-ink style="margin-left: 20px">
         <f-anchor-link href="#基础用法" title="基础用法"></f-anchor-link>
@@ -63,7 +63,7 @@ import Target from './demo/Anchor/Target.vue'
 
 ```html
 <template>
-  <div style="overflow: hidden; border: 1px solid #eee" flex="box:mean">
+  <div style="overflow: hidden; border: 1px solid #eee; border-radius: 6px" flex="box:mean">
     <div style="padding: 20px; background-color: #fff; border-right: 1px solid #eee">
       <f-anchor icon="star-fill">
         <f-anchor-link href="#基础用法" title="基础用法"></f-anchor-link>
@@ -110,7 +110,7 @@ import Target from './demo/Anchor/Target.vue'
 
 ```html
 <template>
-  <div style="overflow: hidden; border: 1px solid #eee" flex="box:mean">
+  <div style="overflow: hidden; border: 1px solid #eee; border-radius: 6px" flex="box:mean">
     <div style="padding: 20px; background-color: #fff; border-right: 1px solid #eee">
       <f-anchor icon="fire-fill" active-color="success">
         <f-anchor-link href="#基础用法" title="基础用法"></f-anchor-link>
@@ -159,7 +159,7 @@ import Target from './demo/Anchor/Target.vue'
 <template>
   <div>
     <f-button size="small" @click="scrollTo7">滚动到第七行</f-button>
-    <div style="overflow: hidden; border: 1px solid #eee" flex>
+    <div style="overflow: hidden; border: 1px solid #eee; border-radius: 6px" flex>
       <div style="padding: 20px; width: 30%; background-color: #fff; border-right: 1px solid #eee">
         <f-anchor ref="anchorScrollRef" target="#scrollWrap" show-ink>
           <f-anchor-link href="#id1" title="标题1"></f-anchor-link>

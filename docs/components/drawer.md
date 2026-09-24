@@ -110,7 +110,7 @@ import Dragable from './demo/Drawer/Dragable.vue'
 ```html
 <template>
   <div
-    style="position: relative; height: 400px; background: #eee; border: 1px solid #eee; z-index: 2"
+    style="position: relative; height: 400px; background: #eee; border: 1px solid #eee; z-index: 2; border-radius: 6px"
   >
     <f-button type="primary" @click="valueInner = true">内部抽屉</f-button>
     <f-drawer v-model="valueInner" title="内部抽屉" :lock-scroll="false" inner :z-index="10">

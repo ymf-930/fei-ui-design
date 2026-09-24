@@ -3166,6 +3166,52 @@ check-site-links ✓ / check-docs-contrast ✓ / check-docs-placeholders ✓
 作为证据 —— 这两句在本次删除后**已不再对应该页现状**，已就地加注（引述保留为**当时状态**，
 不改历史结论）。
 
+### 10.24 demo 示意边框统一 6px（2026-09-24，用户拍板）
+
+**触发**：用户问「空状态边框是否和其它一样保持圆角？」。
+
+**先查清事实（结论与直觉相反）**：空状态 demo 的 4 个示意容器是**直角 `0px`**，
+且与基线 `6c51741` **逐字一致**（`git diff` 空）⇒ **不是本轮引入**。全库普查（288 个 demo，
+39 个含 `border`）：**只有 5 处写了圆角** —— Loading 4 处硬编码 `4px` + Calendar 的 `dayStyle`
+⇒ **直角才是多数派，Loading 反而是不合群的那个**。组件库本体的统一圆角是
+`--fei-border-radius-default: 6px`（`src/_styles/base/vars.css:63`，被 27 个组件样式引用）。
+
+**用户拍板**：全库 demo 示意边框统一为 **6px**（而非只改空状态）。
+
+**覆盖清单（30 个文件 / 43 处）**，用 `.workbuddy/tmp/_add-radius.mjs` 精确替换
+（**先 dry-run 核对命中数，再 `--write`** —— 命中数与预期不符就说明正则抓到/漏了东西）：
+
+| 组 | 对象 | 处理 |
+| --- | --- | --- |
+| A | 16 个 demo `.vue` + 7 个 md 代码块 | 示意容器 inline style 末尾追加 `; border-radius: 6px`。Anchor ×4 / BackTop ×2 / Drawer ×1 / Empty ×4 / Space ×3 / Split ×5 / Upload ×1（虚线框） |
+| B | 7 个文件 | 已有 `border-radius: 4px` → `6px`：Loading 4 个 demo + `loading.md`（4 处）+ `icon.md` 的 `.demo-icon` + `common-transition.md` 的 `.demo-transition`（2 处） |
+| C | `icon.md` 的 `ul.icon-list` | 原本无圆角（`border: 1px solid #eaeefb`）→ 补 `6px` |
+
+⚠️ **A 组的 md 代码块必须同步**：demo 改了、文档里展示的代码块不改，
+`check-docs-demo.cjs` 与读者看到的示例都会与真实 demo 不符。本次涉及
+`anchor.md`(4) / `back-top.md`(2) / `drawer.md`(1) / `empty.md`(4) / `space.md`(3) / `split.md`(5) / `upload.md`(1)。
+
+**三类刻意不动（判据要记牢，别下轮又当遗漏补上）**：
+
+1. **内部分隔线** `border-right:` / `border-bottom:` —— 替换正则要求 `border:` 后**紧跟冒号**，
+   `border-right:` 天然不匹配（Anchor 分栏、Tree 左栏、Checkbox 分隔、Rate 分隔、Menu 分栏）。
+2. **组件 props** —— `<f-table border>` / `:bordered="false"` / `no-border` / Calendar 的
+   `:body-style="{ border: 'none' }"`。它们不是 CSS 边框。
+3. **非示意容器的圆角** —— `color-design.md` 色板 hover 的 `4px 4px 0 0`；
+   `common-directive.md` 的内联 `<span>` 小标签（已有 `2px`，是行内标记不是容器）；
+   `guide/changelog.md` 页自身 `.version` / `.date` 的边框（是页面 UI，不是 demo 容器）。
+
+**验收**：重建（41.71s / 73 页）→ `.workbuddy/tmp/_scan-radius.mjs` 逐页扫 10 个页面：
+**44 个容器元素（DIV/UL）全部 `radius=6px`** ✓（示意容器 + 组件库自带 card/button 等）。
+
+⚠️ **扫描脚本的假阳性陷阱**：同一轮扫描报出 89 个「非 6px」，**全都不是本次对象** ——
+其中 `TH`（0/10px）是文档 API 表格，`INPUT.fei-input` 更值得记：
+它实测是 `tl:0 tr:6 br:6 bl:0` 的**左侧拼接输入框**（`fei-input-wrapper-default`），
+**只取 `borderTopLeftRadius` 判定就会误杀**。⇒ 判「圆角是否统一」要**四角都取**，
+或至少明确自己取的是哪一角；单角的值不能代表「整个圆角」。
+
+8 个文档/站点护栏全绿；vitest **16/16**（逐文件跑）。
+
 ## §11 工程环境与工具链速查（跨轮次复用，2026-09-18 追加）
 
 > 本仓库 git 在 **E 盘**、工作区在 **C 盘**（跨盘）+ 受限沙箱，导致下列行为与常规环境不同。

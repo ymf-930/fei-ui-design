@@ -1,7 +1,7 @@
 <template>
   <div>
     <f-button size="small" @click="scrollTo7">滚动到第七行</f-button>
-    <div style="overflow: hidden; border: 1px solid #eee" flex>
+    <div style="overflow: hidden; border: 1px solid #eee; border-radius: 6px" flex>
       <div style="padding: 20px; width: 30%; border-right: 1px solid #eee">
         <f-anchor ref="anchorScrollRef" target="#scrollWrap" show-ink>
           <f-anchor-link href="#id1" title="标题1"></f-anchor-link>

@@ -1,5 +1,5 @@
 <template>
-  <div style="overflow: hidden; border: 1px solid #eee" flex="box:mean">
+  <div style="overflow: hidden; border: 1px solid #eee; border-radius: 6px" flex="box:mean">
     <div style="padding: 20px; border-right: 1px solid #eee">
       <f-anchor icon="star-fill">
         <f-anchor-link href="#基础用法" title="基础用法"></f-anchor-link>

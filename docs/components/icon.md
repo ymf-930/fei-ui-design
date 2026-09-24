@@ -154,7 +154,7 @@ const icon = ref('')
 <style scoped>
 .demo-icon {
   padding: 20px;
-  border-radius: 4px;
+  border-radius: 6px;
   border: 1px solid var(--vp-c-divider);
   margin-bottom: 20px;
   overflow: hidden;
@@ -173,6 +173,7 @@ ul.icon-list {
   padding: 0;
   min-height: 120px;
   border: 1px solid #eaeefb;
+  border-radius: 6px;
   li {
     display: inline-block;
     width: 125px;

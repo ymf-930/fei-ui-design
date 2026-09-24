@@ -2,7 +2,7 @@
   <div style="width: 400px">
     <f-upload action="//jsonplaceholder.typicode.com/posts/" multiple type="drag">
       <div
-        style="padding: 20px 0; border: 1px dashed #eee; cursor: pointer"
+        style="padding: 20px 0; border: 1px dashed #eee; cursor: pointer; border-radius: 6px"
         flex="dir:top main:center cross:center"
       >
         <p>

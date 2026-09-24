@@ -1,5 +1,5 @@
 <template>
-  <div style="width: 100%; height: 300px; border: 1px solid #ddd">
+  <div style="width: 100%; height: 300px; border: 1px solid #ddd; border-radius: 6px">
     <f-split split="horizontal" :default="100">
       <template #left>
         <div class="left-container">上边容器</div>

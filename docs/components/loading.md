@@ -46,7 +46,7 @@ import Ctrl from './demo/Loading/Ctrl.vue'
   margin-right: 5px;
   width: 200px;
   height: 100px;
-  border-radius: 4px;
+  border-radius: 6px;
   border: 1px solid #cecece;
 }
 </style>
@@ -92,7 +92,7 @@ import Ctrl from './demo/Loading/Ctrl.vue'
   margin-right: 5px;
   width: 200px;
   height: 100px;
-  border-radius: 4px;
+  border-radius: 6px;
   border: 1px solid #cecece;
 }
 </style>
@@ -145,7 +145,7 @@ import Ctrl from './demo/Loading/Ctrl.vue'
   margin-right: 5px;
   width: 200px;
   height: 100px;
-  border-radius: 4px;
+  border-radius: 6px;
   border: 1px solid #cecece;
 }
 </style>
@@ -208,7 +208,7 @@ import Ctrl from './demo/Loading/Ctrl.vue'
   margin-right: 5px;
   width: 200px;
   height: 100px;
-  border-radius: 4px;
+  border-radius: 6px;
   border: 1px solid #cecece;
 }
 </style>
