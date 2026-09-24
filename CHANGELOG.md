@@ -7,6 +7,23 @@
 
 ## [Unreleased]
 
+### 变更
+
+- 首页演示区统一由组件库真实组件渲染（`FButton` / `FInput` / `FCheckbox`），
+  控件的盒型、间距、配色与组件文档页保持一致。
+- 文档站排版收敛到单一权威层（`docs/.vitepress/theme/styles/doc-typography.styl`）：
+  标题、正文、列表、代码块、表格的字号 / 行高 / 间距不再分散在多个文件里互相覆盖。
+
+### 修复
+
+- 文档站：导航、侧边栏、站内搜索、明暗切换的若干缺陷；页内链接与悬浮提示的英文残留。
+- 清除被浏览器静默丢弃的样式：未定义的 Stylus 变量会让整条声明（或整个 `@media` 块）
+  原样进入产物后被浏览器丢弃，构建期零警告；现已纳入产物护栏。
+
+### 清理
+
+- 删除文档站中不可达的主题组件与样式文件，以及未被任何入口引用的静态资源（合计约 10.3 MB）。
+
 ### 待办（类型债务，按优先级排序）
 
 - 消除 `vue-tsc --noEmit` 暴露的类型错误（详见 `docs/.internal/refactor-plan.md` §3.3）：
@@ -35,7 +52,7 @@
 
 ### 变更
 
-- 组件 `name` 统一为 `F` 前缀，并同步各组件 `index.ts` 导出；旧名称以别名形式保留一个版本。
+- 组件 `name` 与各组件 `index.ts` 的导出一律采用 `F` 前缀 PascalCase，命名风格全库一致。
 - `src/create.ts` 的全局注册逻辑加固：仅在 `name` 为 PascalCase 时注册，
   自动跳过 hook / 渲染函数等非组件导出，避免向 `app.component()` 注册无效项。
 - `vue` 由 `dependencies` 调整为 `peerDependencies`，避免宿主工程出现多实例 Vue。
