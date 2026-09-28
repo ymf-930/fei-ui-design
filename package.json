@@ -15,6 +15,11 @@
   "license": "MIT",
   "private": false,
   "type": "module",
+  "sideEffects": [
+    "**/*.css",
+    "**/*.scss",
+    "**/*.styl"
+  ],
   "homepage": "https://ymf-930.gitee.io/fei-ui-design/",
   "repository": {
     "type": "git",
@@ -129,6 +134,7 @@
     "@types/gulp-autoprefixer": "^0.0.37",
     "@types/gulp-postcss": "^8.0.6",
     "@types/node": "^20.10.6",
+    "@types/sortablejs": "^1.15.9",
     "@typescript-eslint/eslint-plugin": "^6.18.0",
     "@typescript-eslint/parser": "^6.18.0",
     "@vitejs/plugin-vue": "^5.0.2",

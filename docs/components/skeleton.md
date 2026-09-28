@@ -200,7 +200,7 @@ function show() {
 | --- | --- | --- | --- | --- |
 | animation | 是否开启骨架屏动画 | `boolean` | — | `false` |
 | count | 渲染多少个 template，建议使用尽可能小的数字 | `number` | — | `1` |
-| loading | 是否显示真实的 DOM 结构 | `boolean` | — | `true` |
+| loading | 为 `true` 时显示骨架占位，为 `false` 时渲染默认插槽的真实内容 | `boolean` | — | `true` |
 | rows | 骨架屏段落数量 | `number` | — | `3` |
 | throttle | 延迟占位 DOM 渲染的时间，单位毫秒 | `number` | — | `0` |
 
@@ -208,7 +208,7 @@ function show() {
 
 | 参数 | 说明 | 类型 | 可选值 | 默认值 |
 | --- | --- | --- | --- | --- |
-| variant | 当前显示的占位元素的样式 | `string` | `p` / `text` / `h1` / `h2` / `h5` / `caption` / `button` / `image` / `circle` / `rect` | `text` |
+| variant | 当前显示的占位元素的样式 | `string` | `p` / `text` / `h1` / `h2` / `h3` / `h4` / `h5` / `h6` / `caption` / `button` / `image` / `circle` / `rect` | `text` |
 
 ## Skeleton Slots
 

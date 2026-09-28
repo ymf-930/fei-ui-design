@@ -1,13 +1,19 @@
+import type { DirectiveBinding } from 'vue'
 import { on } from '../../_utils/dom'
 import isServer from '../../_utils/isServer'
 
-const nodeList = new Map()
+interface DocumentHandler {
+  documentHandler: (mouseup: MouseEvent, mousedown: MouseEvent) => void
+  bindingFn: (...args: any[]) => any
+}
 
-let startClick
+const nodeList = new Map<HTMLElement, DocumentHandler[]>()
+
+let startClick: MouseEvent
 
 if (!isServer) {
-  on(document, 'mousedown', e => (startClick = e))
-  on(document, 'mouseup', e => {
+  on(document, 'mousedown', (e: MouseEvent) => (startClick = e))
+  on(document, 'mouseup', (e: MouseEvent) => {
     for (const handlers of nodeList.values()) {
       for (const { documentHandler } of handlers) {
         documentHandler(e, startClick)
@@ -16,8 +22,8 @@ if (!isServer) {
   })
 }
 
-function createDocumentHandler(el, binding) {
-  let excludes = []
+function createDocumentHandler(el: HTMLElement, binding: DirectiveBinding) {
+  let excludes: any[] = []
   if (Array.isArray(binding.arg)) {
     excludes = binding.arg
   } else {
@@ -25,11 +31,11 @@ function createDocumentHandler(el, binding) {
     excludes.push(binding.arg)
   }
 
-  return function (mouseup, mousedown) {
+  return function (mouseup: MouseEvent, mousedown: MouseEvent) {
     if (!mouseup || !mousedown) return
-    const popperRef = binding.instance.popperRef
-    const mouseUpTarget = mouseup.target
-    const mouseDownTarget = mousedown.target
+    const popperRef = (binding.instance as any).popperRef
+    const mouseUpTarget = mouseup.target as Node | null
+    const mouseDownTarget = mousedown.target as Node | null
     // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
     const isBound = !binding || !binding.instance
     const isTargetExists = !mouseUpTarget || !mouseDownTarget
@@ -57,21 +63,21 @@ function createDocumentHandler(el, binding) {
 }
 
 export default {
-  beforeMount(el, binding) {
+  beforeMount(el: HTMLElement, binding: DirectiveBinding) {
     // there could be multiple handlers on the element
     if (!nodeList.has(el)) {
       nodeList.set(el, [])
     }
-    nodeList.get(el).push({
+    nodeList.get(el)!.push({
       documentHandler: createDocumentHandler(el, binding),
       bindingFn: binding.value
     })
   },
-  updated(el, binding) {
+  updated(el: HTMLElement, binding: DirectiveBinding) {
     if (!nodeList.has(el)) {
       nodeList.set(el, [])
     }
-    const handlers = nodeList.get(el)
+    const handlers = nodeList.get(el)!
     const oldHandlerIndex = handlers.findIndex(item => item.bindingFn === binding.oldValue)
     const newHandler = {
       documentHandler: createDocumentHandler(el, binding),
@@ -85,7 +91,7 @@ export default {
       handlers.push(newHandler)
     }
   },
-  unmounted(el) {
+  unmounted(el: HTMLElement) {
     // remove all listeners when a component unmounted
     nodeList.delete(el)
   }

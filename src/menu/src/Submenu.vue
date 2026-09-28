@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 import mitt from 'mitt'
 import {
   computed,

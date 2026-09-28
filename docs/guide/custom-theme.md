@@ -14,7 +14,7 @@ FEI-UI-DESIGN 的主题由一组 CSS 变量（Design Token）驱动，全部以 
 1. **组件内覆盖**：用 [`FConfigProvider`](/components/config-provider) 传递 `theme`，只影响其子树；
 2. **全局覆盖**：直接覆盖 CSS 变量，需要自行引入全量样式。
 
-两种方式都**不需要**写 Sass、Less 或 Stylus。
+两种方式都**不需要**写 Sass、Less 或 Stylus。默认情况下所有组件均为亮色主题，无需任何配置。
 
 ## 调整主题变量
 

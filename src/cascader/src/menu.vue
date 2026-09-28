@@ -21,7 +21,7 @@
   </f-scrollbar>
 </template>
 
-<script>
+<script lang="ts">
 import { computed, defineComponent, getCurrentInstance, inject, ref } from 'vue'
 import { FScrollbar } from '../../_internal/scrollbar'
 import FCascaderNode from './node.vue'

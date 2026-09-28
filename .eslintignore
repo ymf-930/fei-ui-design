@@ -17,6 +17,9 @@ plop-templates/
 handlebars/
 website/
 build/
+.vitepress/
+docs/.vitepress/
+*.tsbuildinfo
 
 # vite / vitest 运行时临时文件（每次运行都会重新生成）
 *.timestamp-*.mjs

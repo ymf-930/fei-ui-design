@@ -15,6 +15,9 @@ lib
 dist-ssr
 *.local
 
+# TypeScript 增量编译信息
+*.tsbuildinfo
+
 /cypress/videos/
 /cypress/screenshots/
 
