@@ -146,6 +146,9 @@ git push --follow-tags
 
 > 需在仓库 `Settings → Secrets` 配置 `NPM_TOKEN`（npm Automation Token）。
 
+> ⚠️ 发布前先确认目标版本未被占用：`npm view fei-ui-design versions`。
+> npm 不允许覆盖已发布的版本号，同名同版本会直接 403 —— 只能先升版本再发。
+
 ## 文档
 
 - [安装](https://ymf-930.gitee.io/fei-ui-design/guide/installation.html)

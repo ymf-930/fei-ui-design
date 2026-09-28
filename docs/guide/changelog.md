@@ -7,8 +7,8 @@ title: 变更日志
 版本号遵循[语义化版本](https://semver.org/lang/zh-CN/)。
 
 <div class="change-log">
-  <h2 id="v-unreleased" class="version">未发布</h2>
-  <div class="date">2026-09-24 起</div>
+  <h2 id="v0-0-3" class="version">0.0.3</h2>
+  <div class="date">2026-09-28</div>
   <div class="type">Feats</div>
   <p class="log-item"><i>🍀</i>文档站：补齐站内搜索，完善导航、侧边栏与明暗切换（含圆形揭开动效）</p>
   <p class="log-item"><i>🍀</i>文档站：标题 / 正文 / 列表 / 代码块 / 表格的排版统一到单一权威层</p>

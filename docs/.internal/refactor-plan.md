@@ -740,8 +740,8 @@ corepack 0.34.6 一直可用，当时是判断失误。项目已切回 **pnpm**�
 
 #### P2-6 `src/version.ts` / `src/info.ts` 是生成物却入库
 
-- 两者由 `build/gen-version.cjs` 生成（当前 `version.ts` 内容为 `export default '0.0.2'`），
-  但**被 git 跟踪**。
+- 两者由 `build/gen-version.cjs` 生成（2026-09-28 升版后为 `export default '0.0.3'`；
+  该次升版即由 `build:package` 内置的 `gen-version` 同步），但**被 git 跟踪**。
 - **影响**：版本号存在「`package.json` 与 `src/version.ts` 两个事实源」；
   `release:*` 走 `npm version` 后若未重跑 `gen-version`，产物中的版本号会静默过期。
 
@@ -1363,13 +1363,17 @@ function isActive(page) {
 
 > ⚠️ 现状（2026-09-24，见 §10.23）：`changelog.md` 的该句说明**已随重构前历史一并移除**，
 > 上表引述为**当时状态**。结论不受影响 —— `package.json` 仍是 `0.0.2`，仍属未发布。
+> ⚠️ 现状（2026-09-28）：`package.json` 已升 **`0.0.3`**（发布准备），在线页首块由
+> `未发布 / 2026-09-24 起` 改为 `0.0.3 / 2026-09-28`（id 同步为 `v0-0-3`）；
+> 重构后版本线仍自 `0.0.2` 起算，`0.0.3` 仍是 0.x ⇒「开发中」判定不变。
 
 **入口 6 · `<span class="v-old">v3.x</span>` —— 移除（而非补 `href`）**
 
 1. **本库没有 3.x 这条版本线**：`changelog.md` 载重构前为 `0.0.1~0.0.4`，
    重构后重新自 `0.0.2` 起算，当前 `0.0.2`。「Previous Version = v3.x」对不上任何一条版本线。
-   （⚠️ 现状 2026-09-24，见 §10.23：在线页已删除重构前历史 ⇒ **该页现只列 `未发布` / `0.0.2`**；
-   上面引述为当时状态。`git show <本提交之前>:docs/guide/changelog.md` 可查原貌。）
+   （⚠️ 现状 2026-09-24，见 §10.23：在线页已删除重构前历史；⚠️ 2026-09-28 起该页只列
+   **`0.0.3` / `0.0.2`** 两条。上面引述为当时状态。
+   `git show <本提交之前>:docs/guide/changelog.md` 可查原貌。）
 2. **唯一候选旧站点已不可达**：上一代项目为 `fei-ui-one`（README:9 指向
    `https://ymf-930.gitee.io/fei-ui-one/#/guide`）。实测 Pages 根路径 **404**、
    `gitee.com/ymf-930/fei-ui-one` 仓库页 **404**、`registry.npmjs.org/fei-ui-one` 返回 `{"error":"Not found"}`。
