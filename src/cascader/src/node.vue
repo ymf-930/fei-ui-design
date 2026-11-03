@@ -61,6 +61,15 @@ import { computed, inject, h, defineComponent } from 'vue'
 import { FCheckbox } from '../../checkbox'
 import { FRadio } from '../../radio'
 import { PANEL_INJECTION_KEY } from '../utils/utils'
+import type Node from '../utils/node'
+
+/** FCascaderNode 暴露给内部 NodeContent 的成员 */
+interface CascaderNodeParent {
+  node: Node
+  panel: {
+    renderLabelFn?: (options: { node: Node; data: any }) => unknown
+  }
+}
 
 export default defineComponent({
   name: 'FCascaderNode',
@@ -69,7 +78,7 @@ export default defineComponent({
     FRadio,
     NodeContent: {
       render() {
-        const { node, panel } = this.$parent
+        const { node, panel } = this.$parent as unknown as CascaderNodeParent
         const { data, label } = node
         const { renderLabelFn } = panel
         return h(

@@ -60,7 +60,7 @@ export default function calcTextareaHeight(targetElement, minRows = 1, maxRows =
   hiddenTextarea.value = targetElement.value || targetElement.placeholder || ''
 
   let height = hiddenTextarea.scrollHeight
-  const result = {}
+  const result: Record<string, string> = {}
 
   if (boxSizing === 'border-box') {
     height = height + borderSize

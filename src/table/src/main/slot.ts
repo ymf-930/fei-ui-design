@@ -1,4 +1,5 @@
 import { inject } from 'vue'
+import type { TableContext } from '../types'
 
 export default {
   name: 'FTableSlot',
@@ -12,7 +13,7 @@ export default {
     }
   },
   setup(props) {
-    const tableRoot = inject('FTable', {})
+    const tableRoot = inject<TableContext>('FTable', {} as TableContext)
     const render = tableRoot.slots[props.column.slot]
     if (!render) {
       throw Error('columns slot should be write <template> in table slots')

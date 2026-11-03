@@ -38,6 +38,8 @@ export interface PopperProps {
   visible?: boolean
   stopPopperMouseEvent?: boolean
   gpuAcceleration?: boolean
+  /** 鼠标移入弹层时是否保持显示（trigger 为 click 时忽略） */
+  enterable?: boolean
 }
 
 //箭头是三角形，边长10px，第三边长~ 14.1px 一个偏移量应该是5，这解决了箭头溢出的问题。

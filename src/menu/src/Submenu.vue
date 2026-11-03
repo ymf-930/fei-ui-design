@@ -19,6 +19,7 @@ import {
 import { FCollapseTransition } from '../../_internal/collapse-transition'
 import useMenu from './useMenu'
 import { FPopper } from '../../_internal/popper'
+import type { RootMenuContext, SubMenuContext } from './types'
 
 export default {
   name: 'FSubmenu',
@@ -45,37 +46,38 @@ export default {
   setup(props) {
     const data = reactive({
       popperJS: null,
-      timeout: null,
-      items: {},
-      submenus: {},
+      timeout: undefined as ReturnType<typeof setTimeout> | undefined,
+      items: {} as Record<string, any>,
+      submenus: {} as Record<string, any>,
       currentPlacement: '',
       mouseInChild: false,
       opened: false
     })
-    const verticalTitleRef = ref(null)
-    const popperVnode = ref(null)
+    const verticalTitleRef = ref<HTMLElement | null>(null)
+    const popperVnode = ref<{ doDestroy: () => void; triggerRef?: HTMLElement } | null>(null)
 
     // instance
-    const instance = getCurrentInstance()
+    const instance = getCurrentInstance()!
     const { paddingStyle, indexPath, parentMenu } = useMenu(instance, props.index)
 
     // inject
+    const rootMenu = inject('rootMenu') as RootMenuContext
     const {
       openedMenus,
       isMenuPopup,
       hoverBackground: rootHoverBackground,
-      methods: rootMethods,
       props: rootProps,
-      methods: { closeMenu },
       rootMenuOn,
       rootMenuEmit
-    } = inject('rootMenu')
+    } = rootMenu
+    const rootMethods = rootMenu.methods
+    const { closeMenu } = rootMenu.methods
 
     const {
       addSubMenu: parentAddSubmenu,
       removeSubMenu: parentRemoveSubmenu,
       handleMouseleave: parentHandleMouseleave
-    } = inject(`subMenu:${parentMenu.value.uid}`)
+    } = inject(`subMenu:${parentMenu.value?.uid}`) as SubMenuContext
 
     // computed
     const submenuTitleIcon = computed(() => {
@@ -88,7 +90,8 @@ export default {
       let isFirstLevel = true
       let parent = instance.parent
       while (parent && parent.type.name !== 'FMenu') {
-        if (['FSubmenu', 'FMenuItemGroup'].includes(parent.type.name)) {
+        const parentName = parent.type.name
+        if (parentName && ['FSubmenu', 'FMenuItemGroup'].includes(parentName)) {
           isFirstLevel = false
           break
         } else {
@@ -214,7 +217,7 @@ export default {
       }, showTimeout)
 
       if (appendToBody.value) {
-        parentMenu.value.vnode.el.dispatchEvent(new MouseEvent('mouseenter'))
+        parentMenu.value?.vnode.el?.dispatchEvent(new MouseEvent('mouseenter'))
       }
     }
     const handleMouseleave = (deepDispatch = false) => {
@@ -231,8 +234,8 @@ export default {
       }, props.hideTimeout)
 
       if (appendToBody.value && deepDispatch) {
-        if (instance.parent.type.name === 'FSubmenu') {
-          parentHandleMouseleave(true)
+        if (instance.parent?.type.name === 'FSubmenu') {
+          parentHandleMouseleave?.(true)
         }
       }
     }

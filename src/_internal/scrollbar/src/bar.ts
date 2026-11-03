@@ -1,6 +1,9 @@
-import { h, computed, ref, getCurrentInstance, onUnmounted, inject, defineComponent } from 'vue'
+import { h, computed, ref, getCurrentInstance, onUnmounted, inject, defineComponent, type Ref } from 'vue'
 import { on, off } from '../../../_utils/dom'
 import { renderThumbStyle, BAR_MAP } from './utils'
+
+/** 滚动容器元素：需按滚动方向动态读写 scrollTop / scrollLeft / offset 等属性 */
+type ScrollElement = HTMLElement & Record<string, any>
 
 export default defineComponent({
   name: 'FScrollbarBar',
@@ -28,34 +31,41 @@ export default defineComponent({
   },
   setup(props) {
     const instance = getCurrentInstance()
-    const thumb = ref(null)
-    const wrap = inject('scroll-bar-wrap', {})
+    const thumb = ref<ScrollElement | null>(null)
+    const wrap = inject('scroll-bar-wrap', {} as Ref<ScrollElement | null>)
     const bar = computed(() => BAR_MAP[props.vertical ? 'vertical' : 'horizontal'])
-    const barStore = ref({})
-    const cursorDown = ref(null)
-    const clickThumbHandler = e => {
+    const barStore = ref<Record<string, number>>({})
+    const cursorDown = ref<boolean | null>(null)
+
+    /** 组件根元素（进入事件回调时组件必定已挂载） */
+    const getRootEl = (): ScrollElement => instance?.vnode.el as ScrollElement
+
+    const clickThumbHandler = (e: MouseEvent) => {
       // prevent click event of right button
       if (e.ctrlKey || e.button === 2) {
         return
       }
       startDrag(e)
+      const currentTarget = e.currentTarget as ScrollElement
       barStore.value[bar.value.axis] =
-        e.currentTarget[bar.value.offset] -
-        (e[bar.value.client] - e.currentTarget.getBoundingClientRect()[bar.value.direction])
+        currentTarget[bar.value.offset] -
+        (e[bar.value.client] - currentTarget.getBoundingClientRect()[bar.value.direction])
     }
 
-    const clickTrackHandler = e => {
+    const clickTrackHandler = (e: MouseEvent) => {
       const offset = Math.abs(
-        e.target.getBoundingClientRect()[bar.value.direction] - e[bar.value.client]
+        (e.target as Element).getBoundingClientRect()[bar.value.direction] - e[bar.value.client]
       )
-      const thumbHalf = thumb.value[bar.value.offset] / 2
+      const thumbHalf = (thumb.value?.[bar.value.offset] ?? 0) / 2
       const thumbPositionPercentage =
-        ((offset - thumbHalf) * 100) / instance.vnode.el[bar.value.offset]
+        ((offset - thumbHalf) * 100) / getRootEl()[bar.value.offset]
 
-      wrap.value[bar.value.scroll] =
-        (thumbPositionPercentage * wrap.value[bar.value.scrollSize]) / 100
+      const wrapEl = wrap.value
+      if (wrapEl) {
+        wrapEl[bar.value.scroll] = (thumbPositionPercentage * wrapEl[bar.value.scrollSize]) / 100
+      }
     }
-    const startDrag = e => {
+    const startDrag = (e: MouseEvent) => {
       e.stopImmediatePropagation()
       cursorDown.value = true
       on(document, 'mousemove', mouseMoveDocumentHandler)
@@ -63,19 +73,22 @@ export default defineComponent({
       document.onselectstart = () => false
     }
 
-    const mouseMoveDocumentHandler = e => {
+    const mouseMoveDocumentHandler = (e: MouseEvent) => {
       if (cursorDown.value === false) return
       const prevPage = barStore.value[bar.value.axis]
 
       if (!prevPage) return
 
       const offset =
-        (instance.vnode.el.getBoundingClientRect()[bar.value.direction] - e[bar.value.client]) * -1
-      const thumbClickPosition = thumb.value[bar.value.offset] - prevPage
+        (getRootEl().getBoundingClientRect()[bar.value.direction] - e[bar.value.client]) * -1
+      const thumbClickPosition = thumb.value?.[bar.value.offset] - prevPage
       const thumbPositionPercentage =
-        ((offset - thumbClickPosition) * 100) / instance.vnode.el[bar.value.offset]
-      wrap.value[bar.value.scroll] =
-        (thumbPositionPercentage * wrap.value[bar.value.scrollSize]) / 100
+        ((offset - thumbClickPosition) * 100) / getRootEl()[bar.value.offset]
+
+      const wrapEl = wrap.value
+      if (wrapEl) {
+        wrapEl[bar.value.scroll] = (thumbPositionPercentage * wrapEl[bar.value.scrollSize]) / 100
+      }
     }
 
     function mouseUpDocumentHandler() {

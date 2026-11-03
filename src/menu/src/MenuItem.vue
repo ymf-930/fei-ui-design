@@ -75,7 +75,7 @@ export default defineComponent({
   },
   emits: ['click'],
   setup(props, { emit, slots }) {
-    const instance = getCurrentInstance()
+    const instance = getCurrentInstance()!
     const rootMenu = inject('rootMenu')
     const { parentMenu, paddingStyle, indexPath } = useMenu(instance, props.index)
 
@@ -107,7 +107,7 @@ export default defineComponent({
       return rootMenu.props.mode
     })
     const isNested = computed(() => {
-      return parentMenu.value.type.name !== 'ElMenu'
+      return parentMenu.value?.type.name !== 'ElMenu'
     })
 
     const itemStyle = computed(() => {

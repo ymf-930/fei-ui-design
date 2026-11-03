@@ -11,10 +11,10 @@ export default defineComponent({
   props: tooltipProps,
   emits: [UPDATE_MODEL_EVENT],
   setup(props, ctx) {
-    if (props.manual && typeof props.modelValue === 'undefined') {
+    if (props.manualMode && typeof props.visible === 'undefined') {
       console.warn('[FTooltip] You need to pass a v-model to f-tooltip when `manual` is true')
     }
-    const popper = ref(null)
+    const popper = ref<{ update: () => void } | null>(null)
 
     const onUpdateVisible = val => {
       ctx.emit(UPDATE_MODEL_EVENT, val)

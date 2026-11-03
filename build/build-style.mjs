@@ -12,10 +12,14 @@ import {
   fullStylesGlob,
   commonStylesGlob,
   fontsGlob
-} from './util-path'
+} from './util-path.mjs'
 
-// 复制字体包
-const copyFonts = () => src(fontsGlob).pipe(dest(`${output}/fonts`))
+/**
+ * 字体等二进制资源必须显式关闭编码：gulp 5 起 vinyl 默认按 utf8 读取，
+ * 不加 `encoding: false` 会把 ttf/woff 写成损坏文本。
+ */
+const copyFonts = () =>
+  src(fontsGlob, { encoding: false }).pipe(dest(`${output}/fonts`))
 
 /**
  * 全量样式打包（dist/styles/index.css 等）

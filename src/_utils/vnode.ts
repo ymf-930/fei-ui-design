@@ -1,4 +1,13 @@
-import { Fragment, Text, Comment, createBlock, openBlock, createCommentVNode } from 'vue'
+import {
+  Fragment,
+  Text,
+  Comment,
+  createBlock,
+  openBlock,
+  createCommentVNode,
+  type VNode,
+  type VNodeArrayChildren
+} from 'vue'
 
 const TEMPLATE = 'template'
 
@@ -18,23 +27,28 @@ export const PatchFlags = {
   BAIL: -2
 }
 
-export const isFragment = node => node.type === Fragment
+/** 可递归遍历的子节点形态（覆写 vnode 的 children / 插槽返回值） */
+type VNodeChildrenInput = VNode | VNodeArrayChildren | string | number | null | undefined
 
-export const isText = node => node.type === Text
+export const isFragment = (node: VNode): boolean => node.type === Fragment
 
-export const isComment = node => node.type === Comment
+export const isText = (node: VNode): boolean => node.type === Text
 
-export const isTemplate = node => node.type === TEMPLATE
+export const isComment = (node: VNode): boolean => node.type === Comment
+
+export const isTemplate = (node: VNode): boolean => node.type === TEMPLATE
 
 /**
  * get a valid child node (not fragment nor comment)
  * @param node {VNode} node to be searched
  * @param depth {number} depth to be searched
  */
-function getChildren(node, depth) {
+function getChildren(node: VNode, depth: number): VNode | undefined {
   if (isComment(node)) return
   if (isFragment(node) || isTemplate(node)) {
-    return depth > 0 ? getFirstValidNode(node.children, depth - 1) : undefined
+    return depth > 0
+      ? getFirstValidNode(node.children as VNodeArrayChildren, depth - 1)
+      : undefined
   }
   return node
 }
@@ -43,22 +57,38 @@ function getChildren(node, depth) {
  * determine if the element is a valid element type rather than fragments and comment e.g. <template> v-if
  * @param node {VNode} node to be tested
  */
-export const isValidElementNode = node => !(isFragment(node) || isComment(node))
+export const isValidElementNode = (node: VNode): boolean =>
+  !(isFragment(node) || isComment(node))
 
-export const getFirstValidNode = (nodes, maxDepth = 3) => {
+export const getFirstValidNode = (
+  nodes: VNodeChildrenInput,
+  maxDepth = 3
+): VNode | undefined => {
   if (Array.isArray(nodes)) {
-    return getChildren(nodes[0], maxDepth)
-  } else {
-    return getChildren(nodes, maxDepth)
+    return getChildren(nodes[0] as VNode, maxDepth)
   }
+  return getChildren(nodes as VNode, maxDepth)
 }
 
-export function renderIf(condition, node, props, children, patchFlag, patchProps) {
+export function renderIf(
+  condition: unknown,
+  node: any,
+  props: any,
+  children: any,
+  patchFlag?: number,
+  patchProps?: any
+): VNode {
   return condition
     ? renderBlock(node, props, children, patchFlag, patchProps)
     : createCommentVNode('v-if', true)
 }
 
-export function renderBlock(node, props, children, patchFlag, patchProps) {
-  return openBlock(), createBlock(node, props, children, patchFlag, patchProps)
+export function renderBlock(
+  node: any,
+  props: any,
+  children: any,
+  patchFlag?: number,
+  patchProps?: any
+): VNode {
+  return (openBlock(), createBlock(node, props, children, patchFlag, patchProps))
 }

@@ -1,42 +1,52 @@
-const hsv2hsl = function (hue, sat, val) {
+export interface ColorOptions {
+  [key: string]: any
+}
+
+interface RGB {
+  r: number
+  g: number
+  b: number
+}
+
+const hsv2hsl = function (hue: number, sat: number, val: number): number[] {
   return [hue, (sat * val) / ((hue = (2 - sat) * val) < 1 ? hue : 2 - hue) || 0, hue / 2]
 }
 
 // Need to handle 1.0 as 100%, since once it is a number, there is no difference between it and 1
 // <http://stackoverflow.com/questions/7422072/javascript-how-to-detect-number-as-a-decimal-including-1-0>
-const isOnePointZero = function (n) {
+const isOnePointZero = function (n: number | string): boolean {
   return typeof n === 'string' && n.indexOf('.') !== -1 && parseFloat(n) === 1
 }
 
-const isPercentage = function (n) {
+const isPercentage = function (n: number | string): boolean {
   return typeof n === 'string' && n.indexOf('%') !== -1
 }
 
 // Take input from [0, n] and return it as [0, 1]
-const bound01 = function (value, max) {
+const bound01 = function (value: number | string, max: number | string): number {
   if (isOnePointZero(value)) value = '100%'
 
   const processPercent = isPercentage(value)
-  value = Math.min(max, Math.max(0, parseFloat(value + '')))
+  let num = Math.min(+max, Math.max(0, parseFloat(value + '')))
 
   // Automatically convert percentage into number
   if (processPercent) {
-    value = parseInt(value * max + '', 10) / 100
+    num = parseInt(num * +max + '', 10) / 100
   }
 
   // Handle floating point rounding errors
-  if (Math.abs(value - max) < 0.000001) {
+  if (Math.abs(num - +max) < 0.000001) {
     return 1
   }
 
   // Convert into [0, 1] range if it isn't already
-  return (value % max) / parseFloat(max)
+  return (num % +max) / parseFloat(max + '')
 }
 
-const INT_HEX_MAP = { 10: 'A', 11: 'B', 12: 'C', 13: 'D', 14: 'E', 15: 'F' }
+const INT_HEX_MAP: Record<number, string> = { 10: 'A', 11: 'B', 12: 'C', 13: 'D', 14: 'E', 15: 'F' }
 
-const toHex = function ({ r, g, b }) {
-  const hexOne = function (value) {
+const toHex = function ({ r, g, b }: RGB): string {
+  const hexOne = function (value: number): string {
     value = Math.min(Math.round(value), 255)
     const high = Math.floor(value / 16)
     const low = value % 16
@@ -48,32 +58,29 @@ const toHex = function ({ r, g, b }) {
   return '#' + hexOne(r) + hexOne(g) + hexOne(b)
 }
 
-const HEX_INT_MAP = { A: 10, B: 11, C: 12, D: 13, E: 14, F: 15 }
+const HEX_INT_MAP: Record<string, number> = { A: 10, B: 11, C: 12, D: 13, E: 14, F: 15 }
 
-const parseHexChannel = function (hex) {
+const parseHexChannel = function (hex: string): number {
   if (hex.length === 2) {
     return (
-      (HEX_INT_MAP[hex[0].toUpperCase()] || +hex[0]) * 16 +
-      (HEX_INT_MAP[hex[1].toUpperCase()] || +hex[1])
+      (HEX_INT_MAP[hex[0].toUpperCase()] || +hex[0]) * 16 + (HEX_INT_MAP[hex[1].toUpperCase()] || +hex[1])
     )
   }
 
   return HEX_INT_MAP[hex[1].toUpperCase()] || +hex[1]
 }
 
-const hsl2hsv = function (hue, sat, light) {
-  sat = sat / 100
-  light = light / 100
-  let smin = sat
-  const lmin = Math.max(light, 0.01)
-  // let sv
-  // let v
+const hsl2hsv = function (hue: number, sat: number, light: number): { h: number; s: number; v: number } {
+  let s = sat / 100
+  let l = light / 100
+  let smin = s
+  const lmin = Math.max(l, 0.01)
 
-  light *= 2
-  sat *= light <= 1 ? light : 2 - light
+  l *= 2
+  s *= l <= 1 ? l : 2 - l
   smin *= lmin <= 1 ? lmin : 2 - lmin
-  const v = (light + sat) / 2
-  const sv = light === 0 ? (2 * smin) / (lmin + smin) : (2 * sat) / (light + sat)
+  const v = (l + s) / 2
+  const sv = l === 0 ? (2 * smin) / (lmin + smin) : (2 * s) / (l + s)
 
   return {
     h: hue,
@@ -86,13 +93,13 @@ const hsl2hsv = function (hue, sat, light) {
 // Converts an RGB color value to HSV
 // *Assumes:* r, g, and b are contained in the set [0, 255] or [0, 1]
 // *Returns:* { h, s, v } in [0,1]
-const rgb2hsv = function (r, g, b) {
-  r = bound01(r, 255)
-  g = bound01(g, 255)
-  b = bound01(b, 255)
+const rgb2hsv = function (r: number | string, g: number | string, b: number | string): { h: number; s: number; v: number } {
+  const red = bound01(r, 255)
+  const green = bound01(g, 255)
+  const blue = bound01(b, 255)
 
-  const max = Math.max(r, g, b)
-  const min = Math.min(r, g, b)
+  const max = Math.max(red, green, blue)
+  const min = Math.min(red, green, blue)
   let h
   const v = max
 
@@ -103,17 +110,20 @@ const rgb2hsv = function (r, g, b) {
     h = 0 // achromatic
   } else {
     switch (max) {
-      case r: {
-        h = (g - b) / d + (g < b ? 6 : 0)
+      case red: {
+        h = (green - blue) / d + (green < blue ? 6 : 0)
         break
       }
-      case g: {
-        h = (b - r) / d + 2
+      case green: {
+        h = (blue - red) / d + 2
         break
       }
-      case b: {
-        h = (r - g) / d + 4
+      case blue: {
+        h = (red - green) / d + 4
         break
+      }
+      default: {
+        h = 0
       }
     }
     h /= 6
@@ -126,20 +136,20 @@ const rgb2hsv = function (r, g, b) {
 // Converts an HSV color value to RGB.
 // *Assumes:* h is contained in [0, 1] or [0, 360] and s and v are contained in [0, 1] or [0, 100]
 // *Returns:* { r, g, b } in the set [0, 255]
-const hsv2rgb = function (h, s, v) {
-  h = bound01(h, 360) * 6
-  s = bound01(s, 100)
-  v = bound01(v, 100)
+const hsv2rgb = function (h: number | string, s: number | string, v: number | string): RGB {
+  const hue = bound01(h, 360) * 6
+  const saturation = bound01(s, 100)
+  const value = bound01(v, 100)
 
-  const i = Math.floor(h)
-  const f = h - i
-  const p = v * (1 - s)
-  const q = v * (1 - f * s)
-  const t = v * (1 - (1 - f) * s)
+  const i = Math.floor(hue)
+  const f = hue - i
+  const p = value * (1 - saturation)
+  const q = value * (1 - f * saturation)
+  const t = value * (1 - (1 - f) * saturation)
   const mod = i % 6
-  const r = [v, q, p, p, t, v][mod]
-  const g = [t, v, v, q, p, p][mod]
-  const b = [p, p, t, v, v, q][mod]
+  const r = [value, q, p, p, t, value][mod]
+  const g = [t, value, value, q, p, p][mod]
+  const b = [p, p, t, value, value, q][mod]
 
   return {
     r: Math.round(r * 255),
@@ -149,7 +159,17 @@ const hsv2rgb = function (h, s, v) {
 }
 
 export default class Color {
-  constructor(options) {
+  _hue: number
+  _saturation: number
+  _value: number
+  _alpha: number
+  enableAlpha: boolean
+  format: string
+  value: string
+  selected: boolean
+  options: ColorOptions
+
+  constructor(options: ColorOptions = {}) {
     this._hue = 0
     this._saturation = 100
     this._value = 100
@@ -158,19 +178,19 @@ export default class Color {
     this.format = 'hex'
     this.value = ''
     this.selected = false
-    this.options = options || {}
+    this.options = options
 
     for (const option in options) {
       // eslint-disable-next-line no-prototype-builtins
       if (options.hasOwnProperty(option)) {
-        this[option] = options[option]
+        ;(this as ColorOptions)[option] = options[option]
       }
     }
 
     this.doOnChange()
   }
 
-  set(prop, value) {
+  set(prop: string | ColorOptions, value?: any): void {
     if (arguments.length === 1 && typeof prop === 'object') {
       for (const p in prop) {
         // eslint-disable-next-line no-prototype-builtins
@@ -181,19 +201,19 @@ export default class Color {
       return
     }
 
-    this['_' + prop] = value
+    ;(this as ColorOptions)[`_${prop}`] = value
     this.doOnChange()
   }
 
-  get(prop) {
-    return this['_' + prop]
+  get(prop: string): number {
+    return (this as ColorOptions)[`_${prop}`]
   }
 
-  toRgb() {
+  toRgb(): RGB {
     return hsv2rgb(this._hue, this._saturation, this._value)
   }
 
-  fromString(value) {
+  fromString(value: string): void {
     if (!value) {
       this._hue = 0
       this._saturation = 100
@@ -203,7 +223,7 @@ export default class Color {
       return
     }
 
-    const fromHSV = (h, s, v) => {
+    const fromHSV = (h: number, s: number, v: number) => {
       this._hue = Math.max(0, Math.min(360, h))
       this._saturation = Math.max(0, Math.min(100, s))
       this._value = Math.max(0, Math.min(100, v))
@@ -219,7 +239,7 @@ export default class Color {
         .map((val, index) => (index > 2 ? parseFloat(val) : parseInt(val, 10)))
 
       if (parts.length === 4) {
-        this._alpha = Math.floor(parseFloat(parts[3]) * 100)
+        this._alpha = Math.floor(parts[3] * 100)
       } else if (parts.length === 3) {
         this._alpha = 100
       }
@@ -235,7 +255,7 @@ export default class Color {
         .map((val, index) => (index > 2 ? parseFloat(val) : parseInt(val, 10)))
 
       if (parts.length === 4) {
-        this._alpha = Math.floor(parseFloat(parts[3]) * 100)
+        this._alpha = Math.floor(parts[3] * 100)
       } else if (parts.length === 3) {
         this._alpha = 100
       }
@@ -250,7 +270,7 @@ export default class Color {
         .map((val, index) => (index > 2 ? parseFloat(val) : parseInt(val, 10)))
 
       if (parts.length === 4) {
-        this._alpha = Math.floor(parseFloat(parts[3]) * 100)
+        this._alpha = Math.floor(parts[3] * 100)
       } else if (parts.length === 3) {
         this._alpha = 100
       }
@@ -261,17 +281,12 @@ export default class Color {
     } else if (value.indexOf('#') !== -1) {
       const hex = value.replace('#', '').trim()
       if (!/^[0-9a-fA-F]{3}$|^[0-9a-fA-F]{6}$|^[0-9a-fA-F]{8}$/.test(hex)) return
-      let r, g, b
 
-      if (hex.length === 3) {
-        r = parseHexChannel(hex[0] + hex[0])
-        g = parseHexChannel(hex[1] + hex[1])
-        b = parseHexChannel(hex[2] + hex[2])
-      } else if (hex.length === 6 || hex.length === 8) {
-        r = parseHexChannel(hex.substring(0, 2))
-        g = parseHexChannel(hex.substring(2, 4))
-        b = parseHexChannel(hex.substring(4, 6))
-      }
+      const channels =
+        hex.length === 3
+          ? [hex[0] + hex[0], hex[1] + hex[1], hex[2] + hex[2]]
+          : [hex.substring(0, 2), hex.substring(2, 4), hex.substring(4, 6)]
+      const [r, g, b] = channels.map(parseHexChannel)
 
       if (hex.length === 8) {
         this._alpha = Math.floor((parseHexChannel(hex.substring(6)) / 255) * 100)
@@ -284,7 +299,7 @@ export default class Color {
     }
   }
 
-  compare(color) {
+  compare(color: Color): boolean {
     return (
       Math.abs(color._hue - this._hue) < 2 &&
       Math.abs(color._saturation - this._saturation) < 1 &&
@@ -293,7 +308,7 @@ export default class Color {
     )
   }
 
-  doOnChange() {
+  doOnChange(): void {
     const { _hue, _saturation, _value, _alpha, format } = this
 
     if (this.enableAlpha) {
@@ -306,9 +321,7 @@ export default class Color {
           break
         }
         case 'hsv': {
-          this.value = `hsva(${_hue}, ${Math.round(_saturation)}%, ${Math.round(_value)}%, ${
-            _alpha / 100
-          })`
+          this.value = `hsva(${_hue}, ${Math.round(_saturation)}%, ${Math.round(_value)}%, ${_alpha / 100})`
           break
         }
         default: {

@@ -35,7 +35,9 @@ export interface FUiInstallOptions {
   [key: string]: unknown
 }
 
-interface FUiCreateOptions {
+// 必须 export：src/index.ts 会 re-export 该类型，
+// 未导出会让 `import type { FUiCreateOptions } from 'fei-ui-design'` 直接报 TS2305。
+export interface FUiCreateOptions {
   components?: ComponentType[]
   componentPrefix?: string
   directives?: DirectiveItem[]

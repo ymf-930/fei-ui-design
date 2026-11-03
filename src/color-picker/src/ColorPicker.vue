@@ -251,7 +251,7 @@ export default defineComponent({
           enableAlpha: props.showAlpha,
           format: props.colorFormat
         })
-        newColor.fromString(props.modelValue)
+        newColor.fromString(props.modelValue || '')
         if (!color.compare(newColor)) {
           resetColor()
         }

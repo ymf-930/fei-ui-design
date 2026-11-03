@@ -83,7 +83,7 @@ export default defineComponent({
         .monthsShort()
         .map(_ => _.toLowerCase())
     )
-    const tableRows = ref([[], [], []])
+    const tableRows = ref<any[][]>([[], [], []])
     const lastRow = ref(null)
     const lastColumn = ref(null)
     const rows = computed(() => {

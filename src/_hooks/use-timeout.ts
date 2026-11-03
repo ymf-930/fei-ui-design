@@ -1,14 +1,25 @@
-import { watch, getCurrentInstance, onUnmounted, ref } from 'vue'
+import { watch, getCurrentInstance, onUnmounted, ref, type Ref } from 'vue'
 
-export function tryOnUnmounted(fn) {
+export function tryOnUnmounted(fn: () => void): void {
   getCurrentInstance() && onUnmounted(fn)
 }
 
-function isFunction(val) {
+function isFunction(val: unknown): val is (...args: any[]) => any {
   return typeof val === 'function'
 }
 
-export function useTimeoutFn(handle, wait, native = false) {
+/** useTimeoutRef 返回的控制句柄 */
+export interface TimeoutRefHandle {
+  readyRef: Ref<boolean>
+  stop: () => void
+  start: () => void
+}
+
+export function useTimeoutFn(
+  handle: () => void,
+  wait: number,
+  native = false
+): TimeoutRefHandle {
   if (!isFunction(handle)) {
     throw new Error('handle is not Function!')
   }
@@ -28,17 +39,17 @@ export function useTimeoutFn(handle, wait, native = false) {
   return { readyRef, stop, start }
 }
 
-export function useTimeoutRef(wait) {
+export function useTimeoutRef(wait: number): TimeoutRefHandle {
   const readyRef = ref(false)
 
-  let timer = null
+  let timer: ReturnType<typeof setTimeout> | null = null
 
-  function stop() {
+  function stop(): void {
     readyRef.value = false
     timer && window.clearTimeout(timer)
   }
 
-  function start() {
+  function start(): void {
     stop()
     timer = setTimeout(() => {
       readyRef.value = true

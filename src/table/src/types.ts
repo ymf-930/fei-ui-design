@@ -1,3 +1,14 @@
+/**
+ * Table 通过 `FTable` 注入的上下文。
+ * 表格内部实现会持续增删成员，未显式声明的部分按动态属性处理。
+ */
+export interface TableContext {
+  props?: Record<string, any>
+  slots?: Record<string, any>
+  store?: Record<string, any>
+  [key: string]: any
+}
+
 export const tableProps = {
   data: {
     type: Array,

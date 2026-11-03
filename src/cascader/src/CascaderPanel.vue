@@ -56,10 +56,10 @@ export default defineComponent({
     const config = useCascaderConfig(props)
 
     const store = ref(null)
-    const menuList = ref([])
+    const menuList = ref<any[]>([])
     const checkedValue = ref(null)
-    const menus = ref([])
-    const expandingNode = ref(null)
+    const menus = ref<Node[][]>([])
+    const expandingNode = ref<Node | null>(null)
     const checkedNodes = ref([])
 
     const isHoverMenu = computed(() => config.value.expandTrigger === 'hover')

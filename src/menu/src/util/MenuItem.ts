@@ -2,45 +2,48 @@ import { EVENT_CODE, triggerEvent } from '../../../_utils/aria'
 import SubMenu from './Submenu'
 
 class MenuItem {
-  constructor(domNode) {
+  domNode: HTMLElement
+  submenu: SubMenu | null
+
+  constructor(domNode: HTMLElement) {
     this.domNode = domNode
     this.submenu = null
     this.init()
   }
 
-  init() {
+  init(): void {
     this.domNode.setAttribute('tabindex', '0')
-    const menuChild = this.domNode.querySelector('.fei-menu')
+    const menuChild = this.domNode.querySelector<HTMLElement>('.fei-menu')
     if (menuChild) {
       this.submenu = new SubMenu(this, menuChild)
     }
     this.addListeners()
   }
 
-  addListeners() {
-    this.domNode.addEventListener('keydown', event => {
+  addListeners(): void {
+    this.domNode.addEventListener('keydown', (event: KeyboardEvent) => {
       let prevDef = false
       switch (event.code) {
         case EVENT_CODE.down: {
-          triggerEvent(event.currentTarget, 'mouseenter')
+          triggerEvent(event.currentTarget as HTMLElement, 'mouseenter')
           this.submenu && this.submenu.gotoSubIndex(0)
           prevDef = true
           break
         }
         case EVENT_CODE.up: {
-          triggerEvent(event.currentTarget, 'mouseenter')
+          triggerEvent(event.currentTarget as HTMLElement, 'mouseenter')
           this.submenu && this.submenu.gotoSubIndex(this.submenu.subMenuItems.length - 1)
           prevDef = true
           break
         }
         case EVENT_CODE.tab: {
-          triggerEvent(event.currentTarget, 'mouseleave')
+          triggerEvent(event.currentTarget as HTMLElement, 'mouseleave')
           break
         }
         case EVENT_CODE.enter:
         case EVENT_CODE.space: {
           prevDef = true
-          event.currentTarget.click()
+          ;(event.currentTarget as HTMLElement).click()
           break
         }
       }

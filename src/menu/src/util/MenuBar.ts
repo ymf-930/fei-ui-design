@@ -1,16 +1,18 @@
 import MenuItem from './MenuItem'
 
 class Menu {
-  constructor(domNode) {
+  domNode: HTMLElement
+
+  constructor(domNode: HTMLElement) {
     this.domNode = domNode
     this.init()
   }
 
-  init() {
+  init(): void {
     const menuChildren = this.domNode.childNodes
     ;[].filter
-      .call(menuChildren, child => child.nodeType === 1)
-      .forEach(child => {
+      .call(menuChildren, (child: ChildNode) => child.nodeType === 1)
+      .forEach((child: HTMLElement) => {
         new MenuItem(child)
       })
   }

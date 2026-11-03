@@ -1,5 +1,5 @@
 export function useMixin(props) {
-  function alignCls(column, row = {}) {
+  function alignCls(column: any, row: any = {}) {
     let cellClassName = ''
     if (row.cellClassName && column.key && row.cellClassName[column.key]) {
       cellClassName = row.cellClassName[column.key]

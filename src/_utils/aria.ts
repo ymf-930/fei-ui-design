@@ -17,8 +17,8 @@ export const EVENT_CODE = {
  * @param  {String} name
  * @param  {*} opts
  */
-export const triggerEvent = function (elm, name, ...opts) {
-  let eventName
+export const triggerEvent = function (elm: HTMLElement, name: string, ...opts: [boolean?, boolean?]): HTMLElement {
+  let eventName: string
   if (name.includes('mouse') || name.includes('click')) {
     eventName = 'MouseEvents'
   } else if (name.includes('key')) {

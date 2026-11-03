@@ -119,27 +119,26 @@ export function getRandomInt(min, max) {
 }
 
 /**
- * @description 打乱某个数组
- * @return {number}
+ * @description 打乱某个数组（返回新数组，不改变入参）
+ * @return {Array}
  */
 export function shuffle(arr) {
   // --
 }
 
 /**
- * @description 交换两个数组内容
- * @return {number}
+ * @description 交换两个数组内容（原地修改，无返回值）
  */
 export function swap(arr, i, j) {
   // --
 }
 
 /**
- * @description 节流函数，(限制函数的执行频率)返回函数连续调用时，空闲时间必须大于或等于 wait，func 才会执行
+ * @description 节流函数：(限制函数的执行频率) 在 wait 时间窗口内至多执行一次
  *
  * @param  {function} func        回调函数
  * @param  {number}   wait        表示时间窗口的间隔
- * @param immediate 是否立即执行 true 则先调用，false不先调用
+ * @param immediate 是否立即执行 true 则先调用，false不先调用（窗口结束时调用）
  * @return {function}             返回客户调用函数
  */
 export function throttle(func, wait, immediate) {
@@ -147,7 +146,7 @@ export function throttle(func, wait, immediate) {
 }
 
 /**
- * @description 防抖函数，(限制函数的执行频率) 保证再一系列调用时间内，只调用一次
+ * @description 防抖函数：(限制函数的执行频率) 返回函数连续调用时，空闲时间必须大于或等于 wait，func 才会执行
  *
  * @param  {function} func        回调函数
  * @param  {number}   wait        表示时间窗口的间隔

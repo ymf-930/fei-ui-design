@@ -46,7 +46,7 @@ export default {
   },
   emits: ['update:modelValue'],
   setup(props, ctx) {
-    const commonPicker = ref(null)
+    const commonPicker = ref<{ handleFocus: () => void } | null>(null)
     const refProps = {
       ...props,
       focus: () => {

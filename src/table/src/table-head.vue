@@ -143,7 +143,7 @@ export default defineComponent({
       if (isSelectAll.value) flag = false
       return flag
     })
-    const headRows = computed(() => {
+    const headRows = computed<any[]>(() => {
       //@ts-ignore
       const isGroup = props.columnRows.length > 1
       if (isGroup) {

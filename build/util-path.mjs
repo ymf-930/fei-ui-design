@@ -1,6 +1,10 @@
-import { resolve } from 'path'
+import { resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
-export const root = resolve(__dirname, '..')
+// ESM 下没有 __dirname，用 import.meta.url 回推当前目录
+const here = fileURLToPath(new URL('.', import.meta.url))
+
+export const root = resolve(here, '..')
 export const compRoot = resolve(root, 'src')
 export const styleRoot = resolve(root, 'src/_styles')
 
@@ -17,7 +21,7 @@ export const pkgPath = root
  * 形如 `C:\a\src/**\/*.css` 的模式会静默匹配不到任何文件
  * （gulp 对空匹配只打印 warning、不会报错，极易漏掉产物）。
  */
-export const posix = (p: string): string => p.replace(/\\/g, '/')
+export const posix = p => p.replace(/\\/g, '/')
 
 /** 单个组件的按需样式（index.css / dark.css 等） */
 export const componentStylesGlob = posix(`${compRoot}/**/styles/*.css`)

@@ -102,6 +102,7 @@ import TableTr from './table-tr.vue'
 import TableCell from './cell.vue'
 import Expand from './main/expand'
 import { useMixin } from './main/mixin'
+import type { TableContext } from './types'
 import { computed, defineComponent, inject } from 'vue'
 
 export default defineComponent({
@@ -134,7 +135,7 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const parentRef = inject('FTable', {})
+    const parentRef = inject<TableContext>('FTable', {} as TableContext)
     const { alignCls, setCellWidth } = useMixin(props)
 
     const expandRender = computed(() => {

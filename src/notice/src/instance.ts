@@ -1,5 +1,5 @@
 import { shallowReactive, createVNode, isVNode, nextTick, render } from 'vue'
-import { NoticeContext, CreateNoticeProps } from './types'
+import { NoticeContext, NoticeProps, CreateNoticeProps } from './types'
 import NoticeConstructor from './Notice.vue'
 import { transferIncrease } from '../../_utils/config'
 import isServer from '../../_utils/isServer'
@@ -50,6 +50,7 @@ export function closeAll() {
 const Notice = (options: CreateNoticeProps) => {
   if (isServer) return
   const position = options.position || 'top-right'
+  const userOptions = options as Partial<NoticeProps>
 
   let verticalOffset = options.offset || 0
   notifications
@@ -60,7 +61,10 @@ const Notice = (options: CreateNoticeProps) => {
   verticalOffset += 16
 
   const id = 'notification_' + seed++
-  const userOnClose = options.onClose
+  const userOnClose = userOptions.onClose
+  const handleClose = () => {
+    close(id, userOnClose)
+  }
   options = {
     offset: verticalOffset,
     id,
@@ -69,10 +73,8 @@ const Notice = (options: CreateNoticeProps) => {
     position: 'top-right',
     showClose: true,
     zIndex: transferIncrease(),
-    ...options,
-    onClose: () => {
-      close(id, userOnClose)
-    }
+    ...userOptions,
+    onClose: handleClose
   }
 
   const container = document.createElement('div')
@@ -91,7 +93,7 @@ const Notice = (options: CreateNoticeProps) => {
   document.body.appendChild(container)
 
   return {
-    close: options.onClose
+    close: handleClose
   }
 }
 

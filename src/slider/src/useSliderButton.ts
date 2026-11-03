@@ -1,6 +1,7 @@
 import { UPDATE_MODEL_EVENT } from '../../_utils/constants'
 import { off, on } from '../../_utils/dom'
 import { computed, inject, nextTick, ref, watch } from 'vue'
+import type { SliderProviderContext } from './types'
 
 const useTooltip = (props, formatTooltip, showTooltip) => {
   const tooltip = ref(null)
@@ -37,7 +38,7 @@ export const useSliderButton = (props, initData, emit) => {
     emitChange,
     resetSize,
     updateDragging
-  } = inject('SliderProvider')
+  } = inject('SliderProvider') as SliderProviderContext
 
   const { tooltip, tooltipVisible, formatValue, displayTooltip, hideTooltip } = useTooltip(
     props,

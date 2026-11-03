@@ -35,7 +35,6 @@ describe('Collpase.vue', () => {
   })
 
   test('basic collapse', async () => {
-    // console.log(wrapper.html())
     const items = wrapper.findAll('.fei-collapse-item')
     const headers = wrapper.findAll('.fei-collapse-header')
     const contents = wrapper.findAll('.fei-collapse-content')

@@ -139,6 +139,16 @@ import { CHANGE_EVENT, UPDATE_MODEL_EVENT } from '../../_utils/constants'
 import { addResizeListener, removeResizeListener } from '../../_utils/resize-event'
 import { useForm } from '../../_hooks'
 import { cascaderProps } from './types'
+import type Node from '../utils/node'
+
+/** 多选模式下已选节点的标签 */
+interface CascaderTag {
+  node?: Node
+  key: number
+  text: string
+  hitState?: boolean
+  closable: boolean
+}
 
 const DEFAULT_INPUT_HEIGHT = 32
 
@@ -201,8 +211,8 @@ export default defineComponent({
     const filtering = ref(false)
     const inputValue = ref('')
     const searchInputValue = ref('')
-    const presentTags = ref([])
-    const suggestions = ref([])
+    const presentTags = ref<CascaderTag[]>([])
+    const suggestions = ref<Node[]>([])
 
     //@ts-ignore
     const isDisabled = computed(() => props.disabled || FForm.disabled)
@@ -280,7 +290,7 @@ export default defineComponent({
       filtering.value = false
     }
 
-    const genTag = node => {
+    const genTag = (node: Node): CascaderTag => {
       const { showAllLevels, separator } = props
       return {
         node,
@@ -291,8 +301,9 @@ export default defineComponent({
       }
     }
 
-    const deleteTag = tag => {
+    const deleteTag = (tag: CascaderTag) => {
       const { node } = tag
+      if (!node) return
       node.doCheck(false)
       //@ts-ignore
       panel.value.calculateCheckedValue()
@@ -303,7 +314,7 @@ export default defineComponent({
       if (!multiple.value) return
 
       const nodes = checkedNodes.value
-      const tags = []
+      const tags: CascaderTag[] = []
 
       if (nodes.length) {
         const [first, ...rest] = nodes

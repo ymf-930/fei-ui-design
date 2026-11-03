@@ -55,8 +55,10 @@ export default defineConfig({
      * 使按需引入 `fei-ui-design/es/button` 时同样能解析到类型。
      */
     dts({
-      outDir: ['es', 'lib'],
-      tsConfigFilePath: r('./tsconfig.json')
+      // vite-plugin-dts 5 底层换成 unplugin-dts，选项随之改名：
+      //   outDir → outDirs，tsConfigFilePath → tsconfigPath
+      outDirs: ['es', 'lib'],
+      tsconfigPath: r('./tsconfig.json')
     })
   ],
   resolve: {

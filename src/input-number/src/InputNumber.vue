@@ -87,7 +87,7 @@ export default defineComponent({
     const inputSize = computed(() => props.size || FForm.size || FFormItem.size)
 
     const data = reactive({
-      currentValue: null,
+      currentValue: null as number | null | undefined,
       focused: false,
       upDisabled: false,
       downDisabled: false

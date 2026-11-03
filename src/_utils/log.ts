@@ -1,9 +1,9 @@
 /**
  * @description 返回这个样式的颜色值
- * @param {String} type 样式名称 [ primary | success | warning | danger | text ]
+ * @param {String} type 样式名称 [ primary | success | warning | danger | info | default ]
  */
-export function typeColor(type = 'default') {
-  let color = ''
+export function typeColor(type = 'default'): string {
+  let color: string
   switch (type) {
     case 'primary':
       color = '#1a5cff'
@@ -17,6 +17,11 @@ export function typeColor(type = 'default') {
     case 'danger':
       color = '#ff4757'
       break
+    // 此前缺少 'info' 分支，typeColor('info') 会落到 default 返回字符串 'info'，
+    // 拼出 `color: info` 这种非法颜色值，控制台的 info 输出因此没有任何配色。
+    case 'info':
+      color = '#909399'
+      break
     case 'default':
       color = '#35495E'
       break
@@ -27,7 +32,10 @@ export function typeColor(type = 'default') {
   return color
 }
 
-const print = (text, type = 'default', back = false) => {
+/** 日志配色级别 */
+type LogType = 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'default'
+
+const print = (text: any, type: LogType = 'default', back = false): void => {
   if (typeof text === 'object') {
     // 如果是对象则调用打印对象方式
     console.dir(text)
@@ -44,7 +52,7 @@ const print = (text, type = 'default', back = false) => {
   }
 }
 
-const pretty = (title, text, type = 'primary') => {
+const pretty = (title: string, text: any, type: LogType = 'primary'): void => {
   console.log(
     `%c ${title} %c ${text} %c`,
     `background:${typeColor(type)};border:1px solid ${typeColor(
@@ -57,35 +65,35 @@ const pretty = (title, text, type = 'primary') => {
   )
 }
 
-const primary = (text, back = false) => {
+const primary = (text: any, back = false): void => {
   print(text, 'primary', back)
 }
-const success = (text, back = false) => {
+const success = (text: any, back = false): void => {
   print(text, 'success', back)
 }
-const info = (text, back = false) => {
+const info = (text: any, back = false): void => {
   print(text, 'info', back)
 }
-const warning = (text, back = false) => {
+const warning = (text: any, back = false): void => {
   print(text, 'warning', back)
 }
-const danger = (text, back = false) => {
+const danger = (text: any, back = false): void => {
   print(text, 'danger', back)
 }
 const printVersion = (
-  title,
-  version,
-  link,
-  type = 'primary',
+  title: string,
+  version: string,
+  link: string,
+  type: LogType = 'primary',
   fontSize = '20px',
   versionColor = '#999'
-) => {
+): void => {
   console.log(
-  `%c${title.toUpperCase()} %cV${version}  ${link}`,
-  `color: ${typeColor(
-  type
-  )};font-weight: 500;font-size: ${fontSize};font-family: Source Sans Pro,Helvetica Neue,Arial,sans-serif;`,
-  `color: ${versionColor};`
+    `%c${title.toUpperCase()} %cV${version}  ${link}`,
+    `color: ${typeColor(
+      type
+    )};font-weight: 500;font-size: ${fontSize};font-family: Source Sans Pro,Helvetica Neue,Arial,sans-serif;`,
+    `color: ${versionColor};`
   )
 }
 const log = {
@@ -101,9 +109,9 @@ const log = {
 
 export default log
 
-export const throwError = (scope, m) => {
+export const throwError = (scope: string, m: string): void => {
   pretty(scope, m, 'danger')
 }
-export const throwWarn = (scope, m) => {
+export const throwWarn = (scope: string, m: string): void => {
   pretty(scope, m, 'warning')
 }

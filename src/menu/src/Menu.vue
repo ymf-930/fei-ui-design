@@ -258,7 +258,7 @@ export default defineComponent({
       // @ts-ignore
       rootMenuEmitter.on('submenu:submenu-click', handleSubmenuClick)
       if (props.mode === 'horizontal') {
-        new Menubar(instance?.vnode.el)
+        new Menubar(instance?.vnode.el as HTMLElement)
       }
     })
 

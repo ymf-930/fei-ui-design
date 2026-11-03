@@ -89,7 +89,7 @@ const data = reactive({
 
 // refs
 const root = ref(null)
-const items = ref([])
+const items = ref<any[]>([])
 const offsetWidth = ref(0)
 const offsetHeight = ref(0)
 
@@ -121,13 +121,19 @@ const indicatorsClasses = computed(() => {
 })
 
 // methods
-const throttledArrowClick = index => {
-  throttle(setActiveItem(index), 300, true)
-}
+// throttle 接收的是「函数」，返回的是包装后的函数。
+// 原写法 throttle(setActiveItem(index), 300, true) 会先立即执行 setActiveItem，
+// 再把它的返回值（undefined）包成一个永不调用的函数，节流完全失效。
+const throttledArrowClick = throttle(
+  (index: number) => setActiveItem(index),
+  300,
+  true
+)
 
-const throttledIndicatorHover = index => {
-  throttle(handleIndicatorHover(index), 300)
-}
+const throttledIndicatorHover = throttle(
+  (index: number) => handleIndicatorHover(index),
+  300
+)
 
 function pauseTimer() {
   if (data.timer) {

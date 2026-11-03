@@ -615,7 +615,6 @@ for (const r of report) {
 }
 lines.push('\n===== 待修复 ' + realCount + ' 项（已豁免已知例外） =====');
 const txt = lines.join('\n');
-fs.writeFileSync('.workbuddy/tmp/api-diff3.txt', txt);
 console.log(txt);
 console.log('\n--- 分类计数（仅待修复项） ---');
 for (const k of KEEP) { const v = (txt.match(new RegExp('\\[' + k + '\\]', 'g')) || []).length; if (v) console.log('  ' + k + ': ' + v); }

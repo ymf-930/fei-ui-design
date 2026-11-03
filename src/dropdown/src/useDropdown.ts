@@ -2,20 +2,20 @@ import { inject, ref } from 'vue'
 import { generateId } from '../../_utils/util-helper'
 import { EVENT_CODE } from '../../_utils/aria'
 import { on } from '../../_utils/dom'
-import { dropdownContextKey } from './types'
+import { dropdownContextKey, type DropdownContext } from './types'
 
 export const useDropdown = () => {
-  const bDropdown = inject(dropdownContextKey, {})
+  const bDropdown = inject(dropdownContextKey, {} as DropdownContext)
 
   return { bDropdown }
 }
 
-export const initDropdownDomEvent = (dropdownChildren, triggerElm, _instance) => {
-  const menuItems = ref(null)
-  const menuItemsArray = ref(null)
-  const dropdownElm = ref(null)
+export const initDropdownDomEvent = (dropdownChildren: any, triggerElm: any, _instance: any) => {
+  const menuItems = ref<HTMLElement[] | null>(null)
+  const menuItemsArray = ref<HTMLElement[] | null>(null)
+  const dropdownElm = ref<HTMLElement | null>(null)
   const listId = ref(`dropdown-menu-${generateId()}`)
-  dropdownElm.value = dropdownChildren?.subTree.el
+  dropdownElm.value = dropdownChildren?.subTree.el ?? null
 
   function removeTabindex() {
     triggerElm.setAttribute('tabindex', '-1')
@@ -24,17 +24,17 @@ export const initDropdownDomEvent = (dropdownChildren, triggerElm, _instance) =>
     })
   }
 
-  function resetTabindex(ele) {
+  function resetTabindex(ele: HTMLElement | undefined) {
     removeTabindex()
     ele?.setAttribute('tabindex', '0')
   }
 
-  function handleTriggerKeyDown(ev) {
+  function handleTriggerKeyDown(ev: KeyboardEvent) {
     const code = ev.code
     if ([EVENT_CODE.up, EVENT_CODE.down].includes(code)) {
       removeTabindex()
-      resetTabindex(menuItems.value[0])
-      menuItems.value[0].focus()
+      resetTabindex(menuItems.value?.[0])
+      menuItems.value?.[0].focus()
       ev.preventDefault()
       ev.stopPropagation()
     } else if (code === EVENT_CODE.enter) {
@@ -44,11 +44,11 @@ export const initDropdownDomEvent = (dropdownChildren, triggerElm, _instance) =>
     }
   }
 
-  function handleItemKeyDown(ev) {
+  function handleItemKeyDown(ev: KeyboardEvent) {
     const code = ev.code
-    const target = ev.target
-    const currentIndex = menuItemsArray.value.indexOf(target)
-    const max = menuItemsArray.value.length - 1
+    const target = ev.target as HTMLElement
+    const currentIndex = menuItemsArray.value?.indexOf(target) ?? -1
+    const max = (menuItemsArray.value?.length ?? 0) - 1
     let nextIndex
     if ([EVENT_CODE.up, EVENT_CODE.down].includes(code)) {
       if (code === EVENT_CODE.up) {
@@ -57,8 +57,8 @@ export const initDropdownDomEvent = (dropdownChildren, triggerElm, _instance) =>
         nextIndex = currentIndex < max ? currentIndex + 1 : max
       }
       removeTabindex()
-      resetTabindex(menuItems.value[nextIndex])
-      menuItems.value[nextIndex].focus()
+      resetTabindex(menuItems.value?.[nextIndex])
+      menuItems.value?.[nextIndex].focus()
       ev.preventDefault()
       ev.stopPropagation()
     } else if (code === EVENT_CODE.enter) {
@@ -74,19 +74,20 @@ export const initDropdownDomEvent = (dropdownChildren, triggerElm, _instance) =>
   }
 
   function initAria() {
-    dropdownElm.value.setAttribute('id', listId.value)
+    dropdownElm.value?.setAttribute('id', listId.value)
     triggerElm.setAttribute('aria-haspopup', 'list')
     triggerElm.setAttribute('aria-controls', listId.value)
   }
 
   function initEvent() {
     on(triggerElm, 'keydown', handleTriggerKeyDown)
-    on(dropdownElm.value, 'keydown', handleItemKeyDown)
+    dropdownElm.value && on(dropdownElm.value, 'keydown', handleItemKeyDown)
   }
 
   function initDomOperation() {
-    menuItems.value = dropdownElm.value.querySelectorAll("[tabindex='-1']")
-    menuItemsArray.value = [].slice.call(menuItems.value)
+    const items = Array.from(dropdownElm.value?.querySelectorAll<HTMLElement>("[tabindex='-1']") || [])
+    menuItems.value = items
+    menuItemsArray.value = items.slice()
 
     initEvent()
     initAria()

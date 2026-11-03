@@ -1,5 +1,7 @@
-import { computed } from 'vue'
-export const DefaultProps = {
+import { computed, type ComputedRef } from 'vue'
+import type { CascaderConfig } from './node'
+
+export const DefaultProps: CascaderConfig = {
   expandTrigger: 'click',
   multiple: false,
   checkStrictly: false, // whether all nodes can be selected
@@ -14,9 +16,6 @@ export const DefaultProps = {
   hoverThreshold: 500
 }
 
-export const useCascaderConfig = props => {
-  return computed(() => ({
-    ...DefaultProps,
-    ...props.props
-  }))
+export const useCascaderConfig = (props: { props?: Record<string, unknown> }): ComputedRef<CascaderConfig> => {
+  return computed(() => ({ ...DefaultProps, ...props.props }) as CascaderConfig)
 }

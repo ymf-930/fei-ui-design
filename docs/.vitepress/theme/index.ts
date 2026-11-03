@@ -7,7 +7,6 @@ import DefaultTheme from "vitepress/theme"
 import { ElementPlusContainer } from "@vitepress-demo-preview/component";
 import FeiUI from "fei-ui-design";
 import card from "./global-components/card.vue"
-// import codex from "./global-components/codex.vue"
 
 import '@vitepress-demo-preview/component/dist/style.css'
 import './index.css'
@@ -34,7 +33,6 @@ export default {
       themeDarken: false,
       sidebarCollapseOpen: true,
     })
-    // app.component('codex', codex)
     // app is the Vue 3 app instance from createApp()
     // router is VitePress' custom router (see `lib/app/router.js`)
     // siteData is a ref of current site-level metadata.

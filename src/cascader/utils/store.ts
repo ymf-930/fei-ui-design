@@ -1,8 +1,8 @@
-import Node from './node'
+import Node, { type CascaderConfig, type CascaderNodeData } from './node'
 import { isEqual } from '../../_utils/util'
 
-const flatNodes = (nodes, leafOnly) => {
-  return nodes.reduce((res, node) => {
+const flatNodes = (nodes: Node[], leafOnly: boolean): Node[] => {
+  return nodes.reduce<Node[]>((res, node) => {
     if (node.isLeaf) {
       res.push(node)
     } else {
@@ -14,7 +14,12 @@ const flatNodes = (nodes, leafOnly) => {
 }
 
 export default class Store {
-  constructor(data, config) {
+  config: CascaderConfig
+  nodes: Node[]
+  allNodes: Node[]
+  leafNodes: Node[]
+
+  constructor(data: CascaderNodeData[] | undefined, config: CascaderConfig) {
     this.config = config
     const nodes = (data || []).map(nodeData => new Node(nodeData, this.config))
     this.nodes = nodes
@@ -22,15 +27,15 @@ export default class Store {
     this.leafNodes = flatNodes(nodes, true)
   }
 
-  getNodes() {
+  getNodes(): Node[] {
     return this.nodes
   }
 
-  getFlattedNodes(leafOnly) {
+  getFlattedNodes(leafOnly: boolean): Node[] {
     return leafOnly ? this.leafNodes : this.allNodes
   }
 
-  appendNode(nodeData, parentNode) {
+  appendNode(nodeData: CascaderNodeData, parentNode?: Node | null): void {
     const node = parentNode ? parentNode.appendChild(nodeData) : new Node(nodeData, this.config)
 
     if (!parentNode) this.nodes.push(node)
@@ -39,12 +44,12 @@ export default class Store {
     node.isLeaf && this.leafNodes.push(node)
   }
 
-  appendNodes(nodeDataList, parentNode) {
+  appendNodes(nodeDataList: CascaderNodeData[], parentNode?: Node | null): void {
     nodeDataList.forEach(nodeData => this.appendNode(nodeData, parentNode))
   }
 
   // when checkStrictly, leaf node first
-  getNodeByValue(value, leafOnly = false) {
+  getNodeByValue(value: any, leafOnly = false): Node | null {
     if (!value && value !== 0) return null
 
     const nodes = this.getFlattedNodes(leafOnly).filter(
@@ -54,7 +59,7 @@ export default class Store {
     return nodes[0] || null
   }
 
-  getSameNode(node) {
+  getSameNode(node: Node | null): Node | null {
     if (!node) return null
 
     const nodes = this.getFlattedNodes(false).filter(

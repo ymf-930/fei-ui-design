@@ -2,7 +2,7 @@
  * @description 更新标题
  * @param {String} title 标题
  */
-export function title(title) {
+export function title(title: string): void {
   if (title) {
     window.document.title = title
   }
@@ -12,7 +12,7 @@ export function title(title) {
  * @description 复制到剪切板
  * @param content
  */
-export function copy(content) {
+export function copy(content: string): Promise<boolean> {
   return new Promise(resolve => {
     const copyInput = document.createElement('textarea')
     copyInput.value = content
@@ -21,7 +21,7 @@ export function copy(content) {
     copyInput.select() // 选择对象
     const result = document.execCommand('Copy') // 执行浏览器复制命令
     copyInput.style.display = 'none'
-    document.body.removeChild(document.getElementById('f-copy-temp'))
+    removeTempElement('f-copy-temp')
     resolve(result)
   })
 }
@@ -31,7 +31,7 @@ export function copy(content) {
  * @param {String} url 地址
  * @param target
  */
-export function open(url, target = false) {
+export function open(url: string, target = false): void {
   const a = document.createElement('a')
   a.setAttribute('href', url)
   if (target) {
@@ -40,8 +40,21 @@ export function open(url, target = false) {
   a.setAttribute('id', 'b-link-temp')
   document.body.appendChild(a)
   a.click()
-  document.body.removeChild(document.getElementById('b-link-temp'))
+  removeTempElement('b-link-temp')
 }
+
+/** 移除临时插入的 DOM 节点（节点可能已被移除，需做空值判断） */
+function removeTempElement(id: string): void {
+  const element = document.getElementById(id)
+  if (element) {
+    document.body.removeChild(element)
+  }
+}
+
+/**
+ * 时间格式化占位符到日期字段的映射
+ */
+type TimeFormatKey = 'y' | 'm' | 'd' | 'h' | 'i' | 's' | 'a'
 
 /**
  * @description 日期格式化
@@ -49,18 +62,22 @@ export function open(url, target = false) {
  * @param cFormat
  * @param weekArray
  */
-export function parseTime(time, cFormat = '{y}-{m}-{d} {h}:{i}:{s}', weekArray) {
+export function parseTime(
+  time: Date | number | string,
+  cFormat = '{y}-{m}-{d} {h}:{i}:{s}',
+  weekArray?: string[]
+): string | null {
   if (arguments.length === 0) {
     return null
   }
   const type = typeOf(time)
-  let date
+  let date: Date | undefined
   switch (type) {
     case 'date':
-      date = time
+      date = time as Date
       break
     case 'number':
-      date = new Date(time)
+      date = new Date(time as number)
       break
     case 'string':
       if (typeof time === 'string') {
@@ -70,6 +87,8 @@ export function parseTime(time, cFormat = '{y}-{m}-{d} {h}:{i}:{s}', weekArray) 
     default:
       return null
   }
+  if (!date) return null
+
   const formatObj = {
     y: date.getFullYear(),
     m: date.getMonth() + 1,
@@ -79,19 +98,21 @@ export function parseTime(time, cFormat = '{y}-{m}-{d} {h}:{i}:{s}', weekArray) 
     s: date.getSeconds(),
     a: date.getDay()
   }
-  return cFormat.replace(/{([ymdhisa])+}/g, (result, key) => {
-    let value = formatObj[key]
+  return cFormat.replace(/{([ymdhisa])+}/g, (result, key: string) => {
     if (key === 'a') {
+      const weekIndex = formatObj.a
       if (weekArray && weekArray.length === 7) {
-        return weekArray[value]
+        return weekArray[weekIndex]
       }
-      return ['日', '一', '二', '三', '四', '五', '六'][value]
+      return ['日', '一', '二', '三', '四', '五', '六'][weekIndex]
     }
-    if (result.length > 0 && value < 10) {
+    let value: number | string = formatObj[key as TimeFormatKey]
+    if (result.length > 0 && (value as number) < 10) {
       // 补0
       value = '0' + value
     }
-    return value || 0
+    // replace 的替换值必须是字符串（原实现返回数字，由引擎隐式转换）
+    return String(value || 0)
   })
 }
 
@@ -101,7 +122,15 @@ export function parseTime(time, cFormat = '{y}-{m}-{d} {h}:{i}:{s}', weekArray) 
  * @param mode
  * @returns {*}
  */
-export function rangeTime(days, mode = '{y}-{m}-{d}') {
+export function rangeTime(
+  days: number,
+  mode = '{y}-{m}-{d}'
+): {
+  startDate: Date
+  endDate: Date
+  startDateStr: string | null
+  endDateStr: string | null
+} {
   const startDate = new Date()
   const endDate = new Date()
   if (days < 0) {
@@ -123,9 +152,9 @@ export function rangeTime(days, mode = '{y}-{m}-{d}') {
  * @description 精准判断对象类型
  * @param obj
  */
-export function typeOf(obj) {
+export function typeOf(obj: unknown): string | undefined {
   const toString = Object.prototype.toString
-  const map = {
+  const map: Record<string, string> = {
     '[object Boolean]': 'boolean',
     '[object Number]': 'number',
     '[object String]': 'string',
@@ -144,9 +173,9 @@ export function typeOf(obj) {
  * @description 深拷贝
  * @param data
  */
-export function deepCopy(data) {
+export function deepCopy(data: any): any {
   const t = typeOf(data)
-  let o
+  let o: any
 
   if (t === 'array') {
     o = []
@@ -173,7 +202,7 @@ export function deepCopy(data) {
  * @param target
  * @param merged
  */
-export function deepMerge(target, merged) {
+export function deepMerge(target: Record<string, any>, merged: Record<string, any>): any {
   for (const key in merged) {
     if (target[key] && typeof target[key] === 'object') {
       deepMerge(target[key], merged[key])
@@ -195,55 +224,62 @@ export function deepMerge(target, merged) {
  * @param max 最大值
  * @return {number}
  */
-export function getRandomInt(min, max) {
+export function getRandomInt(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
 /**
- * @description 打乱某个数组
- * @return {number}
+ * @description 打乱某个数组（返回新数组，不改变入参）
+ * @return {Array}
  */
-export function shuffle(arr) {
+export function shuffle<T>(arr: T[]): T[] {
   const newArr = arr.slice() // 复制一个新数组
   for (let i = 0; i < newArr.length; i++) {
     const j = getRandomInt(0, i) // 在0-当前循环的位置随机一个位置做交换
-    swap(arr, i, j)
+    // 必须交换副本：交换入参会让「打乱」不生效，同时意外修改调用方的原数组
+    swap(newArr, i, j)
   }
   return newArr
 }
 
 /**
- * @description 交换两个数组内容
- * @return {number}
+ * @description 交换两个数组内容（原地修改，无返回值）
  */
-export function swap(arr, i, j) {
+export function swap<T>(arr: T[], i: number, j: number): void {
   const t = arr[i]
   arr[i] = arr[j]
   arr[j] = t
 }
 
+/** 节流返回的可调用函数 */
+export type ThrottledFunction = (...args: any[]) => void
+
 /**
- * @description 节流函数，(限制函数的执行频率)返回函数连续调用时，空闲时间必须大于或等于 wait，func 才会执行
+ * @description 节流函数：(限制函数的执行频率) 在 wait 时间窗口内至多执行一次
  *
  * @param  {function} func        回调函数
  * @param  {number}   wait        表示时间窗口的间隔
- * @param immediate 是否立即执行 true 则先调用，false不先调用
+ * @param immediate 是否立即执行 true 则先调用，false不先调用（窗口结束时调用）
  * @return {function}             返回客户调用函数
  */
-export function throttle(func, wait, immediate = false) {
-  let timeoutID
+export function throttle(
+  func: (...args: any[]) => any,
+  wait: number,
+  immediate: boolean | undefined = false
+): ThrottledFunction {
+  let timeoutID: ReturnType<typeof setTimeout> | undefined
   let lastExec = 0
 
-  function wrapper(...args) {
+  function wrapper(this: unknown, ...args: any[]): void {
     const elapsed = Number(new Date()) - lastExec
 
-    function clearExistingTimeout() {
+    function clearExistingTimeout(): void {
       if (timeoutID) {
         clearTimeout(timeoutID)
       }
     }
 
-    function clear() {
+    function clear(): void {
       timeoutID = undefined
     }
 
@@ -272,13 +308,13 @@ export function throttle(func, wait, immediate = false) {
 }
 
 /**
- * @description 防抖函数，(限制函数的执行频率) 保证再一系列调用时间内，只调用一次
+ * @description 防抖函数：(限制函数的执行频率) 返回函数连续调用时，空闲时间必须大于或等于 wait，func 才会执行
  *
  * @param  {function} func        回调函数
  * @param  {number}   wait        表示时间窗口的间隔
  * @return {function}             返回客户调用函数
  */
-export function debounce(func, wait) {
+export function debounce(func: (...args: any[]) => any, wait: number): ThrottledFunction {
   return throttle(func, wait, false)
 }
 
@@ -287,7 +323,7 @@ export function debounce(func, wait) {
  * @param obj
  * @returns {boolean}
  */
-export function isObject(obj) {
+export function isObject(obj: unknown): obj is Record<string, any> {
   return typeof obj === 'object' && obj !== null
 }
 
@@ -297,7 +333,7 @@ export function isObject(obj) {
  * @param obj2
  * @returns {boolean}
  */
-export function isEqual(obj1, obj2) {
+export function isEqual(obj1: unknown, obj2: unknown): boolean {
   // 两个数据有任何一个不是对象或数组
   if (!isObject(obj1) || !isObject(obj2)) {
     // 值类型(注意：参与equal的一般不会是函数)
@@ -334,7 +370,7 @@ export function isEqual(obj1, obj2) {
  * @description 获取随机uuid
  * @param hasHyphen 是否有连接符
  */
-export function uuid(hasHyphen) {
+export function uuid(hasHyphen?: boolean): string {
   const str = hasHyphen
     ? 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
     : 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'

@@ -23,7 +23,7 @@ export default function (props, emit, targetRef) {
   const modalRef = ref(null)
 
   const style = computed(() => {
-    const style = {}
+    const style: Record<string, string> = {}
     if (!props.fullscreen) {
       style.marginTop = props.top
       if (props.width) {
@@ -63,7 +63,6 @@ export default function (props, emit, targetRef) {
   }
 
   function close() {
-    // if (this.willClose && !this.willClose()) return;
     clearTimer(openTimer)
     clearTimer(closeTimer)
 
@@ -102,9 +101,6 @@ export default function (props, emit, targetRef) {
       return
     }
 
-    // if (props.willOpen?.()) {
-    //  return
-    // }
     visible.value = true
   }
 

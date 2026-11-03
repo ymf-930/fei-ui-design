@@ -5,7 +5,7 @@
 import Color from 'color'
 
 // 调色板
-export function getPalette(color) {
+export function getPalette(color: string): string[] {
   const normalColor = Color(color).hex().toString().toLowerCase()
   // active
   const darkColor1 = mixBlack(normalColor, 0.1)
@@ -36,77 +36,77 @@ export function getPalette(color) {
 }
 
 // getObject
-export function toObject(color) {
+export function toObject(color: string): { r: number; g: number; b: number } {
   return Color(color).object()
 }
 
 // getHex
-export function toHex(color, toLowerCase = true) {
+export function toHex(color: string, toLowerCase = true): string {
   const hex = Color(color).hex().toString()
   return toLowerCase ? hex.toLowerCase() : hex
 }
 
 // getRgbArr
-export function toRgbArr(color) {
+export function toRgbArr(color: string): number[] {
   return Color(color).rgb().array()
 }
 
 // getHslArr
-export function toHslArr(color) {
+export function toHslArr(color: string): { h: number; s: number; l: number } {
   return Color(color).hsl()
 }
 
 // grayscale
-export function grayscale(color) {
+export function grayscale(color: string): string {
   return Color(color).grayscale().toString()
 }
 
 /// 两个颜色值比较
-export function isEqual(color1, color2) {
+export function isEqual(color1: string, color2: string): boolean {
   return Color(color1).toString() === Color(color2).toString()
 }
 
 // 是否是light
-export function isLight(color) {
+export function isLight(color: string): boolean {
   return Color(color).isLight()
 }
 
 // 是否是dark
-export function isDark(color) {
+export function isDark(color: string): boolean {
   return Color(color).isDark()
 }
 
 // 混合色，浓度
-export function mix(mixColor, color, concentration) {
+export function mix(mixColor: string, color: string, concentration: number): string {
   return Color(color).mix(Color(mixColor), concentration).hex().toLowerCase()
 }
 
 // 混合白色
-export function mixWhite(color, concentration) {
+export function mixWhite(color: string, concentration: number): string {
   return mix('#ffffff', color, concentration)
 }
 
 // 混合黑色
-export function mixBlack(color, concentration) {
+export function mixBlack(color: string, concentration: number): string {
   return mix('#000000', color, concentration)
 }
 
 // 透明度
-export function alpha(color, alpha) {
+export function alpha(color: string, alpha: number): string {
   return Color(color).alpha(alpha).toString()
 }
 
 // 渐隐
-export function fade(color, fade) {
+export function fade(color: string, fade: number): string {
   return Color(color).fade(fade).toString()
 }
 
 // 变轻
-export function lighten(color, concentration) {
+export function lighten(color: string, concentration: number): string {
   return Color(color).lighten(concentration).toString()
 }
 
 // 变深
-export function darken(color, concentration) {
+export function darken(color: string, concentration: number): string {
   return Color(color).darken(concentration).toString()
 }

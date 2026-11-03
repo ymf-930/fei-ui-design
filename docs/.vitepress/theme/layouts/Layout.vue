@@ -84,7 +84,6 @@ const shouldShowNavbar = computed(() => {
       || themeConfig.logo
       || themeConfig.repo
       || themeConfig.nav
-      // || frontmatter.value.themeLocaleConfig.nav
   )
   return true
 })
@@ -92,11 +91,9 @@ const shouldShowSidebar = computed(() => {
   return (
     !frontmatter.value.home
     && frontmatter.value.sidebar !== false
-    // && sidebarItems.value.length
   )
 })
 const sidebarItems = computed(() => {
-  // return page.value
   const {filePath} = page.value
   const sidebarList = resolveSidebarItems(
     page.value,

@@ -1,15 +1,27 @@
 // https://github.com/ElemeFE/element/blob/dev/packages/upload/src/ajax.js
 
-function getError(action, option, xhr) {
+/** 请求错误对象：附带状态码、方法与地址，便于调用方展示 */
+interface UploadError extends Error {
+  status?: number
+  method?: string
+  url?: string
+}
+
+/** 进度事件：额外挂载百分比字段 */
+interface UploadProgressEvent extends ProgressEvent {
+  percent?: number
+}
+
+function getError(action: string, option: any, xhr: XMLHttpRequest): UploadError {
   const msg = `fail to post ${action} ${xhr.status}`
-  const err = new Error(msg)
+  const err = new Error(msg) as UploadError
   err.status = xhr.status
   err.method = 'post'
   err.url = action
   return err
 }
 
-function getBody(xhr) {
+function getBody(xhr: XMLHttpRequest) {
   const text = xhr.responseText || xhr.response
   if (!text) {
     return text
@@ -31,9 +43,9 @@ export default function upload(option) {
   const action = option.action
 
   if (xhr.upload) {
-    xhr.upload.onprogress = function progress(e) {
+    xhr.upload.onprogress = function progress(e: ProgressEvent) {
       if (e.total > 0) {
-        e.percent = (e.loaded / e.total) * 100
+        ;(e as UploadProgressEvent).percent = (e.loaded / e.total) * 100
       }
       option.onProgress(e)
     }
@@ -68,10 +80,6 @@ export default function upload(option) {
   }
 
   const headers = option.headers || {}
-
-  // if (headers['X-Requested-With'] !== null) {
-  //   xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-  // }
 
   for (const item in headers) {
     // eslint-disable-next-line no-prototype-builtins

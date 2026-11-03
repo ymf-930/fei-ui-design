@@ -250,15 +250,13 @@ export default defineComponent({
       ]
     })
     const bodyStyle = computed(() => {
-      let style = {}
+      const style: Record<string, string> = {}
       const _bodyHeight = bodyHeight.value
       if (_bodyHeight !== 0) {
         const height = _bodyHeight
         if (props.height) {
-          // @ts-ignore
           style.height = `${height}px`
         } else if (props.maxHeight) {
-          // @ts-ignore
           style.maxHeight = `${height}px`
         }
       }
@@ -488,9 +486,9 @@ export default defineComponent({
       const maxHeight = props.maxHeight
       if (height || maxHeight) {
         nextTick(() => {
-          const titleHeight = parseInt(getStyle(titleRef.value, 'height')) || 0
-          const headerHeight = parseInt(getStyle(headerRef.value, 'height')) || 0
-          const footerHeight = parseInt(getStyle(footerRef.value, 'height')) || 0
+          const titleHeight = parseInt(getStyle(titleRef.value, 'height') || '') || 0
+          const headerHeight = parseInt(getStyle(headerRef.value, 'height') || '') || 0
+          const footerHeight = parseInt(getStyle(footerRef.value, 'height') || '') || 0
           if (height) {
             // @ts-ignore
             bodyHeight.value = height - titleHeight - headerHeight - footerHeight

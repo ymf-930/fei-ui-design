@@ -10,7 +10,13 @@ export { setConfig } from './_utils/config'
 export { default, LoadingBar, Message, MessageBox, Notice } from './preset'
 
 export { default as create, isRegisterableComponent, resolveGlobalName } from './create'
-export type { ComponentType, FUiCreateOptions, FUiInstallOptions, FUiInstance } from './create'
+export type {
+  ComponentType,
+  DirectiveItem,
+  FUiCreateOptions,
+  FUiInstallOptions,
+  FUiInstance
+} from './create'
 
 export * from './components'
 

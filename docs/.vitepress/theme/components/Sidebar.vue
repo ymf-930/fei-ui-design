@@ -22,7 +22,6 @@ export default defineComponent({
 </script>
 <script setup>
 import SidebarLinks from './SidebarLinks.vue'
-// import NavLinks2 from '@theme/components/NavLinks2.vue'
 
 const props = defineProps({
   items:{

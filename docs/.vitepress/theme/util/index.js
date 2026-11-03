@@ -156,19 +156,15 @@ export function resolveSidebarItems (page, regularPath, site, localePath) {
   const localeConfig = localePath && themeConfig.locales
     ? themeConfig.locales[localePath] || themeConfig
     : themeConfig
-  // console.log('localeConfig',localeConfig);
   const pageSidebarConfig = page.frontmatter.sidebar || localeConfig.sidebar || themeConfig.sidebar
   if (pageSidebarConfig === 'auto') {
     return resolveHeaders(page)
   }
-  // console.log('pageSidebarConfig', pageSidebarConfig);
   const sidebarConfig = localeConfig.sidebar || themeConfig.sidebar
-  // console.log('sidebarConfig', sidebarConfig);
   if (!sidebarConfig) {
     return []
   } else {
     const { base, config } = resolveMatchingConfig(regularPath, sidebarConfig)
-    // console.log(base, config);
     return config
       ? config.map(item => resolveItem(item, pages, base))
       : []
@@ -222,7 +218,6 @@ export function resolveNavLinkItem (linkItem) {
  * @returns { base: string, config: SidebarConfig }
  */
 export function resolveMatchingConfig (regularPath, config) {
-  // console.log(regularPath, config);
   if (Array.isArray(config)) {
     return {
       base: '/',
@@ -230,26 +225,16 @@ export function resolveMatchingConfig (regularPath, config) {
     }
   }
   for (const base in config) {
-    // console.log(ensureEndingSlash(regularPath));
-    // console.log(encodeURI(base));
-    // if (ensureEndingSlash(regularPath).indexOf(encodeURI(base)) === 0) {
-      return {
-        base,
-        config: config[base]
-      }
-    // }
+    // 本站只配置了单一 base，命中第一个即可（多 base 场景需恢复前缀匹配）
+    return {
+      base,
+      config: config[base]
+    }
   }
   return {}
 }
 
-function ensureEndingSlash (path) {
-  return /(\.html|\/)$/.test(path)
-    ? path
-    : path + '/'
-}
-
 function resolveItem (item, pages, base, groupDepth = 1) {
-  // console.log(pages);
   if (typeof item === 'string') {
     return resolvePage(pages, item, base)
   } else if (Array.isArray(item)) {

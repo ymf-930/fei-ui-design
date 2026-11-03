@@ -1,7 +1,13 @@
 import { EVENT_CODE, triggerEvent } from '../../../_utils/aria'
+import type MenuItem from './MenuItem'
 
 class SubMenu {
-  constructor(parent, domNode) {
+  subIndex: number
+  parent: MenuItem
+  domNode: HTMLElement
+  subMenuItems: NodeListOf<HTMLElement> | HTMLElement[]
+
+  constructor(parent: MenuItem, domNode: HTMLElement) {
     this.subIndex = 0
     this.parent = parent
     this.domNode = domNode
@@ -9,12 +15,12 @@ class SubMenu {
     this.init()
   }
 
-  init() {
-    this.subMenuItems = this.domNode.querySelectorAll('li')
+  init(): void {
+    this.subMenuItems = this.domNode.querySelectorAll<HTMLElement>('li')
     this.addListeners()
   }
 
-  gotoSubIndex(idx) {
+  gotoSubIndex(idx: number): void {
     if (idx === this.subMenuItems.length) {
       idx = 0
     } else if (idx < 0) {
@@ -24,10 +30,10 @@ class SubMenu {
     this.subIndex = idx
   }
 
-  addListeners() {
+  addListeners(): void {
     const parentNode = this.parent.domNode
-    Array.prototype.forEach.call(this.subMenuItems, el => {
-      el.addEventListener('keydown', event => {
+    Array.prototype.forEach.call(this.subMenuItems, (el: HTMLElement) => {
+      el.addEventListener('keydown', (event: KeyboardEvent) => {
         let prevDef = false
         switch (event.code) {
           case EVENT_CODE.down: {
@@ -47,7 +53,7 @@ class SubMenu {
           case EVENT_CODE.enter:
           case EVENT_CODE.space: {
             prevDef = true
-            event.currentTarget.click()
+            ;(event.currentTarget as HTMLElement).click()
             break
           }
         }

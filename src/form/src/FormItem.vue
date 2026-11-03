@@ -56,6 +56,7 @@ import { getPropByPath } from '../../_utils/util-helper'
 import mitt from 'mitt'
 import { FormKey, FormItemKey, FormEvents } from './token'
 import { formItemProps } from './types'
+import type { FormContext } from '../../_hooks/use-form'
 
 export default defineComponent({
   name: 'FFormItem',
@@ -65,7 +66,7 @@ export default defineComponent({
   setup(props, { slots }) {
     const formItemMitt = mitt()
 
-    const FForm = inject(FormKey, {})
+    const FForm = inject<FormContext>(FormKey, {} as FormContext)
     const validateState = ref('')
     const validateMessage = ref('')
     const validateDisabled = ref(false)

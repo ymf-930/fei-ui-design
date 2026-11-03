@@ -292,12 +292,10 @@ onMounted(() => {
     if (pageRef.value) {
       anchors.value.forEach((item, index) => {
         var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
-        // console.log(scrollTop);
         if (scrollTop >= item.scrollTopNum) {
           currentNav.value = item.id
         }
       })
-      // console.log(currentNav.value);
     }
   },)
 

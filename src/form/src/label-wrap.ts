@@ -10,6 +10,7 @@ import {
   Fragment
 } from 'vue'
 import { FormKey, FormItemKey } from './token'
+import type { FormContext, FormItemContext } from '../../_hooks/use-form'
 import { addResizeListener, removeResizeListener } from '../../_utils/resize-event'
 
 export default {
@@ -19,9 +20,9 @@ export default {
     updateAll: Boolean
   },
   setup(props, { slots }) {
-    const el = ref(null)
-    const elForm = inject(FormKey)
-    const elFormItem = inject(FormItemKey)
+    const el = ref<HTMLElement | null>(null)
+    const elForm = inject<FormContext>(FormKey, {} as FormContext)
+    const elFormItem = inject<FormItemContext>(FormItemKey, {} as FormItemContext)
 
     const computedWidth = ref(0)
     watch(computedWidth, (val, oldVal) => {
@@ -53,7 +54,7 @@ export default {
     const updateLabelWidthFn = () => updateLabelWidth('update')
 
     onMounted(() => {
-      addResizeListener(el.value.firstElementChild, updateLabelWidthFn)
+      addResizeListener(el.value?.firstElementChild, updateLabelWidthFn)
       updateLabelWidthFn()
     })
 
@@ -61,14 +62,14 @@ export default {
 
     onBeforeUnmount(() => {
       updateLabelWidth('remove')
-      removeResizeListener(el.value.firstElementChild, updateLabelWidthFn)
+      removeResizeListener(el.value?.firstElementChild, updateLabelWidthFn)
     })
 
     function render() {
       if (!slots) return null
       if (props.isAutoWidth) {
         const autoLabelWidth = elForm.autoLabelWidth
-        const style = {}
+        const style: Record<string, string> = {}
         if (autoLabelWidth && autoLabelWidth !== 'auto') {
           const marginLeft = parseInt(autoLabelWidth, 10) - computedWidth.value
           if (marginLeft) {

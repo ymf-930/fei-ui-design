@@ -1,9 +1,14 @@
+import type { App } from 'vue'
 import MessageBox from './src/instance'
 
-MessageBox.install = app => {
-  app.config.globalProperties.$messageBox = MessageBox
-  app.config.globalProperties.$alert = MessageBox.alert
-  app.config.globalProperties.$confirm = MessageBox.confirm
+type MessageBoxWithInstall = typeof MessageBox & { install: (app: App) => void }
+
+const MessageBoxPlugin = MessageBox as MessageBoxWithInstall
+
+MessageBoxPlugin.install = app => {
+  app.config.globalProperties.$messageBox = MessageBoxPlugin
+  app.config.globalProperties.$alert = MessageBoxPlugin.alert
+  app.config.globalProperties.$confirm = MessageBoxPlugin.confirm
 }
 
-export default MessageBox
+export default MessageBoxPlugin

@@ -1,3 +1,24 @@
+/** 树节点状态容器（由 Tree / BigTree 统一持有） */
+export interface TreeStates {
+  flatState: any[]
+  [key: string]: any
+}
+
+/**
+ * Tree 通过 `FTreeRoot` 注入的上下文。
+ * 未显式声明的成员按动态属性处理，便于后续扩展。
+ */
+export interface TreeContext {
+  props?: Record<string, any>
+  states: TreeStates
+  titleKey?: string
+  render?: (...args: any[]) => any
+  draggable?: boolean
+  titleEllipsis?: boolean
+  nodeKey?: string
+  [key: string]: any
+}
+
 export const treeProps = {
   data: {
     type: Array,

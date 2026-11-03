@@ -220,46 +220,90 @@ lib/package.json  → { "type": "commonjs" }
 | `docs/.../Table/Drag.vue` | 插槽参数 `row` 未使用（`vue/no-unused-vars` error） | 移除无用插槽参数 |
 | `docs/.../Cascader/Custom.vue` | `selected` 展示但从未更新、`handleChange` 未绑定，示例实际不可用 | 补 `v-model` 与 `@change` 绑定 |
 
-### 3.3 P2 — 类型安全（**未完成，本次最大遗留项**）
+### 3.3 P2 — 类型安全（**进行中：S1 已完成，S2 推进中**）
 
-**现状**：`vue-tsc --noEmit` 报告 **1832 处错误 / 156 个文件**。
+**基线**：`vue-tsc --noEmit` 报告 **1832 处错误 / 156 个文件**。
+**当前**：**1028 处错误 / 115 个文件**，其中 TS2339 已归零（S1 验收达成）。
 
-| 错误码 | 数量 | 含义 | 根因 |
-| --- | --- | --- | --- |
-| TS7006 | 972 | 参数隐式 `any` | 由 JS 迁移而来，函数参数未标注类型 |
-| TS2339 | 323 | 属性不存在 | class 未声明字段；`inject()` 未指定类型 |
-| TS7053 | 91 | 索引签名缺失 | 动态键访问对象 |
-| TS18046 | 75 | 值类型为 `unknown` | `catch` / 未定型返回值 |
-| TS2322 | 69 | 类型不可赋值 | 联合类型收窄不足 |
-| TS7005 | 51 | 变量隐式 `any` | 同 TS7006 |
-| 其他 | 251 | — | — |
+| 错误码 | 基线 | 当前 | 含义 | 根因 |
+| --- | --- | --- | --- | --- |
+| TS7006 | 972 | 637 | 参数隐式 `any` | 由 JS 迁移而来，函数参数未标注类型 |
+| TS2339 | 323 | **0** | 属性不存在 | class 未声明字段；`inject()` 未指定类型 |
+| TS7053 | 91 | 60 | 索引签名缺失 | 动态键访问对象 |
+| TS18046 | 75 | 77 | 值类型为 `unknown` | `catch` / 未定型返回值 |
+| TS2322 | 69 | 56 | 类型不可赋值 | 联合类型收窄不足 |
+| TS7005 | 51 | 28 | 变量隐式 `any` | 同 TS7006 |
+| TS18047 | 50 | 30 | 可能为 `null` | `ref(null)` 未标注类型 |
+| 其他 | 251 | 140 | — | — |
 
-**错误最密集的文件**：
+**错误最密集的文件（当前）**：
 
-| 文件 | 错误数 |
-| --- | --- |
-| `src/color-picker/src/color.ts` | 92 |
-| `src/select/src/useSelect.ts` | 85 |
-| `src/cascader/utils/node.ts` | 69 |
-| `src/table/src/Table.vue` | 63 |
-| `src/table/src/table-body.vue` | 51 |
-| `src/_utils/dom.ts` | 47 |
+| 文件 | 错误数 | 说明 |
+| --- | --- | --- |
+| `src/table/src/Table.vue` | 58 | 选项式 API + `this` 上下文未定型 |
+| `src/select/src/useSelect.ts` | 55 | 组合式函数参数（`props` / 事件回调）未标注 |
+| `src/table/src/table-body.vue` | 53 | 同上 |
+| `src/time-picker/src/time-picker-com/panel-time-range.vue` | 41 | 面板数据与回调未标注 |
+| `src/tree/src/Tree.vue` | 34 | 内部 store / 拖拽回调未标注 |
+| `src/time-picker/src/time-picker-com/useTimePicker.ts` | 32 | 同上 |
+
+> `src/_utils`（19 个文件）已在本轮**全部清零**：`dom.ts`、`util.ts`、`color.ts`、
+> `log.ts`、`vnode.ts`、`config.ts`、`config-util.ts`、`scroll-into-view.ts` 等
+> 的参数与返回值均已定型，后续组件目录可直接受益。
 
 **结论**：这是历史存量债务，无法在一次改造中清零，必须分阶段推进。
 其中 TS2339 多为**真实缺陷**（如 class 声明了 `this.uid` 却无字段声明，
-严格模式下类型推断完全失效）。
+严格模式下类型推断完全失效；`inject()` 未声明类型的上下文在模板里全部退化为 `never`）。
+
+**S1 已落地的主要手段**（合计消除 323 处 TS2339，同时连带修复 100+ 处其他错误码）：
+
+- **class 补字段声明**：`cascader/utils/{node,store}.ts`、`color-picker/src/color.ts`、
+  `menu/src/util/{Submenu,MenuItem,MenuBar}.ts`，并导出 `CascaderConfig` / `CascaderNodeData` 等类型。
+- **`inject()` 补类型参数**：新增 `RootMenuContext`、`SubMenuContext`、`TableContext`、
+  `TreeContext`、`SliderProviderContext`、`CheckboxGroupContext`、`FormContext` / `FormItemContext`
+  等上下文类型，覆盖 menu / color-picker / checkbox / slider / select / table / tree /
+  cascader / form / dropdown / scrollbar / popper。
+- **`ref(null)` / `ref([])` 显式泛型**：select、table-head、cascader、time-picker、
+  date-picker、upload、carousel、input-number、input、modal 等，消除模板与计算属性里的 `never`。
+- **类型守卫收紧**：`isFunction` / `isBool` / `isNumber` / `isString` / `isPromise` /
+  `isHTMLElement` 改为类型谓词（连带消除 13 处 TS7031、多处 TS2349 / TS2538）。
 
 **分阶段路线图**：
 
-| 阶段 | 目标 | 手段 | 验收 |
-| --- | --- | --- | --- |
-| S1 | 消除 TS2339（323） | 为 class 补齐字段声明；`inject<T>()` 补类型参数 | 错误数 ≤ 1500 |
-| S2 | 消除 TS7006 / TS7005（1023） | 按目录批量补参数类型（`_utils` → 简单组件 → 复杂组件） | 错误数 ≤ 400 |
-| S3 | 清零并开启阻断 | 剩余零散错误逐个修复；CI 移除 `continue-on-error` | `type-check` 通过 |
-| S4 | 收紧严格度 | 开启 `noUncheckedIndexedAccess`、`exactOptionalPropertyTypes` | — |
+| 阶段 | 目标 | 手段 | 验收 | 状态 |
+| --- | --- | --- | --- | --- |
+| S1 | 消除 TS2339（323） | 为 class 补齐字段声明；`inject<T>()` 补类型参数 | 错误数 ≤ 1500 | ✅ 已完成（1221，TS2339 = 0） |
+| S2 | 消除 TS7006 / TS7005（1023） | 按目录批量补参数类型（`_utils` → 简单组件 → 复杂组件） | 错误数 ≤ 400 | 🔄 进行中（665，`_utils` 已清零） |
+| S3 | 清零并开启阻断 | 剩余零散错误逐个修复；CI 移除 `continue-on-error` | `type-check` 通过 | ⏳ 待执行 |
+| S4 | 收紧严格度 | 开启 `noUncheckedIndexedAccess`、`exactOptionalPropertyTypes` | — | ⏳ 待执行 |
 
-> S1 切入点清晰：`src/cascader/utils/node.ts`、`src/color-picker/src/color.ts`
-> 均为「class 字段未声明」型问题，属低风险机械修复。
+> S2 下一步建议按「`_hooks` → `_internal` → 简单组件」顺序推进：
+> `_hooks`（`use-modal` / `use-timeout` / `use-focus` / `use-modal-drag`，约 20 处）与
+> `_internal`（popper hooks 21 处、scrollbar 18 处）同样是被广泛复用的底层模块。
+
+**S1 过程中暴露的真实缺陷（随类型补齐一并修复）**：
+
+| 位置 | 问题 | 修复 |
+| --- | --- | --- |
+| `_utils/util-helper.ts` **`isIE()`** | 读的是 `document.DOCUMENT_NODE`（常量 `9`），`Number(9)` 永不为 `NaN`，**函数恒返回 `true`**，导致 `select` 的 `readonly` 判断失效 | 改读 IE 专有属性 `document.documentMode` |
+| `_utils/resize-event.ts` | `removeResizeListener` 在 `indexOf` 未命中时 `splice(-1, 1)`，**会误删最后一个无关监听器**；监听清空后未重置标记，后续 `addResizeListener` 复用已 `disconnect` 的 observer，新监听**永久失效** | 增加 `index === -1` 守卫；清空时一并删除 `__resizeListeners__` / `__ro__` |
+| `select/useSelect.ts` | `inputLength` 取的是输入框**元素本身**（元素无 `length`），结果恒为 `NaN`，输入框宽度退化为 `NaN%` | 改为取输入框内文本长度 |
+| `tooltip/Tooltip.tsx` | `props.manual` / `props.modelValue` 与 props 定义（`manualMode` / `visible`）不符，手动模式的使用提示**永不触发** | 对齐 props 名称 |
+| `menu/src/Submenu.vue` | 根菜单提供的 `subMenu` 上下文不含 `handleMouseleave`，收起时调用即抛错 | 改为可选调用 |
+| `cascader/src/Cascader.vue` | 折叠标签（`+N`）不带 `node`，删除该标签时会抛错 | `deleteTag` 增加空值守卫 |
+
+> 另有两处属于「类型定义缺失」而非运行时缺陷：`LoadingBarProps` 少了实际使用中的 `duration`；
+> `PopperProps` 少了 `onPopperMouseEnter` 引用的 `enterable`（后者运行时 props 也未声明，
+> 该分支目前仍不会生效，是否启用需单独决策）。
+
+**S2 过程中补充的修复（`_utils` 批量定型）**：
+
+| 位置 | 问题 | 修复 |
+| --- | --- | --- |
+| `_utils/util.ts` `parseTime` | `typeOf(time) === 'string'` 但实际不是字符串时，`date` 始终未赋值，后续 `date.getFullYear()` 直接抛错 | 补 `if (!date) return null` 守卫 |
+| `_utils/util.ts` `copy` / `open` | `document.getElementById()` 可能返回 `null` 却直接传给 `removeChild` | 抽出 `removeTempElement()` 并做空值判断 |
+| `_utils/dom.ts` `off` | 未传回调时把 `undefined` 传给 `removeEventListener` | 按 DOM 规范改传 `null`（语义一致，类型正确） |
+| `_utils/color.ts` | 依赖 `color` 无类型声明（TS7016） | 新增 `_utils/color-module.d.ts` 按实际用到的 API 做最小声明 |
 
 ### 3.4 P2 — 测试体系（未完成）
 
@@ -289,7 +333,7 @@ lib/package.json  → { "type": "commonjs" }
 | 阶段二 | 统一命名 + 加固注册逻辑（§3.2 #16 #17） | ✅ 已完成 |
 | 阶段三 | 工程化护栏：lint 可运行且归零、忽略规则修正、真实缺陷修复（§3.2 #18–#27） | ✅ 已完成 |
 | 阶段四 | 发布链路：入口一致性、双格式模块标记、按需引入可解析、产物校验与冒烟测试（§5） | ✅ 已完成 |
-| 阶段五 | 类型安全：按 S1→S4 推进（§3.3） | ⏳ 待执行 |
+| 阶段五 | 类型安全：按 S1→S4 推进（§3.3）。S1 已完成（TS2339 归零），S2 推进中（1028 处 / 115 文件，`_utils` 已清零） | 🔄 进行中 |
 | 阶段六 | 测试与质量门禁：补齐组件测试、移除 `type-check` 的 `continue-on-error`（§3.4） | ⏳ 待执行 |
 | 阶段七 | 能力补全：a11y → i18n → 按需引入插件 → SSR 守卫 → 主题文档（§3.5） | ⏳ 待执行 |
 

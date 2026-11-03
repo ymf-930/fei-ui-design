@@ -60,7 +60,7 @@ export default defineComponent({
     const states = reactive({
       offset: 0, // translateY偏移量
       contentHeight: '0px',
-      visibleData: [],
+      visibleData: [] as any[],
       flattenTree: compileFlatState()
     })
 

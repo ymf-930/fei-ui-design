@@ -5,12 +5,15 @@ import { getPalette, alpha } from './color'
 // 如是需要覆盖本地默认的样式，按需求进行调整即可 如vMBgColor
 // 首字母需要小写
 
+/** CSS 变量名到变量值的映射 */
+export type CSSVariables = Record<string, any>
+
 /**
  * 转换一个变量值为css变量 turn feiColorPrimary => to  --fei-color-primary
  * @param {*} str
  * @returns
  */
-export function convertToCSSVariableName(str) {
+export function convertToCSSVariableName(str: string): string {
   return `--${str.replace(/([A-Z])/g, '-$1').toLowerCase()}`
 }
 
@@ -19,8 +22,8 @@ export function convertToCSSVariableName(str) {
  * @param {*} obj
  * @returns
  */
-export function convertObjectPropsToCSSVariables(obj) {
-  const result = {}
+export function convertObjectPropsToCSSVariables(obj: CSSVariables): CSSVariables {
+  const result: CSSVariables = {}
   Object.keys(obj).forEach(key => {
     // 转换实际css var变量 `--fei-color-primary`
     const cssVariableName = convertToCSSVariableName(key)
@@ -41,7 +44,10 @@ export function convertObjectPropsToCSSVariables(obj) {
  * @param {*} dom
  * @returns
  */
-export function setObjectPropsCSSVariables(obj, dom = document.documentElement) {
+export function setObjectPropsCSSVariables(
+  obj: CSSVariables,
+  dom: HTMLElement = document.documentElement
+): void {
   const props = convertObjectPropsToCSSVariables(obj)
   Object.keys(props).forEach(key => {
     setCssVar(key, props[key], dom)
@@ -54,8 +60,12 @@ export function setObjectPropsCSSVariables(obj, dom = document.documentElement) 
  * @param {*} val
  * @param {*} dom
  */
-export function setCssVar(prop, val, dom = document.documentElement) {
-  dom.style.setProperty(prop, val)
+export function setCssVar(
+  prop: string,
+  val: string | number,
+  dom: HTMLElement = document.documentElement
+): void {
+  dom.style.setProperty(prop, String(val))
 }
 
 /**
@@ -64,7 +74,11 @@ export function setCssVar(prop, val, dom = document.documentElement) {
  * @param {*} val
  * @param {*} dom
  */
-export function setAttrVar(prop, val, dom = document.documentElement) {
+export function setAttrVar(
+  prop: string,
+  val: string,
+  dom: HTMLElement = document.documentElement
+): void {
   dom.setAttribute(prop, val)
 }
 
@@ -74,14 +88,14 @@ export function setAttrVar(prop, val, dom = document.documentElement) {
  * @param {*} val
  * @param {*} dom
  */
-export function removeAttrVar(prop, dom = document.documentElement) {
+export function removeAttrVar(prop: string, dom: HTMLElement = document.documentElement): void {
   dom.removeAttribute(prop)
 }
 
 // 根据变量名称获取扩展名称色板对象 这里是为了扩充计算色板使用
-function getExtensionVariables(key, color) {
+function getExtensionVariables(key: string, color: string): Record<string, string> {
   const mateProps = ['primary', 'success', 'warning', 'danger', 'info'].map(v => `--fei-color-${v}`)
-  const result = {}
+  const result: Record<string, string> = {}
   // 如果有匹配主色的内容则需要扩充色板
   if (mateProps.includes(key)) {
     const paletteColors = getPalette(color)

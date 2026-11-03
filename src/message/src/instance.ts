@@ -1,5 +1,5 @@
 import { shallowReactive, createVNode, nextTick, render, isVNode } from 'vue'
-import { MessageContext, CreateMessageProps } from './types'
+import { MessageContext, MessageProps, CreateMessageProps } from './types'
 import MessageConstructor from './Message.vue'
 import { transferIncrease } from '../../_utils/config'
 import isServer from '../../_utils/isServer'
@@ -41,27 +41,22 @@ function closeAll() {
 
 const Message = (opts: CreateMessageProps | string) => {
   if (isServer) return
-  if (typeof opts === 'string') {
-    opts = {
-      message: opts
-    }
-  }
-  let options = opts
+  const userOptions = (typeof opts === 'string' ? { message: opts } : opts) as Partial<MessageProps>
 
-  let verticalOffset = opts.offset || 20
+  let verticalOffset = userOptions.offset || 20
   instances.forEach(({ vm }) => {
     verticalOffset += (vm.el.offsetHeight || 42) + 16
   })
   verticalOffset += 16
 
   const id = `message_${seed++}`
-  const userOnClose = options.onClose
+  const userOnClose = userOptions.onClose
 
-  options = {
+  const options: MessageProps = {
     id,
     offset: verticalOffset,
     zIndex: transferIncrease(),
-    ...options,
+    ...userOptions,
     onClose: () => {
       close(id, userOnClose)
     }
@@ -92,7 +87,7 @@ function typeExtend(type: string, opts: CreateMessageProps | string) {
     opts = {
       message: opts,
       type
-    }
+    } as CreateMessageProps
   } else {
     opts.type = type
   }

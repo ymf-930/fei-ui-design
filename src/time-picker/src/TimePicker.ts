@@ -22,7 +22,7 @@ export default {
   },
   emits: ['update:modelValue'],
   setup(props, ctx) {
-    const commonPicker = ref(null)
+    const commonPicker = ref<{ handleFocus: () => void; handleBlur: () => void } | null>(null)
     const type = props.isRange ? 'timerange' : 'time'
     const panel = props.isRange ? TimeRangePanel : TimePickPanel
     const refProps = {

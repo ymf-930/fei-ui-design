@@ -356,7 +356,10 @@ export default defineComponent({
         if (ctx.slots.prefix) {
           // @ts-ignore
           const inputChildNodes = reference.value.$el.childNodes
-          const input = [].filter.call(inputChildNodes, item => item.tagName === 'INPUT')[0]
+          const input = [].filter.call(
+            inputChildNodes,
+            (item: any) => item.tagName === 'INPUT'
+          )[0] as HTMLElement
           // @ts-ignore
           const prefix = reference.value.$el.querySelector('.fei-input__prefix')
           // @ts-ignore

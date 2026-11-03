@@ -1,7 +1,13 @@
-import { createVNode, isVNode, render, watch } from 'vue'
+import { createVNode, isVNode, render, watch, type VNode } from 'vue'
 import MessageBoxConstructor from './MessageBox.vue'
 import isServer from '../../_utils/isServer'
 import { isString } from '../../_utils/util-helper'
+
+/** 弹窗组件实例上可访问的响应式字段 */
+interface MessageBoxVm {
+  message?: string | VNode
+  visible: boolean
+}
 
 const messageInstance = new Map()
 
@@ -45,12 +51,12 @@ const showMessage = options => {
     }
   }
 
-  const instance = initInstance(options, container)
+  const instance = initInstance(options, container)!
 
   // This is how we use message box programmably.
   // Maybe consider releasing a template version?
   // get component instance like v2.
-  const vm = instance.proxy
+  const vm = instance.proxy as unknown as MessageBoxVm
 
   watch(
     () => vm.message,
@@ -69,7 +75,6 @@ const showMessage = options => {
   // change visibility after everything is settled
   // instance.exposed.visible.value = true
   vm.visible = true
-  // console.log('show message', instance)
   return vm
 }
 

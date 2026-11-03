@@ -238,7 +238,6 @@ export default defineComponent({
   emits: ['vanish', 'action'],
   setup(props, { emit }) {
     const modalRef = ref(null)
-    // const popup = usePopup(props, doClose)
     const visible = ref(false)
     // s represents state
     const state = reactive({

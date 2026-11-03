@@ -1,7 +1,12 @@
+import type { App } from 'vue'
 import Notice from './src/instance'
 
-Notice.install = app => {
-  app.config.globalProperties.$notice = Notice
+type NoticeWithInstall = typeof Notice & { install: (app: App) => void }
+
+const NoticePlugin = Notice as NoticeWithInstall
+
+NoticePlugin.install = app => {
+  app.config.globalProperties.$notice = NoticePlugin
 }
 
-export default Notice
+export default NoticePlugin

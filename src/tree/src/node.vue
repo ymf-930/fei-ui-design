@@ -62,6 +62,7 @@
 
 <script lang="ts">
 import Render from './render'
+import type { TreeContext } from './types'
 import { FCollapseTransition } from '../../_internal/collapse-transition'
 import { inject, nextTick, ref, computed, defineComponent } from 'vue'
 import { FCheckbox } from '../../checkbox'
@@ -86,7 +87,7 @@ export default defineComponent({
     showCheckbox: Boolean
   },
   setup(props) {
-    const TreeInstance = inject('FTreeRoot', {})
+    const TreeInstance = inject<TreeContext>('FTreeRoot', {} as TreeContext)
     const node$ = ref(null)
 
     //@ts-ignore

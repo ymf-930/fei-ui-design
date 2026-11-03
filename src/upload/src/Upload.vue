@@ -56,7 +56,7 @@ export default defineComponent({
     return {
       prefixCls: prefixCls,
       dragOver: false,
-      fileList: [],
+      fileList: [] as any[],
       tempIndex: 1
     }
   },
@@ -136,13 +136,11 @@ export default defineComponent({
             }
           },
           () => {
-            // this.$emit('cancel', file);
+            // beforeUpload 的 promise 被 reject：放弃本次上传
           }
         )
       } else if (before !== false) {
         this.post(file)
-      } else {
-        // this.$emit('cancel', file);
       }
     },
     post(file) {
@@ -201,7 +199,7 @@ export default defineComponent({
     },
     getFile(file) {
       const fileList = this.fileList
-      let target
+      let target: any = null
       fileList.every(item => {
         target = file.uid === item.uid ? item : null
         return !target

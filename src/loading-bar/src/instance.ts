@@ -2,32 +2,50 @@ import FLoadingBar from './LoadingBar.vue'
 import { createApp } from 'vue'
 import type { LoadingBarProps } from './types'
 
-let loadingBarInstance
-let timer
+/** 进度条组件挂载后暴露的响应式字段 */
+interface LoadingBarVm {
+  $el: HTMLElement
+  percent: number
+  status: string
+  show: boolean
+  icon?: string
+}
+
+/** 进度条运行时可变字段 */
+interface LoadingBarUpdateOptions {
+  percent?: number
+  status?: string
+  show?: boolean
+  icon?: string
+}
+
+let loadingBarInstance: ReturnType<typeof getInstance> | null = null
+let timer: ReturnType<typeof setTimeout> | undefined
 
 let color = 'primary'
 let duration = 800
 let failedColor = 'error'
 let height = 2
-let icon = undefined
+let icon: string | undefined = undefined
 
 // 创建一个实例
 function getInstance(properties: LoadingBarProps) {
   const _props = properties || {}
-  const app = createApp(FLoadingBar, _props)
-  const loadingBar = app.mount(document.createElement('div'))
+  // 展开后为匿名对象类型，可满足 createApp 对 props 的索引签名要求
+  const app = createApp(FLoadingBar, { ..._props })
+  const loadingBar = app.mount(document.createElement('div')) as unknown as LoadingBarVm
   document.body.appendChild(loadingBar.$el)
 
   return {
-    update(options) {
+    update(options: LoadingBarUpdateOptions) {
       if ('percent' in options) {
-        loadingBar.percent = options.percent
+        loadingBar.percent = options.percent as number
       }
       if (options.status) {
         loadingBar.status = options.status
       }
       if ('show' in options) {
-        loadingBar.show = options.show
+        loadingBar.show = options.show as boolean
       }
       if ('icon' in options) {
         loadingBar.icon = options.icon
@@ -48,7 +66,7 @@ function getLoadingBarInstance() {
 }
 
 // 更新进度并传入配置
-function update(options) {
+function update(options: LoadingBarUpdateOptions): void {
   const instance = getLoadingBarInstance()
 
   instance.update(options)
@@ -72,7 +90,7 @@ function hide() {
 function clearTimer() {
   if (timer) {
     clearInterval(timer)
-    timer = null
+    timer = undefined
   }
 }
 

@@ -2,7 +2,7 @@ import { ref } from 'vue'
 
 export default function useMenuColor(color = '') {
   const menuBarColor = ref('')
-  function calcColorChannels(c) {
+  function calcColorChannels(c: string): { red: number; green: number; blue: number } {
     let rawColor = c.replace('#', '')
     if (/^[0-9a-fA-F]{3}$/.test(rawColor)) {
       const color = rawColor.split('')
@@ -25,7 +25,7 @@ export default function useMenuColor(color = '') {
       }
     }
   }
-  function mixColor(color, percent = 0.2) {
+  function mixColor(color: string, percent = 0.2): string {
     let { red, green, blue } = calcColorChannels(color)
     if (percent > 0) {
       // shade given color

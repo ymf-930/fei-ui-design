@@ -1,7 +1,6 @@
 import { describe, test, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import Button from '../src/Button.vue'
-// import Icon from '../../icon/src/Icon.vue'
 
 describe('Button.vue', () => {
   test('basic button', () => {
@@ -13,7 +12,6 @@ describe('Button.vue', () => {
         default: 'button'
       }
     })
-    // console.log(wrapper.html())
 
     // 查看是否包含某个class
     expect(wrapper.classes()).toContain('fei-button--primary')
@@ -22,7 +20,6 @@ describe('Button.vue', () => {
     expect(wrapper.get('button').text()).toBe('button')
     // 测试事件
     wrapper.get('button').trigger('click')
-    // console.log(wrapper.emitted())
     // 事件中是否有属性
     expect(wrapper.emitted()).toHaveProperty('click')
   })
@@ -42,7 +39,6 @@ describe('Button.vue', () => {
     expect(wrapper.find('button').element.disabled).toBeDefined()
     // 测试事件
     wrapper.get('button').trigger('click')
-    // console.log(wrapper.emitted())
     // 事件中是否有属性
     expect(wrapper.emitted()).not.toHaveProperty('click')
   })
@@ -58,7 +54,7 @@ describe('Button.vue', () => {
     })
     // 图标容器与图标类名均应正确渲染
     const iconWrap = wrapper.get('.fei-button__icon')
-    expect(iconWrap.exists()).toBe(true)
+    expect(iconWrap.element).toBeTruthy()
     expect(iconWrap.find('i.f-icon-arrow-up').exists()).toBe(true)
   })
 
@@ -70,11 +66,7 @@ describe('Button.vue', () => {
       slots: {
         default: 'loading'
       }
-      // global: {
-      //   stubs: ['FIcon']
-      // }
     })
-    // console.log(wrapper.html())
     expect(wrapper.classes()).toContain('is-loading')
     expect(wrapper.attributes('disabled')).toBeDefined()
   })

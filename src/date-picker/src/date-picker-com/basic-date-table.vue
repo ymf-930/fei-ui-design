@@ -82,7 +82,7 @@ export default defineComponent({
     // data
     const lastRow = ref(null)
     const lastColumn = ref(null)
-    const tableRows = ref([[], [], [], [], [], []])
+    const tableRows = ref<any[][]>([[], [], [], [], [], []])
 
     // todo better way to get Day.js locale object
     const firstDayOfWeek = 1

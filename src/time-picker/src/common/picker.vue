@@ -196,7 +196,7 @@ export default defineComponent({
         ctx.emit('update:modelValue', val)
       }
     }
-    const refInput = computed(() => {
+    const refInput = computed<HTMLInputElement[]>(() => {
       //@ts-ignore
       if (refPopper.value.triggerRef) {
         //@ts-ignore

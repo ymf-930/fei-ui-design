@@ -1,21 +1,29 @@
-import { unref, watchEffect } from 'vue'
+import { unref, watchEffect, type Ref } from 'vue'
 import { useTimeoutFn } from './use-timeout'
 
-export default function (context) {
-  const getStyle = (dom, attr) => {
-    return getComputedStyle(dom)[attr]
+/** 拖拽所需的响应式配置（由调用方传入 toRefs 后的 props） */
+export interface ModalDragContext {
+  visible: Ref<boolean>
+  draggable?: Ref<boolean> | undefined
+  destroyOnClose?: Ref<boolean> | undefined
+}
+
+export default function useModalDrag(context: ModalDragContext): void {
+  const getStyle = (dom: Element | null, attr: string): string | undefined => {
+    if (!dom) return undefined
+    return (getComputedStyle(dom) as unknown as Record<string, string>)[attr]
   }
-  const drag = wrap => {
+  const drag = (wrap: HTMLElement) => {
     if (!wrap) return
-    wrap.setAttribute('data-drag', unref(context.draggable))
-    const dialogHeaderEl = wrap.querySelector('.fei-modal-header')
+    wrap.setAttribute('data-drag', String(unref(context.draggable)))
+    const dialogHeaderEl = wrap.querySelector<HTMLElement>('.fei-modal-header')
     const dragDom = wrap
 
     if (!dialogHeaderEl || !dragDom || !unref(context.draggable)) return
 
     dialogHeaderEl.style.cursor = 'move'
 
-    dialogHeaderEl.onmousedown = e => {
+    dialogHeaderEl.onmousedown = (e: MouseEvent) => {
       if (!e) return
       // 鼠标按下，计算当前元素距离可视区的距离
       const disX = e.clientX
@@ -32,8 +40,8 @@ export default function (context) {
       const minDragDomTop = dragDom.offsetTop
       const maxDragDomTop = screenHeight - dragDom.offsetTop - dragDomHeight
       // 获取到的值带px 正则匹配替换
-      const domLeft = getStyle(dragDom, 'left')
-      const domTop = getStyle(dragDom, 'top')
+      const domLeft = getStyle(dragDom, 'left') || ''
+      const domTop = getStyle(dragDom, 'top') || ''
       let styL = +domLeft
       let styT = +domTop
 
@@ -46,7 +54,7 @@ export default function (context) {
         styT = +domTop.replace(/px/g, '')
       }
 
-      document.onmousemove = function (e) {
+      document.onmousemove = function (e: MouseEvent) {
         // 通过事件委托，计算移动的距离
         let left = e.clientX - disX
         let top = e.clientY - disY
@@ -77,7 +85,7 @@ export default function (context) {
 
   const handleDrag = () => {
     const dragWraps = document.querySelectorAll('.fei-modal-wrap')
-    for (const wrap of Array.from(dragWraps)) {
+    for (const wrap of Array.from(dragWraps) as HTMLElement[]) {
       if (!wrap) continue
       const display = getStyle(wrap.parentElement, 'display')
       const draggable = wrap.getAttribute('data-drag')

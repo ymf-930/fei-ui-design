@@ -54,9 +54,7 @@ const moveStep = (step, containerWidth, wrapperWidth) => {
     data.left = Math.min(0, data.left + step)
   } else {
     if (containerWidth - padding < wrapperWidth) {
-      if (data.left < -(wrapperWidth - containerWidth + padding)) {
-        // this.left = this.left
-      } else {
+      if (data.left >= -(wrapperWidth - containerWidth + padding)) {
         data.left = Math.max(data.left + step, containerWidth - wrapperWidth - padding)
       }
     } else {

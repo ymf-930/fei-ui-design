@@ -1,3 +1,23 @@
+import type { Ref } from 'vue'
+
+/** 滑块提示文本格式化函数 */
+export type SliderFormatTooltip = (value: number | number[]) => string
+
+/** Slider 通过 `SliderProvider` 注入的上下文 */
+export interface SliderProviderContext {
+  disabled: Ref<boolean>
+  min: Ref<number>
+  max: Ref<number>
+  step: Ref<number>
+  showTooltip: Ref<boolean>
+  precision: Ref<number>
+  sliderSize: Ref<number>
+  formatTooltip: Ref<SliderFormatTooltip>
+  emitChange: () => void
+  resetSize: () => void
+  updateDragging: (val: boolean) => void
+}
+
 export const sliderProps = {
   modelValue: {
     type: [Number, Array],

@@ -1,3 +1,14 @@
-dist
+# 依赖与构建产物
 node_modules
+dist
+es
+lib
+site
+coverage
+
+# 文档站构建缓存
+docs/.vitepress/cache
+docs/.vitepress/.temp
+
+# 锁文件
 pnpm-lock.yaml

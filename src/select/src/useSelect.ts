@@ -9,6 +9,15 @@ import { getValueByPath, isEdge, isIE, isObject } from '../../_utils/util-helper
 import { debounce, isEqual, typeOf } from '../../_utils/util'
 import { useForm } from '../../_hooks'
 
+/** select 中选项对象的通用形状 */
+interface SelectOption {
+  value: any
+  currentLabel?: any
+  isDisabled?: any
+  props?: any
+  hitState?: boolean
+}
+
 export function useSelectStates(props) {
   const selectEmitter = mitt()
   return reactive({
@@ -16,7 +25,8 @@ export function useSelectStates(props) {
     cachedOptions: new Map(),
     createdLabel: null,
     createdSelected: false,
-    selected: props.multiple ? [] : {},
+    // 多选时为选项数组，单选时为单个选项
+    selected: (props.multiple ? [] : {}) as any,
     inputLength: 20,
     inputWidth: 0,
     initialInputHeight: 0,
@@ -42,12 +52,12 @@ export function useSelectStates(props) {
 
 export const useSelect = (props, states, ctx) => {
   // template refs
-  const reference = ref(null)
-  const input = ref(null)
-  const popper = ref(null)
-  const tags = ref(null)
-  const selectWrapper = ref(null)
-  const scrollbar = ref(null)
+  const reference = ref<{ $el: HTMLElement; focus?: () => void; blur?: () => void } | null>(null)
+  const input = ref<HTMLInputElement | null>(null)
+  const popper = ref<{ update?: () => void; popperRef?: HTMLElement } | null>(null)
+  const tags = ref<HTMLElement | null>(null)
+  const selectWrapper = ref<HTMLElement | null>(null)
+  const scrollbar = ref<{ handleScroll?: () => void } | null>(null)
   const hoverOption = ref(-1)
 
   const { FForm, FFormItem, formEmit } = useForm()
@@ -267,7 +277,10 @@ export const useSelect = (props, states, ctx) => {
     nextTick(() => {
       if (!reference.value) return
       const inputChildNodes = reference.value.$el.childNodes
-      const input = [].filter.call(inputChildNodes, item => item.tagName === 'INPUT')[0]
+      const input = [].filter.call(
+        inputChildNodes,
+        (item: ChildNode) => (item as Element).tagName === 'INPUT'
+      )[0] as HTMLInputElement
       const _tags = tags.value
       const sizeInMap = states.initialInputHeight || 32
       input.style.height =
@@ -302,7 +315,7 @@ export const useSelect = (props, states, ctx) => {
     states.hoverIndex = -1
     if (props.multiple && props.filterable) {
       nextTick(() => {
-        const length = input.value.length * 15 + 20
+        const length = (input.value?.value.length ?? 0) * 15 + 20
         states.inputLength = props.collapseTags ? Math.min(50, length) : length
         managePlaceholder()
         resetInputHeight()
@@ -391,7 +404,7 @@ export const useSelect = (props, states, ctx) => {
   }
 
   const getOption = value => {
-    let option
+    let option: SelectOption | undefined
     const isObjectValue = typeOf(value) === 'object'
     const isNull = typeOf(value) === 'null'
     const isUndefined = typeOf(value) === 'undefined'
@@ -413,7 +426,7 @@ export const useSelect = (props, states, ctx) => {
     }
     if (option) return option
     const label = !isObjectValue && !isNull && !isUndefined ? value : ''
-    const newOption = {
+    const newOption: SelectOption = {
       value,
       currentLabel: label
     }
@@ -524,7 +537,7 @@ export const useSelect = (props, states, ctx) => {
         handleQueryChange('')
         states.inputLength = 20
       }
-      if (props.filterable) input.value.focus()
+      if (props.filterable) input.value?.focus()
     } else {
       ctx.emit(UPDATE_MODEL_EVENT, option.value)
       emitChange(option.value)
@@ -557,7 +570,7 @@ export const useSelect = (props, states, ctx) => {
     states.softFocus = true
     const _input = input.value || reference.value
     if (_input) {
-      _input.focus()
+      _input.focus?.()
     }
   }
 
@@ -578,7 +591,7 @@ export const useSelect = (props, states, ctx) => {
         scrollIntoView(menu, target)
       }
     }
-    scrollbar.value?.handleScroll()
+    scrollbar.value?.handleScroll?.()
   }
 
   const onOptionCreate = vm => {
@@ -596,7 +609,7 @@ export const useSelect = (props, states, ctx) => {
 
   const resetInputState = e => {
     if (e.code !== EVENT_CODE.backspace) toggleLastOptionHitState(false)
-    states.inputLength = input.value.length * 15 + 20
+    states.inputLength = (input.value?.value.length ?? 0) * 15 + 20
     resetInputHeight()
   }
 
@@ -645,7 +658,7 @@ export const useSelect = (props, states, ctx) => {
 
   const blur = () => {
     states.visible = false
-    reference.value.blur()
+    reference.value?.blur?.()
   }
 
   const handleBlur = event => {
@@ -678,7 +691,7 @@ export const useSelect = (props, states, ctx) => {
       }
       if (states.visible) {
         // eslint-disable-next-line no-extra-semi
-        ;(input.value || reference.value).focus()
+        ;(input.value || reference.value)?.focus?.()
       }
     }
   }

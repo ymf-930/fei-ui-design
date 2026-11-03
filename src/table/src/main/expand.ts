@@ -11,7 +11,7 @@ export default {
     }
   },
   render: ctx => {
-    const params = {
+    const params: { row: any; index: any; column?: any } = {
       row: ctx.row,
       index: ctx.index
     }

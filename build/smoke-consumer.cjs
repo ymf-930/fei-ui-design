@@ -83,11 +83,14 @@ export { app }
 `
   )
 
-  // SSR 用例：验证样式 import 不会让服务端渲染崩掉
+  // SSR 用例：验证样式 import 不会让服务端渲染崩掉。
+  // 从 `vue/server-renderer` 子路径导入而非直接 `@vue/server-renderer`：
+  // 后者是 vue 的传递依赖，在 pnpm 的隔离式 node_modules 下不会提升到顶层，
+  // 消费者只安装 vue 时无法解析（npm 的扁平化安装恰好看不出这个问题）。
   fs.writeFileSync(
     path.join(workDir, 'ssr.js'),
     `import { createSSRApp, h } from 'vue'
-import { renderToString } from '@vue/server-renderer'
+import { renderToString } from 'vue/server-renderer'
 import { FButton } from 'fei-ui-design'
 
 export async function render() {
