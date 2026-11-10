@@ -215,8 +215,9 @@ blockquote
   & > p
     margin 0
 
-ul, ol
-  padding-left 1.2em
+// 列表的裸 ul/ol 规则已删除。正文列表统一由 doc-typography.styl 的
+// `.vp-doc ul:not(.example *)` 控制；无前缀规则会连带命中组件库的 ul
+// （例如折叠菜单），给 48px 宽的菜单凭空加左内边距，把图标和文字挤歪。
 
 strong
   font-weight 600

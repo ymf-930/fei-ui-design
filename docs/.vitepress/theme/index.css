@@ -32,3 +32,13 @@ body {
   display: table;
   margin: 0;
 }
+
+/* VitePress 默认给 .vp-doc ul/ol 加了缩进与外边距。demo 区里的组件列表
+   （折叠菜单、树、时间线…）不能带这些：48px 宽的折叠菜单会被挤掉一半。
+   这里恢复默认值，不是给组件补样式。 */
+.vp-doc .example ul,
+.vp-doc .example ol {
+  padding-left: 0;
+  margin: 0;
+  list-style: none;
+}

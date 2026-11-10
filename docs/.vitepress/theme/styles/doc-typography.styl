@@ -280,31 +280,33 @@ body[fei-theme="dark"] {
 }
 
 // ── 列表 ───────────────────────────────────────────────────────────────────
-.vp-doc ul,
-.vp-doc ol {
+// `:not(.example *)` 与表格同理：demo 区里的 ul/li 是菜单、树、时间线等组件本体，
+// 不能套用正文列表的缩进、项目符号与行距（折叠菜单只有 48px 宽，会被直接挤歪）。
+.vp-doc ul:not(.example *),
+.vp-doc ol:not(.example *) {
   margin: var(--fd-sp-4) 0;
   padding-left: 1.6em;
 }
 
-.vp-doc ul {
+.vp-doc ul:not(.example *) {
   list-style: disc;
 }
 
-.vp-doc ol {
+.vp-doc ol:not(.example *) {
   list-style: decimal;
 }
 
-.vp-doc li {
+.vp-doc li:not(.example *) {
   font-size: var(--fd-fs-body);
   line-height: var(--fd-lh-body);
 }
 
-.vp-doc li + li {
+.vp-doc li:not(.example *) + li:not(.example *) {
   margin-top: var(--fd-sp-1);
 }
 
-.vp-doc li > ul,
-.vp-doc li > ol {
+.vp-doc li:not(.example *) > ul,
+.vp-doc li:not(.example *) > ol {
   margin: var(--fd-sp-1) 0 0;
 }
 
