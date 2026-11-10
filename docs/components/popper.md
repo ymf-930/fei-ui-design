@@ -21,7 +21,7 @@ popper借助了第三方插件<a href="https://popper.js.org/" target="_blank">p
 
 <template #template>
 
-```html
+```vue
 <template>
   <div style="width: 200px">
     <f-popper trigger="click" theme="light" :z-index="1000">
@@ -38,7 +38,7 @@ popper借助了第三方插件<a href="https://popper.js.org/" target="_blank">p
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 const visible = ref(false)
@@ -61,7 +61,7 @@ const visible = ref(false)
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <div style="width: 200px">
@@ -98,7 +98,7 @@ const visible = ref(false)
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 const list = ref([

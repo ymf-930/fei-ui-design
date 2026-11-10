@@ -75,7 +75,7 @@ import Abstract from './demo/ConfigProvider/Abstract.vue'
 
 <template #style>
 
-```vue
+```css
 <style scoped>
 .demo-button {
   margin: 8px 0;
@@ -116,7 +116,7 @@ import Abstract from './demo/ConfigProvider/Abstract.vue'
 
 <template #script>
 
-```vue
+```ts
 <script setup>
 import { ref } from 'vue'
 

@@ -26,7 +26,7 @@ import More from './demo/Tooltip/More.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-tooltip content="这是tooltip悬停文字">
     <span>这是一段文字，鼠标经过其上时会显示tooltip</span>
@@ -52,7 +52,7 @@ import More from './demo/Tooltip/More.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div class="demo-tooltip">
     <div class="top">
@@ -121,7 +121,7 @@ import More from './demo/Tooltip/More.vue'
 
 <template #style>
 
-```html
+```css
 <style scoped>
 .demo-tooltip {
   .top,
@@ -161,7 +161,7 @@ import More from './demo/Tooltip/More.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-tooltip content="light" theme="light">
     <f-button>light</f-button>
@@ -190,7 +190,7 @@ import More from './demo/Tooltip/More.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-tooltip placement="top">
     <f-button>多行</f-button>
@@ -226,7 +226,7 @@ import More from './demo/Tooltip/More.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-tooltip content="延时一秒显示悬停文字" :open-delay="1000">
     <f-button>延时一秒</f-button>
@@ -244,7 +244,7 @@ import More from './demo/Tooltip/More.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 const disabled = ref(false)

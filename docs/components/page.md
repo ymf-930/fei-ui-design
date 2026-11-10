@@ -28,7 +28,7 @@ import Simple from './demo/Page/Simple.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-page v-model:current="current" :total="100"></f-page>
 </template>
@@ -38,7 +38,7 @@ import Simple from './demo/Page/Simple.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -62,7 +62,7 @@ const current = ref(2)
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-page v-model:current="current" :total="100" show-sizer></f-page>
 </template>
@@ -72,7 +72,7 @@ const current = ref(2)
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -96,7 +96,7 @@ const current = ref(2)
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-page v-model:current="current" :total="100" show-elevator></f-page>
 </template>
@@ -106,7 +106,7 @@ const current = ref(2)
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -130,7 +130,7 @@ const current = ref(2)
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-page v-model:current="current" :total="100" show-total></f-page>
 </template>
@@ -140,7 +140,7 @@ const current = ref(2)
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -164,7 +164,7 @@ const current = ref(2)
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-page
     v-model:current="current"
@@ -181,7 +181,7 @@ const current = ref(2)
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -205,7 +205,7 @@ const current = ref(2)
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-page v-model:current="current" :total="100" prev-text="上一页" next-text="下一页"></f-page>
 </template>
@@ -215,7 +215,7 @@ const current = ref(2)
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -239,7 +239,7 @@ const current = ref(2)
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-page v-model:current="current" :total="100" simple></f-page>
 </template>
@@ -249,7 +249,7 @@ const current = ref(2)
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 

@@ -33,7 +33,7 @@ import Waves from './demo/Button/Waves.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div class="demo-button">
     <f-button>Default</f-button>
@@ -64,7 +64,7 @@ import Waves from './demo/Button/Waves.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div class="demo-button">
     <f-button plain>Default</f-button>
@@ -95,7 +95,7 @@ import Waves from './demo/Button/Waves.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div class="demo-button">
     <f-button round>Default</f-button>
@@ -126,7 +126,7 @@ import Waves from './demo/Button/Waves.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div class="demo-button">
     <f-button dashed>Default</f-button>
@@ -157,7 +157,7 @@ import Waves from './demo/Button/Waves.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div class="demo-button" style="background: #cad4d4; padding: 10px 6px">
     <f-button type="primary" transparent size="small">Primary</f-button>
@@ -187,7 +187,7 @@ import Waves from './demo/Button/Waves.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div class="demo-button">
     <f-button icon="search">search</f-button>
@@ -216,7 +216,7 @@ import Waves from './demo/Button/Waves.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div class="demo-button" flex="cross:center">
     <f-button disabled>Default</f-button>
@@ -249,7 +249,7 @@ import Waves from './demo/Button/Waves.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div class="demo-button">
     <div>
@@ -294,7 +294,7 @@ import Waves from './demo/Button/Waves.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div class="demo-button" flex="cross:center">
     <f-button-group>
@@ -340,7 +340,7 @@ import Waves from './demo/Button/Waves.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div class="demo-button">
     <f-button size="large">不小</f-button>
@@ -369,7 +369,7 @@ import Waves from './demo/Button/Waves.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div class="demo-button" flex="cross:center">
     <f-button type="primary" :loading="loading" icon="reload" @click="loading = true">
@@ -384,7 +384,7 @@ import Waves from './demo/Button/Waves.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
   const loading = ref(false)
@@ -409,7 +409,7 @@ import Waves from './demo/Button/Waves.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div class="demo-button">
     <f-button>Normal Animation</f-button>

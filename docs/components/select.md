@@ -33,7 +33,7 @@ import Size from './demo/Select/Size.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-select v-model="select" style="width: 200px" clearable>
@@ -53,7 +53,7 @@ import Size from './demo/Select/Size.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -87,7 +87,7 @@ const cityList = [
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-select v-model="select" style="width: 200px" clearable>
@@ -116,7 +116,7 @@ const cityList = [
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -150,7 +150,7 @@ const cityList = [
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-select v-model="select" style="width: 200px" clearable placeholder="可清空">
@@ -197,7 +197,7 @@ const cityList = [
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -231,7 +231,7 @@ const cityList = [
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-select v-model="select" style="width: 200px" filterable>
@@ -251,7 +251,7 @@ const cityList = [
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -285,7 +285,7 @@ const cityList = [
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-select v-model="select" style="width: 300px" multiple>
@@ -313,7 +313,7 @@ const cityList = [
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -347,7 +347,7 @@ const cityList = [
 
 <template #template>
 
-```html
+```vue
 <template>
   <div style="width: 200px">
     <f-select v-model="select">
@@ -367,7 +367,7 @@ const cityList = [
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -393,7 +393,7 @@ const select = ref('')
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-row :gutter="20">
     <f-col :span="8">
@@ -424,7 +424,7 @@ const select = ref('')
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -458,7 +458,7 @@ const cityList = [
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-row :gutter="20">
     <f-col :span="6">
@@ -509,7 +509,7 @@ const cityList = [
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 

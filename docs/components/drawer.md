@@ -27,7 +27,7 @@ import Dragable from './demo/Drawer/Dragable.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-button type="primary" @click="value = true">open</f-button>
@@ -42,7 +42,7 @@ import Dragable from './demo/Drawer/Dragable.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
   const value = ref(false)
@@ -67,7 +67,7 @@ import Dragable from './demo/Drawer/Dragable.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-button type="primary" @click="value = true">左侧打开</f-button>
@@ -82,7 +82,7 @@ import Dragable from './demo/Drawer/Dragable.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
   const value = ref(false)
@@ -107,7 +107,7 @@ import Dragable from './demo/Drawer/Dragable.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div
     style="position: relative; height: 400px; background: #eee; border: 1px solid #eee; z-index: 2; border-radius: 6px"
@@ -124,7 +124,7 @@ import Dragable from './demo/Drawer/Dragable.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
   const valueInner = ref(false)
@@ -147,7 +147,7 @@ import Dragable from './demo/Drawer/Dragable.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-button type="primary" @click="value = true">信息预览</f-button>
@@ -203,7 +203,7 @@ import Dragable from './demo/Drawer/Dragable.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
 
@@ -236,7 +236,7 @@ import Dragable from './demo/Drawer/Dragable.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-button type="primary" @click="value = true">打开抽屉</f-button>
@@ -252,7 +252,7 @@ import Dragable from './demo/Drawer/Dragable.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
   const value = ref(false)
@@ -278,7 +278,7 @@ import Dragable from './demo/Drawer/Dragable.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-button type="primary" @click="value = true">open</f-button>
@@ -293,7 +293,7 @@ import Dragable from './demo/Drawer/Dragable.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
   const value = ref(false)

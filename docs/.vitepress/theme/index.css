@@ -10,44 +10,25 @@ body {
 }
 
 /*
- * 文档站里「组件库自身」的适配。
+ * 文档站全局样式只做两件事：
+ *   1. 正文排版 —— 收敛在 styles/doc-typography.styl，规则一律带
+ *      `:not(.example *)`，不落到 demo 区里的组件上。
+ *   2. 隔离 —— 撤销文档站 / VitePress 默认样式对 demo 区组件的污染。
  *
- * 正文排版（标题阶梯 / 段落 / 列表 / 代码块 / 表格 / 引用 / 锚点）统一收敛在
- * styles/doc-typography.styl，已由本文件顶部的 @import 引入 —— 位置必须在
- * `vitepress/theme` 默认样式之后，否则同优先级规则会被默认主题覆盖。
- * 这里只保留一处必要例外：文档站主题是浅色，而组件库若干组件默认按自身主题取色，
- * 在文档页面里需要就地改成站点文字色，否则会出现浅底浅字。
- *
- * 选择器一律写平铺形式（不用 CSS 嵌套），避免依赖压缩器的降级能力。
+ * 约定：这里不允许为了「好看」给 .fei-* / <f-*> 补样式。
+ * 组件在文档里呈现的就是组件库自身的样式；组件本身有问题就改组件库。
  */
-.vp-doc .fei-tag.is-dot {
-  color: var(--fei-theme-color) !important;
+/* 右侧锚点目录（内含 sidebar-sub-headers）不能压在抽屉/弹窗之上：
+   组件库弹层 z-index 从 1000 起，而 Sidebar.vue 给 .sidebar 写了 1800 !important。 */
+.sidebar:has(> .content-sidebar > .sidebar-sub-headers) {
+  z-index: 100 !important;
 }
 
-.vp-doc .fei-radio-group-capsule .fei-radio {
-  color: var(--fei-theme-code);
-}
-
-.vp-doc .fei-form-item__label {
-  color: var(--fei-theme-color);
-}
-
-.vp-doc .fei-tree-title {
-  color: var(--fei-theme-color);
-}
-
-.vp-doc .fei-tree-title:hover {
-  color: var(--fei-theme-bg);
-}
-
-.vp-doc .fei-table-cell {
-  padding: 0;
-}
-
-.vp-doc .fei-desc__body table tr {
-  border: 0;
-}
-
-.vp-doc .fei-timeline-item {
-  width: 100%;
+/* VitePress 默认给 .vp-doc table 设了 display:block / margin:20px 0（为正文表格
+   做横向滚动与留白）。demo 里的组件表格被连带命中后：display:block 会让
+   table-layout:fixed 与 colgroup 失效；margin 会把表头 table 与表体 table 撑开。
+   这里恢复浏览器默认，不是给组件补样式。 */
+.vp-doc .example table {
+  display: table;
+  margin: 0;
 }

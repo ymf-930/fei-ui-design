@@ -28,7 +28,7 @@ import Add from './demo/Form/Add.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div style="width: 500px">
     <f-form ref="form" :model="formObj" label-width="100px">
@@ -78,7 +78,7 @@ import Add from './demo/Form/Add.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
 
@@ -116,7 +116,7 @@ import Add from './demo/Form/Add.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-form ref="form" :model="formObj" inline class="demo-form-inline">
     <f-form-item label="姓名">
@@ -141,7 +141,7 @@ import Add from './demo/Form/Add.vue'
 
 <template #script>
 
-```html
+```ts
   <script setup lang="ts">
   import { ref } from 'vue'
 
@@ -174,7 +174,7 @@ import Add from './demo/Form/Add.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-space>
@@ -254,7 +254,7 @@ import Add from './demo/Form/Add.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
 
@@ -289,7 +289,7 @@ import Add from './demo/Form/Add.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div style="width: 500px">
     <f-form :model="formObj">
@@ -311,7 +311,7 @@ import Add from './demo/Form/Add.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
 
@@ -340,7 +340,7 @@ import Add from './demo/Form/Add.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div style="width: 500px">
     <f-form ref="ruleForm" :model="formObj" status-icon label-width="100px" :rules="ruleValidate">
@@ -407,7 +407,7 @@ import Add from './demo/Form/Add.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
 
@@ -474,7 +474,7 @@ import Add from './demo/Form/Add.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div style="width: 500px">
     <f-form
@@ -507,7 +507,7 @@ import Add from './demo/Form/Add.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
 
@@ -595,7 +595,7 @@ import Add from './demo/Form/Add.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div style="width: 500px">
     <f-form ref="formRef" :model="dynamicValidateForm" label-width="100px" class="demo-dynamic">
@@ -629,7 +629,7 @@ import Add from './demo/Form/Add.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
 

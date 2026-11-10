@@ -25,7 +25,7 @@ import Drag from './demo/Upload/Drag.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div style="width: 400px">
     <f-upload action="//jsonplaceholder.typicode.com/posts/"></f-upload>
@@ -51,7 +51,7 @@ import Drag from './demo/Upload/Drag.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div style="width: 400px">
     <f-upload action="//jsonplaceholder.typicode.com/posts/" multiple>
@@ -81,7 +81,7 @@ import Drag from './demo/Upload/Drag.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div style="width: 400px">
     <f-upload
@@ -103,7 +103,7 @@ import Drag from './demo/Upload/Drag.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Message } from 'fei-ui-design'
@@ -144,7 +144,7 @@ function upload() {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div style="width: 400px">
     <f-upload action="//jsonplaceholder.typicode.com/posts/" multiple type="drag">

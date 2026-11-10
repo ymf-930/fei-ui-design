@@ -26,7 +26,7 @@ import Draggable from './demo/Modal/Draggable.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-button type="primary" @click="visible = true">Open</f-button>
@@ -63,7 +63,7 @@ import Draggable from './demo/Modal/Draggable.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Message } from 'fei-ui-design'
@@ -101,7 +101,7 @@ Modal 组件提供了灵活的自定义样式 API 和 Slot，可以自由控制�
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-button @click="modal1 = true">自定义页头页脚</f-button>
@@ -154,7 +154,7 @@ Modal 组件提供了灵活的自定义样式 API 和 Slot，可以自由控制�
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -184,7 +184,7 @@ const modal5 = ref(false)
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-space>
@@ -222,7 +222,7 @@ const modal5 = ref(false)
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -249,7 +249,7 @@ const transitionName = ref('dialog-fade')
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-button @click="modal1 = true">禁用右上角关闭</f-button>
@@ -268,7 +268,7 @@ const transitionName = ref('dialog-fade')
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -295,7 +295,7 @@ const modal2 = ref(false)
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-button @click="modal1 = true">显示弹窗一</f-button>
@@ -319,7 +319,7 @@ const modal2 = ref(false)
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -346,7 +346,7 @@ const modal2 = ref(false)
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-button @click="modal = true">显示全屏对话框</f-button>
@@ -375,7 +375,7 @@ const modal2 = ref(false)
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -402,7 +402,7 @@ const fullscreen = ref(false)
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-button @click="modal1 = true">打开弹窗1</f-button>
@@ -421,7 +421,7 @@ const fullscreen = ref(false)
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 

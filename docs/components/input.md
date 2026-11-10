@@ -28,7 +28,7 @@ import Count from './demo/Input/Count.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <div style="margin-bottom: 10px">输入的内容：{{ value }}</div>
@@ -41,7 +41,7 @@ import Count from './demo/Input/Count.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
 
@@ -53,7 +53,7 @@ import Count from './demo/Input/Count.vue'
 
 <template #style>
 
-```html
+```css
 <style scoped>
 .input-item {
   width: 300px;
@@ -80,7 +80,7 @@ import Count from './demo/Input/Count.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-space>
     <f-input v-model="value" icon="eye-fill" class="input-item"></f-input>
@@ -93,7 +93,7 @@ import Count from './demo/Input/Count.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
 
@@ -106,7 +106,7 @@ import Count from './demo/Input/Count.vue'
 
 <template #style>
 
-```html
+```css
 <style scoped>
 .input-item {
   width: 300px;
@@ -133,7 +133,7 @@ import Count from './demo/Input/Count.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-input v-model="value" placeholder="disabled" disabled class="input-item"></f-input>
@@ -146,7 +146,7 @@ import Count from './demo/Input/Count.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
 
@@ -159,7 +159,7 @@ import Count from './demo/Input/Count.vue'
 
 <template #style>
 
-```html
+```css
 <style scoped>
 .input-item {
   width: 300px;
@@ -186,7 +186,7 @@ import Count from './demo/Input/Count.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <p>Props：</p>
@@ -243,7 +243,7 @@ import Count from './demo/Input/Count.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
   const type = ref('')
@@ -254,7 +254,7 @@ import Count from './demo/Input/Count.vue'
 
 <template #style>
 
-```html
+```css
 <style scoped>
 .input-item {
   width: 300px;
@@ -281,7 +281,7 @@ import Count from './demo/Input/Count.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-input v-model="value" search placeholder="请输入一些文字..." class="input-item"></f-input>
@@ -293,7 +293,7 @@ import Count from './demo/Input/Count.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
   const value = ref('')
@@ -304,7 +304,7 @@ import Count from './demo/Input/Count.vue'
 
 <template #style>
 
-```html
+```css
 <style scoped>
 .input-item {
   width: 300px;
@@ -331,7 +331,7 @@ import Count from './demo/Input/Count.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-input v-model="value" show-password-toggle type="password" class="input-item"></f-input>
@@ -343,7 +343,7 @@ import Count from './demo/Input/Count.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
   const value = ref('')
@@ -354,7 +354,7 @@ import Count from './demo/Input/Count.vue'
 
 <template #style>
 
-```html
+```css
 <style scoped>
 .input-item {
   width: 300px;
@@ -381,7 +381,7 @@ import Count from './demo/Input/Count.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-row :gutter="10">
     <f-col span="6">
@@ -418,7 +418,7 @@ import Count from './demo/Input/Count.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex="box:mean">
     <div class="input-item">
@@ -439,7 +439,7 @@ import Count from './demo/Input/Count.vue'
 
 <template #style>
 
-```html
+```css
 <style scoped>
 .input-item {
   width: 300px;
@@ -466,7 +466,7 @@ import Count from './demo/Input/Count.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex="box:mean">
     <div class="input-item">
@@ -483,7 +483,7 @@ import Count from './demo/Input/Count.vue'
 
 <template #style>
 
-```html
+```css
 <style scoped>
 .input-item {
   width: 300px;

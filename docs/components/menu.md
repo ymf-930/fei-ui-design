@@ -25,7 +25,7 @@ import Collapse from './demo/Menu/Collapse.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-menu
@@ -90,7 +90,7 @@ import Collapse from './demo/Menu/Collapse.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
 
@@ -121,7 +121,7 @@ import Collapse from './demo/Menu/Collapse.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-row class="tac">
     <f-col :span="12">
@@ -216,7 +216,7 @@ import Collapse from './demo/Menu/Collapse.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   function handleOpen(key, keyPath) {
     console.log(key, keyPath)
@@ -231,7 +231,7 @@ import Collapse from './demo/Menu/Collapse.vue'
 
 <template #style>
 
-```html
+```css
 <style scoped>
 .f-menu-vertical-demo {
   width: 240px;
@@ -318,7 +318,7 @@ import Collapse from './demo/Menu/Collapse.vue'
 
 <template #script>
 
-```vue
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 const isCollapse = ref(false)
@@ -336,7 +336,7 @@ function handleClose(key, keyPath) {
 
 <template #style>
 
-```vue
+```css
 <style scoped>
 .f-menu-vertical-demo {
   width: 240px;

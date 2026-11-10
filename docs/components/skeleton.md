@@ -26,7 +26,7 @@ import Loading from './demo/Skeleton/Loading.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-skeleton></f-skeleton>
 </template>
@@ -50,7 +50,7 @@ import Loading from './demo/Skeleton/Loading.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-skeleton :rows="5"></f-skeleton>
 </template>
@@ -74,7 +74,7 @@ import Loading from './demo/Skeleton/Loading.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-skeleton animation></f-skeleton>
 </template>
@@ -133,7 +133,7 @@ loading结束后加载真实的ui，通过slot设置之后的ui
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <div class="mb-15">
@@ -173,7 +173,7 @@ loading结束后加载真实的ui，通过slot设置之后的ui
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 import dayjs from 'dayjs'

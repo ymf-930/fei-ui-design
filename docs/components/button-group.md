@@ -23,7 +23,7 @@ import Vertical from './demo/ButtonGroup/Vertical.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-button-group>
     <f-button type="primary" icon="left">上一页</f-button>
@@ -64,7 +64,7 @@ import Vertical from './demo/ButtonGroup/Vertical.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-button-group vertical>
     <f-button type="primary">Primary</f-button>

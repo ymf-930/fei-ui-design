@@ -23,7 +23,7 @@ import Separator from './demo/Breadcrumb/Separator.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-breadcrumb separator="/">
@@ -72,7 +72,7 @@ import Separator from './demo/Breadcrumb/Separator.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-breadcrumb separator-icon="right">

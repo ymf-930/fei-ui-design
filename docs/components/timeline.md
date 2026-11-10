@@ -25,7 +25,7 @@ import CustomIcon from './demo/Timeline/CustomIcon.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-timeline>
     <f-timeline-item>
@@ -52,7 +52,7 @@ import CustomIcon from './demo/Timeline/CustomIcon.vue'
 
 <template #style>
 
-```html
+```css
 <style scoped>
 .time {
   margin: 0 !important;
@@ -84,7 +84,7 @@ import CustomIcon from './demo/Timeline/CustomIcon.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-timeline-item color="primary">发布1.0版本</f-timeline-item>
   <f-timeline-item color="info">发布1.5版本</f-timeline-item>
@@ -113,7 +113,7 @@ import CustomIcon from './demo/Timeline/CustomIcon.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-timeline pending>
     <f-timeline-item>发布1.0版本</f-timeline-item>
@@ -142,7 +142,7 @@ import CustomIcon from './demo/Timeline/CustomIcon.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-timeline>
     <f-timeline-item color="success" dot-top="10px">

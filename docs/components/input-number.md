@@ -25,7 +25,7 @@ import Status from './demo/InputNumber/Status.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-row :gutter="16">
     <f-col span="6">
@@ -48,7 +48,7 @@ import Status from './demo/InputNumber/Status.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
   const value1 = ref(1)
@@ -74,7 +74,7 @@ import Status from './demo/InputNumber/Status.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-row :gutter="16">
@@ -100,7 +100,7 @@ import Status from './demo/InputNumber/Status.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
   const obj = ref({ num1: null, num2: '0', num3: undefined })
@@ -123,7 +123,7 @@ import Status from './demo/InputNumber/Status.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-row :gutter="16">
     <f-col span="6">
@@ -142,7 +142,7 @@ import Status from './demo/InputNumber/Status.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
 
@@ -167,7 +167,7 @@ import Status from './demo/InputNumber/Status.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-row :gutter="16">
     <f-col span="6">
@@ -194,7 +194,7 @@ import Status from './demo/InputNumber/Status.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
 
@@ -221,7 +221,7 @@ import Status from './demo/InputNumber/Status.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-row :gutter="16">
     <f-col span="6">
@@ -244,7 +244,7 @@ import Status from './demo/InputNumber/Status.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
   const value = ref(1)
@@ -269,7 +269,7 @@ import Status from './demo/InputNumber/Status.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-row :gutter="16">
     <f-col span="6">
@@ -307,7 +307,7 @@ import Status from './demo/InputNumber/Status.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
   const value = ref(1)

@@ -37,7 +37,7 @@ import NoData from './demo/Table/NoData.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-table :columns="columns" :data="data">
     <template #age="{ row }">
@@ -51,7 +51,7 @@ import NoData from './demo/Table/NoData.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 const columns = [
@@ -113,7 +113,7 @@ const data = ref([
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-table :columns="columns" :data="data" stripe>
     <template #age="{ row }">
@@ -127,7 +127,7 @@ const data = ref([
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 const columns = [
@@ -189,7 +189,7 @@ const data = ref([
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-table :columns="columns" :data="data" border>
     <template #age="{ row }">
@@ -203,7 +203,7 @@ const data = ref([
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 const columns = [
@@ -266,7 +266,7 @@ const data = ref([
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-divider align="left">默认原生title</f-divider>
@@ -281,7 +281,7 @@ const data = ref([
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 const columns = [
@@ -354,7 +354,7 @@ height 和 maxHeight 可以设置固定表头
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-table :columns="columns" :data="data" height="200" border></f-table>
 </template>
@@ -364,7 +364,7 @@ height 和 maxHeight 可以设置固定表头
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 const columns = [
@@ -426,7 +426,7 @@ const data = ref([
 
 <template #template>
 
-```html
+```vue
 <template>
   <div style="width: 800px">
     <f-table :columns="columns" :data="data" height="200" border></f-table>
@@ -438,7 +438,7 @@ const data = ref([
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref, h } from 'vue'
 
@@ -525,7 +525,7 @@ const data = ref([
 
 <template #template>
 
-```html
+```vue
 <template>
   <div style="padding: 2px">
     <f-table :columns="columns" :data="data" max-height="200" border>
@@ -543,7 +543,7 @@ const data = ref([
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -599,7 +599,7 @@ function removeRow(index) {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-table
@@ -636,7 +636,7 @@ function removeRow(index) {
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref, nextTick } from 'vue'
 import { Message } from 'fei-ui-design'
@@ -771,7 +771,7 @@ function removeRow(index) {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-table ref="tableRef" :columns="columns" :data="data" highlight-row></f-table>
@@ -787,7 +787,7 @@ function removeRow(index) {
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 const columns = [
@@ -855,7 +855,7 @@ function getAllSelected() {
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-table :columns="columns" :data="data"></f-table>
 </template>
@@ -865,7 +865,7 @@ function getAllSelected() {
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref, h } from 'vue'
 const columns = [
@@ -935,7 +935,7 @@ columns内容可以设置children来分组渲染表头，合并表头和行列�
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-table :columns="columns" height="300" :data="data" border></f-table>
 </template>
@@ -945,7 +945,7 @@ columns内容可以设置children来分组渲染表头，合并表头和行列�
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 const columns = [
@@ -1048,7 +1048,7 @@ const data = ref([
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-table :columns="columns" :data="data" border :merge-method="handleSpan"></f-table>
 </template>
@@ -1058,7 +1058,7 @@ const data = ref([
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 const columns = [
@@ -1139,7 +1139,7 @@ function handleSpan({ row, column, rowIndex, columnIndex }) {
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-table :columns="columns" :data="data"></f-table>
 </template>
@@ -1149,7 +1149,7 @@ function handleSpan({ row, column, rowIndex, columnIndex }) {
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 const columns = [
@@ -1211,7 +1211,7 @@ const data = ref([
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-table :columns="columns" :data="data">
     <template #name="{ index, row }">
@@ -1277,7 +1277,7 @@ const data = ref([
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import dayjs from 'dayjs'
@@ -1379,7 +1379,7 @@ function handleSave(index) {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <div>
@@ -1420,7 +1420,7 @@ function handleSave(index) {
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref, nextTick } from 'vue'
 const columns1 = [
@@ -1553,7 +1553,7 @@ function removeRow(index) {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-table :columns="columns" :data="data" :loading="loading"></f-table>
@@ -1567,7 +1567,7 @@ function removeRow(index) {
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 const columns = [
@@ -1630,7 +1630,7 @@ const loading = ref(false)
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <div class="mb-16">
@@ -1649,7 +1649,7 @@ const loading = ref(false)
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 const columns = [
@@ -1712,7 +1712,7 @@ noDataText可以设置无数据状态
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-table :columns="columns" :data="data" no-data-text="No Data"></f-table>
 </template>
@@ -1722,7 +1722,7 @@ noDataText可以设置无数据状态
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 const columns = [

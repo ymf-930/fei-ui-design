@@ -21,7 +21,7 @@ import Options from './demo/CountTo/Options.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-button type="primary" @click="restart">restart</f-button>
@@ -38,7 +38,7 @@ import Options from './demo/CountTo/Options.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
 
@@ -70,7 +70,7 @@ import Options from './demo/CountTo/Options.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-button type="primary" @click="restart">restart</f-button>
@@ -120,7 +120,7 @@ import Options from './demo/CountTo/Options.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
 

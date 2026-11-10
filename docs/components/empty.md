@@ -23,7 +23,7 @@ import Directive from './demo/Empty/Directive.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex>
     <div style="width: 224px; border: 1px solid #eee; height: 150px; margin-right: 20px; border-radius: 6px">
@@ -57,7 +57,7 @@ import Directive from './demo/Empty/Directive.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div style="width: 224px">
     <div v-no-data:[dataText]="true" style="border: 1px solid #eee; height: 150px; border-radius: 6px"></div>
@@ -69,7 +69,7 @@ import Directive from './demo/Empty/Directive.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
   const dataText = ref('抱歉，暂时没有数据')

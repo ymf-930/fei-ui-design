@@ -24,7 +24,7 @@ import Custom from './demo/MessageBox/Custom.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-button
@@ -54,7 +54,7 @@ import Custom from './demo/MessageBox/Custom.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { MessageBox, Message } from 'fei-ui-design'
 
@@ -96,7 +96,7 @@ function showAlert() {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-button type="default" @click="open">打开confirm</f-button>
@@ -108,7 +108,7 @@ function showAlert() {
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { MessageBox, Message } from 'fei-ui-design'
 
@@ -147,7 +147,7 @@ function open() {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-button type="default" @click="open">打开MessageBox</f-button>
@@ -159,7 +159,7 @@ function open() {
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { MessageBox, Message } from 'fei-ui-design'
 import { h } from 'vue'

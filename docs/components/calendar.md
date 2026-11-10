@@ -23,7 +23,7 @@ import Mini from './demo/Calendar/Mini.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-calendar></f-calendar>
 </template>
@@ -47,7 +47,7 @@ import Mini from './demo/Calendar/Mini.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex>
     <div style="width: 300px">

@@ -24,7 +24,7 @@ import HideLine from './demo/Split/HideLine.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div style="width: 100%; height: 300px; border: 1px solid #ddd; border-radius: 6px">
     <f-split>
@@ -56,7 +56,7 @@ import HideLine from './demo/Split/HideLine.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div style="width: 100%; height: 300px; border: 1px solid #ddd; border-radius: 6px">
     <f-split split="horizontal" :default="100">
@@ -87,7 +87,7 @@ import HideLine from './demo/Split/HideLine.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div style="width: 100%; height: 300px; border: 1px solid #ddd; border-radius: 6px">
     <f-split>
@@ -127,7 +127,7 @@ import HideLine from './demo/Split/HideLine.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div style="width: 100%; height: 300px; border: 1px solid #ddd; border-radius: 6px">
     <f-split :default-wrap-style="['20%', '80%']">
@@ -165,7 +165,7 @@ import HideLine from './demo/Split/HideLine.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div style="width: 100%; height: 300px; border: 1px solid #ddd; border-radius: 6px">
     <f-split :default="240" hide-line>

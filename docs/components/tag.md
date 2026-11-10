@@ -28,7 +28,7 @@ import Custom from './demo/Tag/Custom.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-tag>default</f-tag>
@@ -59,7 +59,7 @@ import Custom from './demo/Tag/Custom.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-tag>default</f-tag>
@@ -99,7 +99,7 @@ import Custom from './demo/Tag/Custom.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <div class="mb-10">
@@ -156,7 +156,7 @@ import Custom from './demo/Tag/Custom.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-tag type="primary" closable>标签一</f-tag>
@@ -186,7 +186,7 @@ import Custom from './demo/Tag/Custom.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-tag type="default" dot>default</f-tag>
@@ -224,7 +224,7 @@ import Custom from './demo/Tag/Custom.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-button class="button-new-tag" size="small" icon="plus" @click="addOne">New Tag</f-button>
@@ -247,7 +247,7 @@ import Custom from './demo/Tag/Custom.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { reactive, toRefs } from 'vue'
 const data = reactive({
@@ -282,7 +282,7 @@ const addOne = () => {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-tag color="#ffa2d3">Custom Color</f-tag>

@@ -88,7 +88,7 @@ FEI-UI-DESIGN 的主题由一组 CSS 变量（Design Token）驱动，全部以 
 
 <template #style>
 
-```vue
+```css
 <style scoped>
 .demo-button {
   margin: 8px 0;

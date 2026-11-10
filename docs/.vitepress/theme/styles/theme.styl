@@ -274,20 +274,10 @@ hr
   // 原为 `border-top 1px solid $borderColor`，与上方 h2 同一原因被浏览器丢弃
   // （`$borderColor` 未定义）。文档正文区的分隔线见 doc-typography.styl 的 `.vp-doc hr`。
 
-table
-  border-collapse collapse
-  margin 1rem 0
-  overflow-x: auto
-
-tr
-  border-top 1px solid #dfe2e5
-  &:nth-child(2n)
-    background-color transparent
-
-th, td
-  border 1px solid #dfe2e5
-  padding .6em 1em
-
+// 表格 / tr / th / td 的全局裸规则已删除。
+// 正文表格统一由 doc-typography.styl 的 `.vp-doc table:not(.example *)` 精确控制；
+// 这些无前缀规则会连带命中组件库表格和 teleport 到 body 的日历面板，
+// 给组件加上并不属于它们的边框与留白。
 .theme-container
   &.sidebar-open
     .sidebar-mask

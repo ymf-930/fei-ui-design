@@ -68,7 +68,7 @@ import Auto from './demo/Grid/Auto.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div class="demo-grid">
     <f-space>
@@ -102,7 +102,7 @@ import Auto from './demo/Grid/Auto.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
   const gutter = ref(8)
@@ -125,7 +125,7 @@ import Auto from './demo/Grid/Auto.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div class="demo-grid">
     <f-row type="flex">
@@ -156,7 +156,7 @@ import Auto from './demo/Grid/Auto.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div class="demo-grid">
     <f-row>
@@ -185,7 +185,7 @@ offset 可以设置偏移量
 
 <template #template>
 
-```html
+```vue
 <template>
   <div class="demo-grid">
     <f-row>
@@ -221,7 +221,7 @@ offset 可以设置偏移量
 
 <template #template>
 
-```html
+```vue
 <template>
   <div class="demo-grid">
     <p>子元素向左排列</p>
@@ -288,7 +288,7 @@ offset 可以设置偏移量
 
 <template #style>
 
-```html
+```css
 <style scoped>
 .code-row-bg {
   background: #eee;
@@ -317,7 +317,7 @@ offset 可以设置偏移量
 
 <template #template>
 
-```html
+```vue
 <template>
   <div class="demo-grid">
     <f-row>

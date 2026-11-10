@@ -4,7 +4,7 @@ title: 标签页 Tabs
 
 <script setup>
 import Basic from './demo/Tabs/Basic.vue'
-import Card from './demo/Tabs/Card.vue'
+import TabsCard from './demo/Tabs/Card.vue'
 import Add from './demo/Tabs/Add.vue'
 import ContextMenu from './demo/Tabs/ContextMenu.vue'
 import TagType from './demo/Tabs/TagType.vue'
@@ -26,7 +26,7 @@ import TagType from './demo/Tabs/TagType.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-tabs v-model="activeTab" :data="tabs"></f-tabs>
@@ -46,7 +46,7 @@ import TagType from './demo/Tabs/TagType.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 const tabs = ref([
@@ -72,13 +72,13 @@ const activeTab = ref('tab2')
 
 <template #example>
 
-  <Card/>
+  <TabsCard/>
 
 </template>
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-tabs v-model="activeTab" :data="tabs" type="card"></f-tabs>
@@ -98,7 +98,7 @@ const activeTab = ref('tab2')
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 const tabs = ref([
@@ -131,7 +131,7 @@ const activeTab = ref('tab2')
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <div class="mb-15">
@@ -161,7 +161,7 @@ const activeTab = ref('tab2')
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 const tabs = ref([
@@ -206,7 +206,7 @@ const handleTabClose = tab => {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <div class="mb-15">
@@ -246,7 +246,7 @@ const handleTabClose = tab => {
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Message } from 'fei-ui-design'
@@ -320,7 +320,7 @@ function closeAll() {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <div class="mb-15">
@@ -360,7 +360,7 @@ function closeAll() {
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Message } from 'fei-ui-design'

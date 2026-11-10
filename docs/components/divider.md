@@ -24,7 +24,7 @@ import Align from './demo/Divider/Align.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <p>这是一段文字...这是一段文字...这是一段文字...这是一段文字...这是一段文字...</p>
   <f-divider></f-divider>
@@ -54,7 +54,7 @@ import Align from './demo/Divider/Align.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     Text
@@ -84,7 +84,7 @@ align属性可以设置标题位置 使用 align="left" 设置为行内的垂直
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <div style="height: 25px">

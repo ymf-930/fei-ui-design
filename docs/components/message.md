@@ -25,7 +25,7 @@ import Close from './demo/Message/Close.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-button @click="message1">info</f-button>
@@ -38,7 +38,7 @@ import Close from './demo/Message/Close.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { h } from 'vue'
 import { Message } from 'fei-ui-design'
@@ -73,7 +73,7 @@ function message2() {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-button type="primary" plain @click="message1">info</f-button>
@@ -88,7 +88,7 @@ function message2() {
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { Message } from 'fei-ui-design'
 
@@ -139,7 +139,7 @@ function message4() {
 
 <template #script>
 
-```vue
+```ts
 <script setup lang="ts">
 import { Message } from 'fei-ui-design'
 
@@ -173,7 +173,7 @@ function message3() {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-button @click="message">创建三条不会关闭的消息</f-button>
@@ -186,7 +186,7 @@ function message3() {
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { Message } from 'fei-ui-design'
 

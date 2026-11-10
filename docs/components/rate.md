@@ -24,7 +24,7 @@ import Readonly from './demo/Rate/Readonly.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex>
     <div class="block">
@@ -43,7 +43,7 @@ import Readonly from './demo/Rate/Readonly.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 const value1 = ref(null)
@@ -56,7 +56,7 @@ const colors = ['#99A9BF', '#F7BA2A', '#ffba00']
 
 <template #style>
 
-```html
+```css
 <style scoped>
 .block {
   padding: 30px 0;
@@ -85,7 +85,7 @@ const colors = ['#99A9BF', '#F7BA2A', '#ffba00']
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex>
     <f-rate
@@ -102,7 +102,7 @@ const colors = ['#99A9BF', '#F7BA2A', '#ffba00']
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 const value = ref(null)
@@ -126,7 +126,7 @@ const iconClasses = ['heart-fill', 'heart-fill', 'heart-fill']
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-rate :model-value="3.7" disabled show-score text-color="#ffba00" score-template="3.7"></f-rate>
 </template>

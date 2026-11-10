@@ -24,7 +24,7 @@ import Limit from './demo/Checkbox/Limit.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-checkbox v-model="value">多选框</f-checkbox>
@@ -38,7 +38,7 @@ import Limit from './demo/Checkbox/Limit.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
   const value = ref(false)
@@ -61,7 +61,7 @@ import Limit from './demo/Checkbox/Limit.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-checkbox-group v-model="social">
@@ -93,7 +93,7 @@ import Limit from './demo/Checkbox/Limit.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
   const social = ref(['facebook', 'github'])
@@ -117,7 +117,7 @@ import Limit from './demo/Checkbox/Limit.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-checkbox v-model="disabledSingle" disabled>Checkbox</f-checkbox>
@@ -134,7 +134,7 @@ import Limit from './demo/Checkbox/Limit.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
   const disabledSingle = ref(true)
@@ -158,7 +158,7 @@ import Limit from './demo/Checkbox/Limit.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div style="border-bottom: 1px solid #e9e9e9; padding-bottom: 6px; margin-bottom: 6px">
     <f-checkbox v-model="checkAll" :indeterminate="indeterminate" @change="handleCheckAll">
@@ -179,7 +179,7 @@ import Limit from './demo/Checkbox/Limit.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -227,7 +227,7 @@ function checkAllGroupChange(value) {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-checkbox-group v-model="checkAllGroup" :min="1" :max="2">
@@ -245,7 +245,7 @@ function checkAllGroupChange(value) {
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
   const checkAllGroup = ref(['香蕉', '西瓜'])

@@ -24,7 +24,7 @@ import Size from './demo/ColorPicker/Size.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex>
     <div class="block" style="width: 240px; margin-right: 20px">
@@ -50,7 +50,7 @@ import Size from './demo/ColorPicker/Size.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
 
@@ -78,7 +78,7 @@ import Size from './demo/ColorPicker/Size.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex>
     <div class="block" style="width: 200px; margin-right: 20px">
@@ -93,7 +93,7 @@ import Size from './demo/ColorPicker/Size.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
 
@@ -119,7 +119,7 @@ import Size from './demo/ColorPicker/Size.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex>
     <div class="block" style="width: 200px; margin-right: 20px">
@@ -136,7 +136,7 @@ import Size from './demo/ColorPicker/Size.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
 
@@ -202,7 +202,7 @@ import Size from './demo/ColorPicker/Size.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex>
     <div class="block" style="width: 200px; margin-right: 20px">
@@ -217,7 +217,7 @@ import Size from './demo/ColorPicker/Size.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
 
@@ -243,7 +243,7 @@ import Size from './demo/ColorPicker/Size.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <div flex="cross:center" class="mb-16">
@@ -282,7 +282,7 @@ import Size from './demo/ColorPicker/Size.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
 

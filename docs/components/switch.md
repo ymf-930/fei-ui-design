@@ -28,7 +28,7 @@ import Confirm2 from './demo/Switch/Confirm2.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-switch v-model="value" @change="change"></f-switch>
 </template>
@@ -38,7 +38,7 @@ import Confirm2 from './demo/Switch/Confirm2.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -66,7 +66,7 @@ function change(val) {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-switch size="large"></f-switch>
@@ -96,7 +96,7 @@ function change(val) {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-switch>
@@ -143,7 +143,7 @@ function change(val) {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-switch v-model="value1" disabled size="large"></f-switch>
@@ -166,7 +166,7 @@ function change(val) {
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -191,7 +191,7 @@ const value2 = ref(false)
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-switch v-model="value1" loading size="large"></f-switch>
@@ -214,7 +214,7 @@ const value2 = ref(false)
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -241,7 +241,7 @@ const value2 = ref(false)
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-switch confirm></f-switch>
 </template>
@@ -265,7 +265,7 @@ const value2 = ref(false)
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-switch
@@ -289,7 +289,7 @@ const value2 = ref(false)
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 

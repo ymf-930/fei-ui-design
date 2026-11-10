@@ -24,7 +24,7 @@ import Confirm from './demo/Popover/Confirm.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-popover trigger="hover" title="Title" content="这是一段内容这是一段内容这是一段内容">
@@ -63,7 +63,7 @@ import Confirm from './demo/Popover/Confirm.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div class="demo-popover">
     <div class="top">
@@ -132,7 +132,7 @@ import Confirm from './demo/Popover/Confirm.vue'
 
 <template #style>
 
-```html
+```css
 <style scoped>
 .demo-popover {
   .top,
@@ -170,7 +170,7 @@ import Confirm from './demo/Popover/Confirm.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-popover v-model:visible="visible">
     <f-button type="text" @click="close">点我打开浮层</f-button>
@@ -186,7 +186,7 @@ import Confirm from './demo/Popover/Confirm.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -213,7 +213,7 @@ function close() {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-popover placement="top" width="200px">
@@ -251,7 +251,7 @@ function close() {
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-popover v-model:visible="visible" :width="240">
     <f-button type="danger" plain>确认气泡框</f-button>
@@ -273,7 +273,7 @@ function close() {
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Message } from 'fei-ui-design'

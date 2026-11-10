@@ -404,6 +404,13 @@ body[fei-theme="dark"] {
   display: none;
 }
 
+// All 页签把 template / script / style 三段合并展示，只保留一个 vue 角标。
+// 单个页签时三块各自显示 vue / ts / css，这里只作用于 .slot-all。
+.vp-doc .con-code .slot-all .language-ts > span.lang,
+.vp-doc .con-code .slot-all .language-css > span.lang {
+  display: none;
+}
+
 // 卡片里的代码面板（codex）自带容器与圆角，内层代码块必须贴平，
 // 否则会给深色面板内部再套一层圆角与间距。
 .vp-doc .con-code div[class*='language-'],

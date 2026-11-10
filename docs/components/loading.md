@@ -25,7 +25,7 @@ import Ctrl from './demo/Loading/Ctrl.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div class="demo-loading">
     <f-loading></f-loading>
@@ -37,7 +37,7 @@ import Ctrl from './demo/Loading/Ctrl.vue'
 
 <template #style>
 
-```html
+```css
 <style scoped>
 .demo-loading {
   position: relative;
@@ -70,7 +70,7 @@ import Ctrl from './demo/Loading/Ctrl.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div class="demo-loading">
     <div>我是后面的段落我是后面的段落我是后面的段落我是后面的段落</div>
@@ -83,7 +83,7 @@ import Ctrl from './demo/Loading/Ctrl.vue'
 
 <template #style>
 
-```html
+```css
 <style scoped>
 .demo-loading {
   position: relative;
@@ -116,7 +116,7 @@ import Ctrl from './demo/Loading/Ctrl.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <div class="demo-loading">
@@ -136,7 +136,7 @@ import Ctrl from './demo/Loading/Ctrl.vue'
 
 <template #style>
 
-```html
+```css
 <style scoped>
 .demo-loading {
   position: relative;
@@ -169,7 +169,7 @@ import Ctrl from './demo/Loading/Ctrl.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <div class="demo-loading">
@@ -188,7 +188,7 @@ import Ctrl from './demo/Loading/Ctrl.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
   const loading = ref(false)
@@ -199,7 +199,7 @@ import Ctrl from './demo/Loading/Ctrl.vue'
 
 <template #style>
 
-```html
+```css
 <style scoped>
 .demo-loading {
   position: relative;

@@ -24,7 +24,7 @@ import CapsuleType from './demo/Radio/CapsuleType.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-radio v-model="single">Radio</f-radio>
   <span style="color: #ff4511">{{ single }}</span>
@@ -35,7 +35,7 @@ import CapsuleType from './demo/Radio/CapsuleType.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
   const single = ref(false)
@@ -58,7 +58,7 @@ import CapsuleType from './demo/Radio/CapsuleType.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-radio-group v-model="social">
@@ -90,7 +90,7 @@ import CapsuleType from './demo/Radio/CapsuleType.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
   const social = ref('facebook')
@@ -116,7 +116,7 @@ import CapsuleType from './demo/Radio/CapsuleType.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-radio v-model="disabledSingle" disabled>Checkbox</f-radio>
@@ -133,7 +133,7 @@ import CapsuleType from './demo/Radio/CapsuleType.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
   const disabledSingle = ref(true)
@@ -159,7 +159,7 @@ import CapsuleType from './demo/Radio/CapsuleType.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex>
     <div>
@@ -202,7 +202,7 @@ import CapsuleType from './demo/Radio/CapsuleType.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
   const fruit = ref('苹果')
@@ -227,7 +227,7 @@ import CapsuleType from './demo/Radio/CapsuleType.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex>
     <div>
@@ -276,7 +276,7 @@ import CapsuleType from './demo/Radio/CapsuleType.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
   const fruit = ref('苹果')

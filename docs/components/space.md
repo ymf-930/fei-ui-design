@@ -26,7 +26,7 @@ import Align from './demo/Space/Align.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-space>
     space
@@ -53,7 +53,7 @@ import Align from './demo/Space/Align.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-space direction="vertical">
@@ -86,7 +86,7 @@ import Align from './demo/Space/Align.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-space direction="vertical" alignment="start" :size="30">
     <f-radio-group v-model="size" type="capsule">
@@ -110,7 +110,7 @@ import Align from './demo/Space/Align.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 const size = ref('default')
@@ -133,7 +133,7 @@ const size = ref('default')
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-space direction="vertical" alignment="start" :size="30">
     <f-radio-group v-model="size" type="capsule">
@@ -165,7 +165,7 @@ const size = ref('default')
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 const size = ref(16)
@@ -188,7 +188,7 @@ const size = ref(16)
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-space wrap>
     <div v-for="i in 20" :key="i">
@@ -214,7 +214,7 @@ const size = ref(16)
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-space :size="size" spacer="|">
     <div v-for="i in 3" :key="i">
@@ -235,7 +235,7 @@ const size = ref(16)
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { h, ref } from 'vue'
 
@@ -262,7 +262,7 @@ const spacer = h('span', { style: { color: '#999' } }, '>-<')
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-space>
     <div style="width: 240px; margin-bottom: 20px; padding: 8px; border: 1px solid #ccc; border-radius: 6px">

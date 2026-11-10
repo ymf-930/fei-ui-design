@@ -28,7 +28,10 @@ type NodeHandlerName = 'onParentCheck' | 'onChildCheck' | 'onParentExpand' | 'on
 type NodeHandler = ((...handlerArgs: any[]) => void) | undefined
 
 const getNodeHandler = (node: Node, handlerName: NodeHandlerName): NodeHandler => {
-  return (node as unknown as Record<NodeHandlerName, NodeHandler>)[handlerName]
+  // broadcast / emit 里以 handler(...args) 调用，必须绑定 this，
+  // 否则 onParentCheck / onChildCheck 访问 this.isDisabled、this.children 会抛错。
+  const handler = (node as unknown as Record<NodeHandlerName, NodeHandler>)[handlerName]
+  return handler?.bind(node)
 }
 
 let uid = 0

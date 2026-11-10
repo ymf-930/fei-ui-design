@@ -23,7 +23,7 @@ import Mark from './demo/Slider/Mark.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-slider v-model="value1"></f-slider>
@@ -39,7 +39,7 @@ import Mark from './demo/Slider/Mark.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -65,7 +65,7 @@ const value3 = ref([30, 40])
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-slider v-model="value4" :step="10"></f-slider>
@@ -83,7 +83,7 @@ const value3 = ref([30, 40])
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -110,7 +110,7 @@ const value7 = ref([30, 50])
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-slider v-model="value1" show-input></f-slider>
@@ -124,7 +124,7 @@ const value7 = ref([30, 50])
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -153,7 +153,7 @@ function format(val) {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-slider v-model="value1" range :marks="marks"></f-slider>
@@ -165,7 +165,7 @@ function format(val) {
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref, h } from 'vue'
 

@@ -23,7 +23,7 @@ import Custom from './demo/Badge/Custom.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-space :size="24">
     <f-badge :value="12">
@@ -66,7 +66,7 @@ import Custom from './demo/Badge/Custom.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-space :size="24">
     <f-badge value="hot">

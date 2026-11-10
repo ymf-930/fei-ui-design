@@ -32,7 +32,7 @@ import Big from './demo/Tree/Big.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex>
     <div style="width: 300px">
@@ -57,7 +57,7 @@ import Big from './demo/Tree/Big.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -108,7 +108,7 @@ function handleSelect(selected, node) {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-button @click="initData">初始化数据并默认选中前端组</f-button>
@@ -125,7 +125,7 @@ function handleSelect(selected, node) {
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref, nextTick } from 'vue'
 
@@ -251,7 +251,7 @@ expand、selected、checked 和 disabled 可以设置展开，选中，勾选和
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex>
     <div class="p10" style="width: 300px; border-right: 1px solid #eeeeee">
@@ -278,7 +278,7 @@ expand、selected、checked 和 disabled 可以设置展开，选中，勾选和
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -346,7 +346,7 @@ function handleChecked(checked, node) {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <div class="mb-16">
@@ -370,7 +370,7 @@ function handleChecked(checked, node) {
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -447,7 +447,7 @@ function setExpand() {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div style="width: 300px">
     <f-tree :data="data" show-checkbox :load-data="loadData"></f-tree>
@@ -459,7 +459,7 @@ function setExpand() {
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -537,7 +537,7 @@ function loadData(item, callback) {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-input
@@ -559,7 +559,7 @@ function loadData(item, callback) {
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -655,7 +655,7 @@ const filterNode = (value, node) => {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex>
     <div class="p10" style="width: 300px; border-right: 1px solid #eeeeee">
@@ -694,7 +694,7 @@ const filterNode = (value, node) => {
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref, h } from 'vue'
 import { Message, FDropdown, FDropdownMenu, FDropdownItem } from 'fei-ui-design'
@@ -943,7 +943,7 @@ function handleDrop(draggingNode, dropNode, dropType, ev) {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex>
     <div class="p10" style="width: 300px; border-right: 1px solid #eeeeee">
@@ -964,7 +964,7 @@ function handleDrop(draggingNode, dropNode, dropType, ev) {
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref, h } from 'vue'
 import { Message, FDropdown, FDropdownMenu, FDropdownItem } from 'fei-ui-design'
@@ -1125,7 +1125,7 @@ function renderContent1({ root, node, data }) {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <div flex>
@@ -1167,7 +1167,7 @@ function renderContent1({ root, node, data }) {
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -1322,7 +1322,7 @@ function clear() {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <div flex>
@@ -1353,7 +1353,7 @@ function clear() {
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -1487,7 +1487,7 @@ function resetForm() {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <div style="margin-bottom: 8px">
@@ -1524,7 +1524,7 @@ function resetForm() {
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 

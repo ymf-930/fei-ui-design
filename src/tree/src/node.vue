@@ -46,14 +46,14 @@
       </div>
       <FCollapseTransition>
         <div v-show="data.expand" class="fei-tree-node-children">
-          <tree-node
+          <FTreeNode
             v-for="(item, i) in children"
             :key="i"
             :data="item"
             :multiple="multiple"
             :show-checkbox="showCheckbox"
             :children-key="childrenKey"
-          ></tree-node>
+          ></FTreeNode>
         </div>
       </FCollapseTransition>
     </li>

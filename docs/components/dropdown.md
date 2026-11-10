@@ -23,7 +23,7 @@ import Command from './demo/Dropdown/Command.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-dropdown>
@@ -77,7 +77,7 @@ import Command from './demo/Dropdown/Command.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-space>
     <f-dropdown trigger="hover">
@@ -142,7 +142,7 @@ import Command from './demo/Dropdown/Command.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-dropdown placement="right-start">
@@ -191,7 +191,7 @@ import Command from './demo/Dropdown/Command.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-dropdown @command="handleClick">
@@ -217,7 +217,7 @@ import Command from './demo/Dropdown/Command.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { Message } from 'fei-ui-design'
 

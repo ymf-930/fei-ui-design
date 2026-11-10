@@ -30,7 +30,7 @@ import Panel from './demo/Cascader/Panel.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex>
     <div class="block" style="width: 220px; margin-right: 20px">
@@ -58,7 +58,7 @@ import Panel from './demo/Cascader/Panel.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -140,7 +140,7 @@ function handleChange(value) {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex>
     <div class="block" style="width: 220px; margin-right: 20px">
@@ -168,7 +168,7 @@ function handleChange(value) {
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -251,7 +251,7 @@ function handleChange(value) {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex>
     <div class="block" style="width: 220px; margin-right: 20px">
@@ -273,7 +273,7 @@ function handleChange(value) {
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -378,7 +378,7 @@ function handleChange(value) {
 
 <template #script>
 
-```vue
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -442,7 +442,7 @@ function handleChange(value) {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex>
     <div class="block" style="width: 220px; margin-right: 20px">
@@ -476,7 +476,7 @@ function handleChange(value) {
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -560,7 +560,7 @@ function handleChange(value) {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex>
     <div class="block" style="width: 220px; margin-right: 20px">
@@ -592,7 +592,7 @@ function handleChange(value) {
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -678,7 +678,7 @@ lazyload方法有两个参数，第一个参数node为当前点击的节点，�
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex>
     <div class="block" style="width: 220px; margin-right: 20px">
@@ -695,7 +695,7 @@ lazyload方法有两个参数，第一个参数node为当前点击的节点，�
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -740,7 +740,7 @@ const props = {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex>
     <div class="block" style="width: 220px; margin-right: 20px">
@@ -774,7 +774,7 @@ const props = {
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -857,7 +857,7 @@ function filterMethod(node, keyword) {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex>
     <div class="block" style="width: 220px; margin-right: 20px">
@@ -879,7 +879,7 @@ function filterMethod(node, keyword) {
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -959,7 +959,7 @@ function handleChange(value) {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex>
     <div class="block" style="width: 220px; margin-right: 20px">
@@ -982,7 +982,7 @@ function handleChange(value) {
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -1059,7 +1059,7 @@ const options = [
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex>
     <div class="block" style="margin-right: 20px">
@@ -1076,7 +1076,7 @@ const options = [
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 

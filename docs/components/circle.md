@@ -25,7 +25,7 @@ import Dashboard from './demo/Circle/Dashboard.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex="main:justify" style="width: 400px">
     <f-circle :percent="80">
@@ -61,7 +61,7 @@ import Dashboard from './demo/Circle/Dashboard.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex="main:justify" style="width: 300px">
     <f-circle :percent="percent" :stroke-color="color">
@@ -81,7 +81,7 @@ import Dashboard from './demo/Circle/Dashboard.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref, computed } from 'vue'
   const percent = ref(10)
@@ -124,7 +124,7 @@ import Dashboard from './demo/Circle/Dashboard.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-circle
     :size="250"
@@ -164,7 +164,7 @@ import Dashboard from './demo/Circle/Dashboard.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-circle :percent="80" dashboard>
     <span class="demo-circle-inner" style="font-size: 24px">80%</span>

@@ -51,7 +51,7 @@ router.afterEach(() => {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-button @click="start">Start</f-button>
@@ -68,7 +68,7 @@ router.afterEach(() => {
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { LoadingBar } from 'fei-ui-design'
 

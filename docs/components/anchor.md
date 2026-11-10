@@ -25,7 +25,7 @@ import Target from './demo/Anchor/Target.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div style="overflow: hidden; border: 1px solid #eee; border-radius: 6px">
     <div style="width: 200px">
@@ -61,7 +61,7 @@ import Target from './demo/Anchor/Target.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div style="overflow: hidden; border: 1px solid #eee; border-radius: 6px" flex="box:mean">
     <div style="padding: 20px; background-color: #fff; border-right: 1px solid #eee">
@@ -108,7 +108,7 @@ import Target from './demo/Anchor/Target.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div style="overflow: hidden; border: 1px solid #eee; border-radius: 6px" flex="box:mean">
     <div style="padding: 20px; background-color: #fff; border-right: 1px solid #eee">
@@ -155,7 +155,7 @@ import Target from './demo/Anchor/Target.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-button size="small" @click="scrollTo7">滚动到第七行</f-button>
@@ -199,7 +199,7 @@ import Target from './demo/Anchor/Target.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
   const anchorScrollRef = ref(null)

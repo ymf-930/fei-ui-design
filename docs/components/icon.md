@@ -98,7 +98,7 @@ const copyComp = name => {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div style="width: 220px">
     <f-icon-select v-model="icon"></f-icon-select>
@@ -111,7 +111,7 @@ const copyComp = name => {
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 

@@ -26,7 +26,7 @@ import Custom from './demo/Scrollbar/Custom.vue'
 
 注意：如果内容区域不超过容器高度则不会生成滚动条
 
-```html
+```vue
 <template>
   <div style="height: 300px">
     <f-scrollbar ref="componentScrollBar" style="height: 100%">
@@ -54,7 +54,7 @@ import Custom from './demo/Scrollbar/Custom.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div style="height: 300px">
     <f-scrollbar ref="componentScrollBar" always noresize>
@@ -82,7 +82,7 @@ import Custom from './demo/Scrollbar/Custom.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div style="height: 300px">
     <f-scrollbar

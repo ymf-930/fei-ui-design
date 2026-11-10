@@ -34,7 +34,7 @@ import DefaultTime from './demo/DatePicker/DefaultTime.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex="box:mean" style="width: 600px">
     <div style="padding: 0 10px">
@@ -59,7 +59,7 @@ import DefaultTime from './demo/DatePicker/DefaultTime.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
 
@@ -109,7 +109,7 @@ import DefaultTime from './demo/DatePicker/DefaultTime.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex="box:mean">
     <div style="padding: 0 10px">
@@ -141,7 +141,7 @@ import DefaultTime from './demo/DatePicker/DefaultTime.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
 
@@ -170,7 +170,7 @@ import DefaultTime from './demo/DatePicker/DefaultTime.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex="box:mean" style="width: 600px">
     <div style="padding: 0 10px">
@@ -203,7 +203,7 @@ import DefaultTime from './demo/DatePicker/DefaultTime.vue'
 
 <template #script>
 
-```html
+```ts
   <script setup lang="ts">
   import { ref } from 'vue'
 
@@ -259,7 +259,7 @@ import DefaultTime from './demo/DatePicker/DefaultTime.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex="box:mean" style="width: 600px">
     <div style="padding: 0 10px">
@@ -292,7 +292,7 @@ import DefaultTime from './demo/DatePicker/DefaultTime.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
 
@@ -342,7 +342,7 @@ import DefaultTime from './demo/DatePicker/DefaultTime.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex="box:mean" style="width: 600px">
     <div style="padding: 0 10px">
@@ -372,7 +372,7 @@ import DefaultTime from './demo/DatePicker/DefaultTime.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
 
@@ -397,7 +397,7 @@ import DefaultTime from './demo/DatePicker/DefaultTime.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex="box:mean" style="width: 600px">
     <div style="padding: 0 10px">
@@ -429,7 +429,7 @@ import DefaultTime from './demo/DatePicker/DefaultTime.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
 
@@ -456,7 +456,7 @@ import DefaultTime from './demo/DatePicker/DefaultTime.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex="cross:center">
     <div style="padding: 0 10px; width: 300px">
@@ -476,7 +476,7 @@ import DefaultTime from './demo/DatePicker/DefaultTime.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
 
@@ -502,7 +502,7 @@ import DefaultTime from './demo/DatePicker/DefaultTime.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex="cross:center box:mean">
     <div style="padding: 0 10px">
@@ -540,7 +540,7 @@ import DefaultTime from './demo/DatePicker/DefaultTime.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
 
@@ -566,7 +566,7 @@ import DefaultTime from './demo/DatePicker/DefaultTime.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex="cross:center box:mean">
     <div style="padding: 0 10px">
@@ -599,7 +599,7 @@ import DefaultTime from './demo/DatePicker/DefaultTime.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
 
@@ -649,7 +649,7 @@ import DefaultTime from './demo/DatePicker/DefaultTime.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex="cross:center box:mean" style="width: 800px">
     <div style="padding: 0 10px">
@@ -681,7 +681,7 @@ import DefaultTime from './demo/DatePicker/DefaultTime.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
 
@@ -737,7 +737,7 @@ import DefaultTime from './demo/DatePicker/DefaultTime.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex="cross:center box:mean" style="width: 800px">
     <div style="padding: 0 10px">
@@ -770,7 +770,7 @@ import DefaultTime from './demo/DatePicker/DefaultTime.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
 

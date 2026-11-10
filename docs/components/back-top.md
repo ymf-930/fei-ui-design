@@ -23,7 +23,7 @@ import Scrollbar from './demo/BackTop/Scrollbar.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div style="position: relative; border: 1px solid #eee; border-radius: 6px">
     <div class="scroll-box" style="padding: 20px; height: 500px; overflow: auto">
@@ -56,7 +56,7 @@ import Scrollbar from './demo/BackTop/Scrollbar.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div style="height: 500px; overflow: auto; border: 1px solid #eee; border-radius: 6px">
     <f-scrollbar style="height: 100%" wrap-class="scrollbar-box">

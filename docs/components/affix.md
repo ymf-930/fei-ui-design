@@ -23,7 +23,7 @@ import Position from './demo/Affix/Position.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-affix :offset="80">
     <f-button type="primary">固定在顶部80的位置</f-button>
@@ -49,7 +49,7 @@ import Position from './demo/Affix/Position.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-affix :offset="20" position="bottom">
     <f-button type="primary">固定在底部20的位置</f-button>

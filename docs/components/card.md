@@ -24,7 +24,7 @@ import Shadow from './demo/Card/Shadow.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-card class="box-card" width="480px" head-tip>
     <template #header>
@@ -56,7 +56,7 @@ import Shadow from './demo/Card/Shadow.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div style="background: #f8f8f8; padding: 20px">
     <div flex="main:justify box:mean">
@@ -97,7 +97,7 @@ import Shadow from './demo/Card/Shadow.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div style="background: #f8f8f8; padding: 20px">
     <div flex="main:justify box:mean">
@@ -132,7 +132,7 @@ import Shadow from './demo/Card/Shadow.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex="main:justify box:mean">
     <div style="padding: 0 10px">

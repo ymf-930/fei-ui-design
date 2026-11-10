@@ -28,7 +28,7 @@ import Size from './demo/TimePicker/Size.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex>
     <div style="width: 220px; margin-right: 20px">
@@ -58,7 +58,7 @@ import Size from './demo/TimePicker/Size.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -112,7 +112,7 @@ function disabledSeconds(hour, minute) {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex>
     <f-time-picker
@@ -143,7 +143,7 @@ function disabledSeconds(hour, minute) {
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -170,7 +170,7 @@ const value2 = ref([new Date(2016, 9, 10, 8, 40), new Date(2016, 9, 10, 9, 40)])
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex>
     <div style="width: 220px; margin-right: 20px">
@@ -193,7 +193,7 @@ const value2 = ref([new Date(2016, 9, 10, 8, 40), new Date(2016, 9, 10, 9, 40)])
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -248,7 +248,7 @@ function disabledSeconds(hour, minute) {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex>
     <div style="width: 220px; margin-right: 20px">
@@ -280,7 +280,7 @@ function disabledSeconds(hour, minute) {
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -307,7 +307,7 @@ const value2 = ref([new Date(2023, 4, 270, 18, 40), new Date(2023, 4, 30, 11, 40
 
 <template #template>
 
-```html
+```vue
 <template>
   <div flex>
     <div style="width: 240px; margin-right: 20px">
@@ -330,7 +330,7 @@ const value2 = ref([new Date(2023, 4, 270, 18, 40), new Date(2023, 4, 30, 11, 40
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 

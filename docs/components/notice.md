@@ -23,7 +23,7 @@ import Other from './demo/Notice/Other.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-button @click="open(false)">提醒</f-button>
@@ -38,7 +38,7 @@ import Other from './demo/Notice/Other.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { h } from 'vue'
 import { Notice } from 'fei-ui-design'
@@ -83,7 +83,7 @@ function time() {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <div style="padding: 5px 0">带描述</div>
@@ -104,7 +104,7 @@ function time() {
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { Notice } from 'fei-ui-design'
 
@@ -153,7 +153,7 @@ function error(message) {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-button
@@ -182,7 +182,7 @@ function error(message) {
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { Notice } from 'fei-ui-design'
 
@@ -210,7 +210,7 @@ function open(options) {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-button
@@ -232,7 +232,7 @@ function open(options) {
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { Notice } from 'fei-ui-design'
 

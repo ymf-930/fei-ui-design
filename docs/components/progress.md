@@ -25,7 +25,7 @@ Progress 组件设置 `percent` 属性即可，表示进度条对应的百分比
 
 <template #template>
 
-```html
+```vue
 <template>
   <div style="width: 350px">
     <div class="mb-16">
@@ -62,7 +62,7 @@ Progress 组件设置 `percent` 属性即可，表示进度条对应的百分比
 
 <template #template>
 
-```html
+```vue
 <template>
   <div style="width: 350px">
     <div class="mb-16">
@@ -107,7 +107,7 @@ Progress 组件设置 `percent` 属性即可，表示进度条对应的百分比
 
 <template #template>
 
-```html
+```vue
 <template>
   <div style="width: 350px">
     <div class="mb-16">
@@ -147,7 +147,7 @@ Progress 组件设置 `percent` 属性即可，表示进度条对应的百分比
 
 <template #template>
 
-```html
+```vue
 <template>
   <div style="width: 350px">
     <f-progress :stroke-width="20" :percent="percent" active color="#ff86d8"></f-progress>
@@ -166,7 +166,7 @@ Progress 组件设置 `percent` 属性即可，表示进度条对应的百分比
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 const percent = ref(10)

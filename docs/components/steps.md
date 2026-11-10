@@ -26,7 +26,7 @@ import Status from './demo/Steps/Status.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-steps :current="current">
@@ -44,7 +44,7 @@ import Status from './demo/Steps/Status.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -78,7 +78,7 @@ function next() {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-steps :current="current" size="small">
@@ -96,7 +96,7 @@ function next() {
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -130,7 +130,7 @@ function next() {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-steps :current="current">
@@ -147,7 +147,7 @@ function next() {
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -181,7 +181,7 @@ function next() {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-steps :current="current" direction="vertical">
@@ -199,7 +199,7 @@ function next() {
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -233,7 +233,7 @@ function next() {
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-steps :current="2" status="error">

@@ -23,7 +23,7 @@ import Size from './demo/Desc/Size.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-desc title="用户信息">
     <f-desc-item label="用户名">韩梅梅</f-desc-item>
@@ -55,7 +55,7 @@ import Size from './demo/Desc/Size.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <div flex="cross:center">
@@ -106,7 +106,7 @@ import Size from './demo/Desc/Size.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
   const size = ref('default')

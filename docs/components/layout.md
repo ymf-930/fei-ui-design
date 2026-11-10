@@ -22,7 +22,7 @@ import Basic from './demo/Layout/Basic.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-layout has-sider>
     <template #sider>

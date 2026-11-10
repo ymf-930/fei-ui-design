@@ -26,7 +26,7 @@ import Direction from './demo/Carousel/Direction.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-carousel loop trigger="click">
     <f-carousel-item>
@@ -49,7 +49,7 @@ import Direction from './demo/Carousel/Direction.vue'
 
 <template #style>
 
-```html
+```css
 <style scoped>
 .demo-carousel-panel {
   height: 200px;
@@ -80,7 +80,7 @@ import Direction from './demo/Carousel/Direction.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-carousel autoplay :interval="2000" :initial-index="value" loop>
     <f-carousel-item>
@@ -103,7 +103,7 @@ import Direction from './demo/Carousel/Direction.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
   const value = ref(1)
@@ -114,7 +114,7 @@ import Direction from './demo/Carousel/Direction.vue'
 
 <template #style>
 
-```html
+```css
 <style scoped>
 .demo-carousel-panel {
   height: 200px;
@@ -143,7 +143,7 @@ import Direction from './demo/Carousel/Direction.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-carousel indicator-position="inside" arrow="always" trigger="hover" loop>
@@ -183,7 +183,7 @@ import Direction from './demo/Carousel/Direction.vue'
 
 <template #style>
 
-```html
+```css
 <style scoped>
 .demo-carousel-panel {
   height: 200px;
@@ -214,7 +214,7 @@ import Direction from './demo/Carousel/Direction.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-carousel :interval="4000" type="card" height="200px" loop>
     <f-carousel-item>
@@ -237,7 +237,7 @@ import Direction from './demo/Carousel/Direction.vue'
 
 <template #style>
 
-```html
+```css
 <style scoped>
 .demo-carousel-panel {
   height: 200px;
@@ -268,7 +268,7 @@ import Direction from './demo/Carousel/Direction.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <f-carousel height="200px" direction="vertical" :autoplay="false">
     <f-carousel-item>
@@ -291,7 +291,7 @@ import Direction from './demo/Carousel/Direction.vue'
 
 <template #style>
 
-```html
+```css
 <style scoped>
 .demo-carousel-panel {
   height: 200px;

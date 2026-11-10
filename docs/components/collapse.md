@@ -25,7 +25,7 @@ import Wrap from './demo/Collapse/Wrap.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-collapse v-model="value">
@@ -47,7 +47,7 @@ import Wrap from './demo/Collapse/Wrap.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
   const value = ref('')
@@ -72,7 +72,7 @@ import Wrap from './demo/Collapse/Wrap.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-collapse v-model="value" accordion>
@@ -94,7 +94,7 @@ import Wrap from './demo/Collapse/Wrap.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
   const value = ref('')
@@ -119,7 +119,7 @@ import Wrap from './demo/Collapse/Wrap.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-collapse v-model="value" simple>
@@ -145,7 +145,7 @@ import Wrap from './demo/Collapse/Wrap.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
   const value = ref('')
@@ -170,7 +170,7 @@ import Wrap from './demo/Collapse/Wrap.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-collapse-wrap title="标题栏" collapse>
@@ -211,7 +211,7 @@ import Wrap from './demo/Collapse/Wrap.vue'
 
 <template #script>
 
-```html
+```ts
 <script setup lang="ts">
   import { ref } from 'vue'
   const value = ref('')

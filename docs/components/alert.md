@@ -26,7 +26,7 @@ import Banner from './demo/Alert/Banner.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-alert>info alert</f-alert>
@@ -55,7 +55,7 @@ import Banner from './demo/Alert/Banner.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-alert>
@@ -96,7 +96,7 @@ import Banner from './demo/Alert/Banner.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-alert show-icon>info alert</f-alert>
@@ -135,7 +135,7 @@ import Banner from './demo/Alert/Banner.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-alert closable>An info prompt</f-alert>
@@ -171,7 +171,7 @@ import Banner from './demo/Alert/Banner.vue'
 
 <template #template>
 
-```html
+```vue
 <template>
   <div>
     <f-alert banner>公告样式...</f-alert>
