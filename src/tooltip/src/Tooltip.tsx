@@ -1,4 +1,4 @@
-import { defineComponent, h, ref, cloneVNode } from 'vue'
+import { defineComponent, h, ref, cloneVNode, createCommentVNode } from 'vue'
 import { UPDATE_MODEL_EVENT } from '../../_utils/constants'
 import { getFirstValidNode } from '../../_utils/vnode'
 import { tooltipProps } from './types'
@@ -16,7 +16,7 @@ export default defineComponent({
     }
     const popper = ref<{ update: () => void } | null>(null)
 
-    const onUpdateVisible = val => {
+    const onUpdateVisible = (val: boolean) => {
       ctx.emit(UPDATE_MODEL_EVENT, val)
     }
 
@@ -48,7 +48,10 @@ export default defineComponent({
     return h(
       FPopper,
       {
-        ...Object.keys(tooltipProps).reduce((result, key) => ({ ...result, [key]: this[key] }), {}),
+        ...Object.keys(tooltipProps).reduce(
+          (result, key) => ({ ...result, [key]: (this as unknown as Record<string, any>)[key] }),
+          {}
+        ),
         ref: 'popper',
         openDelay,
         manualMode,
@@ -62,7 +65,10 @@ export default defineComponent({
         trigger: () => {
           if ($slots.default) {
             const firstVnode = getFirstValidNode($slots.default(), 1)
-            if (!firstVnode) throwErrorTip()
+            if (!firstVnode) {
+              throwErrorTip()
+              return createCommentVNode('v-if', true)
+            }
             return cloneVNode(firstVnode, {}, true)
           }
           throwErrorTip()

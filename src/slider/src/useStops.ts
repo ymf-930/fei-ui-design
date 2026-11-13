@@ -1,6 +1,6 @@
 import { computed } from 'vue'
 
-export const useStops = (props, initData, minValue, maxValue) => {
+export const useStops = (props: any, initData: any, minValue: any, maxValue: any) => {
   const stops = computed(() => {
     if (!props.showStops || props.min > props.max) return []
     if (props.step === 0) {
@@ -27,7 +27,7 @@ export const useStops = (props, initData, minValue, maxValue) => {
     }
   })
 
-  const getStopStyle = position => {
+  const getStopStyle = (position: number) => {
     return props.vertical ? { bottom: position + '%' } : { left: position + '%' }
   }
 

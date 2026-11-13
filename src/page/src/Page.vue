@@ -45,7 +45,7 @@
     </li>
     <li
       v-if="currentPage === 5"
-      :title="currentPage - 3"
+      :title="String(currentPage - 3)"
       :class="[prefixCls + '-item']"
       @click="changePage(currentPage - 3)"
     >
@@ -53,7 +53,7 @@
     </li>
     <li
       v-if="currentPage - 2 > 1"
-      :title="currentPage - 2"
+      :title="String(currentPage - 2)"
       :class="[prefixCls + '-item']"
       @click="changePage(currentPage - 2)"
     >
@@ -61,7 +61,7 @@
     </li>
     <li
       v-if="currentPage - 1 > 1"
-      :title="currentPage - 1"
+      :title="String(currentPage - 1)"
       :class="[prefixCls + '-item']"
       @click="changePage(currentPage - 1)"
     >
@@ -69,14 +69,14 @@
     </li>
     <li
       v-if="currentPage !== 1 && currentPage !== allPages"
-      :title="currentPage"
+      :title="String(currentPage)"
       :class="[prefixCls + '-item', prefixCls + '-item-active']"
     >
       <span>{{ currentPage }}</span>
     </li>
     <li
       v-if="currentPage + 1 < allPages"
-      :title="currentPage + 1"
+      :title="String(currentPage + 1)"
       :class="[prefixCls + '-item']"
       @click="changePage(currentPage + 1)"
     >
@@ -84,7 +84,7 @@
     </li>
     <li
       v-if="currentPage + 2 < allPages"
-      :title="currentPage + 2"
+      :title="String(currentPage + 2)"
       :class="[prefixCls + '-item']"
       @click="changePage(currentPage + 2)"
     >
@@ -92,7 +92,7 @@
     </li>
     <li
       v-if="allPages - currentPage === 4"
-      :title="currentPage + 3"
+      :title="String(currentPage + 3)"
       :class="[prefixCls + '-item']"
       @click="changePage(currentPage + 3)"
     >
@@ -108,7 +108,7 @@
     </li>
     <li
       v-if="allPages > 1"
-      :title="allPages"
+      :title="String(allPages)"
       :class="lastPageClasses"
       @click="changePage(allPages)"
     >
@@ -160,7 +160,7 @@ export default defineComponent({
       const allPage = Math.ceil(props.total / states.currentPageSize)
       return allPage === 0 ? 1 : allPage
     })
-    const changePage = page => {
+    const changePage = (page: number) => {
       if (states.currentPage !== page) {
         states.currentPage = page
         ctx.emit('update:current', page)
@@ -197,15 +197,15 @@ export default defineComponent({
         changePage(page)
       }
     }
-    const onSize = pageSize => {
+    const onSize = (pageSize: number) => {
       states.currentPageSize = pageSize
       ctx.emit('size-change', pageSize)
       changePage(1)
     }
-    const onPage = page => {
+    const onPage = (page: number) => {
       changePage(page)
     }
-    const keyDown = e => {
+    const keyDown = (e: KeyboardEvent) => {
       const key = e.keyCode
       const condition =
         (key >= 48 && key <= 57) ||
@@ -218,7 +218,7 @@ export default defineComponent({
         e.preventDefault()
       }
     }
-    const keyUp = e => {
+    const keyUp = (e: any) => {
       const key = e.keyCode
       const val = parseInt(e.target.value)
 
@@ -227,14 +227,12 @@ export default defineComponent({
       } else if (key === 40) {
         next()
       } else if (key === 13) {
-        let page = 1
+        let page = val
 
         if (val > allPages.value) {
           page = allPages.value
         } else if (val <= 0 || !val) {
           page = 1
-        } else {
-          page = val
         }
 
         e.target.value = page

@@ -21,7 +21,7 @@
           v-if="file.showProgress"
           :stroke-width="2"
           :percent="parsePercentage(file.percentage)"
-          :status="file.status === 'finished' && file.showProgress ? 'success' : null"
+          :status="file.status === 'finished' && file.showProgress ? 'success' : undefined"
         ></f-progress>
       </transition>
     </li>
@@ -30,16 +30,27 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import type { PropType } from 'vue'
 import { FProgress } from '../../progress'
 
 const prefixCls = 'fei-upload'
+
+/** 上传列表项，由 FUpload 构造并维护 */
+interface UploadFile {
+  name: string
+  status?: string
+  percentage?: number
+  showProgress?: boolean
+  uid?: number
+  response?: unknown
+}
 
 export default defineComponent({
   name: 'FUploadList',
   components: { FProgress },
   props: {
     files: {
-      type: Array,
+      type: Array as PropType<UploadFile[]>,
       default() {
         return []
       }
@@ -52,7 +63,7 @@ export default defineComponent({
     }
   },
   methods: {
-    fileCls(file) {
+    fileCls(file: UploadFile) {
       return [
         `${prefixCls}-list-file`,
         {
@@ -60,17 +71,17 @@ export default defineComponent({
         }
       ]
     },
-    handleClick(file) {
+    handleClick(file: UploadFile) {
       this.$emit('file-click', file)
     },
-    handlePreview(file) {
+    handlePreview(file: UploadFile) {
       this.$emit('file-preview', file)
     },
-    handleRemove(file) {
+    handleRemove(file: UploadFile) {
       this.$emit('file-remove', file)
     },
-    format(file) {
-      const format = file.name.split('.').pop().toLocaleLowerCase() || ''
+    format(file: UploadFile) {
+      const format = file.name.split('.').pop()?.toLocaleLowerCase() || ''
       let type = 'file-text'
 
       if (['gif', 'jpg', 'jpeg', 'png', 'bmp', 'webp'].indexOf(format) > -1) {
@@ -94,7 +105,7 @@ export default defineComponent({
 
       return type
     },
-    parsePercentage(val) {
+    parsePercentage(val: any) {
       return parseInt(val, 10)
     }
   }

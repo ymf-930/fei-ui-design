@@ -35,7 +35,7 @@ const state = reactive({
   printVal: 0,
   paused: false,
   localDuration: props.duration,
-  startTime: null,
+  startTime: null as number | null,
   timestamp: 0,
   remaining: 0,
   rAF: 0
@@ -85,7 +85,7 @@ function reset() {
   state.displayValue = formatNumber(props.startVal)
 }
 
-function count(timestamp) {
+function count(timestamp: number) {
   const { useEasing, easingFn, endVal } = props
   if (!state.startTime) state.startTime = timestamp
   state.timestamp = timestamp

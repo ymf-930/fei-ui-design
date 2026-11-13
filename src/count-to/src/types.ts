@@ -19,7 +19,7 @@ export const CountToProps = {
     type: Number,
     required: false,
     default: 0,
-    validator(value) {
+    validator(value: number) {
       return value >= 0
     }
   },
@@ -45,7 +45,7 @@ export const CountToProps = {
   },
   easingFn: {
     type: Function,
-    default(t, b, c, d) {
+    default(t: number, b: number, c: number, d: number) {
       return (c * (-Math.pow(2, (-10 * t) / d) + 1) * 1024) / 1023 + b
     }
   }

@@ -45,14 +45,14 @@ export default defineComponent({
       }
     )
     // methods
-    function handleClick(event) {
+    function handleClick(event: MouseEvent) {
       const target = event.target
 
       if (target !== thumb.value) {
         handleDrag(event)
       }
     }
-    function handleDrag(event) {
+    function handleDrag(event: MouseEvent) {
       // @ts-ignore
       const el = instance.vnode.el
       // @ts-ignore
@@ -113,10 +113,10 @@ export default defineComponent({
     // mounded
     onMounted(() => {
       const dragConfig = {
-        drag: event => {
+        drag: (event: MouseEvent) => {
           handleDrag(event)
         },
-        end: event => {
+        end: (event: MouseEvent) => {
           handleDrag(event)
         }
       }

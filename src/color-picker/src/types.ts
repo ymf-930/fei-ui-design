@@ -1,3 +1,5 @@
+import type { PropType } from 'vue'
+
 export const colorProps = {
   modelValue: String,
   showAlpha: Boolean,
@@ -8,10 +10,10 @@ export const colorProps = {
   disabled: Boolean,
   size: {
     type: String,
-    validator: val => ['', 'large', 'default', 'small', 'mini'].includes(val)
+    validator: (val: string) => ['', 'large', 'default', 'small', 'mini'].includes(val)
   },
   popperClass: String,
-  colors: Array,
+  colors: Array as PropType<string[]>,
   showLabel: {
     type: Boolean,
     default: true

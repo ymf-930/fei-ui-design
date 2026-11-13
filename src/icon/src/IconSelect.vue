@@ -106,7 +106,7 @@ export default defineComponent({
     modelValue: { type: String, default: '' },
     size: {
       type: String,
-      validator: value => ['small', 'large', 'default', 'mini'].includes(value),
+      validator: value => typeof value === 'string' && ['small', 'large', 'default', 'mini'].includes(value),
       default: 'default'
     },
     disabled: Boolean,

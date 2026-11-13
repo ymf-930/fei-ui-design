@@ -18,14 +18,14 @@ import { FormKey, FormEvents } from './token'
 import { formProps } from './types'
 
 function useFormLabelWidth() {
-  const potentialLabelWidthArr = ref([])
+  const potentialLabelWidthArr = ref<number[]>([])
   const autoLabelWidth = computed(() => {
     if (!potentialLabelWidthArr.value.length) return '0'
     const max = Math.max(...potentialLabelWidthArr.value)
     return max ? `${max}px` : ''
   })
 
-  function getLabelWidthIndex(width) {
+  function getLabelWidthIndex(width: number) {
     //@ts-ignore
     const index = potentialLabelWidthArr.value.indexOf(width)
     if (index === -1) {
@@ -34,7 +34,7 @@ function useFormLabelWidth() {
     return index
   }
 
-  function registerLabelWidth(val, oldVal) {
+  function registerLabelWidth(val: number, oldVal?: number) {
     if (val && oldVal) {
       const index = getLabelWidthIndex(oldVal)
       //@ts-ignore
@@ -45,7 +45,7 @@ function useFormLabelWidth() {
     }
   }
 
-  function deregisterLabelWidth(val) {
+  function deregisterLabelWidth(val: number) {
     const index = getLabelWidthIndex(val)
     index > -1 && potentialLabelWidthArr.value.splice(index, 1)
   }
@@ -64,7 +64,7 @@ export default {
   setup(props, { emit }) {
     const formMitt = mitt()
 
-    const fields = []
+    const fields: any[] = []
 
     watch(
       () => props.rules,
@@ -122,7 +122,7 @@ export default {
       })
     }
 
-    const validate = callback => {
+    const validate = (callback: any) => {
       if (!props.model) {
         console.warn('[Element Warn][Form]model is required for validate to work!')
         return
@@ -132,7 +132,7 @@ export default {
       // if no callback, return promise
       if (typeof callback !== 'function') {
         promise = new Promise(resolve => {
-          callback = function (valid, invalidFields) {
+          callback = function (valid: boolean, invalidFields: Record<string, unknown>) {
             if (valid) {
               resolve(true)
             } else {
@@ -164,7 +164,7 @@ export default {
       return promise
     }
 
-    const validateField = (props, cb) => {
+    const validateField = (props: any, cb: any) => {
       props = [].concat(props)
       //@ts-ignore
       const fds = fields.filter(field => props.indexOf(field.prop) !== -1)

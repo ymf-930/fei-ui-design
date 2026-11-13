@@ -65,7 +65,7 @@ defineOptions({
 const emit = defineEmits(['prev', 'next', 'today', 'selected', 'select-day'])
 const props = defineProps<CalendarProps>()
 
-function getNewDate(date) {
+function getNewDate(date: Date) {
   let year = date.getFullYear()
   let month = date.getMonth()
   let day = date.getDate()
@@ -73,11 +73,11 @@ function getNewDate(date) {
 }
 
 // 根据年月日转换成日期类型
-function getDate(year, month, day) {
+function getDate(year: number, month: number, day: number) {
   return new Date(year, month, day)
 }
 
-function isPrevOrNextMonth(date, time) {
+function isPrevOrNextMonth(date: Date, time: { year: number; month: number; day: number }) {
   let newDate = getNewDate(getDate(time.year, time.month, 1))
   let currentYear = newDate.year
   let currentMonth = newDate.month
@@ -90,7 +90,7 @@ function isPrevOrNextMonth(date, time) {
   return null
 }
 
-function isCurrent(date) {
+function isCurrent(date: Date) {
   let newDate = getNewDate(new Date())
   let currentYear = newDate.year
   let currentMonth = newDate.month
@@ -107,7 +107,7 @@ let time: Ref<{
 }> = ref({ year, month, day })
 const visibleCalendar: Ref<DateProps[]> = ref([])
 
-const dateViewStyle = computed(() => {
+const dateViewStyle = computed<any>(() => {
   if (props.dayStyle) {
     return props.dayStyle
   }
@@ -192,7 +192,7 @@ const handleToday = () => {
   emit('today')
 }
 // 点击某一天
-const handleSelectDay = item => {
+const handleSelectDay = (item: DateProps) => {
   if (!item.monthFlag) {
     setSelected(item)
     return
@@ -214,7 +214,7 @@ const handleSelectDay = item => {
     select && setSelected(select)
   }
 }
-const setSelected = day => {
+const setSelected = (day: DateProps) => {
   visibleCalendar.value.map(x => (x.selected = false))
   day.selected = true
   emit('selected', day)

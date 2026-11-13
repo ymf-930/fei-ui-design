@@ -1,18 +1,25 @@
 let supportsPassive = false
 try {
   const opts = Object.defineProperty({}, 'passive', {
-    // eslint-disable-next-line getter-return
     get() {
       supportsPassive = true
     }
   })
-  window.addEventListener('testPassive', null, opts)
-  window.removeEventListener('testPassive', null, opts)
+  const noop = () => {}
+  window.addEventListener('testPassive', noop, opts)
+  window.removeEventListener('testPassive', noop, opts)
   // eslint-disable-next-line no-empty
-} catch (e) {}
+} catch {}
 
-export function addEventListenerWrap(target, eventType, cb, option) {
-  if (target.addEventListener) {
+type Listener = (...args: any[]) => void
+
+export function addEventListenerWrap(
+  target: EventTarget | null,
+  eventType: string,
+  cb: Listener | null,
+  option?: boolean | AddEventListenerOptions
+) {
+  if (target?.addEventListener) {
     let opt = option
     if (
       opt === undefined &&
@@ -25,7 +32,7 @@ export function addEventListenerWrap(target, eventType, cb, option) {
   }
   return {
     remove: () => {
-      if (target.removeEventListener) {
+      if (target?.removeEventListener) {
         target.removeEventListener(eventType, cb)
       }
     }

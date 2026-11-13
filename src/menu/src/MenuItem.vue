@@ -7,7 +7,7 @@
     :class="{
       'is-active': active,
       'is-disabled': disabled,
-      'is-tooltip': parentMenu.type.name === 'FMenu' && rootMenu.props.collapse && slots.title
+      'is-tooltip': parentMenu?.type.name === 'FMenu' && rootMenu.props.collapse && slots.title
     }"
     @click="handleClick"
     @mouseenter="onMouseEnter"
@@ -16,7 +16,7 @@
     @mouseleave="onMouseLeave"
   >
     <f-tooltip
-      v-if="parentMenu.type.name === 'FMenu' && rootMenu.props.collapse && slots.title"
+      v-if="parentMenu?.type.name === 'FMenu' && rootMenu.props.collapse && slots.title"
       theme="dark"
       placement="right"
     >
@@ -76,7 +76,7 @@ export default defineComponent({
   emits: ['click'],
   setup(props, { emit, slots }) {
     const instance = getCurrentInstance()!
-    const rootMenu = inject('rootMenu')
+    const rootMenu = inject('rootMenu') as any
     const { parentMenu, paddingStyle, indexPath } = useMenu(instance, props.index)
 
     // @ts-ignore

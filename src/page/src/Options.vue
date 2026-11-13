@@ -38,7 +38,7 @@ import { defineComponent, ref, watch } from 'vue'
 import { optionsProps } from './types'
 import { FSelect, FOption } from '../../select'
 
-function isValueNumber(value) {
+function isValueNumber(value: unknown) {
   return /^[1-9][0-9]*$/.test(value + '')
 }
 
@@ -52,7 +52,7 @@ export default defineComponent({
     const changeSize = () => {
       ctx.emit('size', currentPageSize.value)
     }
-    const changePage = e => {
+    const changePage = (e: any) => {
       let val = e.target.value.trim()
       let page = 0
 

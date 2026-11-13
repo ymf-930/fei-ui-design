@@ -44,7 +44,7 @@ export default defineComponent({
     // data
     const thumbLeft = ref(0)
     const thumbTop = ref(0)
-    const background = ref(null)
+    const background = ref('')
 
     watch(
       () => props.color.get('alpha'),
@@ -87,10 +87,10 @@ export default defineComponent({
         const { r, g, b } = props.color.toRgb()
         return `linear-gradient(to right, rgba(${r}, ${g}, ${b}, 0) 0%, rgba(${r}, ${g}, ${b}, 1) 100%)`
       }
-      return null
+      return ''
     }
 
-    function handleClick(event) {
+    function handleClick(event: MouseEvent) {
       const target = event.target
 
       if (target !== thumb.value) {
@@ -98,7 +98,7 @@ export default defineComponent({
       }
     }
 
-    function handleDrag(event) {
+    function handleDrag(event: MouseEvent) {
       // @ts-ignore
       const el = instance.vnode.el
       // @ts-ignore
@@ -145,10 +145,10 @@ export default defineComponent({
     // mounded
     onMounted(() => {
       const dragConfig = {
-        drag: event => {
+        drag: (event: MouseEvent) => {
           handleDrag(event)
         },
-        end: event => {
+        end: (event: MouseEvent) => {
           handleDrag(event)
         }
       }

@@ -1,4 +1,4 @@
-import { Comment, h } from 'vue'
+import { createCommentVNode, h } from 'vue'
 
 export default function renderArrow(showArrow: boolean) {
   return showArrow
@@ -8,8 +8,7 @@ export default function renderArrow(showArrow: boolean) {
           ref: 'arrowRef',
           class: 'fei-popper__arrow',
           'data-popper-arrow': ''
-        },
-        null
+        }
       )
-    : h(Comment, null, '')
+    : createCommentVNode('')
 }

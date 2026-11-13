@@ -64,7 +64,7 @@ const itemStyle = computed(() => {
 
 // methods
 
-function processIndex(index, activeIndex, length) {
+function processIndex(index: number, activeIndex: number, length: number) {
   if (activeIndex === 0 && index === length - 1) {
     return -1
   } else if (activeIndex === length - 1 && index === 0) {
@@ -77,7 +77,7 @@ function processIndex(index, activeIndex, length) {
   return index
 }
 
-function calcCardTranslate(index, activeIndex) {
+function calcCardTranslate(index: number, activeIndex: number) {
   // @ts-ignore
   const parentWidth = injectCarouselScope.offsetWidth.value
   if (data.inStage) {
@@ -89,13 +89,13 @@ function calcCardTranslate(index, activeIndex) {
   }
 }
 
-function calcTranslate(index, activeIndex, isVertical) {
+function calcTranslate(index: number, activeIndex: number, isVertical: boolean) {
   // @ts-ignore
   const distance = injectCarouselScope[isVertical ? 'offsetHeight' : 'offsetWidth'].value
   return distance * (index - activeIndex)
 }
 
-const translateItem = (index, activeIndex, oldIndex) => {
+const translateItem = (index: number, activeIndex: number, oldIndex?: number) => {
   // @ts-ignore
   const parentType = injectCarouselScope.type // @ts-ignore
   const length = injectCarouselScope.items.value.length

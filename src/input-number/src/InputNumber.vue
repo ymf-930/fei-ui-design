@@ -60,12 +60,12 @@ function addNum(num1: number, num2: number) {
   let sq1, sq2, m
   try {
     sq1 = num1.toString().split('.')[1].length
-  } catch (e) {
+  } catch {
     sq1 = 0
   }
   try {
     sq2 = num2.toString().split('.')[1].length
-  } catch (e) {
+  } catch {
     sq2 = 0
   }
   m = Math.pow(10, Math.max(sq1, sq2))
@@ -107,7 +107,7 @@ export default defineComponent({
       }
       changeStep('down', targetVal)
     }
-    const focus = e => {
+    const focus = (e: FocusEvent) => {
       data.focused = true
       ctx.emit('focus', e)
     }
@@ -119,7 +119,7 @@ export default defineComponent({
       })
     }
 
-    const keyDown = e => {
+    const keyDown = (e: KeyboardEvent) => {
       if (e.keyCode === 38) {
         e.preventDefault()
         // @ts-ignore
@@ -130,7 +130,7 @@ export default defineComponent({
         down(e)
       }
     }
-    const change = e => {
+    const change = (e: any) => {
       let val = e.target.value.trim()
       // 需要格式化数据时
       let needFormat =
@@ -160,7 +160,7 @@ export default defineComponent({
       }
     }
 
-    function changeStep(type, value) {
+    function changeStep(type: string, value: unknown) {
       if (props.disabled || props.readonly) {
         return false
       }
@@ -197,7 +197,7 @@ export default defineComponent({
       setValue(val)
     }
 
-    function setValue(val) {
+    function setValue(val: any) {
       // 如果 step 是小数，且没有设置 precision，是有问题的
       // @ts-ignore
       if (val && !isNaN(props.precision)) val = Number(Number(val).toFixed(props.precision))
@@ -217,7 +217,7 @@ export default defineComponent({
       })
     }
 
-    function changeVal(val) {
+    function changeVal(val: any) {
       // 根据类型进行特殊处理
       const inputType = typeOf(val)
 

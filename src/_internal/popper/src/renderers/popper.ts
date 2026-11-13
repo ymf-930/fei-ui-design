@@ -1,7 +1,27 @@
 import { withDirectives, Transition, vShow, withCtx, h } from 'vue'
+import type { Ref, VNode } from 'vue'
 import { stop } from '../../../../_utils/dom'
 
-export default function renderPopper(props, children) {
+/** renderPopper 的渲染配置（FPopper 与 FPopover 复用同一渲染器，多数字段可缺省） */
+export interface RenderPopperOptions {
+  theme?: string
+  name?: string
+  stopPopperMouseEvent?: boolean
+  popperClass?: string
+  popperStyle?: Record<string, any>
+  popperRef?: Ref<HTMLElement | null> | string
+  pure?: boolean
+  popperId?: string
+  visibility: boolean
+  onMouseEnter?: (e: MouseEvent) => void
+  onMouseLeave?: (e: MouseEvent) => void
+  onAfterEnter?: () => void
+  onAfterLeave?: () => void
+  onBeforeEnter?: () => void
+  onBeforeLeave?: () => void
+}
+
+export default function renderPopper(props: RenderPopperOptions, children: VNode[]): VNode {
   const {
     theme,
     name,

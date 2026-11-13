@@ -1,6 +1,6 @@
 import { computed } from 'vue'
 
-export const useMarks = props => {
+export const useMarks = (props: any) => {
   return computed(() => {
     if (!props.marks) {
       return []

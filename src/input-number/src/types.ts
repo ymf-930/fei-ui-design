@@ -20,7 +20,7 @@ export const inputNumberProps = {
   },
   size: {
     type: String,
-    validator: value => ['small', 'large', 'default', 'mini', ''].includes(value)
+    validator: (value: string) => ['small', 'large', 'default', 'mini', ''].includes(value)
   },
   disabled: {
     type: Boolean,

@@ -12,6 +12,7 @@
 
 <script setup lang="ts">
 import { inject } from 'vue'
+import type { PropType } from 'vue'
 import FDescCell from './DescCell'
 import type { DescProps } from './types'
 
@@ -20,7 +21,7 @@ defineOptions({
 })
 defineProps({
   row: {
-    type: Array,
+    type: Array as PropType<Record<string, any>[]>,
     default: () => []
   }
 })

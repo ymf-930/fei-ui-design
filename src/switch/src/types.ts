@@ -13,7 +13,7 @@ export const switchProps = {
   },
   disabled: Boolean,
   size: {
-    validator: value => {
+    validator: (value: string) => {
       return ['large', 'small', 'default'].includes(value)
     },
     default: 'default'

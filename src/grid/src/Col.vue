@@ -31,10 +31,12 @@ const classes = computed(() => {
   ]
 
   ;['xs', 'sm', 'md', 'lg', 'xl', 'xxl'].forEach(size => {
-    if (typeof props[size] === 'number') {
-      classList.push(`${prefixCls}-span-${size}-${props[size]}`)
-    } else if (typeof props[size] === 'object') {
-      let propItem = props[size]
+    // ColProps 只声明 number，但运行时也支持对象型响应式配置，故按索引映射读取
+    const value = (props as unknown as Record<string, unknown>)[size]
+    if (typeof value === 'number') {
+      classList.push(`${prefixCls}-span-${size}-${value}`)
+    } else if (value && typeof value === 'object') {
+      const propItem = value as Record<string, unknown>
       Object.keys(propItem).forEach(prop => {
         classList.push(
           prop !== 'span'

@@ -1,6 +1,6 @@
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, ref, watch, type Ref } from 'vue'
 
-export default function (loading, throttle = 0) {
+export default function (loading: Ref<boolean>, throttle = 0) {
   if (throttle === 0) return loading
   const throttled = ref(false)
   let timeoutHandle = 0

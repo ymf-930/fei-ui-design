@@ -30,7 +30,7 @@ export const uploadProps = {
   },
   type: {
     type: String,
-    validator(value) {
+    validator(value: string) {
       return ['select', 'drag'].includes(value)
     },
     default: 'select'

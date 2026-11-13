@@ -182,7 +182,7 @@ export default defineComponent({
     )
 
     // methods
-    function displayedRgb(color, showAlpha) {
+    function displayedRgb(color: any, showAlpha: boolean) {
       if (!(color instanceof Color)) {
         throw Error('color should be instance of _color Class')
       }
@@ -193,7 +193,7 @@ export default defineComponent({
         : `rgb(${r}, ${g}, ${b})`
     }
 
-    function setShowPicker(value) {
+    function setShowPicker(value: boolean) {
       showPicker.value = value
     }
 

@@ -7,14 +7,25 @@ import { isString } from '../../_utils/util-helper'
 interface MessageBoxVm {
   message?: string | VNode
   visible: boolean
+  doClose: () => void
 }
 
-const messageInstance = new Map()
+interface MessageBoxState {
+  options: any
+  callback?: (action: string, proxy: unknown) => void
+  resolve: (value: unknown) => void
+  reject: (reason?: unknown) => void
+}
 
-const initInstance = (props, container) => {
+const messageInstance = new Map<MessageBoxVm, MessageBoxState>()
+
+const initInstance = (props: any, container: HTMLElement) => {
   const vnode = createVNode(MessageBoxConstructor, props)
   render(vnode, container)
-  document.body.appendChild(container.firstElementChild)
+  const el = container.firstElementChild
+  if (el) {
+    document.body.appendChild(el)
+  }
   return vnode.component
 }
 
@@ -22,7 +33,7 @@ const genContainer = () => {
   return document.createElement('div')
 }
 
-const showMessage = options => {
+const showMessage = (options: any) => {
   const container = genContainer()
   // Adding destruct method.
   // when transition leaves emitting `vanish` evt. so that we can do the clean job.
@@ -35,8 +46,9 @@ const showMessage = options => {
     // but render(null, container) did that job for us. so that we do not call that directly
   }
 
-  options.onAction = action => {
+  options.onAction = (action: string) => {
     const currentMsg = messageInstance.get(vm)
+    if (!currentMsg) return
     const resolve = action
     if (options.callback) {
       options.callback(resolve, instance.proxy)
@@ -78,9 +90,9 @@ const showMessage = options => {
   return vm
 }
 
-function MessageBox(options) {
+function MessageBox(options: any) {
   if (isServer) return
-  let callback
+  let callback: MessageBoxState['callback']
   if (isString(options) || isVNode(options)) {
     options = {
       message: options
@@ -100,7 +112,7 @@ function MessageBox(options) {
   })
 }
 
-MessageBox.alert = options => {
+MessageBox.alert = (options: any) => {
   return MessageBox(
     Object.assign(
       {
@@ -113,7 +125,7 @@ MessageBox.alert = options => {
   )
 }
 
-MessageBox.confirm = options => {
+MessageBox.confirm = (options: any) => {
   return MessageBox(
     Object.assign(
       {

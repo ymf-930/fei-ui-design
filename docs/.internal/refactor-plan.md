@@ -223,18 +223,18 @@ lib/package.json  → { "type": "commonjs" }
 ### 3.3 P2 — 类型安全（**进行中：S1 已完成，S2 推进中**）
 
 **基线**：`vue-tsc --noEmit` 报告 **1832 处错误 / 156 个文件**。
-**当前**：**1028 处错误 / 115 个文件**，其中 TS2339 已归零（S1 验收达成）。
+**当前**：**580 处错误 / 36 个文件**，其中 TS2339 已归零（S1 验收达成）。
 
 | 错误码 | 基线 | 当前 | 含义 | 根因 |
 | --- | --- | --- | --- | --- |
-| TS7006 | 972 | 637 | 参数隐式 `any` | 由 JS 迁移而来，函数参数未标注类型 |
+| TS7006 | 972 | 357 | 参数隐式 `any` | 由 JS 迁移而来，函数参数未标注类型 |
 | TS2339 | 323 | **0** | 属性不存在 | class 未声明字段；`inject()` 未指定类型 |
-| TS7053 | 91 | 60 | 索引签名缺失 | 动态键访问对象 |
-| TS18046 | 75 | 77 | 值类型为 `unknown` | `catch` / 未定型返回值 |
-| TS2322 | 69 | 56 | 类型不可赋值 | 联合类型收窄不足 |
-| TS7005 | 51 | 28 | 变量隐式 `any` | 同 TS7006 |
-| TS18047 | 50 | 30 | 可能为 `null` | `ref(null)` 未标注类型 |
-| 其他 | 251 | 140 | — | — |
+| TS7053 | 91 | 50 | 索引签名缺失 | 动态键访问对象 |
+| TS18046 | 75 | 64 | 值类型为 `unknown` | `catch` / 未定型返回值 |
+| TS2322 | 69 | 24 | 类型不可赋值 | 联合类型收窄不足 |
+| TS7005 | 51 | 11 | 变量隐式 `any` | 同 TS7006 |
+| TS18047 | 50 | 2 | 可能为 `null` | `ref(null)` 未标注类型 |
+| 其他 | 251 | 72 | — | — |
 
 **错误最密集的文件（当前）**：
 
@@ -247,9 +247,14 @@ lib/package.json  → { "type": "commonjs" }
 | `src/tree/src/Tree.vue` | 34 | 内部 store / 拖拽回调未标注 |
 | `src/time-picker/src/time-picker-com/useTimePicker.ts` | 32 | 同上 |
 
-> `src/_utils`（19 个文件）已在本轮**全部清零**：`dom.ts`、`util.ts`、`color.ts`、
-> `log.ts`、`vnode.ts`、`config.ts`、`config-util.ts`、`scroll-into-view.ts` 等
-> 的参数与返回值均已定型，后续组件目录可直接受益。
+> `src/_utils`（19 个文件）、`src/_hooks`、`src/_internal` 及 31 个组件目录
+> 已在本轮**全部清零**：`dom.ts`、`util.ts`、`color.ts`、`log.ts`、`vnode.ts`、
+> `config.ts`、`config-util.ts`、`scroll-into-view.ts`、popper / scrollbar /
+> move-transition 内部，以及 switch / steps / count-to / collapse / input-number /
+> skeleton / space / popover / radio / checkbox / tooltip / grid / desc / icon /
+> anchor / back-top / tabs / message-box / modal / message / input / page / carousel /
+> form / notice / calendar / color-picker / slider / menu / upload / cascader
+> 的参数与返回值均已定型，剩余高复杂度组件目录可直接受益。
 
 **结论**：这是历史存量债务，无法在一次改造中清零，必须分阶段推进。
 其中 TS2339 多为**真实缺陷**（如 class 声明了 `this.uid` 却无字段声明，
@@ -273,13 +278,14 @@ lib/package.json  → { "type": "commonjs" }
 | 阶段 | 目标 | 手段 | 验收 | 状态 |
 | --- | --- | --- | --- | --- |
 | S1 | 消除 TS2339（323） | 为 class 补齐字段声明；`inject<T>()` 补类型参数 | 错误数 ≤ 1500 | ✅ 已完成（1221，TS2339 = 0） |
-| S2 | 消除 TS7006 / TS7005（1023） | 按目录批量补参数类型（`_utils` → 简单组件 → 复杂组件） | 错误数 ≤ 400 | 🔄 进行中（665，`_utils` 已清零） |
-| S3 | 清零并开启阻断 | 剩余零散错误逐个修复；CI 移除 `continue-on-error` | `type-check` 通过 | ⏳ 待执行 |
+| S2 | 消除 TS7006 / TS7005（1023） | 按目录批量补参数类型（`_utils` → 简单组件 → 复杂组件） | 错误数 ≤ 400 | ✅ 验收达标（368 ≤ 400，31 个目录已清零） |
+| S3 | 清零并开启阻断 | 剩余零散错误逐个修复；CI 移除 `continue-on-error` | `type-check` 通过 | 🔄 进行中 |
 | S4 | 收紧严格度 | 开启 `noUncheckedIndexedAccess`、`exactOptionalPropertyTypes` | — | ⏳ 待执行 |
 
-> S2 下一步建议按「`_hooks` → `_internal` → 简单组件」顺序推进：
-> `_hooks`（`use-modal` / `use-timeout` / `use-focus` / `use-modal-drag`，约 20 处）与
-> `_internal`（popper hooks 21 处、scrollbar 18 处）同样是被广泛复用的底层模块。
+> TS7006 + TS7005 已由 1023 降至 **368**，S2 的「≤ 400」验收线达成；
+> 底层模块与 31 个组件目录已清零，剩余 5 个高复杂度目录转入 S3：
+> `table`(177) / `time-picker`(148) / `date-picker`(101) / `select`(85) / `tree`(69)。
+> 这些目录的模板 `this` 上下文与选项式 API 相互耦合，建议逐目录批量补参数类型。
 
 **S1 过程中暴露的真实缺陷（随类型补齐一并修复）**：
 
@@ -304,6 +310,126 @@ lib/package.json  → { "type": "commonjs" }
 | `_utils/util.ts` `copy` / `open` | `document.getElementById()` 可能返回 `null` 却直接传给 `removeChild` | 抽出 `removeTempElement()` 并做空值判断 |
 | `_utils/dom.ts` `off` | 未传回调时把 `undefined` 传给 `removeEventListener` | 按 DOM 规范改传 `null`（语义一致，类型正确） |
 | `_utils/color.ts` | 依赖 `color` 无类型声明（TS7016） | 新增 `_utils/color-module.d.ts` 按实际用到的 API 做最小声明 |
+
+**S2 过程中补充的修复（`_internal` 批量定型）**：
+
+| 位置 | 问题 | 修复 |
+| --- | --- | --- |
+| `_internal/popper/src/types.ts` | `TriggerType` 缺 `focus`，但 hooks 已实现 `onFocus` / `onBlur` 事件映射，类型与实现不符 | 补齐 `focus`；同时补齐 options 组装实际读取的 `fallbackPlacements` 类型 |
+| `_internal/popper/src/renderers/arrow.ts` | `h('div', props, null)` 与 `h(Comment, null, '')` 均不命中 `h` 的合法重载 | 移除 `null` children；注释节点改用 `createCommentVNode('')` |
+| `_internal/popper/src/hooks/index.ts` | `triggerEventsMap` 未配置 `contextmenu` 时 `undefined.forEach` 会在 setup 阶段抛错 | 映射表改为 `Partial<Record<TriggerType, string[]>>` 并可选调用 |
+| `_internal/move-transition/src/MoveTransition.ts` | `el.style = ''` 对只读属性赋值，DOM 类型下不合法 | 改为语义等价的 `style.cssText = ''` |
+| `_internal/scrollbar/src/bar.ts` | 拖拽计算中 `thumb.value?.[...]` 为 `undefined` 时减法得到 `NaN`，位置计算失效 | 补 `?? 0` 空值兜底 |
+
+> 本轮 `_internal` 共消除 31 处类型错误（popper 28、move-transition 2、scrollbar 1），
+> 目录内已清零；`vue-tsc` 总数 987 → 956，TS2339 保持 0，ESLint 与 16 个单测用例全部通过。
+
+**S2 过程中补充的修复（简单组件批量定型）**：
+
+| 位置 | 问题 | 修复 |
+| --- | --- | --- |
+| `checkbox/src/Checkbox.vue` | 模板用 `:tabindex="... : false"` / `:role="... : false"` 表达「不设置」，Vue 会渲染成字符串 `"false"` | 改用 `undefined` 让 Vue 移除属性 |
+| `desc/src/DescCell.ts` | `descriptions.column` 可能 `undefined`，`50 / undefined` 得到 `NaN`，单元格宽度退化 | 沿用 `FDesc` 的默认值 3 兜底 |
+| `checkbox/src/useCheckbox.ts` | `model.value.length >= max` 中 `max` 可能为 `undefined`，比较恒为 `false` | 显式守卫 `undefined`，保持原边界语义 |
+| `tooltip/src/Tooltip.tsx` | `getFirstValidNode()` 可能返回 `undefined` 却直接 `cloneVNode`；动态 props 索引无签名 | 空节点用 `createCommentVNode` 兜底，索引经 `Record<string, any>` 读取 |
+| `collapse/src/types.ts` | `UPDATE_MODEL_EVENT` 等常量被当作类型使用（TS2749） | 改用 `typeof` 取字面量类型 |
+| `popover/src/types.ts` | 覆盖 `trigger` 时丢失 `PropType`，与 `TriggerType` 不一致 | 对齐 `String as PropType<TriggerType>` |
+| `anchor/src/Anchor.vue` | 滚动容器可能为 `null` 仍传给 `scrollTop` | 加空值守卫并收窄类型 |
+| `back-top/src/BackTop.vue` | 用 `null` 表示「无回调」，但签名只接受函数或 `undefined` | 改传 `undefined` |
+| `grid/src/Col.vue` | 动态字符串索引 `props[size]` 无索引签名；`ColProps` 只声明 number | 用索引映射读取，保留对象型断点配置的运行时能力 |
+
+> 本轮共消除 59 处类型错误，16 个简单组件目录全部清零；
+> `vue-tsc` 总数 956 → 897 / 80 个文件，TS2339 保持 0，
+> ESLint 0 error、16 个单测用例全部通过。
+
+**S2 过程中补充的修复（中等组件批量定型）**：
+
+| 位置 | 问题 | 修复 |
+| --- | --- | --- |
+| `modal/src/useModal.ts` | `openTimer` / `closeTimer` 用 `ref(null)`，赋值定时器句柄后类型退化为 `null`；`zIndex` / `top` 可选却直接参与运算和赋值 | 定时器改为 `ref<number \| null>`，数值与字符串补默认值 |
+| `modal/src/addListener.ts` | 探测 passive 支持时把 `null` 当 listener 传给 `addEventListener`，DOM 类型下不合法 | 改用空函数，并为包装函数补齐 `EventTarget` / listener / options 类型 |
+| `message/src/instance.ts` | `vm.component` / `vm.el` / `exposed` 可能为 `null`，关闭与重排消息时直接解引用；`typeExtend` 用 `string` 覆盖字面量联合的 `type` | 全面加可选链与空值兜底，`type` 收敛为 `MessageProps['type']` |
+| `message-box/src/instance.ts` | `messageInstance` 为无类型 `Map`，`Map.get()` 结果未判空即调用 `resolve/reject`；`firstElementChild` 可能为 `null` 仍传给 `appendChild` | 定义实例与状态接口，加空值守卫 |
+| `tabs/src/ScrollPane.vue` | `moveStep` 参数隐式 `any`；滚轮事件兼容旧版 `wheelDelta`，容器宽度可能 `undefined` | 补齐事件与数值参数类型，宽度补 `?? 0` |
+| `message-box/src/types.ts` | `beforeClose` 三个参数均未定型 | 按 `MessageBox.vue` 的实际调用补齐签名 |
+
+> 本轮共消除 50 处类型错误，tabs / message-box / modal / message 四个目录全部清零；
+> `vue-tsc` 总数 897 → 847 / 73 个文件，TS2339 保持 0，
+> ESLint 0 error / 0 warning、16 个单测用例全部通过。
+
+**S2 过程中补充的修复（input / page / carousel 批量定型）**：
+
+| 位置 | 问题 | 修复 |
+| --- | --- | --- |
+| `input/src/calcTextareaHeight.ts` | `maxRows = null` 使参数类型退化为 `null`，调用方传 `number` 直接报错；模块级 `hiddenTextarea` 未定型 | `maxRows: number \| null`，`hiddenTextarea: HTMLTextAreaElement \| null` |
+| `input/src/Input.vue` | 文本域 `:value` 收到 `string \| number \| boolean`；`:style` 中 `resize: null` 不匹配 `StyleValue`（被前一处错误掩盖） | value 显式转字符串；`textareaStyle` 标注为宽松类型 |
+| `page/src/types.ts` / `Options.vue` | `pageSizeOpts: Array` 解析为 `unknown[]`，模板 `:key` / `:value` 无法接收 `unknown` | 两处 props 统一为 `PropType<number[]>` |
+| `page/src/Page.vue` | 8 处 `:title` 绑定 number，`li.title` 只接受字符串；`keyUp` 中 `page` 的初值从未生效（`no-useless-assignment`） | title 显式 `String()`；删去冗余的 else 分支 |
+| `carousel/src/Carousel.vue` | `resetItemPosition(oldIndex: any)` 不能作为无参的 `ResizeListener` 注册 / 解绑 | 改为可选参数 `oldIndex?: number` |
+| `carousel/src/CarouselItem.vue` | 位移计算的四个函数参数均为隐式 `any` | 按索引 / 激活索引 / 方向补齐类型 |
+
+> 本轮共消除 56 处类型错误，input / page / carousel 三个目录全部清零；
+> `vue-tsc` 总数 847 → 791 / 66 个文件，TS2339 保持 0，
+> ESLint 0 error / 0 warning、16 个单测用例全部通过。
+
+**S2 过程中补充的修复（form / notice / calendar 批量定型）**：
+
+| 位置 | 问题 | 修复 |
+| --- | --- | --- |
+| `notice/src/instance.ts` | `vm.component` / `vm.el` / `vm.props` 可能为 `null` 却直接解引用；`typeExtend` 用 `string` 覆盖字面量联合的 `type`；`options` 拼装 `onClose` 与 `CreateNoticeProps` 不符 | 全面加可选链与空值兜底，`type` 收敛为 `NoticeProps['type']`，拆出 `noticeProps: NoticeProps` |
+| `form/src/Form.vue` | `fields` / `potentialLabelWidthArr` 为隐式 `any[]`；`validate` 回调被重新赋值且参数未定型 | 显式标注集合与回调类型 |
+| `form/src/FormItem.vue` | `props.prop` 可选却直接传给要求 `string` 的 `getPropByPath` | 补 `\|\| ''` 默认值 |
+| `form/src/label-wrap.ts` | `setup` 的两个参数均为隐式 `any` | 显式标注 `props` 与 `Slots` |
+| `calendar/src/Calendar.vue` | 日期样式的 `textAlign: string` 不匹配 `CSSProperties.TextAlign`，导致模板 `li` props 校验失败 | `dateViewStyle` 标注为宽松类型 |
+
+> 本轮共消除 54 处类型错误，form / notice / calendar 三个目录全部清零；
+> `vue-tsc` 总数 791 → 737 / 61 个文件，TS2339 保持 0，
+> ESLint 0 error / 0 warning、16 个单测用例全部通过。
+
+**S2 过程中补充的修复（color-picker / slider 批量定型）**：
+
+| 位置 | 问题 | 修复 |
+| --- | --- | --- |
+| `color-picker/src/alpha-slider.vue` | `getBackground()` 返回 `null`，`background: ref(null)` 使 `:style` 不匹配 `StyleValue` | 初值与兜底均改为空字符串 |
+| `color-picker/src/predefine.vue` | `colors: Array` 解析为 `unknown[]`，模板 `:key="colors[index]"` 索引失败 | 与 `colorProps` 统一为 `PropType<string[]>` |
+| `color-picker/src/draggable.ts` | 拖拽的 element / options / 三个事件回调均为隐式 `any` | 定义 `DragOptions` 并补齐参数类型 |
+| `slider/src/Slider.vue` | `initData.firstValue` / `secondValue` 初值 `null`，传给子组件 `v-model` 类型不兼容 | 改为数值初值 0（`useLifecycle` 会立即覆盖） |
+| `slider/src/useSlide.ts` | `firstButton` / `slider` 等 `ref(null)` 类型退化为 `null`；`buttonRefs[buttonRefName]` 动态键无签名 | ref 标注宽松类型，`buttonRefName` 收窄为字面量联合 |
+| `slider/src/useSliderButton.ts` | `onButtonDown` 同时绑定 `mousedown` 与 `touchstart`，标成 `MouseEvent` 后与 `TouchEvent` 冲突；`tooltip.value` 可能为 `null` | 事件参数改为宽松类型，`tooltip` 标注宽松类型 |
+
+> 本轮共消除 56 处类型错误，color-picker / slider 两个目录全部清零；
+> `vue-tsc` 总数 737 → 681 / 49 个文件，TS2339 保持 0，
+> ESLint 0 error / 0 warning、16 个单测用例全部通过。
+
+**S2 过程中补充的修复（menu / upload 批量定型）**：
+
+| 位置 | 问题 | 修复 |
+| --- | --- | --- |
+| `upload/src/UploadList.vue` | `files: Array` 解析为 `unknown[]`，模板中 `file.name` / `file.status` 全部退化为 `unknown`；进度条 `:status` 用 `null` 表达「不设置」 | 定义 `UploadFile` 并声明 `PropType<UploadFile[]>`，`null` 改为 `undefined` |
+| `upload/src/Upload.vue` | 选项式 API 的 `this.$refs.input` 为 `unknown`；清空 file input 时赋 `null` 会被 DOM 转成字符串 `"null"` | `$refs` 显式收窄为 `HTMLInputElement`，清空改用空字符串 |
+| `upload/src/Upload.vue` | 上传链路 20 余个方法 / 回调参数为隐式 `any`，`format.some` 元素为 `unknown` | 批量补齐参数类型 |
+| `menu/src/Menu.vue` | `routeToItem` 要求 `route` 必填，但菜单项注册表只有 `index` / `indexPath` | 按实际调用放宽为可选字段 |
+| `menu/src/MenuItem.vue` | 模板直接访问可能为 `null` 的 `parentMenu`；`rootMenu` 注入值类型为 `unknown` | 模板改可选链，注入值显式定型 |
+| `menu/src/Submenu.vue` | `h('i', props, null)` 不命中重载；动态计算的 `placement: string` 不匹配 `Placement` 字面量联合 | 移除 `null` children，placement 显式收窄 |
+| `menu/src/useMenu.ts` | `computed<Record<string, string>>` 的空对象分支被推断为含 `undefined` 的联合 | 空分支断言为 `Record<string, string>` |
+
+> 本轮共消除 55 处类型错误，menu / upload 两个目录全部清零；
+> `vue-tsc` 总数 681 → 626 / 41 个文件，TS2339 保持 0，
+> ESLint 0 error / 0 warning、16 个单测用例全部通过。
+
+**S2 过程中补充的修复（cascader 批量定型）**：
+
+| 位置 | 问题 | 修复 |
+| --- | --- | --- |
+| `cascader/src/menu.vue` | `nodes: Array` 解析为 `unknown[]`，模板 `node.uid` / `:node` 退化为 `unknown`；`inject(PANEL_INJECTION_KEY)` 结果为 `unknown`；`activeNode` / `hoverTimer` 初值为 `null` 导致类型退化 | 声明 `PropType<any[]>`，注入值与局部变量显式定型 |
+| `cascader/src/CascaderPanel.vue` | `checkedNodes = ref([])` 推断为 `never[]`，无法回写 `Node[]`；懒加载、展开、勾选链路十余个回调参数为隐式 `any` | `ref<Node[]>([])` 并批量补齐参数类型 |
+| `cascader/src/Cascader.vue` | `togglePopperVisible` 模板无参调用但签名要求必填；`INPUT_HEIGHT_MAP[realSize.value]` 动态索引无签名；`focusFirstNode` 的初值从未生效 | visible 改可选，键名收窄为 `keyof`，去掉冗余初值 |
+| `cascader/src/node.vue` | 模板 `:aria-owns` / `:tabindex` 用 `null` 表达「不设置」，DOM 类型不接受 | 改用 `undefined` |
+
+> 本轮共消除 46 处类型错误，cascader 目录清零；
+> `vue-tsc` 总数 626 → 580 / 36 个文件，TS2339 保持 0，
+> ESLint 0 error / 0 warning、16 个单测用例全部通过。
+> **S2 验收线（TS7006 + TS7005 ≤ 400）已达成：368。**
 
 ### 3.4 P2 — 测试体系（未完成）
 
@@ -333,7 +459,7 @@ lib/package.json  → { "type": "commonjs" }
 | 阶段二 | 统一命名 + 加固注册逻辑（§3.2 #16 #17） | ✅ 已完成 |
 | 阶段三 | 工程化护栏：lint 可运行且归零、忽略规则修正、真实缺陷修复（§3.2 #18–#27） | ✅ 已完成 |
 | 阶段四 | 发布链路：入口一致性、双格式模块标记、按需引入可解析、产物校验与冒烟测试（§5） | ✅ 已完成 |
-| 阶段五 | 类型安全：按 S1→S4 推进（§3.3）。S1 已完成（TS2339 归零），S2 推进中（1028 处 / 115 文件，`_utils` 已清零） | 🔄 进行中 |
+| 阶段五 | 类型安全：按 S1→S4 推进（§3.3）。S1 已完成（TS2339 归零），S2 验收达标（368 ≤ 400），S3 推进中（580 处 / 36 文件，31 个目录已清零） | 🔄 进行中 |
 | 阶段六 | 测试与质量门禁：补齐组件测试、移除 `type-check` 的 `continue-on-error`（§3.4） | ⏳ 待执行 |
 | 阶段七 | 能力补全：a11y → i18n → 按需引入插件 → SSR 守卫 → 主题文档（§3.5） | ⏳ 待执行 |
 

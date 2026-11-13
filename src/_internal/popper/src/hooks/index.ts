@@ -1,30 +1,28 @@
 import { computed, ref, reactive, watch } from 'vue'
 import { createPopper } from '@popperjs/core'
 import type { Instance as PopperInstance } from '@popperjs/core'
-import {
-  generateId,
-  isBool,
-  isHTMLElement,
-  isString,
-  $,
-  isArray
-} from '../../../../_utils/util-helper'
+import { generateId, isBool, isHTMLElement, isString, $ } from '../../../../_utils/util-helper'
 
 import usePopperOptions from './use-popper-options'
 import { transferIncrease } from '../../../../_utils/config'
-import type { PopperProps } from '../types'
+import { DEFAULT_TRIGGER, type PopperProps, type TriggerType } from '../types'
 
 export const UPDATE_VISIBLE_EVENT = 'update:visible'
 
-export default function (props: PopperProps, ctx) {
+/** hook 仅依赖 emit，使用最小上下文类型以兼容 defineComponent 推导出的 ctx 变体 */
+interface PopperContext {
+  emit: (...args: any[]) => void
+}
+
+export default function (props: PopperProps, ctx: PopperContext) {
   const arrowRef = ref<HTMLElement | null>(null)
   const triggerRef = ref<HTMLElement | null>(null)
   const popperRef = ref<HTMLElement | null>(null)
 
   const popperId = `fei-popper-${generateId()}`
   let popperInstance: null | PopperInstance = null
-  let showTimer = null
-  let hideTimer = null
+  let showTimer: number | undefined
+  let hideTimer: number | undefined
   let triggerFocused = false
 
   const isManualMode = () => props.manualMode || props.trigger === 'manual'
@@ -55,7 +53,7 @@ export default function (props: PopperProps, ctx) {
   })
 
   function _show() {
-    if (props.hideAfter > 0) {
+    if ((props.hideAfter ?? 0) > 0) {
       hideTimer = window.setTimeout(() => {
         _hide()
       }, props.hideAfter)
@@ -87,7 +85,7 @@ export default function (props: PopperProps, ctx) {
   const hide = () => {
     if (isManualMode()) return
     clearTimers()
-    if (props.closeDelay > 0) {
+    if ((props.closeDelay ?? 0) > 0) {
       hideTimer = window.setTimeout(() => {
         close()
       }, props.closeDelay)
@@ -112,13 +110,10 @@ export default function (props: PopperProps, ctx) {
   }
 
   function onPopperMouseLeave() {
-    const { trigger } = props
+    const trigger = props.trigger ?? DEFAULT_TRIGGER
+    // 同时兼容字符串 trigger 与历史遗留的数组 trigger 写法（数组形态只需覆盖单元素场景）
     const shouldPrevent =
       (isString(trigger) && (trigger === 'click' || trigger === 'focus')) ||
-      // we'd like to test array type trigger here, but the only case we need to cover is trigger === 'click' or
-      // trigger === 'focus', because that when trigger is string
-      // trigger.length === 1 and trigger[0] === 5 chars string is mutually exclusive.
-      // so there will be no need to test if trigger is array type.
       (trigger.length === 1 && (trigger[0] === 'click' || trigger[0] === 'focus'))
 
     if (shouldPrevent) return
@@ -136,7 +131,7 @@ export default function (props: PopperProps, ctx) {
     popperInstance.update()
   }
 
-  function doDestroy(forceDestroy) {
+  function doDestroy(forceDestroy?: boolean) {
     /* istanbul ignore if */
     if (!popperInstance || ($(visibility) && !forceDestroy)) return
     detachPopper()
@@ -147,7 +142,7 @@ export default function (props: PopperProps, ctx) {
     popperInstance = null
   }
 
-  const events = {}
+  const events: Record<string, (e: Event) => void> = {}
 
   function update() {
     if (!$(visibility)) {
@@ -160,9 +155,9 @@ export default function (props: PopperProps, ctx) {
     }
   }
 
-  function onVisibilityChange(toState) {
+  function onVisibilityChange(toState: boolean) {
     if (toState) {
-      popperStyle.value.zIndex = transferIncrease() + props.zIndex
+      popperStyle.value.zIndex = transferIncrease() + (props.zIndex ?? 0)
       initializePopper()
     }
   }
@@ -176,7 +171,7 @@ export default function (props: PopperProps, ctx) {
       }
     }
 
-    const popperEventsHandler = e => {
+    const popperEventsHandler = (e: Event) => {
       e.stopPropagation()
       switch (e.type) {
         case 'click': {
@@ -209,22 +204,25 @@ export default function (props: PopperProps, ctx) {
       }
     }
 
-    const triggerEventsMap = {
+    const triggerEventsMap: Partial<Record<TriggerType, string[]>> = {
       click: ['onClick'],
       hover: ['onMouseenter', 'onMouseleave'],
       focus: ['onFocus', 'onBlur']
     }
 
-    const mapEvents = t => {
-      triggerEventsMap[t].forEach(event => {
+    const mapEvents = (t: TriggerType) => {
+      // contextmenu / manual 等未配置映射的取值不应在解绑流程中抛错
+      triggerEventsMap[t]?.forEach(event => {
         events[event] = popperEventsHandler
       })
     }
 
-    if (isArray(props.trigger)) {
-      Object.values(props.trigger).forEach(mapEvents)
+    // 兼容历史遗留的数组 trigger 写法：运行时透传数组时逐个绑定事件
+    const trigger: TriggerType | TriggerType[] = props.trigger ?? DEFAULT_TRIGGER
+    if (Array.isArray(trigger)) {
+      trigger.forEach(mapEvents)
     } else {
-      mapEvents(props.trigger)
+      mapEvents(trigger)
     }
   }
 

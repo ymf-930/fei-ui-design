@@ -44,7 +44,7 @@ export const cascaderProps = {
   filterable: Boolean,
   filterMethod: {
     type: Function,
-    default: (node, keyword) => node.text.includes(keyword)
+    default: (node: any, keyword: string) => node.text.includes(keyword)
   },
   separator: {
     type: String,

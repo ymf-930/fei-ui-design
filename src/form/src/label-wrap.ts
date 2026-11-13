@@ -7,7 +7,8 @@ import {
   onUpdated,
   onBeforeUnmount,
   nextTick,
-  Fragment
+  Fragment,
+  type Slots
 } from 'vue'
 import { FormKey, FormItemKey } from './token'
 import type { FormContext, FormItemContext } from '../../_hooks/use-form'
@@ -19,7 +20,7 @@ export default {
     isAutoWidth: Boolean,
     updateAll: Boolean
   },
-  setup(props, { slots }) {
+  setup(props: any, { slots }: { slots: Slots }) {
     const el = ref<HTMLElement | null>(null)
     const elForm = inject<FormContext>(FormKey, {} as FormContext)
     const elFormItem = inject<FormItemContext>(FormItemKey, {} as FormItemContext)

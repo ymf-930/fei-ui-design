@@ -75,8 +75,8 @@ export default defineComponent({
   watch: {
     defaultFileList: {
       immediate: true,
-      handler(fileList) {
-        this.fileList = fileList.map(item => {
+      handler(fileList: any[]) {
+        this.fileList = fileList.map((item: any) => {
           item.status = 'finished'
           item.percentage = 100
           item.uid = Date.now() + this.tempIndex++
@@ -88,39 +88,39 @@ export default defineComponent({
   methods: {
     handleClick() {
       if (this.disabled) return
-      this.$refs.input.click()
+      ;(this.$refs.input as HTMLInputElement).click()
     },
-    handleChange(e) {
+    handleChange(e: any) {
       const files = e.target.files
 
       if (!files) {
         return
       }
       this.uploadFiles(files)
-      this.$refs.input.value = null
+      ;(this.$refs.input as HTMLInputElement).value = ''
     },
-    onDrop(e) {
+    onDrop(e: any) {
       this.dragOver = false
       if (this.type === 'select' || this.disabled) return
       this.uploadFiles(e.dataTransfer.files)
     },
-    handlePaste(e) {
+    handlePaste(e: any) {
       if (this.disabled) return
       if (this.paste) {
         this.uploadFiles(e.clipboardData.files)
       }
     },
-    uploadFiles(files) {
+    uploadFiles(files: any) {
       let postFiles = Array.prototype.slice.call(files)
       if (!this.multiple) postFiles = postFiles.slice(0, 1)
 
       if (postFiles.length === 0) return
 
-      postFiles.forEach(file => {
+      postFiles.forEach((file: any) => {
         this.upload(file)
       })
     },
-    upload(file) {
+    upload(file: any) {
       if (!this.beforeUpload) {
         return this.post(file)
       }
@@ -128,7 +128,7 @@ export default defineComponent({
       const before = this.beforeUpload(file)
       if (before && before.then) {
         before.then(
-          processedFile => {
+          (processedFile: any) => {
             if (Object.prototype.toString.call(processedFile) === '[object File]') {
               this.post(processedFile)
             } else {
@@ -143,11 +143,11 @@ export default defineComponent({
         this.post(file)
       }
     },
-    post(file) {
+    post(file: any) {
       // check format
       if (this.format.length) {
         const fileFormat = file.name.split('.').pop().toLocaleLowerCase()
-        const checked = this.format.some(item => item.toLocaleLowerCase() === fileFormat)
+        const checked = this.format.some((item: any) => item.toLocaleLowerCase() === fileFormat)
         if (!checked) {
           this.onFormatError(file, this.fileList)
           return false
@@ -173,18 +173,18 @@ export default defineComponent({
         data: this.data,
         filename: this.name,
         action: this.action,
-        onProgress: e => {
+        onProgress: (e: any) => {
           this.handleProgress(e, file)
         },
-        onSuccess: res => {
+        onSuccess: (res: any) => {
           this.handleSuccess(res, file)
         },
-        onError: (err, response) => {
+        onError: (err: any, response: any) => {
           this.handleError(err, response, file)
         }
       })
     },
-    handleStart(file) {
+    handleStart(file: any) {
       file.uid = Date.now() + this.tempIndex++
       const _file = {
         status: 'uploading',
@@ -197,7 +197,7 @@ export default defineComponent({
 
       this.fileList.push(_file)
     },
-    getFile(file) {
+    getFile(file: any) {
       const fileList = this.fileList
       let target: any = null
       fileList.every(item => {
@@ -206,12 +206,12 @@ export default defineComponent({
       })
       return target
     },
-    handleProgress(e, file) {
+    handleProgress(e: any, file: any) {
       const _file = this.getFile(file)
       this.onProgress(e, _file, this.fileList)
       _file.percentage = e.percent || 0
     },
-    handleSuccess(res, file) {
+    handleSuccess(res: any, file: any) {
       const _file = this.getFile(file)
 
       if (_file) {
@@ -226,7 +226,7 @@ export default defineComponent({
         }, 1000)
       }
     },
-    handleError(err, response, file) {
+    handleError(err: any, response: any, file: any) {
       const _file = this.getFile(file)
       const fileList = this.fileList
 
@@ -236,12 +236,12 @@ export default defineComponent({
 
       this.onError(err, response, file)
     },
-    handleRemove(file) {
+    handleRemove(file: any) {
       const fileList = this.fileList
       fileList.splice(fileList.indexOf(file), 1)
       this.onRemove(file, fileList)
     },
-    handlePreview(file) {
+    handlePreview(file: any) {
       if (file.status === 'finished') {
         this.onPreview(file)
       }

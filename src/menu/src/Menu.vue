@@ -165,8 +165,10 @@ export default defineComponent({
       }
     }
 
-    // eslint-disable-next-line no-unused-vars
-    const routeToItem = (item: { route: any; index: any }, onError: (error: any) => void) => {
+    const routeToItem = (
+      item: { route?: any; index: any; indexPath?: any },
+      onError: (error: any) => void
+    ) => {
       let route = item.route || item.index
       try {
         router?.push(route, () => null, onError)

@@ -81,7 +81,7 @@ export default defineComponent({
 
       const offset =
         (getRootEl().getBoundingClientRect()[bar.value.direction] - e[bar.value.client]) * -1
-      const thumbClickPosition = thumb.value?.[bar.value.offset] - prevPage
+      const thumbClickPosition = (thumb.value?.[bar.value.offset] ?? 0) - prevPage
       const thumbPositionPercentage =
         ((offset - thumbClickPosition) * 100) / getRootEl()[bar.value.offset]
 

@@ -1,7 +1,11 @@
-import { computed } from 'vue'
+import { computed, type Ref } from 'vue'
 import buildModifiers from './build-modifiers'
+import type { PopperProps } from '../types'
 
-export default function usePopperOptions(props, state) {
+export default function usePopperOptions(
+  props: PopperProps,
+  state: { arrow: Ref<HTMLElement | null> }
+) {
   return computed(() => {
     return {
       placement: props.placement,

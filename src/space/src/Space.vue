@@ -12,7 +12,7 @@ export default defineComponent({
   setup(props) {
     return useSpace(props)
   },
-  render(ctx) {
+  render(ctx: any) {
     const { classes, $slots, containerStyle, itemStyle, spacer, prefixCls } = ctx
 
     const children = renderSlot($slots, 'default', { key: 0 }, () => [])

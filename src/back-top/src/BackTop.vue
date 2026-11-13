@@ -51,7 +51,7 @@ const onScroll = () => {
 
 const handleClick = (e: MouseEvent) => {
   if (!el.value) return
-  scrollTop(el.value, el.value.scrollTop, 0, props.duration, null)
+  scrollTop(el.value, el.value.scrollTop, 0, props.duration, undefined)
   emit('click', e)
 }
 

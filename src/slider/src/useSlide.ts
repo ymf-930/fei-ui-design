@@ -2,14 +2,14 @@ import { computed, nextTick, ref } from 'vue'
 import { CHANGE_EVENT } from '../../_utils/constants'
 import { useForm } from '../../_hooks'
 
-export const useSlide = (props, initData, emit) => {
+export const useSlide = (props: any, initData: any, emit: (...args: any[]) => void) => {
   const { FForm, formEmit } = useForm()
 
-  const slider = ref(null)
+  const slider = ref<any>(null)
 
-  const firstButton = ref(null)
+  const firstButton = ref<any>(null)
 
-  const secondButton = ref(null)
+  const secondButton = ref<any>(null)
 
   const buttonRefs = {
     firstButton,
@@ -60,13 +60,13 @@ export const useSlide = (props, initData, emit) => {
     }
   }
 
-  const setPosition = percent => {
+  const setPosition = (percent: number) => {
     const targetValue = props.min + (percent * (props.max - props.min)) / 100
     if (!props.range) {
       firstButton.value.setPosition(percent)
       return
     }
-    let buttonRefName
+    let buttonRefName: 'firstButton' | 'secondButton'
     if (Math.abs(minValue.value - targetValue) < Math.abs(maxValue.value - targetValue)) {
       buttonRefName = initData.firstValue < initData.secondValue ? 'firstButton' : 'secondButton'
     } else {
@@ -80,7 +80,7 @@ export const useSlide = (props, initData, emit) => {
     emit(CHANGE_EVENT, props.range ? [minValue.value, maxValue.value] : props.modelValue)
   }
 
-  const onSliderClick = event => {
+  const onSliderClick = (event: MouseEvent) => {
     if (sliderDisabled.value || initData.dragging) return
     resetSize()
     if (props.vertical) {

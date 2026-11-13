@@ -3,8 +3,8 @@ import { off, on } from '../../_utils/dom'
 import { computed, inject, nextTick, ref, watch } from 'vue'
 import type { SliderProviderContext } from './types'
 
-const useTooltip = (props, formatTooltip, showTooltip) => {
-  const tooltip = ref(null)
+const useTooltip = (props: any, formatTooltip: any, showTooltip: any) => {
+  const tooltip = ref<any>(null)
   const tooltipVisible = ref(false)
   const enableFormat = computed(() => formatTooltip.value instanceof Function)
 
@@ -25,7 +25,7 @@ const useTooltip = (props, formatTooltip, showTooltip) => {
   }
 }
 
-export const useSliderButton = (props, initData, emit) => {
+export const useSliderButton = (props: any, initData: any, emit: (...args: any[]) => void) => {
   const {
     disabled,
     min,
@@ -64,7 +64,7 @@ export const useSliderButton = (props, initData, emit) => {
     hideTooltip()
   }
 
-  const onButtonDown = event => {
+  const onButtonDown = (event: any) => {
     if (disabled.value) return
     event.preventDefault()
     onDragStart(event)
@@ -91,7 +91,7 @@ export const useSliderButton = (props, initData, emit) => {
     emitChange()
   }
 
-  const getClientXY = event => {
+  const getClientXY = (event: any) => {
     let clientX
     let clientY
     if (event.type.startsWith('touch')) {
@@ -107,7 +107,7 @@ export const useSliderButton = (props, initData, emit) => {
     }
   }
 
-  const onDragStart = event => {
+  const onDragStart = (event: any) => {
     initData.dragging = true
     initData.isClick = true
     const { clientX, clientY } = getClientXY(event)
@@ -120,7 +120,7 @@ export const useSliderButton = (props, initData, emit) => {
     initData.newPosition = initData.startPosition
   }
 
-  const onDragging = event => {
+  const onDragging = (event: any) => {
     if (initData.dragging) {
       initData.isClick = false
       displayTooltip()
@@ -161,7 +161,7 @@ export const useSliderButton = (props, initData, emit) => {
     }
   }
 
-  const setPosition = async newPosition => {
+  const setPosition = async (newPosition: number) => {
     if (newPosition === null || isNaN(newPosition)) return
     if (newPosition < 0) {
       newPosition = 0

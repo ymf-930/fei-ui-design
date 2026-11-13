@@ -1,7 +1,22 @@
-export default function buildModifier(props, externalModifiers = []) {
+import type { Modifier, Placement } from '@popperjs/core'
+
+/** buildModifiers 所需的配置子集，由 usePopperOptions 组装后传入 */
+export interface BuildModifierOptions {
+  arrow?: HTMLElement | null
+  arrowOffset?: number
+  offset?: number
+  gpuAcceleration?: boolean
+  /** 预留字段：组装 options 时透传，当前 modifiers 未消费 */
+  fallbackPlacements?: Placement[]
+}
+
+export default function buildModifier(
+  props: BuildModifierOptions,
+  externalModifiers: Partial<Modifier<string, any>>[] = []
+): Partial<Modifier<string, any>>[] {
   const { arrow, arrowOffset, offset, gpuAcceleration } = props
 
-  const modifiers = [
+  const modifiers: Partial<Modifier<string, any>>[] = [
     {
       name: 'offset',
       options: {

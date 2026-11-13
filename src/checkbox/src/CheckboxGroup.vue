@@ -31,7 +31,7 @@ export default defineComponent({
   setup(props, ctx) {
     const { formEmit } = useCheckboxGroup()
 
-    const changeEvent = value => {
+    const changeEvent = (value: unknown) => {
       ctx.emit(UPDATE_MODEL_EVENT, value)
       nextTick(() => {
         ctx.emit(CHANGE_EVENT, value)

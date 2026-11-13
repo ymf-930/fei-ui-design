@@ -183,19 +183,19 @@ function setActiveItem(index: number) {
   }
 }
 
-function resetItemPosition(oldIndex) {
+function resetItemPosition(oldIndex?: number) {
   items.value.forEach((item, index) => {
     // @ts-ignore
     item.translateItem(index, data.activeIndex, oldIndex)
   })
 }
 
-function updateItems(item) {
+function updateItems(item: any) {
   // @ts-ignore
   items.value.push(item)
 }
 
-function itemInStage(item, index) {
+function itemInStage(item: any, index: number) {
   const length = items.value.length
   if (
     // @ts-ignore
@@ -225,7 +225,7 @@ function handleMouseLeave() {
   startTimer()
 }
 
-function handleButtonEnter(arrow) {
+function handleButtonEnter(arrow: string | boolean) {
   if (props.direction === 'vertical') return
   items.value.forEach((item, index) => {
     if (arrow === itemInStage(item, index)) {
@@ -243,11 +243,11 @@ function handleButtonLeave() {
   })
 }
 
-function handleIndicatorClick(index) {
+function handleIndicatorClick(index: number) {
   data.activeIndex = index
 }
 
-function handleIndicatorHover(index) {
+function handleIndicatorHover(index: number) {
   if (props.trigger === 'hover' && index !== data.activeIndex) {
     data.activeIndex = index
   }

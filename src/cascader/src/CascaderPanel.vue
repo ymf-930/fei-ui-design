@@ -60,7 +60,7 @@ export default defineComponent({
     const checkedValue = ref(null)
     const menus = ref<Node[][]>([])
     const expandingNode = ref<Node | null>(null)
-    const checkedNodes = ref([])
+    const checkedNodes = ref<Node[]>([])
 
     const isHoverMenu = computed(() => config.value.expandTrigger === 'hover')
     const renderLabelFn = computed(() => props.renderLabel || slots.default)
@@ -86,12 +86,12 @@ export default defineComponent({
       }
     }
 
-    const lazyLoad = (node, cb) => {
+    const lazyLoad = (node: any, cb?: (data?: any) => void) => {
       const cfg = config.value
       node = node || new Node({}, cfg, null, true)
       node.loading = true
 
-      const resolve = dataList => {
+      const resolve = (dataList: any) => {
         const parent = node.root ? null : node
         // @ts-ignore
         dataList && store.value.appendNodes(dataList, parent)
@@ -103,7 +103,7 @@ export default defineComponent({
       cfg.lazyLoad(node, resolve)
     }
 
-    const expandNode = (node, silent) => {
+    const expandNode = (node: any, silent?: boolean) => {
       const { level } = node
       const newMenus = menus.value.slice(0, level)
       let newExpandingNode
@@ -123,7 +123,7 @@ export default defineComponent({
       }
     }
 
-    const handleCheckChange = (node, checked, emitClose = true) => {
+    const handleCheckChange = (node: any, checked: boolean, emitClose = true) => {
       const { checkStrictly, multiple } = config.value
       const oldNode = checkedNodes.value[0]
       manualChecked = true
@@ -135,13 +135,13 @@ export default defineComponent({
       emitClose && !multiple && !checkStrictly && emit('close')
     }
 
-    const getFlattedNodes = leafOnly => {
+    const getFlattedNodes = (leafOnly: boolean) => {
       // @ts-ignore
       return store.value.getFlattedNodes(leafOnly)
     }
 
-    const getCheckedNodes = leafOnly => {
-      return getFlattedNodes(leafOnly).filter(node => node.checked !== false)
+    const getCheckedNodes = (leafOnly: boolean) => {
+      return getFlattedNodes(leafOnly).filter((node: any) => node.checked !== false)
     }
 
     const clearCheckedNodes = () => {
@@ -192,23 +192,23 @@ export default defineComponent({
       }
     }
 
-    const syncMenuState = (newCheckedNodes, reserveExpandingState = true) => {
+    const syncMenuState = (newCheckedNodes: any[], reserveExpandingState = true) => {
       const { checkStrictly } = config.value
       const oldNodes = checkedNodes.value
-      const newNodes = newCheckedNodes.filter(node => !!node && (checkStrictly || node.isLeaf))
+      const newNodes = newCheckedNodes.filter((node: any) => !!node && (checkStrictly || node.isLeaf))
       // @ts-ignore
       const oldExpandingNode = store.value.getSameNode(expandingNode.value)
       const newExpandingNode = (reserveExpandingState && oldExpandingNode) || newNodes[0]
 
       if (newExpandingNode) {
-        newExpandingNode.pathNodes.forEach(node => expandNode(node, true))
+        newExpandingNode.pathNodes.forEach((node: any) => expandNode(node, true))
       } else {
         expandingNode.value = null
       }
 
       // @ts-ignore
-      oldNodes.forEach(node => node.doCheck(false))
-      newNodes.forEach(node => node.doCheck(true))
+      oldNodes.forEach((node: any) => node.doCheck(false))
+      newNodes.forEach((node: any) => node.doCheck(true))
 
       checkedNodes.value = newNodes
       nextTick(scrollToExpandingNode)
@@ -230,7 +230,7 @@ export default defineComponent({
       })
     }
 
-    const handleKeyDown = e => {
+    const handleKeyDown = (e: any) => {
       const target = e.target
       const { code } = e
 

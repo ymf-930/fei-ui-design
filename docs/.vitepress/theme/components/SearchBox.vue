@@ -352,7 +352,9 @@ getVar(var)
     transition all .2s ease
 
     &::placeholder
-      color getVar(theme-color)
+      // 占位文字用次要文字色而非主文字色；--fd-text-2 浅色 #5a6b7d(5.1:1)、
+      // 暗色 #a3aab4(7.5:1)，两档都过 AA，且跟随站点主题。
+      color unquote('var(--fd-text-2)')
 
     &:focus
       width 25rem

@@ -8,7 +8,8 @@ export const Theme = {
 
 export const DEFAULT_TRIGGER = 'hover'
 
-export type TriggerType = 'hover' | 'click' | 'contextmenu' | 'manual'
+/** focus 由 hooks 中的 onFocus / onBlur 事件映射实现，此处补齐其类型 */
+export type TriggerType = 'hover' | 'click' | 'contextmenu' | 'focus' | 'manual'
 export type ThemeType = 'light' | 'dark'
 
 export interface PopperProps {
@@ -27,6 +28,8 @@ export interface PopperProps {
   disabled?: boolean
   popperClass?: string
   popperOptions?: Partial<Options>
+  /** 备用 placement：组装 popper options 时透传，当前 modifiers 未消费 */
+  fallbackPlacements?: Placement[]
   showArrow?: boolean
   showAfter?: number
   hideAfter?: number

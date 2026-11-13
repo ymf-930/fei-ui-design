@@ -86,7 +86,7 @@
         :maxlength="maxlength"
         :readonly="readonly"
         :name="name"
-        :value="currentValue"
+        :value="String(currentValue ?? '')"
         :autofocus="autofocus"
         @keyup.enter="handleEnter"
         @keyup="handleKeyup"
@@ -198,7 +198,7 @@ export default defineComponent({
       ]
     })
     const closeClasses = computed(() => [prefixCls + '-icon', prefixCls + '-icon-clear'])
-    const textareaStyle = computed(() => {
+    const textareaStyle = computed<any>(() => {
       return {
         resize: props.noResize ? 'none' : null,
         ...data.textareaStyles
@@ -217,7 +217,7 @@ export default defineComponent({
     })
 
     // self methods
-    const setCurrentValue = value => {
+    const setCurrentValue = (value: any) => {
       if (value === data.currentValue) return
       nextTick(() => {
         resizeTextarea()
@@ -239,33 +239,33 @@ export default defineComponent({
       data.textareaStyles = calcTextareaHeight(textareaRef.value, minRows, maxRows)
     }
     // handle methods
-    const handleEnter = e => {
+    const handleEnter = (e: Event) => {
       ctx.emit('enter', e)
       if (props.search) ctx.emit('search', data.currentValue)
     }
-    const handleKeydown = e => {
+    const handleKeydown = (e: Event) => {
       ctx.emit('keydown', e)
     }
-    const handleKeypress = e => {
+    const handleKeypress = (e: Event) => {
       ctx.emit('keypress', e)
     }
-    const handleKeyup = e => {
+    const handleKeyup = (e: Event) => {
       ctx.emit('keyup', e)
     }
-    const handleIconClick = e => {
+    const handleIconClick = (e: Event) => {
       ctx.emit('click', e)
     }
-    const handleFocus = e => {
+    const handleFocus = (e: Event) => {
       ctx.emit('focus', e)
     }
-    const handleBlur = e => {
+    const handleBlur = (e: Event) => {
       ctx.emit('blur', e)
       if (props.validateEvent) {
         formEmit('blur', [props.modelValue])
       }
     }
 
-    const handleComposition = e => {
+    const handleComposition = (e: CompositionEvent) => {
       if (e.type === 'compositionstart') {
         data.isOnComposition = true
       }
@@ -274,7 +274,7 @@ export default defineComponent({
         handleInput(e)
       }
     }
-    const handleInput = e => {
+    const handleInput = (e: any) => {
       if (data.isOnComposition) return
       let value = e.target.value
       if (props.number && value !== '') value = Number.isNaN(Number(value)) ? value : Number(value)
@@ -282,7 +282,7 @@ export default defineComponent({
       ctx.emit(UPDATE_MODEL_EVENT, value)
       ctx.emit('input', value)
     }
-    const handleChange = e => {
+    const handleChange = (e: any) => {
       ctx.emit(CHANGE_EVENT, e.target.value)
     }
     const handleTogglePass = () => {

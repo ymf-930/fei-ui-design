@@ -168,23 +168,23 @@ export default {
 
     // methods
 
-    const handleCollapseToggle = value => {
+    const handleCollapseToggle = (value: any) => {
       if (value) {
         updatePlacement()
       } else {
         doDestroy()
       }
     }
-    const addItem = item => {
+    const addItem = (item: any) => {
       data.items[item.index] = item
     }
-    const removeItem = item => {
+    const removeItem = (item: any) => {
       delete data.items[item.index]
     }
-    const addSubMenu = item => {
+    const addSubMenu = (item: any) => {
       data.submenus[item.index] = item
     }
-    const removeSubMenu = item => {
+    const removeSubMenu = (item: any) => {
       delete data.submenus[item.index]
     }
     const handleClick = () => {
@@ -198,7 +198,7 @@ export default {
       }
       rootMenuEmit('submenu:submenu-click', { index: props.index, indexPath })
     }
-    const handleMouseenter = (event, showTimeout = props.showTimeout) => {
+    const handleMouseenter = (event: any, showTimeout = props.showTimeout) => {
       if (!('ActiveXObject' in window) && event.type === 'focus' && !event.relatedTarget) {
         return
       }
@@ -335,13 +335,9 @@ export default {
   render() {
     const titleTag = [
       this.$slots.title?.(),
-      h(
-        'i',
-        {
-          class: ['fei-submenu__icon-arrow', 'f-iconfont', this.submenuTitleIcon]
-        },
-        null
-      )
+      h('i', {
+        class: ['fei-submenu__icon-arrow', 'f-iconfont', this.submenuTitleIcon]
+      })
     ]
     const ulStyle = {
       backgroundColor: this.rootProps.backgroundColor || ''
@@ -360,7 +356,7 @@ export default {
             boundariesPadding: 0,
             showArrow: false,
             popperClass: 'fei-submenu-popper',
-            placement: this.data.currentPlacement,
+            placement: this.data.currentPlacement as any,
             appendToBody: this.appendToBody
           },
           {

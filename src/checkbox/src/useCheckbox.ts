@@ -99,9 +99,11 @@ const useDisabled = (
   const isLimitDisabled = computed(() => {
     const max = checkboxGroup.max?.value
     const min = checkboxGroup.min?.value
+    // 与 undefined 做大小比较恒为 false，此处显式守卫并保留原有边界语义
+    const hasLimit = !!(max || min)
     return (
-      (!!(max || min) && model.value.length >= max && !isChecked.value) ||
-      (model.value.length <= min && isChecked.value)
+      (hasLimit && max !== undefined && model.value.length >= max && !isChecked.value) ||
+      (hasLimit && min !== undefined && model.value.length <= min && isChecked.value)
     )
   })
   const isDisabled = computed(() => {

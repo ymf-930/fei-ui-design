@@ -59,7 +59,7 @@ export default defineComponent({
       background.value = 'hsl(' + props.color.get('hue') + ', 100%, 50%)'
     }
 
-    function handleDrag(event) {
+    function handleDrag(event: MouseEvent) {
       //@ts-ignore
       const el = instance.vnode.el
       //@ts-ignore
@@ -92,10 +92,10 @@ export default defineComponent({
     onMounted(() => {
       //@ts-ignore
       draggable(instance.vnode.el, {
-        drag: event => {
+        drag: (event: MouseEvent) => {
           handleDrag(event)
         },
-        end: event => {
+        end: (event: MouseEvent) => {
           handleDrag(event)
         }
       })

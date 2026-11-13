@@ -49,7 +49,7 @@ const calcWidth = () => {
   }
 }
 
-const moveStep = (step, containerWidth, wrapperWidth) => {
+const moveStep = (step: number, containerWidth: number, wrapperWidth: number) => {
   if (step > 0) {
     data.left = Math.min(0, data.left + step)
   } else {
@@ -62,11 +62,11 @@ const moveStep = (step, containerWidth, wrapperWidth) => {
     }
   }
 }
-const handleScroll = e => {
-  const eventDelta = e.wheelDelta * 0.5 || -e.deltaY * 3
+const handleScroll = (e: WheelEvent & { wheelDelta?: number }) => {
+  const eventDelta = (e.wheelDelta ?? 0) * 0.5 || -e.deltaY * 3
   const $containerWidth = scrollContainerRef.value?.offsetWidth
   const $wrapperWidth = scrollWrapperRef.value?.offsetWidth
-  moveStep(eventDelta, $containerWidth, $wrapperWidth)
+  moveStep(eventDelta, $containerWidth ?? 0, $wrapperWidth ?? 0)
 }
 const handlePrev = () => {
   if (!scrollContainerRef.value || !scrollWrapperRef.value) return
@@ -103,7 +103,6 @@ const moveToTarget = ($target: HTMLElement) => {
     $targetLeft + $targetWidth < -data.left + $containerWidth - padding
   ) {
     // tag in the current view
-    // eslint-disable-line
   } else {
     // tag in the right
     data.left = $containerWidth - $wrapperWidth - padding

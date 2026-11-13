@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, getCurrentInstance, inject, ref } from 'vue'
+import { computed, defineComponent, getCurrentInstance, inject, ref, type PropType } from 'vue'
 import { FScrollbar } from '../../_internal/scrollbar'
 import FCascaderNode from './node.vue'
 import { generateId } from '../../_utils/util-helper'
@@ -36,7 +36,7 @@ export default defineComponent({
   },
   props: {
     nodes: {
-      type: Array,
+      type: Array as PropType<any[]>,
       required: true
     },
     index: {
@@ -48,21 +48,21 @@ export default defineComponent({
   setup(props) {
     const instance = getCurrentInstance()
     const id = generateId()
-    let activeNode = null
-    let hoverTimer = null
+    let activeNode: any = null
+    let hoverTimer: number | null = null
 
-    const panel = inject(PANEL_INJECTION_KEY)
+    const panel = inject(PANEL_INJECTION_KEY) as any
 
     const hoverZone = ref(null)
 
     const isEmpty = computed(() => !props.nodes.length)
     const menuId = computed(() => `cascader-menu-${id}-${props.index}`)
 
-    const handleExpand = e => {
+    const handleExpand = (e: any) => {
       activeNode = e.target
     }
 
-    const handleMouseMove = e => {
+    const handleMouseMove = (e: MouseEvent) => {
       if (!panel.isHoverMenu || !activeNode || !hoverZone.value) return
 
       if (activeNode.contains(e.target)) {

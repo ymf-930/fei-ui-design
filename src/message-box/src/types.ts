@@ -1,8 +1,7 @@
-/* eslint-disable no-unused-vars */
 import type { VNode } from 'vue'
 // message props
 export interface MessageBoxProps {
-  beforeClose?: (action, state, doClose) => void
+  beforeClose?: (action: string, state: unknown, doClose: () => void) => void
   callback?: () => void
   cancelText?: string
   cancelButtonClass?: string

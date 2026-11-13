@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { computed, ref, watch, nextTick, onMounted } from 'vue'
 import isServer from '../../_utils/isServer'
 import { UPDATE_MODEL_EVENT } from '../../_utils/constants'
@@ -12,12 +11,33 @@ export const CLOSED_EVENT = 'closed'
 export const OPENED_EVENT = 'opened'
 export { UPDATE_MODEL_EVENT }
 
-export default function (props, emit, targetRef) {
+/** useModal 仅读取以下配置字段，避免与不同调用方的 props 定义耦合 */
+interface UseModalProps {
+  fullscreen?: boolean
+  top?: string
+  width?: string
+  openDelay?: number
+  closeDelay?: number
+  destroyOnClose?: boolean
+  /** 运行时 props 为 FunctionConstructor，此处保持宽松以兼容组件传入的定义 */
+  beforeClose?: any
+  lockScroll?: boolean
+  escClosable?: boolean
+  modelValue?: boolean
+  zIndex?: number
+  maskClosable?: boolean
+}
+
+export default function (
+  props: UseModalProps,
+  emit: (...args: any[]) => void,
+  targetRef: { value: any }
+) {
   const visible = ref(false)
   const closed = ref(false)
   const dialogRef = ref(null)
-  const openTimer = ref(null)
-  const closeTimer = ref(null)
+  const openTimer = ref<number | null>(null)
+  const closeTimer = ref<number | null>(null)
   const rendered = ref(false) // when desctroyOnClose is true, we initialize it as false vise versa
   const modalIndex = ref(props.zIndex || transferIncrease())
   const modalRef = ref(null)
@@ -25,7 +45,7 @@ export default function (props, emit, targetRef) {
   const style = computed(() => {
     const style: Record<string, string> = {}
     if (!props.fullscreen) {
-      style.marginTop = props.top
+      style.marginTop = props.top ?? ''
       if (props.width) {
         style.width = props.width
       }
@@ -76,7 +96,7 @@ export default function (props, emit, targetRef) {
     }
   }
 
-  function hide(shouldCancel) {
+  function hide(shouldCancel?: boolean) {
     if (shouldCancel) return
     closed.value = true
     visible.value = false
@@ -131,7 +151,7 @@ export default function (props, emit, targetRef) {
         open()
         rendered.value = true // enables lazy rendering
         emit(OPEN_EVENT)
-        modalIndex.value = props.zIndex > 0 ? ++modalIndex.value : transferIncrease()
+        modalIndex.value = (props.zIndex ?? 0) > 0 ? ++modalIndex.value : transferIncrease()
         nextTick(() => {
           if (targetRef.value) {
             targetRef.value.scrollTop = 0

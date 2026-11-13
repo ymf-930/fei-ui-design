@@ -1,11 +1,19 @@
-import { computed, watch } from 'vue'
+import { computed, watch, type ExtractPropTypes } from 'vue'
 import { typeOf } from '../../_utils/util'
 import { usePopper } from '../../_internal/popper'
+import { popoverProps } from './types'
 
 export const SHOW_EVENT = 'show'
 export const HIDE_EVENT = 'hide'
 
-export default function usePopover(props, ctx) {
+type PopoverProps = ExtractPropTypes<typeof popoverProps>
+
+/** 与 popper hook 一致，仅依赖 emit */
+interface PopoverContext {
+  emit: (...args: any[]) => void
+}
+
+export default function usePopover(props: PopoverProps, ctx: PopoverContext) {
   const popperProps = usePopper(props, ctx)
 
   const popperStyle = computed(() => {

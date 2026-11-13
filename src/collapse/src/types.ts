@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import type { InjectionKey, Ref } from 'vue'
 import { UPDATE_MODEL_EVENT, CHANGE_EVENT } from '../../_utils/constants'
 
@@ -31,8 +30,8 @@ export interface CollapseWrapProps {
 }
 
 export interface CollapseEmits {
-  (e: UPDATE_MODEL_EVENT, values: NameType[] | NameType | boolean): void
-  (e: CHANGE_EVENT, values: NameType[] | NameType | boolean): void
+  (e: typeof UPDATE_MODEL_EVENT, values: NameType[] | NameType | boolean): void
+  (e: typeof CHANGE_EVENT, values: NameType[] | NameType | boolean): void
 }
 
 export const collapseContextKey: InjectionKey<CollapseContext> = Symbol('collapseContext')

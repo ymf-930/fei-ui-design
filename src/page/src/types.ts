@@ -1,5 +1,7 @@
+import type { PropType } from 'vue'
+
 export const optionsProps = {
-  pageSizeOpts: Array,
+  pageSizeOpts: Array as PropType<number[]>,
   showSizer: Boolean,
   showElevator: Boolean,
   current: Number,
@@ -25,18 +27,18 @@ export const pageProps = {
     default: 10
   },
   pageSizeOpts: {
-    type: Array,
+    type: Array as PropType<number[]>,
     default: () => {
       return [10, 20, 30, 40]
     }
   },
   placement: {
-    validator: value => ['top', 'bottom'].includes(value),
+    validator: (value: string) => ['top', 'bottom'].includes(value),
     default: 'bottom'
   },
   appendToBody: { type: Boolean, default: true },
   size: {
-    validator: value => ['', 'small'].includes(value)
+    validator: (value: string) => ['', 'small'].includes(value)
   },
   simple: Boolean,
   showTotal: Boolean,

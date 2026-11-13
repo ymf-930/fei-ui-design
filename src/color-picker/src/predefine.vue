@@ -16,11 +16,12 @@
 
 <script lang="ts">
 import { defineComponent, inject, ref, watch, watchEffect } from 'vue'
+import type { PropType } from 'vue'
 import Color from './color'
 
 export default defineComponent({
   props: {
-    colors: { type: Array, required: true },
+    colors: { type: Array as PropType<string[]>, required: true },
     color: {
       type: Object,
       required: true
@@ -40,7 +41,7 @@ export default defineComponent({
         const color = new Color()
         color.fromString(val)
 
-        rgbaColors.value.forEach(item => {
+        rgbaColors.value.forEach((item: any) => {
           item.selected = color.compare(item)
         })
       }
@@ -49,12 +50,12 @@ export default defineComponent({
       rgbaColors.value = parseColors(props.colors, props.color)
     })
 
-    function handleSelect(index) {
+    function handleSelect(index: number) {
       props.color.fromString(props.colors[index])
     }
 
-    function parseColors(colors, color) {
-      return colors.map(value => {
+    function parseColors(colors: string[], color: any) {
+      return colors.map((value: string) => {
         // @ts-ignore
         const c = new Color()
         // @ts-ignore

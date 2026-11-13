@@ -34,7 +34,7 @@ export default function useMenu(
   })
   const paddingStyle = computed<Record<string, string>>(() => {
     let parent: ComponentInternalInstance | null = instance.parent
-    if (rootMenu.props.mode !== 'vertical') return {}
+    if (rootMenu.props.mode !== 'vertical') return {} as Record<string, string>
 
     let padding = 20
 

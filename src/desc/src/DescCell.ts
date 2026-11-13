@@ -19,14 +19,15 @@ export default defineComponent({
   },
   setup(props) {
     const descriptions = inject<DescProps>('FDesc', {})
+    // FDesc 的 column 默认值为 3，inject 缺省时沿用同一默认值
+    const column = descriptions.column ?? 3
 
     const label = computed(() => props.cell?.children?.label?.() || props.cell?.props?.label)
     const content = computed(() => props.cell?.children?.default?.())
     const span = computed(() => props.cell?.props?.span || 1)
-    const labelWidth = computed(() => descriptions.labelWidth || 50 / descriptions.column)
+    const labelWidth = computed(() => descriptions.labelWidth || 50 / column)
     const contentWidth = computed(() => {
       const labelWidth = descriptions.labelWidth
-      const column = descriptions.column
       return labelWidth ? (100 - column * labelWidth) / column : 50 / column
     })
 
@@ -36,7 +37,8 @@ export default defineComponent({
       content,
       span,
       labelWidth,
-      contentWidth
+      contentWidth,
+      column
     }
   },
   render() {
@@ -66,7 +68,7 @@ export default defineComponent({
           'td',
           {
             colSpan: this.span,
-            style: { width: `${this.span * (100 / this.descriptions.column)}%` }
+            style: { width: `${this.span * (100 / this.column)}%` }
           },
           [
             h('span', { class: 'fei-desc__label' }, this.label),

@@ -164,7 +164,7 @@ const popperOptions = {
       name: 'arrowPosition',
       enabled: true,
       phase: 'main',
-      fn: ({ state }) => {
+      fn: ({ state }: any) => {
         const { modifiersData, elements } = state
         const { reference, arrow } = elements
         modifiersData.arrow.x =
@@ -257,7 +257,7 @@ export default defineComponent({
       return popper.value?.popperRef
     })
 
-    const togglePopperVisible = visible => {
+    const togglePopperVisible = (visible?: boolean) => {
       if (isDisabled.value) return
 
       visible = visible ?? !popperVisible.value
@@ -363,7 +363,7 @@ export default defineComponent({
     }
 
     const focusFirstNode = () => {
-      let firstNode = null
+      let firstNode: any
 
       if (filtering.value && suggestionPanel.value) {
         //@ts-ignore
@@ -402,17 +402,17 @@ export default defineComponent({
       }
     }
 
-    const getCheckedNodes = leafOnly => {
+    const getCheckedNodes = (leafOnly?: boolean) => {
       //@ts-ignore
       return panel.value.getCheckedNodes(leafOnly)
     }
 
-    const handleExpandChange = value => {
+    const handleExpandChange = (value: any) => {
       updatePopperPosition()
       emit('expand-change', value)
     }
 
-    const handleKeyDown = e => {
+    const handleKeyDown = (e: KeyboardEvent) => {
       switch (e.code) {
         case EVENT_CODE.enter:
           //@ts-ignore
@@ -436,7 +436,7 @@ export default defineComponent({
       togglePopperVisible(false)
     }
 
-    const handleSuggestionClick = node => {
+    const handleSuggestionClick = (node: any) => {
       const { checked } = node
 
       if (multiple.value) {
@@ -483,7 +483,7 @@ export default defineComponent({
       }
     }, props.debounce)
 
-    const handleInput = (val, e) => {
+    const handleInput = (val: any, e: any) => {
       !popperVisible.value && togglePopperVisible(true)
 
       if (e?.isComposing) return
@@ -506,7 +506,9 @@ export default defineComponent({
       //@ts-ignore
       const inputEl = input.value.$el
       inputInitialHeight =
-        inputEl?.offsetHeight || INPUT_HEIGHT_MAP[realSize.value] || DEFAULT_INPUT_HEIGHT
+        inputEl?.offsetHeight ||
+        INPUT_HEIGHT_MAP[realSize.value as keyof typeof INPUT_HEIGHT_MAP] ||
+        DEFAULT_INPUT_HEIGHT
       addResizeListener(inputEl, updateStyle)
     })
 

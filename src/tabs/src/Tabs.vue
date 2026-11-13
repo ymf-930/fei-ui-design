@@ -128,7 +128,7 @@ const emitInput = () => {
   emit('change', tag)
 }
 // 选择当前tab
-const handleSelectTab = tab => {
+const handleSelectTab = (tab: TabItem) => {
   status.selectedTag = { ...tab }
   emitInput()
   if (props.type === 'default') {
@@ -140,7 +140,7 @@ const handleSelectTab = tab => {
 }
 
 // 移动焦点至后一个view
-const toLastView = (visitedViews, view) => {
+const toLastView = (visitedViews: TabItem[], view: TabItem) => {
   status.selectedTag = { key: '' }
   const currentIndex = visitedViews.findIndex(t => t.key === view.key)
   // 前后的索引缓存
@@ -158,7 +158,7 @@ const toLastView = (visitedViews, view) => {
   emitInput()
 }
 // 关闭当前的tab页签
-const closeSelectedTab = tab => {
+const closeSelectedTab = (tab: TabItem) => {
   // 缓存tabs
   let visitedViews = deepCopy(props.data)
   if (tab.key === props.modelValue) {
@@ -166,7 +166,7 @@ const closeSelectedTab = tab => {
   }
   emit('tab-close', tab)
 } // 打开右键菜单选择
-const openMenu = (tab, e) => {
+const openMenu = (tab: TabItem, e: MouseEvent) => {
   if (props.contextMenu) {
     status.visible = true
     status.selectedTag = tab

@@ -145,11 +145,13 @@ const handleSetInkTop = () => {
 }
 
 const handleScrollTo = (to: number) => {
+  const container = el.value
+  if (!container) return
   const offsetTop = to - props.scrollOffset
   animating = true
   // @ts-ignore
-  const currentPos = el.value.pageYOffset || el.value.scrollTop
-  scrollTop(el.value, currentPos, offsetTop, 1000, () => {
+  const currentPos = container.pageYOffset || container.scrollTop
+  scrollTop(container as HTMLElement | Window, currentPos, offsetTop, 1000, () => {
     animating = false
   })
 }

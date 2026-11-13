@@ -86,7 +86,7 @@ export default defineComponent({
       return false
     })
 
-    let initialValue = undefined
+    let initialValue: any = undefined
 
     watch(
       () => props.error,
@@ -184,7 +184,7 @@ export default defineComponent({
       return FFormItemSize.value
     })
 
-    const validate = (trigger, callback = () => {}) => {
+    const validate = (trigger: string, callback: (...args: any[]) => void = () => {}) => {
       validateDisabled.value = false
       const rules = getFilteredRule(trigger)
       if ((!rules || rules.length === 0) && props.required === undefined) {
@@ -227,7 +227,7 @@ export default defineComponent({
       //@ts-ignore
       let model = FForm.model
       let value = fieldValue.value
-      let path = props.prop
+      let path = props.prop || ''
       //@ts-ignore
       if (path.indexOf(':') !== -1) {
         //@ts-ignore
@@ -259,7 +259,7 @@ export default defineComponent({
       //@ts-ignore
       return [].concat(selfRules || normalizedRule || []).concat(requiredRule)
     }
-    const getFilteredRule = trigger => {
+    const getFilteredRule = (trigger: string) => {
       const rules = getRules()
 
       return (
@@ -295,7 +295,7 @@ export default defineComponent({
       //@ts-ignore
       validate('change')
     }
-    const updateComputedLabelWidth = width => {
+    const updateComputedLabelWidth = (width: number) => {
       computedLabelWidth.value = width ? `${width}px` : ''
     }
 

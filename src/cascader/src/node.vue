@@ -3,9 +3,9 @@
     :id="`${menuId}-${node.uid}`"
     role="menuitem"
     :aria-haspopup="!isLeaf"
-    :aria-owns="isLeaf ? null : menuId"
+    :aria-owns="isLeaf ? undefined : menuId"
     :aria-expanded="inExpandingPath"
-    :tabindex="expandable ? -1 : null"
+    :tabindex="expandable ? -1 : undefined"
     :class="[
       'fei-cascader-node',
       checkStrictly && 'is-selectable',
@@ -120,7 +120,7 @@ export default defineComponent({
     // @ts-ignore
     const inCheckedPath = computed(() => checkStrictly.value && panel.checkedNodes.some(isInPath))
 
-    const isInPath = node => {
+    const isInPath = (node: any) => {
       const { level, uid } = props.node
       return node?.pathNodes[level - 1]?.uid === uid
     }
@@ -131,7 +131,7 @@ export default defineComponent({
       panel.expandNode(props.node)
     }
 
-    const doCheck = checked => {
+    const doCheck = (checked: boolean) => {
       const { node } = props
       if (checked === node.checked) return
       // @ts-ignore
@@ -145,7 +145,7 @@ export default defineComponent({
       })
     }
 
-    const handleHoverExpand = e => {
+    const handleHoverExpand = (e: any) => {
       if (!isHoverMenu.value) return
       handleExpand()
       !isLeaf.value && emit('expand', e)
@@ -171,7 +171,7 @@ export default defineComponent({
       }
     }
 
-    const handleCheck = checked => {
+    const handleCheck = (checked: boolean) => {
       if (!props.node.loaded) {
         doLoad()
       } else {

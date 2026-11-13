@@ -1,16 +1,16 @@
 import { shallowReactive, createVNode, isVNode, nextTick, render } from 'vue'
+import type { VNode } from 'vue'
 import { NoticeContext, NoticeProps, CreateNoticeProps } from './types'
 import NoticeConstructor from './Notice.vue'
 import { transferIncrease } from '../../_utils/config'
 import isServer from '../../_utils/isServer'
 
-let vm
 const notifications: NoticeContext[] = shallowReactive([])
 let seed = 1
 
-export function close(id, userOnClose) {
+export function close(id: string, userOnClose?: (vm: VNode) => void) {
   const idx = notifications.findIndex(({ vm }) => {
-    const { id: _id } = vm.component.props
+    const _id = vm.component?.props?.id
     return id === _id
   })
   if (idx === -1) {
@@ -21,7 +21,7 @@ export function close(id, userOnClose) {
   if (!vm) return
   userOnClose?.(vm)
 
-  const removedHeight = vm.el.offsetHeight
+  const removedHeight = (vm.el as HTMLElement | null)?.offsetHeight ?? 0
   render(null, $el)
   nextTick(() => {
     document.body.removeChild($el)
@@ -29,21 +29,28 @@ export function close(id, userOnClose) {
   notifications.splice(idx, 1)
   const len = notifications.length
   if (len < 1) return
-  const position = vm.props.position
+  const position = vm.props?.position
   for (let i = idx; i < len; i++) {
-    if (notifications[i].vm.component.props.position === position) {
-      const verticalPos = vm.props.position.split('-')[0]
-
-      const pos = parseInt(notifications[i].vm.el.style[verticalPos], 10) - removedHeight - 16
-      notifications[i].vm.component.props.offset = pos
-      notifications[i].vm.el.style[verticalPos] = pos
+    const itemVm = notifications[i].vm
+    if (itemVm.component?.props?.position === position) {
+      const verticalPos = String(position).split('-')[0]
+      const el = itemVm.el as HTMLElement | null
+      const style = el?.style as unknown as Record<string, string> | undefined
+      const pos = parseInt(style?.[verticalPos] ?? '0', 10) - removedHeight - 16
+      if (itemVm.component?.props) {
+        itemVm.component.props.offset = pos
+      }
+      if (style) {
+        style[verticalPos] = String(pos)
+      }
     }
   }
 }
 
 export function closeAll() {
   for (let i = notifications.length - 1; i >= 0; i--) {
-    notifications[i].vm.component.props.onClose()
+    const onClose = notifications[i].vm.component?.props?.onClose as (() => void) | undefined
+    onClose?.()
   }
 }
 
@@ -54,9 +61,9 @@ const Notice = (options: CreateNoticeProps) => {
 
   let verticalOffset = options.offset || 0
   notifications
-    .filter(({ vm }) => vm.component.props.position === position)
+    .filter(({ vm }) => vm.component?.props?.position === position)
     .forEach(({ vm }) => {
-      verticalOffset += (vm.el.offsetHeight || 0) + 16
+      verticalOffset += ((vm.el as HTMLElement | null)?.offsetHeight || 0) + 16
     })
   verticalOffset += 16
 
@@ -65,7 +72,7 @@ const Notice = (options: CreateNoticeProps) => {
   const handleClose = () => {
     close(id, userOnClose)
   }
-  options = {
+  const noticeProps: NoticeProps = {
     offset: verticalOffset,
     id,
     useHTML: false,
@@ -82,11 +89,11 @@ const Notice = (options: CreateNoticeProps) => {
   container.className = `container_${id}`
   container.style.zIndex = String()
 
-  const message = options.message
-  vm = createVNode(
+  const message = noticeProps.message
+  const vm = createVNode(
     NoticeConstructor,
-    options,
-    isVNode(options.message) ? { default: () => message } : null
+    noticeProps as any,
+    isVNode(noticeProps.message) ? { default: () => message } : null
   )
   render(vm, container)
   notifications.push({ vm, $el: container })
@@ -98,22 +105,22 @@ const Notice = (options: CreateNoticeProps) => {
 }
 
 // 扩展类型调用
-function typeExtend(type: string, opts: CreateNoticeProps | string) {
+function typeExtend(type: NonNullable<NoticeProps['type']>, opts: CreateNoticeProps | string) {
   if (typeof opts === 'string') {
     opts = {
       message: opts,
       type
-    }
+    } as CreateNoticeProps
   } else {
     opts.type = type
   }
-  return Notice(opts)
+  return Notice(opts as CreateNoticeProps)
 }
 
-Notice.info = options => typeExtend('info', options)
-Notice.success = options => typeExtend('success', options)
-Notice.warning = options => typeExtend('warning', options)
-Notice.error = options => typeExtend('error', options)
+Notice.info = (options: CreateNoticeProps | string) => typeExtend('info', options)
+Notice.success = (options: CreateNoticeProps | string) => typeExtend('success', options)
+Notice.warning = (options: CreateNoticeProps | string) => typeExtend('warning', options)
+Notice.error = (options: CreateNoticeProps | string) => typeExtend('error', options)
 
 Notice.closeAll = closeAll
 

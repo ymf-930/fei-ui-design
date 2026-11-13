@@ -1,4 +1,6 @@
+import type { PropType } from 'vue'
 import { popperProps } from '../../_internal/popper/src/types'
+import type { TriggerType } from '../../_internal/popper'
 
 export const popoverProps = {
   ...popperProps,
@@ -6,7 +8,7 @@ export const popoverProps = {
     type: String
   },
   trigger: {
-    type: String,
+    type: String as PropType<TriggerType>,
     default: 'click'
   },
   title: {

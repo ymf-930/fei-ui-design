@@ -1,8 +1,9 @@
 import { ref, computed, watch, isVNode } from 'vue'
+import type { ExtractPropTypes } from 'vue'
 import { validSize } from '../../_utils/validator-size'
 import { isNumber, isArray, isString } from '../../_utils/util-helper'
 
-const SizeMap = {
+const SizeMap: Record<string, number> = {
   mini: 4,
   small: 8,
   default: 16,
@@ -31,7 +32,7 @@ export const defaultProps = {
   spacer: {
     type: [Object, String, Number],
     default: null,
-    validator: val => {
+    validator: (val: unknown) => {
       return isVNode(val) || isNumber(val) || isString(val)
     }
   },
@@ -41,13 +42,15 @@ export const defaultProps = {
   },
   size: {
     type: [String, Array, Number],
-    validator: val => {
+    validator: (val: unknown) => {
       return validSize(val) || isNumber(val) || isArray(val)
     }
   }
 }
 
-export function useSpace(props) {
+export type SpaceProps = ExtractPropTypes<typeof defaultProps>
+
+export function useSpace(props: SpaceProps) {
   const classes = computed(() => ['fei-space', `fei-space--${props.direction}`, props.class])
 
   const horizontalSize = ref(0)
@@ -57,16 +60,17 @@ export function useSpace(props) {
     () => [props.size, props.wrap, props.direction],
     ([size = 'small', wrap, dir]) => {
       // when the specified size have been given
-      if (isArray(size)) {
-        const [h = 0, v = 0] = size
+      if (Array.isArray(size)) {
+        const [h = 0, v = 0] = size as number[]
         horizontalSize.value = h
         verticalSize.value = v
       } else {
-        let val
+        let val: number
         if (isNumber(size)) {
           val = size
         } else {
-          val = SizeMap[size] || SizeMap.small
+          // size 可能是字符串或数组，转成字符串后再查表，避免索引签名报错
+          val = SizeMap[String(size)] || SizeMap.small
         }
 
         if (wrap && dir === 'horizontal') {

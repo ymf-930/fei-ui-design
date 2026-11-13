@@ -3,13 +3,19 @@ import { on, off } from '../../_utils/dom'
 
 let isDragging = false
 
-export default function (element, options) {
+interface DragOptions {
+  drag?: (event: any) => void
+  start?: (event: any) => void
+  end?: (event: any) => void
+}
+
+export default function (element: any, options: DragOptions) {
   if (isServer) return
 
-  const moveFn = function (event) {
+  const moveFn = function (event: any) {
     options.drag?.(event)
   }
-  const upFn = function (event) {
+  const upFn = function (event: any) {
     off(document, 'mousemove', moveFn)
     off(document, 'mouseup', upFn)
     document.onselectstart = null
@@ -20,7 +26,7 @@ export default function (element, options) {
     options.end?.(event)
   }
 
-  on(element, 'mousedown', function (event) {
+  on(element, 'mousedown', function (event: any) {
     if (isDragging) return
     document.onselectstart = () => false
     document.ondragstart = () => false
