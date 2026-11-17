@@ -325,6 +325,9 @@ getVar(var)
   #main-title
     font-size 2rem
     font-weight normal
+    // hero 标题含 <br> 两行，2.3rem 字号下继承全局 h1~h6 的 line-height 1.25
+    // 会让两行行盒重叠（文字挤在一起）。这里显式放大行距，只作用于首页 hero。
+    line-height 1.5
 
     a
       text-decoration underline
