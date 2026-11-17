@@ -1,0 +1,78 @@
+name: Deploy Docs
+
+# 文档站部署到 GitHub Pages。
+# 触发：push 到 develop / main，或在 GitHub 手动触发。
+# 地址：https://ymf-930.github.io/fei-ui-design/
+on:
+  push:
+    branches: [main, master, develop]
+    paths:
+      - 'docs/**'
+      - '.github/workflows/deploy-docs.yml'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+  workflow_dispatch:
+
+# 允许 GITHUB_TOKEN 部署到 Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 同一分支的多次部署只保留最新一次，避免并发写 Pages
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: 构建并校验文档站
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 安装 pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: 安装 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: 安装依赖
+        run: pnpm install --frozen-lockfile
+
+      # 与 ci.yml 的 docs job 保持一致的质量护栏
+      - name: 文档一致性校验
+        run: pnpm run docs:check
+      - name: 构建文档站点
+        run: pnpm run build:site
+      - name: 校验站点产物链接
+        run: pnpm run docs:check-site
+      - name: 校验代码块对比度
+        run: pnpm run docs:check-contrast
+      - name: 校验占位文案基线
+        run: pnpm run docs:check-placeholders
+
+      - name: 配置 Pages
+        uses: actions/configure-pages@v5
+
+      # site/ 由 build:site 产出（config.js 的 outDir: '../site'）
+      - name: 上传 Pages 产物
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    name: 部署到 GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: 部署
+        id: deployment
+        uses: actions/deploy-pages@v4

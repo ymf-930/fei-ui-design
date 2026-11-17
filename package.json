@@ -20,7 +20,7 @@
     "**/*.styl",
     "./dist/**"
   ],
-  "homepage": "https://ymf-930.gitee.io/fei-ui-design/",
+  "homepage": "https://ymf-930.github.io/fei-ui-design/",
   "repository": {
     "type": "git",
     "url": "https://gitee.com/ymf-930/fei-ui-design.git"

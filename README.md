@@ -6,7 +6,7 @@
 面向 Vue 3 的企业级中后台组件库，提供 59 个开箱即用的组件，完整支持 TypeScript、
 按需引入与 CSS 变量主题定制。
 
-> 本项目由 [fei-ui-one](https://ymf-930.gitee.io/fei-ui-one/#/guide) 升级而来，可平滑迁移。
+> 本项目由 [fei-ui-one](https://github.com/ymf-930/f-ui-one) 升级而来，可平滑迁移。
 
 ## 特性
 
@@ -84,7 +84,7 @@ export default defineConfig({
 }
 ```
 
-详见[自定义主题](https://ymf-930.gitee.io/fei-ui-design/guide/custom-theme.html)。
+详见[自定义主题](https://ymf-930.github.io/fei-ui-design/guide/custom-theme.html)。
 
 ## 环境要求
 
@@ -151,10 +151,10 @@ git push --follow-tags
 
 ## 文档
 
-- [安装](https://ymf-930.gitee.io/fei-ui-design/guide/installation.html)
-- [在 SFC 中使用](https://ymf-930.gitee.io/fei-ui-design/guide/usage-sfc.html)
-- [按需引入](https://ymf-930.gitee.io/fei-ui-design/guide/import-on-demand.html)
-- [自定义主题](https://ymf-930.gitee.io/fei-ui-design/guide/custom-theme.html)
+- [安装](https://ymf-930.github.io/fei-ui-design/guide/installation.html)
+- [在 SFC 中使用](https://ymf-930.github.io/fei-ui-design/guide/usage-sfc.html)
+- [按需引入](https://ymf-930.github.io/fei-ui-design/guide/import-on-demand.html)
+- [自定义主题](https://ymf-930.github.io/fei-ui-design/guide/custom-theme.html)
 
 > 内部的代码审计与改造计划（含类型债务路线图）位于
 > [`docs/.internal/refactor-plan.md`](./docs/.internal/refactor-plan.md)，不参与在线文档站构建。
