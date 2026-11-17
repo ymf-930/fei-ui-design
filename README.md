@@ -6,7 +6,7 @@
 面向 Vue 3 的企业级中后台组件库，提供 59 个开箱即用的组件，完整支持 TypeScript、
 按需引入与 CSS 变量主题定制。
 
-> 本项目由 [fei-ui-one](https://github.com/ymf-930/f-ui-one) 升级而来，可平滑迁移。
+> 本项目由 [f-ui-one](https://ymf-930.github.io/f-ui-one/) 升级而来，可平滑迁移。
 
 ## 特性
 

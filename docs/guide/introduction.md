@@ -8,7 +8,7 @@ FEI-UI-DESIGN 是一个基于 Vue 3 的组件库，提供 59 个开箱即用的�
 
 要了解如何安装，参见 [安装](/guide/installation)。
 
-它由 [f-ui-one](https://github.com/ymf-930/f-ui-one) 演进而来，可以平滑地过渡和切换。
+它由 [f-ui-one](https://ymf-930.github.io/f-ui-one/) 演进而来，可以平滑地过渡和切换。
 
 ## 最新版本
 

@@ -74,5 +74,5 @@
 
 - `.npmignore`（改由 `package.json` 的 `files` 白名单统一管控，避免 `*.md` 误排除 README / CHANGELOG）。
 
-[Unreleased]: https://gitee.com/ymf-930/fei-ui-design/compare/v0.0.2...HEAD
-[0.0.2]: https://gitee.com/ymf-930/fei-ui-design/releases/tag/v0.0.2
+[Unreleased]: https://github.com/ymf-930/fei-ui-design/compare/v0.0.2...HEAD
+[0.0.2]: https://github.com/ymf-930/fei-ui-design/releases/tag/v0.0.2
