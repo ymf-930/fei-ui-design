@@ -69,9 +69,9 @@ jobs:
     name: 部署到 GitHub Pages
     needs: build
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    # 不指定 environment：GitHub 自动创建的 github-pages 环境默认只允许默认分支
+    # 部署，会从 develop 触发时被环境保护规则拒绝（Branch not allowed to deploy）。
+    # 去掉后 deploy-pages@v4 仍正常发布，部署 URL 见 Actions 的 page_url 输出。
     steps:
       - name: 部署
         id: deployment
